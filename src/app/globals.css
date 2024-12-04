@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+
+body {
+    /* color: rgb(var(--foreground-rgb));
+    background: rgb(var(--background-rgb)); */
+
+    font-family: "Pretendard", sans-serif !important;
+    line-height: normal;
+
+    letter-spacing: -0.02em;
+    line-height: 100% !important;
+
+    background-attachment: fixed !important;
+    background: linear-gradient(188deg, rgba(1,0,24,1) 0%, rgb(12, 12, 46) 49%, rgb(26, 26, 70) 83%, rgb(32, 60, 91) 100%);
+    
+    @apply overflow-x-hidden;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    line-height: 140% !important;
+}
+
+input,
+textarea,
+button {
+    appearance: none;
+    border-radius: 0;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    outline: none;
+    @apply prevent-select;
+}
+button {
+    @apply flex justify-center items-center;
+}
+input:focus {
+    outline: none !important;
+    outline-offset: 2px !important;
+}
+select:focus {
+    outline: 2px solid transparent !important;
+    outline-offset: 2px !important;
+}
+button:focus {
+    outline: none !important;
+    outline-offset: none !important;
+}
+textarea:focus {
+    outline: none !important;
+    outline-offset: none !important;
+}
+
+.prevent-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.scroll-transparent {
+    overflow-y: overlay;
+}
+.scroll-transparent::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: transparent;
+}
+.scroll-transparent::-webkit-scrollbar-track {
+    box-shadow: none;
+    background-color: transparent;
+}
+.scroll-transparent::-webkit-scrollbar-thumb {
+    background-color: #425167;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+    border-radius: 9999px;
+    transition: all 0.3s;
+    outline: none;
+}
+.scroll-overlay {
+    scrollbar-gutter: both-edges;
+}
+
+.flex-center {
+    @apply items-center justify-center;
+}
+.absolute-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    &.fade-in-up {
+        animation: fadeInUpCenter 0.5s;
+    }
+    &.fade-in-down {
+        animation: fadeInDownCenter 0.5s;
+    }
+}
+
+.skeleton {
+    color: transparent !important;
+    @apply bg-slate-300 animate-pulse-fast rounded-lg duration-300;
+}
+
+.height-fill {
+    height: 100vh;
+    height: -webkit-fill-available;
+}
+
+.swal2-container {
+    @apply 
+        [&>.popup]:rounded-lg
+        [&>.popup]:bg-slate-50 dark:[&>.popup]:bg-slate-700
+        [&>.popup]:text-slate-700 dark:[&>.popup]:text-slate-200
+
+        [&>.popup>.swal2-actions]:space-x-2
+        [&>.popup>.swal2-actions>button]:px-8 [&>.popup>.swal2-actions>button]:py-3
+        [&>.popup>.swal2-actions>button]:rounded-lg
+        [&>.popup>.swal2-actions>button]:bg-slate-200 hover:[&>.popup>.swal2-actions>button]:bg-slate-300
+        [&>.popup>.swal2-actions>button]:dark:bg-slate-600 hover:[&>.popup>.swal2-actions>button]:dark:bg-slate-500
+        [&>.popup>.swal2-actions>button]:duration-200
+        [&>.confirmButton]:bg-slate-700
+        [&>.confirmButton]:text-slate-200
+    ;
+}
+
+@keyframes fadeInUpCenter {
+    0% {
+        opacity: 0;
+        transform: translate3d(-50%, -45%, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(-50%, -50%);
+    }
+}
+@keyframes fadeInDownCenter {
+    0% {
+        opacity: 0;
+        transform: translate3d(-50%, -55%, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(-50%, -50%);
+    }
+}
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, -55%, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, -50%);
+    }
+}
+
+/* @supports (-webkit-touch-callout: none) {
+    height: -webkit-fill-available;
+} */
+
+@layer utilities {
+    .text-balance {
+        text-wrap: balance;
+    }
+}
+
+@tailwind utilities;
