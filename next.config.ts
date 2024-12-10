@@ -21,6 +21,12 @@ const nextConfig = {
                 port: '', // 포트가 명시되지 않은 경우 비워둡니다.
                 pathname: '/**', // 모든 경로 허용
             },
+            {
+                protocol: 'https',
+                hostname: 'static.upbit.com',
+                port: '', // 포트가 명시되지 않은 경우 비워둡니다.
+                pathname: '/**', // 모든 경로 허용
+            },
         ]
     },
     typescript: {

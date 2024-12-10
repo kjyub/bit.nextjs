@@ -14,7 +14,7 @@ body {
     background-attachment: fixed !important;
     background: linear-gradient(188deg, rgba(1,0,24,1) 0%, rgb(12, 12, 46) 49%, rgb(26, 26, 70) 83%, rgb(32, 60, 91) 100%);
     
-    @apply overflow-x-hidden;
+    @apply overflow-x-hidden text-slate-100;
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -51,6 +51,10 @@ button:focus {
 textarea:focus {
     outline: none !important;
     outline-offset: none !important;
+}
+
+.test-border {
+    @apply rounded-lg border;
 }
 
 .prevent-select {

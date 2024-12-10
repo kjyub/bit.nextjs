@@ -14,11 +14,8 @@ export default function Navigation() {
     const [isAuth, setAuth] = useState<boolean>(false)
 
     useEffect(() => {
-        console.log(user)
         setAuth(user.accountStatus === AccountStatusTypes.NORMAL)
     }, [user])
-
-    console.log(isAuth)
 
     const handleLogout = async () => {
         signOut().then(() => {
@@ -34,8 +31,8 @@ export default function Navigation() {
                     <button className="btn">
                         <span>Home</span>
                     </button>
-                    <Link href="/coin" className="btn">
-                        <span>거래</span>
+                    <Link href="/crypto" className="btn">
+                        <span>암호화폐 거래</span>
                     </Link>
                 </NS.Section>
                 {/* 오른쪽 */}

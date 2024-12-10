@@ -15,6 +15,10 @@ export default {
             colors: {
                 background: "var(--background)",
                 foreground: "var(--foreground)",
+                price: {
+                    rise: "#FF0000",
+                    fall: "#0000FF",
+                },
                 gray: {
                     75: "#f6f7f8",
                     150: "#eceef1",
