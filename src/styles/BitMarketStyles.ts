@@ -53,6 +53,11 @@ export const MarketListBox = tw.div`
     [&>.market-type>button.active]:bg-slate-700/70
     [&>.market-type>button]:transition-colors
 
+    [&>.market-sort]:grid [&>.market-sort]:grid-cols-4 [&>.market-sort]:w-full [&>.market-sort]:min-h-[1.5rem]
+    [&>.market-sort>button]:text-slate-400 hover:[&>.market-sort>button]:text-slate-200 [&>.market-sort>button]:font-light
+    [&>.market-sort>button.active]:text-slate-200
+    [&>.market-sort>button]:text-sm [&>.market-sort>button]:transition-colors
+
     [&>.list]:flex [&>.list]:flex-col [&>.list]:w-full [&>.list]:space-y-1
     [&>.list]:p-2 [&>.list]:rounded-lg [&>.list]:bg-slate-500/10
     [&>.list]:overflow-y-auto
@@ -67,7 +72,7 @@ export const MarketListItem = tw(Link)`
     [&>.change-color]:text-slate-200
     [&.rise>.change-color]:text-red-500 [&.fall>.change-color]:text-blue-500
 
-    [&>.name]:flex [&>.name]:flex-col [&>.name]:w-36
+    [&>.name]:flex [&>.name]:flex-col [&>.name]:flex-1
     [&>.name>span]:truncate
     [&>.name>.korean]:text-sm [&>.name>.korean]:text-slate-200
     [&>.name>.english]:text-[10px] [&>.name>.english]:text-slate-400 [&>.name>.english]:font-light

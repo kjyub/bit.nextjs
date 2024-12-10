@@ -4,7 +4,7 @@ import BitApi from "@/apis/api/bits/BitApi"
 import useMarketPriceStore from "@/store/useMarketPriceStore"
 import * as S from "@/styles/BitMarketStyles"
 import BitMarket from "@/types/bits/BitMarket"
-import { MarketTypeNames, MarketTypes, PriceChangeTypes } from "@/types/bits/BitTypes"
+import { MarketSortTypeNames, MarketSortTypes, MarketTypeNames, MarketTypes, PriceChangeTypes } from "@/types/bits/BitTypes"
 import { TextFormats } from "@/types/CommonTypes"
 import BitUtils from "@/utils/BitUtils"
 import CommonUtils from "@/utils/CommonUtils"
@@ -17,6 +17,8 @@ export default function BitMarketList() {
     const [marketFiltered, setMarketFiltered] = useState<BitMarket[]>([]) // 검색한 코인 목록
     const [marketType, setMarketType] = useState<MarketTypes>(MarketTypes.KRW) // 마켓 종류 (KRW, BTC, USDT, HOLD)
     const [search, setSearch] = useState<string>("") // 검색어
+
+    const [sortType, setSortType] = useState<string>(MarketSortTypes.NAME) // 정렬 기준
 
     useEffect(() => {
         getMarkets(search, marketType)
@@ -81,6 +83,29 @@ export default function BitMarketList() {
                 />
             </div>
 
+            <div className="market-sort">
+                <MarketSortType 
+                    sortType={MarketSortTypes.NAME}
+                    currentSortType={sortType}
+                    setSortType={setSortType}
+                />
+                <MarketSortType 
+                    sortType={MarketSortTypes.PRICE}
+                    currentSortType={sortType}
+                    setSortType={setSortType}
+                />
+                <MarketSortType 
+                    sortType={MarketSortTypes.CHANGE}
+                    currentSortType={sortType}
+                    setSortType={setSortType}
+                />
+                <MarketSortType 
+                    sortType={MarketSortTypes.VOLUME}
+                    currentSortType={sortType}
+                    setSortType={setSortType}
+                />
+            </div>
+
             <div className="list">
                 {marketFiltered.map((market, index) => (
                     <Market key={index} market={market} />
@@ -102,6 +127,22 @@ const MarketType = ({ marketType, currentMarketType, setMarketType }: IMarketTyp
             onClick={() => setMarketType(marketType)}
         >
             {MarketTypeNames[marketType]}
+        </button>
+    )
+}
+
+interface IMarketSortType {
+    sortType: MarketSortTypes
+    currentSortType: MarketSortTypes
+    setSortType: (sortType: MarketSortTypes) => void
+}
+const MarketSortType = ({ sortType, currentSortType, setSortType }: IMarketSortType) => {
+    return (
+        <button 
+            className={`${sortType === currentSortType ? "active" : ""} ${sortType}`}
+            onClick={() => setSortType(sortType)}
+        >
+            {MarketSortTypeNames[sortType]}
         </button>
     )
 }

@@ -38,3 +38,16 @@ export const PriceChangeTypes = {
     RISE: "RISE",
     FALL: "FALL",
 }
+
+export const MarketSortTypes = {
+    NAME: "korean_name",
+    PRICE: "price",
+    CHANGE: "change_rate",
+    VOLUME: "volume",
+}
+export const MarketSortTypeNames = {
+    "korean_name": "이름",
+    "price": "가격",
+    "change_rate": "전일대비",
+    "volume": "거래대금",
+}
