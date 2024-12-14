@@ -56,8 +56,10 @@ export const MarketListBox = tw.div`
     [&>.market-sort]:grid [&>.market-sort]:grid-cols-4 [&>.market-sort]:w-full [&>.market-sort]:min-h-[1.5rem]
     [&>.market-sort>button]:text-slate-500 hover:[&>.market-sort>button]:text-slate-300 [&>.market-sort>button]:font-light
     [&>.market-sort>button.active]:text-slate-200
-    [&>.market-sort>button]:text-sm [&>.market-sort>button]:font-light
+    [&>.market-sort>button]:text-sm [&>.market-sort>button]:space-x-1
     [&>.market-sort>button]:transition-colors
+    [&>.market-sort>button>.icon]:text-xs
+    [&>.market-sort>button>.icon]:opacity-0 [&>.market-sort>button.active>.icon]:opacity-100
 
     [&>.list]:flex [&>.list]:flex-col [&>.list]:w-full [&>.list]:space-y-1
     [&>.list]:p-2 [&>.list]:rounded-lg [&>.list]:bg-slate-500/10

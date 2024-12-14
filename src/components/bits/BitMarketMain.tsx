@@ -108,7 +108,7 @@ export default function BitMarketMain({ marketCode, marketData, marketCurrent }:
                             </div>
                             <div>
                                 <span className="label">거래량(24h)</span>
-                                <span className="value w-36 text-xs">{marketCurrent.acc_trade_volume_24h}</span>
+                                <span className="value w-36 text-xs">{BitUtils.getPriceText(marketCurrent.acc_trade_volume_24h)}</span>
                             </div>
                             <div>
                                 <span className="label">저가</span>
