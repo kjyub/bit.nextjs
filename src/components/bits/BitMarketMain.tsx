@@ -54,6 +54,9 @@ export default function BitMarketMain({ marketCode, marketData, marketCurrent }:
         setPriceWidth((BitUtils.getPriceTextLength(price) * 15) + 30)
     }, [price])
     
+    if (Object.keys(marketCurrent).length === 0) {
+        return
+    }
     
     return (
         <>

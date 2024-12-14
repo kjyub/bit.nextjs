@@ -2,20 +2,17 @@ import { UserTypes } from '@/types/user/UserTypes';
 import ApiUtils from '@/utils/ApiUtils';
 import Pagination from '@/types/api/pagination';
 import { EditStateTypes } from '@/types/DataTypes';
-import BitMarket from '@/types/bits/BitMarket';
-import useMarketPriceStore from '@/store/useMarketPriceStore';
-import { io, Socket } from "socket.io-client"
-import { defaultServerInstance } from '@/apis/utils/serverApis';
+import { tradeDefaultServerInstance } from '@/apis/utils/serverTradeApis';
 import { IUpbitMarket, IUpbitMarketTicker } from '@/types/bits/BitInterfaces';
 
-class UpbitServerApi {
+class TradeGoServerApi {
     // region Market
     static async getMarketCurrent(marketCode: string): Promise<IUpbitMarketTicker> {
         let result: IUpbitMarketTicker = {}
 
-        await defaultServerInstance.get("https://api.upbit.com/v1/ticker", { params: {
-            markets: marketCode
-        }}).then(({ data }) => {
+        await tradeDefaultServerInstance.post("/markets", { 
+            codes: [marketCode]
+        }).then(({ data }) => {
             if (Array.isArray(data) && data.length > 0) {
                 result = data[0]
             }
@@ -28,4 +25,4 @@ class UpbitServerApi {
     // endregion
 }
 
-export default UpbitServerApi
+export default TradeGoServerApi

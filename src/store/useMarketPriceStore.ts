@@ -1,7 +1,20 @@
 // store.js
+import TradeGoApi from '@/apis/api/bits/TradeGoApi'
+import UpbitServerApi from '@/apis/api/bits/UpbitServerApi'
 import { IUpbitMarketTicker } from '@/types/bits/BitInterfaces'
 import CommonUtils from '@/utils/CommonUtils'
 import { create } from 'zustand'
+
+const getInitData = async () => {
+    const markets = await TradeGoApi.getMarketsCurrent()
+
+    const data: { [key: string]: IUpbitMarketTicker } = {}
+    markets.forEach((market: IUpbitMarketTicker) => {
+        data[market.code] = market
+    })
+
+    return data
+}
 
 interface IMarketPriceStore {
     marketDic: {
@@ -11,6 +24,13 @@ interface IMarketPriceStore {
 }
 const useMarketPriceStore = create<IMarketPriceStore>((set) => ({
     marketDic: {},
+    init: () => {
+        getInitData().then((data) => {
+            set({
+                marketDic: data
+            })
+        })
+    },
     updateMarketPriceDic: (data) => {
         set((state) => {
             let marketCode: string = ""
@@ -23,12 +43,12 @@ const useMarketPriceStore = create<IMarketPriceStore>((set) => ({
                 return state
             }
 
-            let newState = { ...state }
-            newState.marketDic[marketCode] = data
-
-            // console.log(data.code, data.trade_price)
-
-            return newState
+            return {
+                marketDic: {
+                    ...state.marketDic,
+                    [marketCode]: data
+                }
+            }
         })
     },
 }))

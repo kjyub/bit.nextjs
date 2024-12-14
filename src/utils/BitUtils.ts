@@ -3,7 +3,7 @@ import CommonUtils from "./CommonUtils"
 import { TextFormats } from "@/types/CommonTypes"
 
 
-export default class {
+export default class BitUtils{
     // 유저 타입에따라 쓰기가 가능한 현황만 가져온다.
     static getPriceChangeType(price: number, openingPrice: number): PriceChangeTypes {
         let changeType = PriceChangeTypes.EVEN
@@ -30,8 +30,14 @@ export default class {
         }
     }
     static getPriceText(price: number): string {
-        if (price >= 1000) {
-            return CommonUtils.textFormat(price, TextFormats.NUMBER)
+        return CommonUtils.textFormat(price, TextFormats.NUMBER)
+    }
+    static getTradePriceText(price: number): string {
+        if (price >= 1000000) {
+
+            return CommonUtils.textFormat((price / 1000000).toFixed(0), TextFormats.NUMBER) + "백만"
+        } else if (price >= 10000) {
+            return CommonUtils.textFormat((price / 10000).toFixed(0), TextFormats.NUMBER) + "만"
         } else {
             return price.toString()
         }

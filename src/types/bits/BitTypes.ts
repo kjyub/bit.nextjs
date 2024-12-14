@@ -43,11 +43,11 @@ export const MarketSortTypes = {
     NAME: "korean_name",
     PRICE: "price",
     CHANGE: "change_rate",
-    VOLUME: "volume",
+    TRADE_PRICE: "trade_price",
 }
 export const MarketSortTypeNames = {
     "korean_name": "이름",
     "price": "가격",
     "change_rate": "전일대비",
-    "volume": "거래대금",
+    "trade_price": "거래대금",
 }

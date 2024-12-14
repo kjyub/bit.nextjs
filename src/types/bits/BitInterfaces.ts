@@ -3,6 +3,15 @@ export interface IMarketPrice {
     price: number
 }
 
+export interface IUpbitMarket {
+    market: string
+    korean_name: string
+    english_name: string
+    market_event: {
+        warning: boolean
+        caution: object
+    }
+}
 export interface IUpbitMarketTicker {
     code: string
     market: string

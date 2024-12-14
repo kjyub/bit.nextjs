@@ -4,11 +4,11 @@ export const CommonTypes = {
     BRAND: 1,
     COMMON: 2,
 }
-export const SortTypes = {
+export const OrderTypes = {
     ASC: 0,
     DESC: 1,
 }
-export const SortTypeNames = {
+export const OrderTypeNames = {
     0: "오름차순",
     1: "내림차순",
 }

@@ -5,7 +5,6 @@ import ApiUtils from '@/utils/ApiUtils';
 import Pagination from '@/types/api/pagination';
 import { EditStateTypes } from '@/types/DataTypes';
 
-import { SortTypes } from '@/types/common/CommonTypes';
 import ImageFile from '@/types/common/ImageFile';
 
 

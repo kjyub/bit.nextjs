@@ -1,10 +1,9 @@
 "use client"
 
-import BitApi from "@/apis/api/bits/BitApi"
-import UpbitApi from "@/apis/api/bits/UpbitApi"
 import { useEffect, useRef, useState } from "react"
 import { v4 as uuid } from 'uuid'
-import { Socket } from "socket.io-client"
+import useMarketPriceStore from "@/store/useMarketPriceStore"
+import TradeGoApi from "@/apis/api/bits/TradeGoApi"
 
 export default function MarketPriceLayout({
     children,
@@ -12,9 +11,11 @@ export default function MarketPriceLayout({
     children: React.ReactNode
 }) {
     const socketRef = useRef<WebSocket | null>(null)
+    const marketPriceInit = useMarketPriceStore.getState().init
 
     useEffect(() => {      
-        socketRef.current = UpbitApi.initPriceWebSocket()
+        marketPriceInit()
+        socketRef.current = TradeGoApi.initPriceWebSocket()
 
         return () => {
             socketRef.current.close()
