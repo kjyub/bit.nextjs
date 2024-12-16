@@ -52,7 +52,6 @@ class TradeGoApi {
 
             if (sendMessage) {
                 socket.send(sendMessage)
-                console.log(sendMessage)
             }
         }
       

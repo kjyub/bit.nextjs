@@ -10,7 +10,6 @@ export const useUser = (getNewUser: boolean = false, isSessionUserUpdate: boolea
     const [isLoading, setLoading] = useState<boolean>(true)
 
     useEffect(() => {
-        console.log("effect status", session, session?.status)
         if (session) {
             const _user = new User()
             _user.parseResponse(session.user)
