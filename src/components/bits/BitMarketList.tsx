@@ -271,6 +271,8 @@ const Market = ({ market, socketData }: IMarket) => {
 
     if (price < 0) return null
 
+    const changeRateText = !isNaN(changeRate) ? `${(changeRate * 100).toFixed(2) }%`: "-"
+
     return (
         <S.MarketListItem
             href={`/crypto/${market.code}`}
@@ -290,7 +292,7 @@ const Market = ({ market, socketData }: IMarket) => {
                 </span>
             </div>
             <div className="change change-color">
-                <span className="rate" title="전일 대비 변화액">{(changeRate * 100).toFixed(2)}%</span>
+                <span className="rate" title="전일 대비 변화액">{changeRateText}</span>
                 {isPriceChangeShow && (
                     <span className="price" title="전일 대비 변화율">{BitUtils.getPriceText(changePrice)}</span>
                 )}
