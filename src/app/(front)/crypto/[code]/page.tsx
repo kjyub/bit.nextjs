@@ -1,6 +1,8 @@
 import BitServerApi from "@/apis/api/bits/BitServerApi";
 import TradeGoServerApi from "@/apis/api/bits/TradeGoServerApi";
 import BitMarketMain from "@/components/bits/BitMarketMain";
+import CryptoFallback from "@/components/fallbacks/CryptoFallback";
+import { Suspense } from "react";
 
 interface IMarketPage {
     code: string

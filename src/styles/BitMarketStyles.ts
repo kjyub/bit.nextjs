@@ -24,6 +24,7 @@ export const ChartAndTradeLayout = tw.div`
 `
 export const ChartLayout = tw.div`
     flex flex-col flex-1 h-full
+    rounded-lg bg-slate-800/60
 `
 export const TradeLayout = tw.div`
     flex flex-col w-72 h-full
@@ -61,7 +62,7 @@ export const MarketListBox = tw.div`
     [&>.market-sort>button>.icon]:text-xs
     [&>.market-sort>button>.icon]:opacity-0 [&>.market-sort>button.active>.icon]:opacity-100
 
-    [&>.list]:flex [&>.list]:flex-col [&>.list]:w-full [&>.list]:space-y-1
+    [&>.list]:flex [&>.list]:flex-col [&>.list]:w-full [&>.list]:h-full [&>.list]:space-y-1
     [&>.list]:p-2 [&>.list]:rounded-lg [&>.list]:bg-slate-500/10
     [&>.list]:overflow-y-auto
 `
@@ -78,14 +79,14 @@ export const MarketListItem = tw(Link)`
     [&>.name]:flex [&>.name]:flex-col [&>.name]:flex-1
     [&>.name>span]:truncate
     [&>.name>.korean]:text-sm [&>.name>.korean]:text-slate-200
-    [&>.name>.english]:text-[10px] [&>.name>.english]:text-slate-400 [&>.name>.english]:font-light
+    [&>.name>.english]:text-[10px] [&>.name>.english]:text-slate-400 [&>.name>.english]:font-extralight
 
     [&>.price]:flex [&>.price]:flex-col [&>.price]:w-24
-    [&>.price>.volume]:text-[11px] [&>.price>.volume]:text-slate-400
+    [&>.price>.volume]:text-[11px] [&>.price>.volume]:text-slate-400 [&>.price>.volume]:font-extralight
 
     [&>.change]:flex [&>.change]:flex-col [&>.change]:w-12
     [&>.change>.rate]:text-sm 
-    [&>.change>.price]:text-[10px] [&>.change>.price]:font-light
+    [&>.change>.price]:text-[10px] [&>.change>.price]:font-extralight
 `
 
 export const MainTitleBox = tw.div`

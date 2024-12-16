@@ -3,6 +3,8 @@ import * as MS from "@/styles/MainStyles"
 import * as S from "@/styles/BitMarketStyles"
 import BitMarketList from "@/components/bits/BitMarketList"
 import MarketPriceLayout from "@/layouts/MarketPriceLayout"
+import { Suspense } from "react"
+import CryptoFallback from "@/components/fallbacks/CryptoFallback"
 
 export default function BitLayout({ children }: Readonly<{children: React.ReactNode}>) {
     return (
@@ -10,7 +12,9 @@ export default function BitLayout({ children }: Readonly<{children: React.ReactN
             <MarketPriceLayout />
             <S.Layout>
                 <S.InfoLayout>
-                    {children}
+                    <Suspense fallback={<CryptoFallback />}>
+                        {children}
+                    </Suspense>
                 </S.InfoLayout>
 
                 <S.MarketListLayout>

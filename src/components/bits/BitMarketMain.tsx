@@ -123,7 +123,7 @@ export default function BitMarketMain({ marketCode, marketData, marketCurrent }:
                 </S.TitleLayout>
                 
                 <S.ChartAndTradeLayout>
-                    <S.ChartLayout className="rounded-lg bg-slate-800/60">
+                    <S.ChartLayout>
 
                     </S.ChartLayout>
                     <S.TradeLayout className="test-border">
