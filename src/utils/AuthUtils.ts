@@ -1,8 +1,8 @@
 import { Session } from "next-auth"
 import CommonUtils from "./CommonUtils"
 import { randomUUID } from "crypto"
-import { AccountStatusTypes, UserTypes } from '@/types/user/UserTypes'
-import User from "@/types/user/User"
+import { AccountStatusTypes, UserTypes } from '@/types/users/UserTypes'
+import User from "@/types/users/User"
 import UserApi from "@/apis/api/users/UserApi"
 import { UpdateSession } from "next-auth/react"
 import { SessionStorageConsts, userData } from "@/types/ApiTypes"

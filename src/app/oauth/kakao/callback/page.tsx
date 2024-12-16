@@ -1,7 +1,7 @@
 "use client"
 
-import User from '@/types/user/User'
-import { AccountStatusTypes } from '@/types/user/UserTypes'
+import User from '@/types/users/User'
+import { AccountStatusTypes } from '@/types/users/UserTypes'
 import CommonUtils from '@/utils/CommonUtils'
 import { getSession, signIn } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'

@@ -1,4 +1,4 @@
-import { UserTypes } from '@/types/user/UserTypes';
+import { UserTypes } from '@/types/users/UserTypes';
 import { authInstance, defaultInstance, fileInstance } from '../../utils/clientApis';
 import ApiUtils from '@/utils/ApiUtils';
 import Pagination from '@/types/api/pagination';

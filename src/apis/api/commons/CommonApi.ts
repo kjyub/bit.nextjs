@@ -1,6 +1,6 @@
-import { UserTypes } from '@/types/user/UserTypes';
+import { UserTypes } from '@/types/users/UserTypes';
 import { authInstance, defaultInstance, fileInstance } from '../../utils/clientApis';
-import User from '@/types/user/User';
+import User from '@/types/users/User';
 import ApiUtils from '@/utils/ApiUtils';
 import Pagination from '@/types/api/pagination';
 import { EditStateTypes } from '@/types/DataTypes';

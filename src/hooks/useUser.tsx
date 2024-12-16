@@ -1,4 +1,4 @@
-import User from "@/types/user/User"
+import User from "@/types/users/User"
 import AuthUtils from "@/utils/AuthUtils"
 import CommonUtils from "@/utils/CommonUtils"
 import { useSession } from "next-auth/react"

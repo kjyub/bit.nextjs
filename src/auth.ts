@@ -3,7 +3,7 @@ import { authConfig } from "./auth.config"
 import Credentials from "next-auth/providers/credentials"
 import CommonUtils from "./utils/CommonUtils"
 import { defaultServerInstance } from "@/apis/utils/serverApis"
-import User from "./types/user/User"
+import User from "./types/users/User"
 import AuthUtils from "./utils/AuthUtils"
 
 

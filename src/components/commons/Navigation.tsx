@@ -2,7 +2,7 @@
 
 import { useUser } from "@/hooks/useUser"
 import * as NS from "@/styles/NavigationStyles"
-import { AccountStatusTypes } from "@/types/user/UserTypes"
+import { AccountStatusTypes } from "@/types/users/UserTypes"
 import { signOut } from "next-auth/react"
 import Link from "next/link"
 import { useEffect, useState } from "react"

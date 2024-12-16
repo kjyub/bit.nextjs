@@ -1,6 +1,6 @@
 import React from "react"
 import CommonUtils from "@/utils/CommonUtils"
-import { AccountStatusTypes, UserTypes } from "@/types/user/UserTypes"
+import { AccountStatusTypes, UserTypes } from "@/types/users/UserTypes"
 import { Expose } from "class-transformer"
 import { AbsApiObject } from "../ApiTypes"
 import UserBrand from "./UserBrand"

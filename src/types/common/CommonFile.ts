@@ -1,6 +1,6 @@
 import CommonUtils from "@/utils/CommonUtils"
 import FileUtils from "@/utils/FileUtils"
-import User from "../user/User"
+import User from "../users/User"
 import { AbsApiObject } from "../ApiTypes"
 
 export default class extends AbsApiObject{
