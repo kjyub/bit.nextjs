@@ -36,7 +36,7 @@ const axiosAuthApi = (options) => {
         async (config) => {
             const session = await getSession()
             const djangoToken = session.accessToken
-
+            
             // 쿠키가 없는 경우 http only 쿠키에서 보낸다.
             if (!CommonUtils.isStringNullOrEmpty(djangoToken)) {
                 config.headers.Authorization = `Bearer ${djangoToken}`

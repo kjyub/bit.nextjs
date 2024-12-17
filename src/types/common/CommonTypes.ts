@@ -12,3 +12,9 @@ export const OrderTypeNames = {
     0: "오름차순",
     1: "내림차순",
 }
+
+export const LikeTypes = {
+    LIKE: 1,
+    DISLIKE: -1,
+    NONE: 0,
+}

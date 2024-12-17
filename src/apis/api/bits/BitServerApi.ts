@@ -45,6 +45,53 @@ class BitServerApi {
         return result
     }
     // endregion
+
+    // region Community
+    static async getCommunityList(search: string, marketCode: string, page: number, pageSize: number): Promise<object> {
+        let result: object = {}
+
+        await defaultServerInstance.get("/api/bits/community/", { params: {
+            search: search,
+            market_code: marketCode,
+            page: page,
+            page_size: pageSize,
+        }}).then(({ data }) => {
+            result = data
+        }).catch((error) => {
+            console.log(error)
+        })
+
+        return result
+    }
+    static async getCommunityDetail(nanoId: string): Promise<object> {
+        let result: object = {}
+
+        await defaultServerInstance.get(`/api/bits/community/${nanoId}/`).then(({ data }) => {
+            result = data
+        }).catch((error) => {
+            console.log(error)
+        })
+
+        return result
+    }
+    // endregion
+    // region Community Comment
+    static async getCommunityCommentList(communityId: number, pageIndex: number, pageSize: number): Promise<object> {
+        let result: object = {}
+
+        await defaultServerInstance.get("/api/bits/community_comment/", { params: {
+            community_id: community,
+            page: page,
+            page_size: pageSize,
+        }}).then(({ data }) => {
+            result = data
+        }).catch((error) => {
+            console.log(error)
+        })
+
+        return result
+    }
+    // endregion
 }
 
 export default BitServerApi

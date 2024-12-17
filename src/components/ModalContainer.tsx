@@ -43,7 +43,7 @@ const ModalContainer = ({
                 setIsOpen(false)
             }}
             style={{ overlay: { backgroundColor: "transparent", zIndex: 500 } }}
-            className={`flex flex-center w-screen h-screen bg-black/20 outline-none ${
+            className={`flex flex-center w-screen h-screen bg-black/20 dark:bg-black/30 outline-none ${
                 isBlur && "backdrop-blur-sm"
             }`}
         >
@@ -55,7 +55,7 @@ const ModalContainer = ({
                 >
                     {(!isCloseByBackground || isCloseButtonShow) && (
                         <i
-                            className="absolute top-5 right-5 fa-solid fa-xmark cursor-pointer"
+                            className="absolute z-10 top-5 right-6 fa-solid fa-xmark text-lg text-slate-400 cursor-pointer"
                             onClick={() => setIsOpen(false)}
                         />
                     )}

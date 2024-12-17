@@ -20,8 +20,9 @@ interface IBitMarket {
     marketCode: string
     marketData: object
     marketCurrent: IUpbitMarketTicker
+    communityNode: React.ReactNode
 }
-export default function BitMarketMain({ marketCode, marketData, marketCurrent }: IBitMarket) {
+export default function BitMarketMain({ marketCode, marketData, marketCurrent, communityNode }: IBitMarket) {
     const market = new BitMarket()
     market.parseResponse(marketData)
 
@@ -132,8 +133,9 @@ export default function BitMarketMain({ marketCode, marketData, marketCurrent }:
                 </S.ChartAndTradeLayout>
             </S.MainLayout>
 
-            <S.CommunityLayout className="test-border">
-                commu
+            {/* 커뮤니티 */}
+            <S.CommunityLayout>
+                {communityNode}
             </S.CommunityLayout>
         </>
     )

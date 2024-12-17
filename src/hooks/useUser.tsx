@@ -4,7 +4,7 @@ import CommonUtils from "@/utils/CommonUtils"
 import { useSession } from "next-auth/react"
 import react, { useState, useEffect, useRef } from "react"
 
-export const useUser = (getNewUser: boolean = false, isSessionUserUpdate: boolean = false): User => {
+export const useUser = (getNewUser: boolean = false, isSessionUserUpdate: boolean = false): [User, boolean] => {
     const { data: session, status, update } = useSession()
     const [user, setUser] = useState<User>(new User())
     const [isLoading, setLoading] = useState<boolean>(true)
@@ -32,7 +32,7 @@ export const useUser = (getNewUser: boolean = false, isSessionUserUpdate: boolea
             _user.parseResponse(session.user)
             setUser(_user)
         }
-    }, [session ? session.user.account_status : null])
+    }, [session ? session.user : null])
     
     const getCurrentUser = async () => {
         // 세션에 저장된 데이터까지 업데이트 하는 경우

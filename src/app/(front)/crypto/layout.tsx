@@ -22,7 +22,7 @@ export default function BitLayout({ children }: Readonly<{children: React.ReactN
                         <BitNavigation />
                     </div>
                     
-                    <BitMarketList />
+                    {/* <BitMarketList /> */}
                 </S.MarketListLayout>
             </S.Layout>
         </MS.PageLayout>

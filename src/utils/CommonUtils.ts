@@ -270,4 +270,28 @@ export default class CommonUtils {
     static rowIndex(index: number, pageIndex: number, pageSize: number, itemCount: number): number {
         return itemCount - ((pageIndex - 1) * pageSize + index) 
     }
+    static getDateShorten(date: string): string {
+        try {
+            const now = moment()
+            const inputDate = moment(date)
+            const diffSeconds = now.diff(inputDate, 'seconds')
+            const diffMinutes = now.diff(inputDate, 'minutes')
+            const diffHours = now.diff(inputDate, 'hours')
+            const diffDays = now.diff(inputDate, 'days')
+    
+            if (diffSeconds < 60) {
+                return `${diffSeconds}초 전`
+            } else if (diffMinutes < 60) {
+                return `${diffMinutes}분 전`
+            } else if (diffHours < 24) {
+                return `${diffHours}시간 전`
+            } else if (diffDays < 7) {
+                return `${diffDays}일 전`
+            } else {
+                return inputDate.format('YYYY-MM-DD')
+            }
+        } catch {
+            return ""
+        }
+    }
 }

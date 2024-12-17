@@ -3,11 +3,11 @@ import Link from "next/link"
 import tw from "tailwind-styled-components"
 
 export const Layout = tw.div`
-    flex w-full
+    flex justify-center w-full
 `
 
 export const InfoLayout = tw.div`
-    flex flex-col flex-1 p-4 space-y-4
+    flex flex-col flex-1 max-w-[1280px] p-4 space-y-4
 `
 
 // 제목, 차트, 거래를 담는 레이아웃
