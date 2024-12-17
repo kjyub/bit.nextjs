@@ -34,19 +34,19 @@ export default function BitMarketCommunityView({ user, communityNanoId }: IBitMa
 
     // 댓글 데이터 정리
     useEffect(() => {
+        setComments([])
+        setItemCount(0)
+        setPageIndex(1)
+        setCommentLoading(false)
+        
         if (!CommonUtils.isStringNullOrEmpty(communityNanoId)) {
             getCommunity(communityNanoId)
+            getComments(-1)
         } else {
             setCommunity(new MarketCommunity())
         }
     }, [communityNanoId])
-
-    useEffect(() => {
-        if (!CommonUtils.isStringNullOrEmpty(communityNanoId)) {
-            getComments(-1)
-        }
-    }, [community.nanoId])
-
+    
     const getCommunity = async (nanoId: string) => {
         const response = await BitApi.getCommunityDetail(nanoId)
         setCommunity(response)
@@ -58,7 +58,7 @@ export default function BitMarketCommunityView({ user, communityNanoId }: IBitMa
     // 댓글 목록 가져오기
     const getComments = async (_pageIndex: number, requireId: number = -1) => {
         let response = new Pagination<MarketCommunityComment>()
-        response = await BitApi.getCommunityCommentList(community.nanoId, _pageIndex, MARKET_COMMUNITY_COMMENT_PAGE_SIZE)
+        response = await BitApi.getCommunityCommentList(communityNanoId, _pageIndex, MARKET_COMMUNITY_COMMENT_PAGE_SIZE)
 
         // 결과에 있어야할 필수 댓글이 있는지 확인 (대댓글 관련 로직)
         const hasRequireComment = (): boolean => {

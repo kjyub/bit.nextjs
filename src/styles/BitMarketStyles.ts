@@ -15,8 +15,17 @@ export const MainLayout = tw.div`
     flex flex-col w-full h-156 space-y-2
 `
 // 코인 이름 및 가격 정보
-export const TitleLayout = tw.div`
-    flex justify-between items-center w-full h-40
+export const TitleLayout = tw.div<StyleProps>`
+    sticky top-[32px] z-30
+    flex justify-between items-center w-full
+    border-b
+
+    ${({$is_active}: StyleProps) => $is_active ? 
+        "h-40 border-slate-500/20 backdrop-blur-lg" : 
+        "h-40 border-transparent"
+    }
+
+    duration-300
 `
 
 export const ChartAndTradeLayout = tw.div`
