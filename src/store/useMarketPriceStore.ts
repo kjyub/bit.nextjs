@@ -6,14 +6,7 @@ import CommonUtils from '@/utils/CommonUtils'
 import { create } from 'zustand'
 
 const getInitData = async () => {
-    const markets = await TradeGoApi.getMarketsCurrent()
-
-    const data: { [key: string]: IUpbitMarketTicker } = {}
-    markets.forEach((market: IUpbitMarketTicker) => {
-        data[market.code] = market
-    })
-
-    return data
+    return await TradeGoApi.getMarketsCurrentDic()
 }
 
 interface IMarketPriceStore {

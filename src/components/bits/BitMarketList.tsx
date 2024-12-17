@@ -1,6 +1,7 @@
 "use client"
 
 import BitApi from "@/apis/api/bits/BitApi"
+import TradeGoApi from "@/apis/api/bits/TradeGoApi"
 import useMarketPriceStore from "@/store/useMarketPriceStore"
 import * as S from "@/styles/BitMarketStyles"
 import { IUpbitMarketTicker } from "@/types/bits/BitInterfaces"
@@ -11,11 +12,11 @@ import { TextFormats } from "@/types/CommonTypes"
 import BitUtils from "@/utils/BitUtils"
 import CommonUtils from "@/utils/CommonUtils"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import CountUp from "react-countup"
 
 export default function BitMarketList() {
-    const socketDataDic = useMarketPriceStore((state) => state.marketDic)
+    // const socketDataDic = useMarketPriceStore((state) => state.marketDic)
 
     const [marketDic, setMarketDic] = useState<{ [key:string]: BitMarket}>({}) // 코인 목록
     const [marketFilteredCodeSet, setMarketFilteredCodeSet] = useState<Set<string>>(new Set<string>()) // 검색한 코인 목록
@@ -43,10 +44,13 @@ export default function BitMarketList() {
     }, [sortType])
 
     useEffect(() => {
-        const _sortedCodes = getSortedCodes(sortType, orderType)
-        setSortedCodes(_sortedCodes)
-
-        setResultCodes(_sortedCodes.filter(code => marketFilteredCodeSet.has(code)))
+        const run = async () => {
+            const _sortedCodes = await getSortedCodes(sortType, orderType)
+            setSortedCodes(_sortedCodes)
+    
+            setResultCodes(_sortedCodes.filter(code => marketFilteredCodeSet.has(code)))
+        }
+        run()
     }, [marketDic, orderType, sortType])
 
     const getMarkets = async (_search: string, marketType: MarketTypes) => {
@@ -83,7 +87,9 @@ export default function BitMarketList() {
     }
  
     // 코드 정렬하기
-    const getSortedCodes = (_sortType: MarketSortTypes, _orderType: OrderTypes): string[] => {
+    const getSortedCodes = useCallback(async (_sortType: MarketSortTypes, _orderType: OrderTypes): string[] => {
+        const socketDataDic = await TradeGoApi.getMarketsCurrentDic()
+
         return Object.keys(marketDic).sort((a, b) => {
             let valueA: string | number
             let valueB: string | number
@@ -110,7 +116,7 @@ export default function BitMarketList() {
             }
             return 0
         })
-    }
+    }, [marketDic])
 
     return (
         <S.MarketListBox>
@@ -177,7 +183,8 @@ export default function BitMarketList() {
 
             <div className="list">
                 {sortedCodes.filter(code => marketFilteredCodeSet.has(code)).map((marketCode, index) => (
-                    <Market key={index} market={marketDic[marketCode]} socketData={socketDataDic[marketCode]} />
+                    // <Market key={index} market={marketDic[marketCode]} socketData={socketDataDic[marketCode]} />
+                    <Market key={index} market={marketDic[marketCode]} />
                 ))}
             </div>
         </S.MarketListBox>
@@ -237,21 +244,33 @@ const MarketSortType = ({ sortType, currentSortType, setSortType, currentOrderTy
     )
 }
 
+interface IMarketData {
+    changeType: PriceChangeTypes
+    openingPrice: number
+    price: number
+    startPrice: number
+    tradePrice24: number
+    changeRate: number
+    changePrice: number
+}
+
 interface IMarket {
     market: BitMarket
-    socketData: IUpbitMarketTicker
+    // socketData: IUpbitMarketTicker
 }
-const Market = ({ market, socketData }: IMarket) => {
-    const [isPriceChangeShow, setIsPriceChangeShow] = useState<boolean>(false)
-    // const socketData = useMarketPriceStore((state) => state.marketDic[market.code])
+const Market = ({ market }: IMarket) => {
+    const socketData = useMarketPriceStore((state) => state.marketDic[market.code])
 
-    const [changeType, setChangeType] = useState<PriceChangeTypes>(market.change)
-    const [openingPrice, setOpeningPrice] = useState<number>(market.openingPrice)
-    const [price, setPrice] = useState<number>(market.price)
-    const [startPrice, setStartPrice] = useState<number>(market.price) // 애니메이션용
-    const [tradePrice24, setTradePrice24] = useState<number>(0)
-    const [changeRate, setChangeRate] = useState<number>(market.changeRate)
-    const [changePrice, setChangePrice] = useState<number>(market.changePrice)
+    const [isPriceChangeShow, setIsPriceChangeShow] = useState<boolean>(false)
+    const [d, setMarketData] = useState<IMarketData>({
+        changeType: market.change,
+        openingPrice: market.openingPrice,
+        price: market.price,
+        startPrice: market.price,
+        tradePrice24: 0,
+        changeRate: market.changeRate,
+        changePrice: market.changePrice,
+    })
 
     useEffect(() => {
         setIsPriceChangeShow(market.code.includes("KRW-"))
@@ -259,42 +278,45 @@ const Market = ({ market, socketData }: IMarket) => {
 
     useEffect(() => {
         if (!socketData) return
-
-        setChangeType(BitUtils.getPriceChangeType(socketData.trade_price, socketData.opening_price))
-        setOpeningPrice(socketData.opening_price)
-        setStartPrice(price) // 애니메이션용
-        setPrice(socketData.trade_price)
-        setTradePrice24(socketData.acc_trade_price_24h)
-        setChangeRate(socketData.signed_change_rate)
-        setChangePrice(socketData.signed_change_price)
+        
+        setMarketData({
+            changeType: BitUtils.getPriceChangeType(socketData.trade_price, socketData.opening_price),
+            openingPrice: socketData.opening_price,
+            price: socketData.trade_price,
+            startPrice: socketData.trade_price,
+            tradePrice24: socketData.acc_trade_price_24h,
+            changeRate: socketData.signed_change_rate,
+            changePrice: socketData.signed_change_price,
+        })
     }, [socketData])
 
-    if (price < 0) return null
+    if (d.price < 0) return null
 
-    const changeRateText = !isNaN(changeRate) ? `${(changeRate * 100).toFixed(2) }%`: "-"
+    const changeRateText = !isNaN(d.changeRate) ? `${(d.changeRate * 100).toFixed(2) }%`: "-"
 
     return (
         <S.MarketListItem
             href={`/crypto/${market.code}`}
-            className={`${changeType === PriceChangeTypes.RISE ? "rise" : changeType === PriceChangeTypes.FALL ? "fall" : ""}`}
+            id={`market-list-${market.code}`}
+            className={`${d.changeType === PriceChangeTypes.RISE ? "rise" : d.changeType === PriceChangeTypes.FALL ? "fall" : ""}`}
         >
             <div className="name">
                 <span className="korean">{market.koreanName}</span>
                 <span className="english">{market.code}</span>
             </div>
             <div className="price change-color">
-                <span className="가격">
+                <span className="price">
                     {/* <CountUp start={startPrice} end={price} duration={0.3} separator="," /> */}
-                    {BitUtils.getPriceText(price)}
+                    {BitUtils.getPriceText(d.price)}
                 </span>
                 <span className="volume" title="거래대금 (24h)">
-                    {BitUtils.getTradePriceText(tradePrice24)}
+                    {BitUtils.getTradePriceText(d.tradePrice24)}
                 </span>
             </div>
             <div className="change change-color">
                 <span className="rate" title="전일 대비 변화액">{changeRateText}</span>
                 {isPriceChangeShow && (
-                    <span className="price" title="전일 대비 변화율">{BitUtils.getPriceText(changePrice)}</span>
+                    <span className="price" title="전일 대비 변화율">{BitUtils.getPriceText(d.changePrice)}</span>
                 )}
             </div>
         </S.MarketListItem>

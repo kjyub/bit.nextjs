@@ -24,6 +24,16 @@ class TradeGoApi {
 
         return result
     }
+    static async getMarketsCurrentDic(marketCodes: Array<string> = []): Promise<{ [key: string]: IUpbitMarketTicker }> {
+        const markets = await this.getMarketsCurrent(marketCodes)
+
+        const result: { [key: string]: IUpbitMarketTicker } = {}
+        markets.forEach((market: IUpbitMarketTicker) => {
+            result[market.code] = market
+        })
+
+        return result
+    }
     static async getMarketCurrent(marketCode: string): Promise<IUpbitMarketTicker> {
         let result: IUpbitMarketTicker = {}
 
