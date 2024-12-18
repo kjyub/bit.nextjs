@@ -142,7 +142,6 @@ export default function BitMarketMain({ marketCode, marketData, marketCurrent, c
                 </div>
             </S.TitleLayout>
             <S.MainLayout>
-                
                 <S.ChartAndTradeLayout>
                     <S.ChartLayout>
 
@@ -150,6 +149,7 @@ export default function BitMarketMain({ marketCode, marketData, marketCurrent, c
                     <S.TradeLayout>
                         <BitMarketTrade
                             marketCode={marketCode}
+                            marketPrice={price}
                         />
                     </S.TradeLayout>
                 </S.ChartAndTradeLayout>

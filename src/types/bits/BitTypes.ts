@@ -20,6 +20,12 @@ export const TradeStatus = {
     FAIL: 2,
 }
 
+export const OrderType = {
+    NONE: 0,
+    LIMIT: 1,
+    MARKET: 2,
+}
+
 export const MarketTypes = {
     KRW: "KRW",
     BTC: "BTC",

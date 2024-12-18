@@ -33,6 +33,11 @@ button {
     outline: none;
     @apply prevent-select;
 }
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 button {
     @apply flex justify-center items-center;
 }

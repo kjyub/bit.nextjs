@@ -12,7 +12,7 @@ export const InfoLayout = tw.div`
 
 // 제목, 차트, 거래를 담는 레이아웃
 export const MainLayout = tw.div`
-    flex flex-col w-full h-128 p-1 space-y-2
+    flex flex-col w-full h-[608px] p-1 space-y-2
 `
 // 코인 이름 및 가격 정보
 export const TitleLayout = tw.div<StyleProps>`
@@ -36,7 +36,7 @@ export const ChartLayout = tw.div`
     rounded-lg bg-slate-800/60
 `
 export const TradeLayout = tw.div`
-    flex flex-col w-64 h-full
+    flex flex-col w-56 h-full
 `
 
 export const BottomLayout = tw.div`
@@ -136,8 +136,4 @@ export const MainPriceInfoGrid = tw.div`
     [&>div>.label]:w-20 [&>div>.label]:text-sm [&>div>.label]:text-slate-400 [&>div>.label]:font-light
     [&>div>.value]:text-slate-300 [&>div>.value]:text-right
     [&>div>.value.rise]:text-red-500 [&>div>.value.fall]:text-blue-500
-`
-
-export const TradeBox = tw.div`
-    flex flex-col w-full space-y-4
 `
