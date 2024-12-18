@@ -15,6 +15,7 @@ import CommonUtils from "@/utils/CommonUtils"
 import { TextFormats } from "@/types/CommonTypes"
 import { PriceChangeTypes } from "@/types/bits/BitTypes"
 import CountUp from "react-countup"
+import BitMarketTrade from "./BitMarketTrade"
 
 interface IBitMarket {
     marketCode: string
@@ -45,7 +46,6 @@ export default function BitMarketMain({ marketCode, marketData, marketCurrent, c
 
     useEffect(() => {
         const handleScroll = () => {
-            console.log(window.scrollY > 56)
             setTitleSticky(window.scrollY > 56)
         }
 
@@ -71,6 +71,10 @@ export default function BitMarketMain({ marketCode, marketData, marketCurrent, c
         setPriceWidth((BitUtils.getPriceTextLength(price) * 15) + 30)
     }, [price])
     
+    const handleScrollTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" })
+    }
+
     if (Object.keys(marketCurrent).length === 0) {
         return
     }
@@ -78,7 +82,7 @@ export default function BitMarketMain({ marketCode, marketData, marketCurrent, c
     return (
         <>
             {/* 코인 정보 */}
-            <S.TitleLayout $is_active={isTitleSticky}>
+            <S.TitleLayout $is_active={isTitleSticky} onClick={() => {handleScrollTop()}}>
                 <div className="flex flex-col">
                     {/* 코인 이름 */}
                     <S.MainTitleBox>
@@ -143,16 +147,23 @@ export default function BitMarketMain({ marketCode, marketData, marketCurrent, c
                     <S.ChartLayout>
 
                     </S.ChartLayout>
-                    <S.TradeLayout className="test-border">
-
+                    <S.TradeLayout>
+                        <BitMarketTrade
+                            marketCode={marketCode}
+                        />
                     </S.TradeLayout>
                 </S.ChartAndTradeLayout>
             </S.MainLayout>
 
             {/* 커뮤니티 */}
-            <S.CommunityLayout>
-                {communityNode}
-            </S.CommunityLayout>
+            <S.BottomLayout>
+                <S.MyTradeLayout className="test-border">
+
+                </S.MyTradeLayout>
+                <S.CommunityLayout>
+                    {communityNode}
+                </S.CommunityLayout>
+            </S.BottomLayout>
         </>
     )
 }
