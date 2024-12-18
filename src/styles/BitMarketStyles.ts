@@ -44,7 +44,7 @@ export const BottomLayout = tw.div`
 `
 export const MyTradeLayout = tw.div`
     sticky top-56
-    flex flex-col flex-1 h-72
+    flex flex-col flex-1 h-72 max-h-[1024px]
 `
 export const CommunityLayout = tw.div`
     flex flex-col w-128 min-h-[10rem]
