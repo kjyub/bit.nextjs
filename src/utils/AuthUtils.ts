@@ -6,6 +6,7 @@ import User from "@/types/users/User"
 import UserApi from "@/apis/api/users/UserApi"
 import { UpdateSession } from "next-auth/react"
 import { SessionStorageConsts, userData } from "@/types/ApiTypes"
+import { use } from "react"
 
 export default class AuthUtils {
     static parseJwt(token: string): object {
@@ -80,10 +81,10 @@ export default class AuthUtils {
 
         const userData = await UserApi.getUserDataSelf()
 
-        if (userData === {} || CommonUtils.isStringNullOrEmpty(userData.id)) {
+        if (userData === {} || CommonUtils.isStringNullOrEmpty(userData.uuid)) {
             return newUser
         }
-
+        
         if (session && update) {
             const updated = await update({
                 ...session,

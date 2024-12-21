@@ -143,6 +143,28 @@ class UserApi {
 
         return [user, error]
     }
+    static async getUserCurrent(): Promise<User> {
+        const result = new User()
+
+        await authInstance.get("/api/users/detail_info_auth/").then(({data}) => {
+            result.parseResponse(data)
+        }).catch(error => {
+            console.log(error)
+        })
+
+        return result
+    }
+    static async getUserDataSelf(): Promise<object> {
+        let userData = {}
+
+        await authInstance.get("/api/users/detail_info_auth/").then(({data}) => {
+            userData = data
+        }).catch(error => {
+            console.log(error)
+        })
+
+        return userData
+    }
 }
 
 export default UserApi

@@ -5,6 +5,7 @@ import CryptoMarketMain from "@/components/cryptos/CryptoMarketMain";
 import CryptoFallback from "@/components/fallbacks/CryptoFallback";
 import { Suspense } from "react";
 import { MARKET_COMMUNITY_PAGE_SIZE } from "@/constants/CryptoConsts";
+import CryptoMarketCommunityPage from "./community";
 
 export interface IMarketPageSearchParams {
     search: string
@@ -16,14 +17,13 @@ interface IMarketPage {
     searchParams: Promise<IMarketPageSearchParams>
 }
 export default async function CryptoMarketPage({ params, searchParams }: IMarketPage) {
-    const { code } = await params
+    const awaitParams = await params
+    const { code } = awaitParams
     const awaitSearchParams = await searchParams
     const { search = "", page = 1 } = awaitSearchParams
 
     const marketData = await CryptoServerApi.getMarket(code)
     const marketCurrent = await TradeGoServerApi.getMarketCurrent(code)
-
-    const communityListData = await CryptoServerApi.getCommunityList(search, code, page, MARKET_COMMUNITY_PAGE_SIZE)
 
     return (
         <CryptoMarketMain 
@@ -31,11 +31,10 @@ export default async function CryptoMarketPage({ params, searchParams }: IMarket
             marketData={marketData} 
             marketCurrent={marketCurrent} 
             communityNode={
-                <Suspense fallback={<CryptoFallback />}>
-                    <CryptoMarketCommunity 
-                        marketCode={code}
-                        params={awaitSearchParams}
-                        communityListData={communityListData}
+                <Suspense fallback={<CryptoMarketCommunity params={{}} communityListData={{}} />}>
+                    <CryptoMarketCommunityPage 
+                        params={awaitParams}
+                        searchParams={awaitSearchParams}
                     />
                 </Suspense>
             }

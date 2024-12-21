@@ -11,6 +11,11 @@ export const WalletTransactionTypeNames = {
     3: "거래",
 }
 
+export const TransferTypes = {
+    TO_WALLET: 0,
+    TO_ACCOUNT: 1,
+}
+
 export const MarginModeType = {
     ISOLATED: 0,
     CROSSED: 1

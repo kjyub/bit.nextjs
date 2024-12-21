@@ -11,11 +11,9 @@ export default function CryptoLayout({ children }: Readonly<{children: React.Rea
         <MS.PageLayout>
             <MarketPriceLayout />
             <S.Layout>
-                <S.InfoLayout>
-                    <Suspense fallback={<CryptoFallback />}>
-                        {children}
-                    </Suspense>
-                </S.InfoLayout>
+                <Suspense fallback={<CryptoFallback />}>
+                    {children}
+                </Suspense>
 
                 <S.MarketListLayout>
                     <div className="py-2 border-b border-slate-600/50">

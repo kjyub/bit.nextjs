@@ -13,6 +13,7 @@ interface IMarketPriceStore {
     marketDic: {
         [key: string]: IUpbitMarketTicker
     }
+    init: () => void
     updateMarketPriceDic: (data: IUpbitMarketTicker) => void
 }
 const useMarketPriceStore = create<IMarketPriceStore>((set) => ({

@@ -7,8 +7,33 @@ import CryptoMarket from '@/types/cryptos/CryptoMarket';
 import MarketCommunity from '@/types/cryptos/MarketCommunity';
 import MarketCommunityComment from '@/types/cryptos/MarketCommunityComment';
 import { LikeTypes } from '@/types/common/CommonTypes';
+import CryptoWallet from '@/types/cryptos/CryptoWallet';
 
 class CryptoApi {
+    // region Wallet
+    static async getWallet(): Promise<CryptoWallet> {
+        const result: CryptoWallet = new CryptoWallet()
+
+        await authInstance.get("/api/cryptos/wallet/").then(({ data }) => {
+            result.parseResponse(data)
+        }).catch((error) => {
+            console.log(error)
+        })
+
+        return result
+    }
+    static async transactionWallet(requestData: object): Promise<boolean> {
+        let result = false
+
+        await authInstance.post("/api/cryptos/wallet_transaction/", requestData).then(({ data }) => {
+            result = true
+        }).catch((error) => {
+            console.log(error)
+        })
+
+        return result
+    }
+    // endregion
     // region Market
     static async getMarkets(search: string, marketType: string): Promise<Array<CryptoMarket>> {
         const result: Array<CryptoMarket> = []

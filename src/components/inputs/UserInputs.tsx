@@ -19,6 +19,7 @@ interface InputProps {
     value: string
     setValue: React.Dispatch<React.SetStateAction<unknown>>
     errorMessage?: string
+    suffix?: string
     setFocus?: React.Dispatch<React.SetStateAction<boolean>>
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
     onEnter: () => void
@@ -63,6 +64,7 @@ export const Input: React.FC<InputProps> = ({
     autoComplete=false,
     value,
     errorMessage,
+    suffix="",
     onChange,
     onEnter,
     setFocus,
@@ -112,6 +114,11 @@ export const Input: React.FC<InputProps> = ({
                     />
                 </S.InputBox>
                 {children}
+                {!CommonUtils.isStringNullOrEmpty(suffix) && (
+                    <S.Suffix>
+                        {suffix}
+                    </S.Suffix>
+                )}
                 {isError && (
                     <S.ErrorMessage>
                         {errorMessage}

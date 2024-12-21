@@ -13,7 +13,7 @@ export default function ModalLayout({
     return (
         <div className={`flex flex-col [&>div]:w-full [&>div]:p-6 [&>div]:bg-slate-700/50 backdrop-blur-lg ${layoutClassName}`}>
             {/* 헤더 */}
-            <div className="flex items-center h-16 rounded-t-lg border-b border-slate-600">
+            <div className="flex items-center h-16 rounded-t-lg border-b border-slate-700/50">
                 <span className="text-xl font-medium text-slate-200">
                     {title}
                 </span>

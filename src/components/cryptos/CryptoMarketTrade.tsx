@@ -7,6 +7,7 @@ import { useEffect, useState } from "react"
 import CommonUtils from "@/utils/CommonUtils"
 import { TextFormats } from "@/types/CommonTypes"
 import TypeUtils from "@/utils/TypeUtils"
+import useUserInfoStore from "@/store/useUserInfo"
 
 const R = 0.005 // 유지 증거금률
 
@@ -15,6 +16,9 @@ interface ICryptoMarketTrade {
     marketPrice: number
 }
 export default function CryptoMarketTrade({ marketCode, marketPrice }: ICryptoMarketTrade) {
+    const {  balance, updateInfo } = useUserInfoStore()
+    const userBudget = balance
+
     const [marginMode, setMarginMode] = useState<MarginModeType>(MarginModeType.CROSSED)
     const [leverageRatio, setLeverageRatio] = useState<number>(1)
     const [orderType, setOrderType] = useState<OrderType>(OrderType.LIMIT)
@@ -24,7 +28,6 @@ export default function CryptoMarketTrade({ marketCode, marketPrice }: ICryptoMa
     const [stopLoss, setStopLoss] = useState<number>(0)
     const [targetPrice, setTargetPrice] = useState<number>(0) // 시장가 주문시 사용
 
-    const [userBudget, setUserBudget] = useState<number>(4954007)
     const [maxAmount, setMaxAmount] = useState<number>(0)
 
     const [buyPrice, setBuyPrice] = useState<number>(0) // 총 구매 가격
@@ -32,8 +35,9 @@ export default function CryptoMarketTrade({ marketCode, marketPrice }: ICryptoMa
     const [liqShortPrice, setLiqShortPrice] = useState<number>(0) // 청산가 (숏)
 
     useEffect(() => {
+        updateInfo()
         initPrice()
-    }, [])
+    }, [marketCode])
 
     useEffect(() => {
         setMaxAmount(userBudget / price)

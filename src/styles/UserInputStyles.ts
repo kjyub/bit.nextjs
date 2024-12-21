@@ -28,18 +28,23 @@ export const InputBox = tw(InputColor)`
     flex items-center justify-between w-full h-full p-4
     rounded-lg 
 
-    ${({$is_active}: StyleProps) => $is_active ? "border-2 !border-blue-500" : "border"}
+    ${({$is_active}: StyleProps) => $is_active ? "border-2 !border-indigo-500" : "border"}
     ${({$is_error}: StyleProps) => $is_error ? "border-red-500" : ""}
     duration-200
 `
 export const Input = tw.input`
     w-full bg-transparent
 `
+
+export const Suffix = tw.span`
+    absolute right-3
+    text-slate-400
+`
 export const FeatureButton = tw.button`
     flex-shrink-0
     flex flex-center h-full p-4
     rounded-lg border 
-    border-blue-500 text-blue-500
+    border-indigo-500 text-indigo-500
     disabled:border-slate-600 disabled:text-slate-600
 `
 export const ErrorMessage = tw.span`
@@ -57,9 +62,9 @@ export const BoolButton = tw(InputColor)`
 
     ${({$is_active}: StyleProps) => $is_active ? 
         `
-        border-blue-200 dark:border-blue-600
-        bg-blue-100 dark:bg-blue-700
-        text-blue-800 dark:text-blue-100
+        border-indigo-200 dark:border-indigo-600
+        bg-indigo-100 dark:bg-indigo-700
+        text-indigo-800 dark:text-indigo-100
         ` : 
         `
         border-slate-200 dark:border-slate-600

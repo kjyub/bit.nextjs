@@ -80,7 +80,7 @@ export default function CryptoMarketMain({ marketCode, marketData, marketCurrent
     }
     
     return (
-        <>
+        <S.MarketLayout>
             {/* 코인 정보 */}
             <S.TitleLayout $is_active={isTitleSticky} onClick={() => {handleScrollTop()}}>
                 <div className="flex flex-col">
@@ -164,6 +164,6 @@ export default function CryptoMarketMain({ marketCode, marketData, marketCurrent
                     {communityNode}
                 </S.CommunityLayout>
             </S.BottomLayout>
-        </>
+        </S.MarketLayout>
     )
 }

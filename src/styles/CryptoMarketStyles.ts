@@ -6,7 +6,7 @@ export const Layout = tw.div`
     flex justify-center w-full
 `
 
-export const InfoLayout = tw.div`
+export const MarketLayout = tw.div`
     flex flex-col flex-1 max-w-[1280px] p-4 space-y-4
 `
 

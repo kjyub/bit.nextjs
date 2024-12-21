@@ -265,8 +265,9 @@ interface NumberInputProps {
     setValue: (value: number) => void
     min?: number
     max?: number | undefined
+    className?: string
 }
-export const NumberInput = ({ label, value, setValue, min=0, max=undefined }: NumberInputProps) => {
+export const NumberInput = ({ label, value, setValue, min=0, max=undefined, className="" }: NumberInputProps) => {
     const handleValue = (e: ChangeEvent<HTMLInputElement>) => {
         const replaceComma = e.target.value.replace(/,/g, "")
         const _value = Number(replaceComma)
@@ -282,7 +283,7 @@ export const NumberInput = ({ label, value, setValue, min=0, max=undefined }: Nu
     }
     
     return (
-        <S.InputBox className="justify-between h-8 space-x-2">
+        <S.InputBox className={`justify-between h-8 space-x-2 ${className}`}>
             <span className="font-light text-sm text-slate-400/80 text-nowrap select-none">{label}</span>
             <input 
                 className="input text-right"
