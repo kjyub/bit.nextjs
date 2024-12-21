@@ -1,10 +1,10 @@
 import React from "react"
 import CommonUtils from "@/utils/CommonUtils"
 import { AbsApiObject } from "../ApiTypes"
-import { PriceChangeTypes } from "./BitTypes"
-import BitUtils from "@/utils/BitUtils"
+import { PriceChangeTypes } from "./CryptoTypes"
+import CryptoUtils from "@/utils/CryptoUtils"
 
-export default class BitMarket extends AbsApiObject {
+export default class CryptoMarket extends AbsApiObject {
     private _id: number
     
     private _code: string
@@ -60,7 +60,7 @@ export default class BitMarket extends AbsApiObject {
         return this._isClosed
     }
     public get change(): PriceChangeTypes {
-        return BitUtils.getPriceChangeType(this._price, this._openingPrice)
+        return CryptoUtils.getPriceChangeType(this._price, this._openingPrice)
     }
     public get changePrice(): number {
         return this._price - this._openingPrice

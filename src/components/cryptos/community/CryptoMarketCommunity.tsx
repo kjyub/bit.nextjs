@@ -1,9 +1,9 @@
 "use client"
 
-import * as S from "@/styles/BitMarketStyles"
-import * as CS from "@/styles/BitMarketCommunityStyles"
+import * as S from "@/styles/CryptoMarketStyles"
+import * as CS from "@/styles/CryptoMarketCommunityStyles"
 import Pagination from "@/types/api/pagination"
-import MarketCommunity from "@/types/bits/MarketCommunity"
+import MarketCommunity from "@/types/cryptos/MarketCommunity"
 import CommunitySearch from "../../atomics/community/CommunitySearch"
 import CommonUtils from "@/utils/CommonUtils"
 import { TextFormats } from "@/types/CommonTypes"
@@ -12,27 +12,27 @@ import FrontUtils from "@/utils/FrontUtils"
 import { usePathname, useRouter } from "next/navigation"
 import { useState } from "react"
 import ModalContainer from "../../ModalContainer"
-import BitMarketCommunityEditor from "./BitMarketCommunityEditor"
-import { MARKET_COMMUNITY_PAGE_SIZE } from "@/constants/BitConsts"
+import CryptoMarketCommunityEditor from "./CryptoMarketCommunityEditor"
+import { MARKET_COMMUNITY_PAGE_SIZE } from "@/constants/CryptoConsts"
 import { useUser } from "@/hooks/useUser"
 import User from "@/types/users/User"
 import { UserTypes } from "@/types/users/UserTypes"
-import BitApi from "@/apis/api/bits/BitApi"
-import BitMarketCommunityView from "./BitMarketCommunityView"
+import CryptoApi from "@/apis/api/cryptos/CryptoApi"
+import CryptoMarketCommunityView from "./CryptoMarketCommunityView"
 import { IMarketPageSearchParams } from "@/app/(front)/crypto/[code]/page"
 
-interface IBitMarketCommunity {
+interface ICryptoMarketCommunity {
     marketCode: string
     params: IMarketPageSearchParams
     communityListData: object
     communityDetailData: object
 }
-export default function BitMarketCommunity({
+export default function CryptoMarketCommunity({
     marketCode,
     params,
     communityListData,
     communityDetailData
-}: IBitMarketCommunity) {
+}: ICryptoMarketCommunity) {
     const pagination = new Pagination<MarketCommunity>()
     pagination.parseResponse(communityListData, MarketCommunity)
 
@@ -125,7 +125,7 @@ export default function BitMarketCommunity({
                 isCloseByBackground={false}
                 isBlur={false}
             >
-                <BitMarketCommunityEditor 
+                <CryptoMarketCommunityEditor 
                     marketCode={marketCode}
                     community={selectedCommunity}
                     onClose={() => {setShowEditor(false)}}
@@ -166,7 +166,7 @@ const Community = ({ user, community, selectedCommunity, setSelectedCommunity, h
 
         if (!confirm("정말 삭제하시겠습니까?")) return
 
-        const response = await BitApi.deleteCommunity(community.nanoId)
+        const response = await CryptoApi.deleteCommunity(community.nanoId)
         if (!response) {
             alert("삭제에 실패했습니다.")
             return
@@ -223,7 +223,7 @@ const Community = ({ user, community, selectedCommunity, setSelectedCommunity, h
             </CS.ItemRow>
 
             {selectedCommunity.nanoId === community.nanoId && (
-                <BitMarketCommunityView 
+                <CryptoMarketCommunityView 
                     user={user}
                     communityNanoId={community.nanoId}
                 />

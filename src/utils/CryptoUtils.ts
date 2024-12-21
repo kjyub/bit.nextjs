@@ -1,9 +1,9 @@
-import { PriceChangeTypes } from "@/types/bits/BitTypes"
+import { PriceChangeTypes } from "@/types/cryptos/CryptoTypes"
 import CommonUtils from "./CommonUtils"
 import { TextFormats } from "@/types/CommonTypes"
 
 
-export default class BitUtils{
+export default class CryptoUtils{
     // 유저 타입에따라 쓰기가 가능한 현황만 가져온다.
     static getPriceChangeType(price: number, openingPrice: number): PriceChangeTypes {
         let changeType = PriceChangeTypes.EVEN

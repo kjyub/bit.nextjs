@@ -1,10 +1,10 @@
-import BitServerApi from "@/apis/api/bits/BitServerApi";
-import TradeGoServerApi from "@/apis/api/bits/TradeGoServerApi";
-import BitMarketCommunity from "@/components/bits/community/BitMarketCommunity";
-import BitMarketMain from "@/components/bits/BitMarketMain";
+import CryptoServerApi from "@/apis/api/cryptos/CryptoServerApi";
+import TradeGoServerApi from "@/apis/api/cryptos/TradeGoServerApi";
+import CryptoMarketCommunity from "@/components/cryptos/community/CryptoMarketCommunity";
+import CryptoMarketMain from "@/components/cryptos/CryptoMarketMain";
 import CryptoFallback from "@/components/fallbacks/CryptoFallback";
 import { Suspense } from "react";
-import { MARKET_COMMUNITY_PAGE_SIZE } from "@/constants/BitConsts";
+import { MARKET_COMMUNITY_PAGE_SIZE } from "@/constants/CryptoConsts";
 
 export interface IMarketPageSearchParams {
     search: string
@@ -20,19 +20,19 @@ export default async function CryptoMarketPage({ params, searchParams }: IMarket
     const awaitSearchParams = await searchParams
     const { search = "", page = 1 } = awaitSearchParams
 
-    const marketData = await BitServerApi.getMarket(code)
+    const marketData = await CryptoServerApi.getMarket(code)
     const marketCurrent = await TradeGoServerApi.getMarketCurrent(code)
 
-    const communityListData = await BitServerApi.getCommunityList(search, code, page, MARKET_COMMUNITY_PAGE_SIZE)
+    const communityListData = await CryptoServerApi.getCommunityList(search, code, page, MARKET_COMMUNITY_PAGE_SIZE)
 
     return (
-        <BitMarketMain 
+        <CryptoMarketMain 
             marketCode={code} 
             marketData={marketData} 
             marketCurrent={marketCurrent} 
             communityNode={
                 <Suspense fallback={<CryptoFallback />}>
-                    <BitMarketCommunity 
+                    <CryptoMarketCommunity 
                         marketCode={code}
                         params={awaitSearchParams}
                         communityListData={communityListData}

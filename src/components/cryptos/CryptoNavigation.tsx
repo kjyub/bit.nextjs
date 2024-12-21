@@ -1,7 +1,7 @@
 import * as NS from "@/styles/NavigationStyles"
 import Link from "next/link"
 
-export default function BitNavigation() {
+export default function CryptoNavigation() {
     return (
         <NS.Section>
             <Link href="/crypto" className="btn">

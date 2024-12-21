@@ -3,7 +3,7 @@ import ApiUtils from '@/utils/ApiUtils';
 import Pagination from '@/types/api/pagination';
 import { EditStateTypes } from '@/types/DataTypes';
 import { tradeDefaultServerInstance } from '@/apis/utils/serverTradeApis';
-import { IUpbitMarket, IUpbitMarketTicker } from '@/types/bits/BitInterfaces';
+import { IUpbitMarket, IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
 
 class TradeGoServerApi {
     // region Market

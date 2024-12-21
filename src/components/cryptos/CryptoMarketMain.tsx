@@ -1,30 +1,30 @@
 "use client"
 
 import * as MS from "@/styles/MainStyles"
-import * as S from "@/styles/BitMarketStyles"
-import BitNavigation from "./BitNavigation"
-import BitMarketList from "./BitMarketList"
-import { IUpbitMarketTicker } from "@/types/bits/BitInterfaces"
-import UpbitApi from "@/apis/api/bits/UpbitApi"
+import * as S from "@/styles/CryptoMarketStyles"
+import CryptoNavigation from "./CryptoNavigation"
+import CryptoMarketList from "./CryptoMarketList"
+import { IUpbitMarketTicker } from "@/types/cryptos/CryptoInterfaces"
+import UpbitApi from "@/apis/api/cryptos/UpbitApi"
 import { useEffect, useState } from "react"
 import useMarketPriceStore from "@/store/useMarketPriceStore"
-import BitMarket from "@/types/bits/BitMarket"
-import BitUtils from "@/utils/BitUtils"
+import CryptoMarket from "@/types/cryptos/CryptoMarket"
+import CryptoUtils from "@/utils/CryptoUtils"
 import Image from "next/image"
 import CommonUtils from "@/utils/CommonUtils"
 import { TextFormats } from "@/types/CommonTypes"
-import { PriceChangeTypes } from "@/types/bits/BitTypes"
+import { PriceChangeTypes } from "@/types/cryptos/CryptoTypes"
 import CountUp from "react-countup"
-import BitMarketTrade from "./BitMarketTrade"
+import CryptoMarketTrade from "./CryptoMarketTrade"
 
-interface IBitMarket {
+interface ICryptoMarket {
     marketCode: string
     marketData: object
     marketCurrent: IUpbitMarketTicker
     communityNode: React.ReactNode
 }
-export default function BitMarketMain({ marketCode, marketData, marketCurrent, communityNode }: IBitMarket) {
-    const market = new BitMarket()
+export default function CryptoMarketMain({ marketCode, marketData, marketCurrent, communityNode }: ICryptoMarket) {
+    const market = new CryptoMarket()
     market.parseResponse(marketData)
 
     const imageCode = marketCode.split('-')[1]
@@ -59,7 +59,7 @@ export default function BitMarketMain({ marketCode, marketData, marketCurrent, c
     useEffect(() => {
         if (!socketData) return
 
-        setChangeType(BitUtils.getPriceChangeType(socketData.trade_price, socketData.opening_price))
+        setChangeType(CryptoUtils.getPriceChangeType(socketData.trade_price, socketData.opening_price))
         setOpeningPrice(socketData.opening_price)
         setStartPrice(price) // 애니메이션용
         setPrice(socketData.trade_price)
@@ -68,7 +68,7 @@ export default function BitMarketMain({ marketCode, marketData, marketCurrent, c
     }, [socketData])
 
     useEffect(() => {
-        setPriceWidth((BitUtils.getPriceTextLength(price) * 15) + 30)
+        setPriceWidth((CryptoUtils.getPriceTextLength(price) * 15) + 30)
     }, [price])
     
     const handleScrollTop = () => {
@@ -106,14 +106,14 @@ export default function BitMarketMain({ marketCode, marketData, marketCurrent, c
                     >
                         <span className={`price w-[${priceWidth}px]`}>
                             {/* <CountUp start={startPrice} end={price} duration={0.3} separator="," />  */}
-                            {BitUtils.getPriceText(price)}
+                            {CryptoUtils.getPriceText(price)}
                             <span className="currency">{currency}</span>
                         </span>
 
                         <div className="change">
                             <span className="rate">{(changeRate * 100).toFixed(2)}%</span>
                             <span className="price">
-                                {BitUtils.getPriceText(changePrice)}
+                                {CryptoUtils.getPriceText(changePrice)}
                                 <span className="currency">{currency}</span>
                             </span>
                         </div>
@@ -124,19 +124,19 @@ export default function BitMarketMain({ marketCode, marketData, marketCurrent, c
                     <S.MainPriceInfoGrid>
                         <div>
                             <span className="label">고가</span>
-                            <span className="value w-32 rise">{BitUtils.getPriceText(marketCurrent.high_price)}</span>
+                            <span className="value w-32 rise">{CryptoUtils.getPriceText(marketCurrent.high_price)}</span>
                         </div>
                         <div>
                             <span className="label">거래량(24h)</span>
-                            <span className="value w-36 text-xs">{BitUtils.getPriceText(marketCurrent.acc_trade_volume_24h)}</span>
+                            <span className="value w-36 text-xs">{CryptoUtils.getPriceText(marketCurrent.acc_trade_volume_24h)}</span>
                         </div>
                         <div>
                             <span className="label">저가</span>
-                            <span className="value w-32 fall">{BitUtils.getPriceText(marketCurrent.low_price)}</span>
+                            <span className="value w-32 fall">{CryptoUtils.getPriceText(marketCurrent.low_price)}</span>
                         </div>
                         <div>
                             <span className="label">거래대금(24h)</span>
-                            <span className="value w-36 text-xs">{BitUtils.getPriceText(marketCurrent.acc_trade_price_24h)}</span>
+                            <span className="value w-36 text-xs">{CryptoUtils.getPriceText(marketCurrent.acc_trade_price_24h)}</span>
                         </div>
                     </S.MainPriceInfoGrid>
                 </div>
@@ -147,7 +147,7 @@ export default function BitMarketMain({ marketCode, marketData, marketCurrent, c
 
                     </S.ChartLayout>
                     <S.TradeLayout>
-                        <BitMarketTrade
+                        <CryptoMarketTrade
                             marketCode={marketCode}
                             marketPrice={price}
                         />

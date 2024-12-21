@@ -3,15 +3,15 @@ import { authInstance, defaultInstance, fileInstance } from '../../utils/clientA
 import ApiUtils from '@/utils/ApiUtils';
 import Pagination from '@/types/api/pagination';
 import { EditStateTypes } from '@/types/DataTypes';
-import BitMarket from '@/types/bits/BitMarket';
-import MarketCommunity from '@/types/bits/MarketCommunity';
-import MarketCommunityComment from '@/types/bits/MarketCommunityComment';
+import CryptoMarket from '@/types/cryptos/CryptoMarket';
+import MarketCommunity from '@/types/cryptos/MarketCommunity';
+import MarketCommunityComment from '@/types/cryptos/MarketCommunityComment';
 import { LikeTypes } from '@/types/common/CommonTypes';
 
-class BitApi {
+class CryptoApi {
     // region Market
-    static async getMarkets(search: string, marketType: string): Promise<Array<BitMarket>> {
-        const result: Array<BitMarket> = []
+    static async getMarkets(search: string, marketType: string): Promise<Array<CryptoMarket>> {
+        const result: Array<CryptoMarket> = []
 
         await defaultInstance.get("/api/cryptos/market/", { params: {
             search: search,
@@ -19,7 +19,7 @@ class BitApi {
         }}).then(({ data }) => {
             if (Array.isArray(data)) {
                 data.forEach((item) => {
-                    const market: BitMarket = new BitMarket()
+                    const market: CryptoMarket = new CryptoMarket()
                     market.parseResponse(item)
                     result.push(market)
                 })
@@ -31,13 +31,13 @@ class BitApi {
         return result
     }
     // 가격을 제외한 심플한 데이터 전부 가져온다
-    static async getMarketAll(): Promise<Array<BitMarket>> {
-        const result: Array<BitMarket> = []
+    static async getMarketAll(): Promise<Array<CryptoMarket>> {
+        const result: Array<CryptoMarket> = []
 
         await defaultInstance.get("/api/cryptos/market_all/",).then(({ data }) => {
             if (Array.isArray(data)) {
                 data.forEach((item) => {
-                    const market: BitMarket = new BitMarket()
+                    const market: CryptoMarket = new CryptoMarket()
                     market.parseResponse(item)
                     result.push(market)
                 })
@@ -175,4 +175,4 @@ class BitApi {
     // endregion
 }
 
-export default BitApi
+export default CryptoApi

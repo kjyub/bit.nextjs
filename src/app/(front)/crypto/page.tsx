@@ -1,7 +1,7 @@
-import BitMain from "@/components/bits/BitMain";
+import CryptoMain from "@/components/cryptos/CryptoMain";
 
 export default function CryptoMainPage() {
     return (
-        <BitMain />
+        <CryptoMain />
     )
 }

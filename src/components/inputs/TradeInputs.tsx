@@ -1,5 +1,5 @@
-import { MarginModeType, OrderType } from "@/types/bits/BitTypes"
-import * as S from "@/styles/BitTradeStyles"
+import { MarginModeType, OrderType } from "@/types/cryptos/CryptoTypes"
+import * as S from "@/styles/CryptoTradeStyles"
 import React, { useEffect, useRef, useState } from "react"
 import { useMouseHover } from "@/hooks/useMouseHover"
 import CommonUtils from "@/utils/CommonUtils"

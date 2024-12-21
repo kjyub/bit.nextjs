@@ -1,18 +1,20 @@
 import { UserTypes } from '@/types/users/UserTypes';
-import { authInstance, defaultInstance, fileInstance } from '../../utils/clientApis';
 import ApiUtils from '@/utils/ApiUtils';
 import Pagination from '@/types/api/pagination';
 import { EditStateTypes } from '@/types/DataTypes';
-import BitMarket from '@/types/bits/BitMarket';
+import CryptoMarket from '@/types/cryptos/CryptoMarket';
 import useMarketPriceStore from '@/store/useMarketPriceStore';
 import { io, Socket } from "socket.io-client"
+import { tradeDefaultInstance } from '@/apis/utils/clientTradeApis';
 
-class UpbitApi {
+class TradeGoApi {
     // region Market
-    static async getMarketsAll(): Promise<Array<IUpbitMarket>> {
-        let result: Array<IUpbitMarket> = []
+    static async getMarketsCurrent(marketCodes: Array<string> = []): Promise<Array<IUpbitMarketTicker>> {
+        let result: Array<IUpbitMarketTicker> = []
 
-        await defaultInstance.get("https://api.upbit.com/v1/market/all").then(({ data }) => {
+        await tradeDefaultInstance.post("/markets", {
+            markets: marketCodes
+        }).then(({ data }) => {
             if (Array.isArray(data)) {
                 result = data
             }
@@ -22,17 +24,12 @@ class UpbitApi {
 
         return result
     }
-    static async getMarketsCurrent(marketCodes: Array<string>): Promise<Array<IUpbitMarketTicker>> {
-        let result: Array<IUpbitMarketTicker> = []
+    static async getMarketsCurrentDic(marketCodes: Array<string> = []): Promise<{ [key: string]: IUpbitMarketTicker }> {
+        const markets = await this.getMarketsCurrent(marketCodes)
 
-        await defaultInstance.get("https://api.upbit.com/v1/ticker", { params: {
-            markets: marketCodes.join(",")
-        }}).then(({ data }) => {
-            if (Array.isArray(data)) {
-                result = data
-            }
-        }).catch((error) => {
-            console.log(error)
+        const result: { [key: string]: IUpbitMarketTicker } = {}
+        markets.forEach((market: IUpbitMarketTicker) => {
+            result[market.code] = market
         })
 
         return result
@@ -40,9 +37,9 @@ class UpbitApi {
     static async getMarketCurrent(marketCode: string): Promise<IUpbitMarketTicker> {
         let result: IUpbitMarketTicker = {}
 
-        await defaultInstance.get("https://api.upbit.com/v1/ticker", { params: {
-            markets: marketCode
-        }}).then(({ data }) => {
+        await tradeDefaultInstance.post("/markets", {
+            markets: [marketCode]
+        }).then(({ data }) => {
             if (Array.isArray(data) && data.length > 0) {
                 result = data[0]
             }
@@ -65,12 +62,10 @@ class UpbitApi {
 
             if (sendMessage) {
                 socket.send(sendMessage)
-                console.log(sendMessage)
             }
         }
       
         socket.onmessage = (event: MessageEvent) => {
-            console.log(event.data)
             try {
                 const data = JSON.parse(event.data)
                 updateMarketPriceDic(data)
@@ -91,4 +86,4 @@ class UpbitApi {
     }
 }
 
-export default UpbitApi
+export default TradeGoApi

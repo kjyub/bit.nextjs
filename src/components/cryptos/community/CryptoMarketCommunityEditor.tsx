@@ -1,19 +1,19 @@
 
-import * as CS from "@/styles/BitMarketCommunityStyles";
+import * as CS from "@/styles/CryptoMarketCommunityStyles";
 import ModalLayout from "@/components/atomics/ModalLayout";
 import { ContentInput, TitleInput } from "@/components/inputs/CommunityInputs";
-import MarketCommunity from "@/types/bits/MarketCommunity";
+import MarketCommunity from "@/types/cryptos/MarketCommunity";
 import CommonUtils from "@/utils/CommonUtils";
 import { useState } from "react";
-import BitApi from "@/apis/api/bits/BitApi";
+import CryptoApi from "@/apis/api/cryptos/CryptoApi";
 import { useRouter } from "next/navigation";
 
-interface IBitMarketCommunityEditor {
+interface ICryptoMarketCommunityEditor {
     marketCode: string
     community: MarketCommunity
     onClose: () => void
 }
-export default function BitMarketCommunityEditor({ marketCode, community, onClose }: IBitMarketCommunityEditor) {
+export default function CryptoMarketCommunityEditor({ marketCode, community, onClose }: ICryptoMarketCommunityEditor) {
     const router = useRouter()
 
     const isCreate = CommonUtils.isStringNullOrEmpty(community.nanoId)
@@ -38,7 +38,7 @@ export default function BitMarketCommunityEditor({ marketCode, community, onClos
     }
 
     const create = async (data: object) => {
-        const response = await BitApi.createCommunity(data)
+        const response = await CryptoApi.createCommunity(data)
 
         if (!CommonUtils.isStringNullOrEmpty(response.nanoId)) {
             alert("저장되었습니다.")
@@ -50,7 +50,7 @@ export default function BitMarketCommunityEditor({ marketCode, community, onClos
     }
 
     const update = async (data: object) => {
-        const response = await BitApi.updateCommunity(community.nanoId, data)
+        const response = await CryptoApi.updateCommunity(community.nanoId, data)
 
         if (!CommonUtils.isStringNullOrEmpty(response.nanoId)) {
             alert("수정되었습니다.")

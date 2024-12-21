@@ -2,11 +2,11 @@ import { UserTypes } from '@/types/users/UserTypes';
 import ApiUtils from '@/utils/ApiUtils';
 import Pagination from '@/types/api/pagination';
 import { EditStateTypes } from '@/types/DataTypes';
-import BitMarket from '@/types/bits/BitMarket';
+import CryptoMarket from '@/types/cryptos/CryptoMarket';
 import useMarketPriceStore from '@/store/useMarketPriceStore';
 import { io, Socket } from "socket.io-client"
 import { defaultServerInstance } from '@/apis/utils/serverApis';
-import { IUpbitMarket, IUpbitMarketTicker } from '@/types/bits/BitInterfaces';
+import { IUpbitMarket, IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
 
 class UpbitServerApi {
     // region Market

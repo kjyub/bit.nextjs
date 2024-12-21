@@ -1,8 +1,8 @@
 "use client"
 
-import * as S from "@/styles/BitTradeStyles"
+import * as S from "@/styles/CryptoTradeStyles"
 import * as I from "@/components/inputs/TradeInputs"
-import { MarginModeType, OrderType } from "@/types/bits/BitTypes"
+import { MarginModeType, OrderType } from "@/types/cryptos/CryptoTypes"
 import { useEffect, useState } from "react"
 import CommonUtils from "@/utils/CommonUtils"
 import { TextFormats } from "@/types/CommonTypes"
@@ -10,11 +10,11 @@ import TypeUtils from "@/utils/TypeUtils"
 
 const R = 0.005 // 유지 증거금률
 
-interface IBitMarketTrade {
+interface ICryptoMarketTrade {
     marketCode: string
     marketPrice: number
 }
-export default function BitMarketTrade({ marketCode, marketPrice }: IBitMarketTrade) {
+export default function CryptoMarketTrade({ marketCode, marketPrice }: ICryptoMarketTrade) {
     const [marginMode, setMarginMode] = useState<MarginModeType>(MarginModeType.CROSSED)
     const [leverageRatio, setLeverageRatio] = useState<number>(1)
     const [orderType, setOrderType] = useState<OrderType>(OrderType.LIMIT)

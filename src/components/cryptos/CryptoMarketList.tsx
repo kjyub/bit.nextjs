@@ -1,24 +1,24 @@
 "use client"
 
-import BitApi from "@/apis/api/bits/BitApi"
-import TradeGoApi from "@/apis/api/bits/TradeGoApi"
+import CryptoApi from "@/apis/api/cryptos/CryptoApi"
+import TradeGoApi from "@/apis/api/cryptos/TradeGoApi"
 import useMarketPriceStore from "@/store/useMarketPriceStore"
-import * as S from "@/styles/BitMarketStyles"
-import { IUpbitMarketTicker } from "@/types/bits/BitInterfaces"
-import BitMarket from "@/types/bits/BitMarket"
-import { MarketSortTypeNames, MarketSortTypes, MarketTypeNames, MarketTypes, PriceChangeTypes } from "@/types/bits/BitTypes"
+import * as S from "@/styles/CryptoMarketStyles"
+import { IUpbitMarketTicker } from "@/types/cryptos/CryptoInterfaces"
+import CryptoMarket from "@/types/cryptos/CryptoMarket"
+import { MarketSortTypeNames, MarketSortTypes, MarketTypeNames, MarketTypes, PriceChangeTypes } from "@/types/cryptos/CryptoTypes"
 import { OrderTypes } from "@/types/common/CommonTypes"
 import { TextFormats } from "@/types/CommonTypes"
-import BitUtils from "@/utils/BitUtils"
+import CryptoUtils from "@/utils/CryptoUtils"
 import CommonUtils from "@/utils/CommonUtils"
 import Link from "next/link"
 import { useCallback, useEffect, useState } from "react"
 import CountUp from "react-countup"
 
-export default function BitMarketList() {
+export default function CryptoMarketList() {
     // const socketDataDic = useMarketPriceStore((state) => state.marketDic)
 
-    const [marketDic, setMarketDic] = useState<{ [key:string]: BitMarket}>({}) // 코인 목록
+    const [marketDic, setMarketDic] = useState<{ [key:string]: CryptoMarket}>({}) // 코인 목록
     const [marketFilteredCodeSet, setMarketFilteredCodeSet] = useState<Set<string>>(new Set<string>()) // 검색한 코인 목록
     const [marketType, setMarketType] = useState<MarketTypes>(MarketTypes.KRW) // 마켓 종류 (KRW, BTC, USDT, HOLD)
     const [search, setSearch] = useState<string>("") // 검색어
@@ -55,7 +55,7 @@ export default function BitMarketList() {
 
     const getMarkets = async (_search: string, marketType: MarketTypes) => {
         // 마켓타입에 따른 모든 코인 목록을 가져온다
-        const response = await BitApi.getMarkets("", marketType)
+        const response = await CryptoApi.getMarkets("", marketType)
         setMarketDic(
             response.reduce((acc, market) => {
                 acc[market.code] = market
@@ -69,7 +69,7 @@ export default function BitMarketList() {
     }
 
     // 검색 결과 정리
-    const getFilteredMarkets = (_search: string, _markets: Array<BitMarket>): Set<string> => {
+    const getFilteredMarkets = (_search: string, _markets: Array<CryptoMarket>): Set<string> => {
         const keys = new Set<string>()
         if (search === "") {
             _markets.map((market) => {
@@ -255,7 +255,7 @@ interface IMarketData {
 }
 
 interface IMarket {
-    market: BitMarket
+    market: CryptoMarket
     // socketData: IUpbitMarketTicker
 }
 const Market = ({ market }: IMarket) => {
@@ -280,7 +280,7 @@ const Market = ({ market }: IMarket) => {
         if (!socketData) return
         
         setMarketData({
-            changeType: BitUtils.getPriceChangeType(socketData.trade_price, socketData.opening_price),
+            changeType: CryptoUtils.getPriceChangeType(socketData.trade_price, socketData.opening_price),
             openingPrice: socketData.opening_price,
             price: socketData.trade_price,
             startPrice: socketData.trade_price,
@@ -307,16 +307,16 @@ const Market = ({ market }: IMarket) => {
             <div className="price change-color">
                 <span className="price">
                     {/* <CountUp start={startPrice} end={price} duration={0.3} separator="," /> */}
-                    {BitUtils.getPriceText(d.price)}
+                    {CryptoUtils.getPriceText(d.price)}
                 </span>
                 <span className="volume" title="거래대금 (24h)">
-                    {BitUtils.getTradePriceText(d.tradePrice24)}
+                    {CryptoUtils.getTradePriceText(d.tradePrice24)}
                 </span>
             </div>
             <div className="change change-color">
                 <span className="rate" title="전일 대비 변화액">{changeRateText}</span>
                 {isPriceChangeShow && (
-                    <span className="price" title="전일 대비 변화율">{BitUtils.getPriceText(d.changePrice)}</span>
+                    <span className="price" title="전일 대비 변화율">{CryptoUtils.getPriceText(d.changePrice)}</span>
                 )}
             </div>
         </S.MarketListItem>

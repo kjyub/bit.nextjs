@@ -1,7 +1,7 @@
 // store.js
-import TradeGoApi from '@/apis/api/bits/TradeGoApi'
-import UpbitServerApi from '@/apis/api/bits/UpbitServerApi'
-import { IUpbitMarketTicker } from '@/types/bits/BitInterfaces'
+import TradeGoApi from '@/apis/api/cryptos/TradeGoApi'
+import UpbitServerApi from '@/apis/api/cryptos/UpbitServerApi'
+import { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces'
 import CommonUtils from '@/utils/CommonUtils'
 import { create } from 'zustand'
 

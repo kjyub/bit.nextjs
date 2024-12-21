@@ -1,24 +1,24 @@
-import * as S from "@/styles/BitMarketStyles"
-import * as CS from "@/styles/BitMarketCommunityStyles"
+import * as S from "@/styles/CryptoMarketStyles"
+import * as CS from "@/styles/CryptoMarketCommunityStyles"
 import Pagination from "@/types/api/pagination"
-import MarketCommunity from "@/types/bits/MarketCommunity"
+import MarketCommunity from "@/types/cryptos/MarketCommunity"
 import CommunitySearch from "../../atomics/community/CommunitySearch"
 import CommonUtils from "@/utils/CommonUtils"
-import BitApi from "@/apis/api/bits/BitApi"
-import MarketCommunityComment from "@/types/bits/MarketCommunityComment"
+import CryptoApi from "@/apis/api/cryptos/CryptoApi"
+import MarketCommunityComment from "@/types/cryptos/MarketCommunityComment"
 import { useEffect, useRef, useState } from "react"
 import User from "@/types/users/User"
 import { TextFormats } from "@/types/CommonTypes"
 import CommunityPagination from "@/components/atomics/community/CommunityPagination"
 import { LikeTypes } from "@/types/common/CommonTypes"
-import { MARKET_COMMUNITY_COMMENT_PAGE_SIZE } from "@/constants/BitConsts"
+import { MARKET_COMMUNITY_COMMENT_PAGE_SIZE } from "@/constants/CryptoConsts"
 import { UserTypes } from "@/types/users/UserTypes"
 
-interface IBitMarketCommunityView {
+interface ICryptoMarketCommunityView {
     user: User
     communityNanoId: string
 }
-export default function BitMarketCommunityView({ user, communityNanoId }: IBitMarketCommunityView) {
+export default function CryptoMarketCommunityView({ user, communityNanoId }: ICryptoMarketCommunityView) {
     const [community, setCommunity] = useState<MarketCommunity>(new MarketCommunity())
 
     const [myLikeType, setMyLikeType] = useState<LikeTypes>(LikeTypes.NONE)
@@ -49,7 +49,7 @@ export default function BitMarketCommunityView({ user, communityNanoId }: IBitMa
     }, [communityNanoId])
 
     const getCommunity = async (nanoId: string) => {
-        const response = await BitApi.getCommunityDetail(nanoId)
+        const response = await CryptoApi.getCommunityDetail(nanoId)
         setCommunity(response)
         setLikes(response.likes)
         setDislikes(response.dislikes)
@@ -59,7 +59,7 @@ export default function BitMarketCommunityView({ user, communityNanoId }: IBitMa
     // 댓글 목록 가져오기
     const getComments = async (_pageIndex: number, requireId: number = -1) => {
         let response = new Pagination<MarketCommunityComment>()
-        response = await BitApi.getCommunityCommentList(communityNanoId, _pageIndex, MARKET_COMMUNITY_COMMENT_PAGE_SIZE)
+        response = await CryptoApi.getCommunityCommentList(communityNanoId, _pageIndex, MARKET_COMMUNITY_COMMENT_PAGE_SIZE)
 
         // 결과에 있어야할 필수 댓글이 있는지 확인 (대댓글 관련 로직)
         const hasRequireComment = (): boolean => {
@@ -72,7 +72,7 @@ export default function BitMarketCommunityView({ user, communityNanoId }: IBitMa
             // 서버 과부하를 막기 위한 10번 제한
             while (additionalIndex < 10) {
                 additionalIndex += 1
-                response = await BitApi.getCommunityCommentList(community.nanoId, _pageIndex + additionalIndex, MARKET_COMMUNITY_COMMENT_PAGE_SIZE)
+                response = await CryptoApi.getCommunityCommentList(community.nanoId, _pageIndex + additionalIndex, MARKET_COMMUNITY_COMMENT_PAGE_SIZE)
 
                 if (hasRequireComment()) {
                     break
@@ -112,7 +112,7 @@ export default function BitMarketCommunityView({ user, communityNanoId }: IBitMa
             data["parent_id"] = parentId
         }
 
-        const result = await BitApi.createCommunityComment(data)
+        const result = await CryptoApi.createCommunityComment(data)
 
         if (result.id < 0) {
             setCommentLoading(false)
@@ -151,7 +151,7 @@ export default function BitMarketCommunityView({ user, communityNanoId }: IBitMa
         if (myLikeType === LikeTypes.NONE && _type !== myLikeType) {
             type = _type
         }
-        const result = await BitApi.likeCommunity(community.nanoId, type)
+        const result = await CryptoApi.likeCommunity(community.nanoId, type)
 
         if (!result) {
             alert("추천 실패했습니다.")
@@ -290,7 +290,7 @@ const Comment = ({ user, comment, handleComment }: IComment) => {
             content: value,
         }
 
-        const result = await BitApi.updateCommunityComment(comment.id, data)
+        const result = await CryptoApi.updateCommunityComment(comment.id, data)
 
         if (result.id < 0) {
             setEditLoading(false)
@@ -324,7 +324,7 @@ const Comment = ({ user, comment, handleComment }: IComment) => {
             return
         }
 
-        const response = await BitApi.deleteCommunityComment(comment.id)
+        const response = await CryptoApi.deleteCommunityComment(comment.id)
 
         if (response) {
             setDeleted(true)

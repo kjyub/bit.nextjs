@@ -2,10 +2,10 @@ import { UserTypes } from '@/types/users/UserTypes';
 import ApiUtils from '@/utils/ApiUtils';
 import Pagination from '@/types/api/pagination';
 import { EditStateTypes } from '@/types/DataTypes';
-import BitMarket from '@/types/bits/BitMarket';
+import CryptoMarket from '@/types/cryptos/CryptoMarket';
 import { defaultServerInstance } from '@/apis/utils/serverApis';
 
-class BitServerApi {
+class CryptoServerApi {
     // region Market
     static async getMarkets(search: string, marketType: string): Promise<object> {
         let result: object = {}
@@ -94,4 +94,4 @@ class BitServerApi {
     // endregion
 }
 
-export default BitServerApi
+export default CryptoServerApi

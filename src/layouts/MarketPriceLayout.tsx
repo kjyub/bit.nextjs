@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import { v4 as uuid } from 'uuid'
 import useMarketPriceStore from "@/store/useMarketPriceStore"
-import TradeGoApi from "@/apis/api/bits/TradeGoApi"
+import TradeGoApi from "@/apis/api/cryptos/TradeGoApi"
 
 export default function MarketPriceLayout({
     children,
