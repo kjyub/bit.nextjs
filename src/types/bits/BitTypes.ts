@@ -1,3 +1,16 @@
+export const WalletTransactionType = {
+    SYSTEM: 0,
+    DEPOSIT: 1,
+    WITHDRAW: 2,
+    TRADE: 3,
+}
+export const WalletTransactionTypeNames = {
+    0: "시스템",
+    1: "입금",
+    2: "출금",
+    3: "거래",
+}
+
 export const MarginModeType = {
     ISOLATED: 0,
     CROSSED: 1
