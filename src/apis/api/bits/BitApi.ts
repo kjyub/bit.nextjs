@@ -13,7 +13,7 @@ class BitApi {
     static async getMarkets(search: string, marketType: string): Promise<Array<BitMarket>> {
         const result: Array<BitMarket> = []
 
-        await defaultInstance.get("/api/bits/market/", { params: {
+        await defaultInstance.get("/api/cryptos/market/", { params: {
             search: search,
             market_type: marketType,
         }}).then(({ data }) => {
@@ -34,7 +34,7 @@ class BitApi {
     static async getMarketAll(): Promise<Array<BitMarket>> {
         const result: Array<BitMarket> = []
 
-        await defaultInstance.get("/api/bits/market_all/",).then(({ data }) => {
+        await defaultInstance.get("/api/cryptos/market_all/",).then(({ data }) => {
             if (Array.isArray(data)) {
                 data.forEach((item) => {
                     const market: BitMarket = new BitMarket()
@@ -54,7 +54,7 @@ class BitApi {
     static async getCommunityList(search: string, marketCode: string, page: number, pageSize: number): Promise<Pagination<MarketCommunity>> {
         const result: Pagination<MarketCommunity> = new Pagination<MarketCommunity>()
 
-        await defaultInstance.get("/api/bits/community/", { params: {
+        await defaultInstance.get("/api/cryptos/community/", { params: {
             search: search,
             market_code: marketCode,
             page: page,
@@ -70,7 +70,7 @@ class BitApi {
     static async getCommunityDetail(nanoId: string): Promise<MarketCommunity> {
         const result: MarketCommunity = new MarketCommunity()
 
-        await authInstance.get(`/api/bits/community/${nanoId}/`).then(({ data }) => {
+        await authInstance.get(`/api/cryptos/community/${nanoId}/`).then(({ data }) => {
             result.parseResponse(data)
         }).catch((error) => {
             console.log(error)
@@ -81,7 +81,7 @@ class BitApi {
     static async createCommunity(requestData: object): Promise<MarketCommunity> {
         const result: MarketCommunity = new MarketCommunity()
 
-        await authInstance.post("/api/bits/community_create/", requestData).then(({ data }) => {
+        await authInstance.post("/api/cryptos/community_create/", requestData).then(({ data }) => {
             result.parseResponse(data)
         }).catch((error) => {
             console.log(error)
@@ -92,7 +92,7 @@ class BitApi {
     static async updateCommunity(nanoId: string, requestData: object): Promise<MarketCommunity> {
         const result: MarketCommunity = new MarketCommunity()
 
-        await authInstance.put(`/api/bits/community_update/${nanoId}/`, requestData).then(({ data }) => {
+        await authInstance.put(`/api/cryptos/community_update/${nanoId}/`, requestData).then(({ data }) => {
             result.parseResponse(data)
         }).catch((error) => {
             console.log(error)
@@ -103,7 +103,7 @@ class BitApi {
     static async deleteCommunity(nanoId: string): Promise<boolean> {
         let result = false
 
-        await authInstance.delete(`/api/bits/community_update/${nanoId}/`).then(() => {
+        await authInstance.delete(`/api/cryptos/community_update/${nanoId}/`).then(() => {
             result = true
         }).catch((error) => {
             console.log(error)
@@ -114,7 +114,7 @@ class BitApi {
     static async likeCommunity(nanoId: string, likeType: LikeTypes): Promise<boolean> {
         let result = false
 
-        await authInstance.post(`/api/bits/community_like/${nanoId}/`, { like_type: likeType }).then(() => {
+        await authInstance.post(`/api/cryptos/community_like/${nanoId}/`, { like_type: likeType }).then(() => {
             result = true
         }).catch((error) => {
             console.log(error)
@@ -127,7 +127,7 @@ class BitApi {
     static async getCommunityCommentList(communityNanoId: string, pageIndex: number, pageSize: number): Promise<Pagination<MarketCommunityComment>> {
         const result: Pagination<MarketCommunityComment> = new Pagination<MarketCommunityComment>()
 
-        await defaultInstance.get(`/api/bits/community_comment/`, { params: {
+        await defaultInstance.get(`/api/cryptos/community_comment/`, { params: {
             community_id: communityNanoId,
             page: pageIndex,
             page_size: pageSize,
@@ -142,7 +142,7 @@ class BitApi {
     static async createCommunityComment(requestData: object): Promise<MarketCommunityComment> {
         const result: MarketCommunityComment = new MarketCommunityComment()
 
-        await authInstance.post("/api/bits/community_comment_create/", requestData).then(({ data }) => {
+        await authInstance.post("/api/cryptos/community_comment_create/", requestData).then(({ data }) => {
             result.parseResponse(data)
         }).catch((error) => {
             console.log(error)
@@ -153,7 +153,7 @@ class BitApi {
     static async updateCommunityComment(id: number, requestData: object): Promise<MarketCommunityComment> {
         const result: MarketCommunityComment = new MarketCommunityComment()
 
-        await authInstance.put(`/api/bits/community_comment_update/${id}/`, requestData).then(({ data }) => {
+        await authInstance.put(`/api/cryptos/community_comment_update/${id}/`, requestData).then(({ data }) => {
             result.parseResponse(data)
         }).catch((error) => {
             console.log(error)
@@ -164,7 +164,7 @@ class BitApi {
     static async deleteCommunityComment(id: number): Promise<boolean> {
         let result = false
 
-        await authInstance.delete(`/api/bits/community_comment_update/${id}/`).then(() => {
+        await authInstance.delete(`/api/cryptos/community_comment_update/${id}/`).then(() => {
             result = true
         }).catch((error) => {
             console.log(error)

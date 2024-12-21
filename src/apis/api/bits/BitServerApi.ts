@@ -10,7 +10,7 @@ class BitServerApi {
     static async getMarkets(search: string, marketType: string): Promise<object> {
         let result: object = {}
 
-        await defaultServerInstance.get("/api/bits/market/", { params: {
+        await defaultServerInstance.get("/api/cryptos/market/", { params: {
             search: search,
             market_type: marketType,
         }}).then(({ data }) => {
@@ -25,7 +25,7 @@ class BitServerApi {
     static async getMarketAll(): Promise<object> {
         let result: object = {}
 
-        await defaultServerInstance.get("/api/bits/market_all/",).then(({ data }) => {
+        await defaultServerInstance.get("/api/cryptos/market_all/",).then(({ data }) => {
             result = data
         }).catch((error) => {
             console.log(error)
@@ -36,7 +36,7 @@ class BitServerApi {
     static async getMarket(code: string): Promise<object> {
         let result: object = {}
 
-        await defaultServerInstance.get(`/api/bits/market/${code}/`).then(({ data }) => {
+        await defaultServerInstance.get(`/api/cryptos/market/${code}/`).then(({ data }) => {
             result = data
         }).catch((error) => {
             console.log(error)
@@ -50,7 +50,7 @@ class BitServerApi {
     static async getCommunityList(search: string, marketCode: string, page: number, pageSize: number): Promise<object> {
         let result: object = {}
 
-        await defaultServerInstance.get("/api/bits/community/", { params: {
+        await defaultServerInstance.get("/api/cryptos/community/", { params: {
             search: search,
             market_code: marketCode,
             page: page,
@@ -66,7 +66,7 @@ class BitServerApi {
     static async getCommunityDetail(nanoId: string): Promise<object> {
         let result: object = {}
 
-        await defaultServerInstance.get(`/api/bits/community/${nanoId}/`).then(({ data }) => {
+        await defaultServerInstance.get(`/api/cryptos/community/${nanoId}/`).then(({ data }) => {
             result = data
         }).catch((error) => {
             console.log(error)
@@ -79,7 +79,7 @@ class BitServerApi {
     static async getCommunityCommentList(communityId: number, pageIndex: number, pageSize: number): Promise<object> {
         let result: object = {}
 
-        await defaultServerInstance.get("/api/bits/community_comment/", { params: {
+        await defaultServerInstance.get("/api/cryptos/community_comment/", { params: {
             community_id: community,
             page: page,
             page_size: pageSize,
