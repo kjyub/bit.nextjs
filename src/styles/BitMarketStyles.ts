@@ -16,13 +16,13 @@ export const MainLayout = tw.div`
 `
 // 코인 이름 및 가격 정보
 export const TitleLayout = tw.div<StyleProps>`
-    sticky top-[32px] z-30
+    sticky top-[56px] z-30
     flex justify-between items-center w-full
     border-b
 
     ${({$is_active}: StyleProps) => $is_active ? 
-        "h-40 border-slate-500/20 backdrop-blur-lg" : 
-        "h-40 border-transparent"
+        "h-32 border-slate-500/20 backdrop-blur-lg" : 
+        "h-32 border-transparent"
     }
 
     duration-300

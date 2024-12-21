@@ -12,6 +12,7 @@ import { TextFormats } from "@/types/CommonTypes"
 import CommunityPagination from "@/components/atomics/community/CommunityPagination"
 import { LikeTypes } from "@/types/common/CommonTypes"
 import { MARKET_COMMUNITY_COMMENT_PAGE_SIZE } from "@/constants/BitConsts"
+import { UserTypes } from "@/types/users/UserTypes"
 
 interface IBitMarketCommunityView {
     user: User
@@ -46,7 +47,7 @@ export default function BitMarketCommunityView({ user, communityNanoId }: IBitMa
             setCommunity(new MarketCommunity())
         }
     }, [communityNanoId])
-    
+
     const getCommunity = async (nanoId: string) => {
         const response = await BitApi.getCommunityDetail(nanoId)
         setCommunity(response)
