@@ -36,7 +36,7 @@ export default function SignupLobby() {
                             onClick={() => {handleKakao()}}
                         >
                             <KakaoImage width={30} height={30} viewBox="0 0 20 20" />
-                            <span className="pr-1">카카오 로그인</span>
+                            <span className="pr-1 text-kakao-text">카카오 로그인</span>
                         </button>
                     </div>
 
