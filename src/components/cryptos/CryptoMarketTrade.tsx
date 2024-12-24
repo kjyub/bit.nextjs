@@ -2,12 +2,13 @@
 
 import * as S from "@/styles/CryptoTradeStyles"
 import * as I from "@/components/inputs/TradeInputs"
-import { MarginModeType, OrderType } from "@/types/cryptos/CryptoTypes"
-import { useEffect, useState } from "react"
+import { MarginModeType, OrderType, PositionType, TradeType } from "@/types/cryptos/CryptoTypes"
+import { useCallback, useEffect, useState } from "react"
 import CommonUtils from "@/utils/CommonUtils"
 import { TextFormats } from "@/types/CommonTypes"
 import TypeUtils from "@/utils/TypeUtils"
 import useUserInfoStore from "@/store/useUserInfo"
+import CryptoApi from "@/apis/api/cryptos/CryptoApi"
 
 const R = 0.005 // 유지 증거금률
 
@@ -16,7 +17,7 @@ interface ICryptoMarketTrade {
     marketPrice: number
 }
 export default function CryptoMarketTrade({ marketCode, marketPrice }: ICryptoMarketTrade) {
-    const {  balance, updateInfo } = useUserInfoStore()
+    const { balance, updateInfo } = useUserInfoStore()
     const userBudget = balance
 
     const [marginMode, setMarginMode] = useState<MarginModeType>(MarginModeType.CROSSED)
@@ -41,7 +42,7 @@ export default function CryptoMarketTrade({ marketCode, marketPrice }: ICryptoMa
 
     useEffect(() => {
         setMaxAmount(userBudget / price)
-    }, [maxAmount, price])
+    }, [userBudget, price])
 
     useEffect(() => {
         if (orderType === OrderType.MARKET) {
@@ -56,10 +57,40 @@ export default function CryptoMarketTrade({ marketCode, marketPrice }: ICryptoMa
         setLiqShortPrice(buyPrice * (1 + (1/leverageRatio) - R))
     }, [buyPrice, leverageRatio])
 
+    useEffect(() => {
+        if (orderType === OrderType.MARKET) {
+            setPrice(marketPrice)
+        }
+    }, [orderType, marketPrice])
+
     const initPrice = () => {
         setPrice(marketPrice)
     }
 
+    const handleTrade = useCallback(async (_positionType: PositionType) => {
+        const data = {
+            market_code: marketCode,
+            quantity: amount,
+            price: price,
+            leverage: leverageRatio,
+            position_type: _positionType,
+            trade_type: TradeType.BUY,
+        }
+        
+        let result = false
+        if (orderType === OrderType.LIMIT) {
+            result = await CryptoApi.orderLimit(data)
+        } else if (orderType === OrderType.MARKET) {
+            result = await CryptoApi.orderMarket(data)
+        }
+        
+        if (result) {
+            alert("거래가 성공적으로 완료되었습니다.")
+            updateInfo()
+        } else {
+            alert("거래에 실패하였습니다.")
+        }
+    }, [marketCode, amount, price, leverageRatio])
 
     return (
         <S.TradeBox>
@@ -137,10 +168,14 @@ export default function CryptoMarketTrade({ marketCode, marketPrice }: ICryptoMa
             </div>
 
             <div className="grid grid-cols-2 gap-2 w-full">
-                <S.TradeLongButton>
+                <S.TradeLongButton
+                    onClick={() => {handleTrade(PositionType.LONG)}}
+                >
                     매수/롱
                 </S.TradeLongButton>
-                <S.TradeShortButton>
+                <S.TradeShortButton
+                    onClick={() => {handleTrade(PositionType.SHORT)}}
+                >
                     매도/숏
                 </S.TradeShortButton>
             </div>

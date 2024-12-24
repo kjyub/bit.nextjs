@@ -75,6 +75,42 @@ class CryptoApi {
     }
     // endregion
 
+    // region Trade
+    static async orderMarket(requestData: object): Promise<boolean> {
+        let result = false
+
+        await authInstance.post("/api/cryptos/order_market/", requestData).then(({ data }) => {
+            result = data
+        }).catch((error) => {
+            console.log(error)
+        })
+
+        return result
+    }
+    static async orderLimit(requestData: object): Promise<boolean> {
+        let result = false
+
+        await authInstance.post("/api/cryptos/order_limit/", requestData).then(({ data }) => {
+            result = data
+        }).catch((error) => {
+            console.log(error)
+        })
+
+        return result
+    }
+    static async orderLimitCancel(requestData: object): Promise<boolean> {
+        let result = false
+
+        await authInstance.post("/api/cryptos/order_limit_cancel/", requestData).then(({ data }) => {
+            result = data
+        }).catch((error) => {
+            console.log(error)
+        })
+
+        return result
+    }
+    // endregion
+
     // region Community
     static async getCommunityList(search: string, marketCode: string, page: number, pageSize: number): Promise<Pagination<MarketCommunity>> {
         const result: Pagination<MarketCommunity> = new Pagination<MarketCommunity>()

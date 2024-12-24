@@ -5,9 +5,11 @@ import * as NS from "@/styles/NavigationStyles"
 import { AccountStatusTypes } from "@/types/users/UserTypes"
 import { signOut } from "next-auth/react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 
 export default function Navigation() {
+    const pathname = usePathname()
 
     // 회원 관련
     const [user, isUserLoading] = useUser()
@@ -28,9 +30,9 @@ export default function Navigation() {
             <div className="content">
                 {/* 왼쪽 */}
                 <NS.Section>
-                    <button className="btn">
+                    <Link href="/" className="btn">
                         <span>Home</span>
-                    </button>
+                    </Link>
                     <Link href="/crypto" className="btn">
                         <span>암호화폐 거래</span>
                     </Link>
