@@ -19,6 +19,18 @@ export default {
                     rise: "#FF0000",
                     fall: "#0000FF",
                 },
+                position: {
+                    long: {
+                        1: "#ad2c2c",
+                        2: "#c43a3a",
+                        3: "#d74848",
+                    },
+                    short: {
+                        1: "#2d5ab9",
+                        2: "#3b69cb",
+                        3: "#4978dd",
+                    },
+                },
                 gray: {
                     75: "#f6f7f8",
                     150: "#eceef1",

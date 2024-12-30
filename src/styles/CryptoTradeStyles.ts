@@ -30,6 +30,7 @@ export const Title2 = tw.span`
 export const InputBox = tw.div<StyleProps>`
     flex items-center w-full h-7 p-2
     rounded-lg bg-slate-500/20
+    hover:ring-1 hover:ring-violet-700
     focus-within:ring-1 focus-within:ring-violet-500
     [&>.input]:text-sm [&>.input]:text-slate-300 [&>.input]:bg-transparent
     [&>.input]:outline-none focus:[&>.input]:outline-none
@@ -92,16 +93,32 @@ export const Slider = styled(SliderBox)`
         -webkit-appearance: none; /* 기본 스타일 제거 */
         width: 16px;
         height: 16px;
-        background: #7c3aed; /* 보라색 */
+        background: #6d28d9; /* 보라색 */
+        &:hover {
+            background: #8b5cf6; /* 보라색 */
+        }
+        &:active {
+            background: #7c3aed; /* 보라색 */
+        }
+        transition: background 0.15s;
         border-radius: 50%; /* 원형 */
         cursor: pointer;
         margin-top: 0px; /* 중앙 맞추기 */
+        border-width: 10px;
+        border-color: #4c1d95;
     }
 
     input[type="range"]::-moz-range-thumb {
         width: 16px;
         height: 16px;
-        background: #7c3aed;
+        background: #6d28d9;
+        &:hover {
+            background: #8b5cf6; /* 보라색 */
+        }
+        &:active {
+            background: #7c3aed; /* 보라색 */
+        }
+        transition: background 0.15s;
         border: none;
         border-radius: 50%;
         cursor: pointer;
@@ -110,7 +127,14 @@ export const Slider = styled(SliderBox)`
     input[type="range"]::-ms-thumb {
         width: 16px;
         height: 16px;
-        background: #7c3aed;
+        background: #6d28d9;
+        &:hover {
+            background: #8b5cf6; /* 보라색 */
+        }
+        &:active {
+            background: #7c3aed; /* 보라색 */
+        }
+        transition: background 0.15s;
         border: none;
         border-radius: 50%;
         cursor: pointer;
@@ -144,10 +168,10 @@ const TradeButton = tw.button`
     transition-colors
 `
 export const TradeLongButton = tw(TradeButton)`
-    bg-[#ad2c2c] hover:bg-[#c43a3a]
+    bg-position-long-1 hover:bg-position-long-2
 `
 export const TradeShortButton = tw(TradeButton)`
-    bg-[#2d5ab9] hover:bg-[#3b69cb]
+    bg-position-short-1 hover:bg-position-short-2
 `
 
 export const SummaryItem = tw.div`

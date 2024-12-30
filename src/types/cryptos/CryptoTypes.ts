@@ -75,3 +75,8 @@ export const MarketSortTypeNames = {
     "change_rate": "전일대비",
     "trade_price": "거래대금",
 }
+
+export const SizeUnitTypes = {
+    PRICE: 0,
+    QUANTITY: 1,
+}

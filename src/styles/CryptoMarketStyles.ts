@@ -36,7 +36,7 @@ export const ChartLayout = tw.div`
     rounded-lg bg-slate-800/60
 `
 export const TradeLayout = tw.div`
-    flex flex-col w-56 h-full
+    flex flex-col w-64 h-full
 `
 
 export const BottomLayout = tw.div`
@@ -44,7 +44,7 @@ export const BottomLayout = tw.div`
 `
 export const MyTradeLayout = tw.div`
     sticky top-56
-    flex flex-col flex-1 h-72 max-h-[1024px]
+    flex flex-col flex-1
 `
 export const CommunityLayout = tw.div`
     flex flex-col w-128 min-h-[10rem]

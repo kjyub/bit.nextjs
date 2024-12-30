@@ -35,7 +35,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                     const user: User = new User()
                     user.parseResponse(data.user)
                     
-                    if (!CommonUtils.isStringNullOrEmpty(user.id)) {
+                    if (!CommonUtils.isStringNullOrEmpty(user.uuid)) {
                         const result = {
                             ...data.user,
                             accessToken: data.token.access,

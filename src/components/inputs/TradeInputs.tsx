@@ -1,4 +1,4 @@
-import { MarginModeType, OrderType } from "@/types/cryptos/CryptoTypes"
+import { MarginModeType, OrderType, SizeUnitTypes } from "@/types/cryptos/CryptoTypes"
 import * as S from "@/styles/CryptoTradeStyles"
 import React, { useEffect, useRef, useState } from "react"
 import { useMouseHover } from "@/hooks/useMouseHover"
@@ -47,6 +47,7 @@ export const SlideInput = ({ value, setValue, min, max, step=1, mark=undefined }
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue(Number(e.target.value))
     }
+    // console.log(min, max, step)
 
     return (
         <S.Slider className="">
@@ -229,7 +230,7 @@ interface OrderTypeInputProps {
 }
 export const OrderTypeInput = ({ orderType, setOrderType }: OrderTypeInputProps) => {
     return (
-        <div className="flex items-center w-full h-7 space-x-4">
+        <div className="flex items-center w-full h-5 space-x-4">
             <S.OrderTypeBox> 
                 <button 
                     className={orderType === OrderType.LIMIT ? "active" : ""}
@@ -266,12 +267,30 @@ interface NumberInputProps {
     min?: number
     max?: number | undefined
     className?: string
+    suffix?: string
 }
-export const NumberInput = ({ label, value, setValue, min=0, max=undefined, className="" }: NumberInputProps) => {
+export const NumberInput = ({ label, value, setValue, min=0, max=undefined, className="", suffix="" }: NumberInputProps) => {
     const handleValue = (e: ChangeEvent<HTMLInputElement>) => {
-        const replaceComma = e.target.value.replace(/,/g, "")
-        const _value = Number(replaceComma)
+        const replaceComma = String(e.target.value.replace(/,/g, ""))
+
+        if (replaceComma === "") {
+            setValue()
+            return
+        }
+
+        const _value = parseFloat(replaceComma)
         if (isNaN(_value)) return
+
+        // 소수점 입력하는 경우 1
+        if (replaceComma[replaceComma.length-1] === ".") {
+            setValue(replaceComma)
+            return
+        }
+        // 소수점 입력하는 경우 2
+        if (replaceComma.includes(".") && replaceComma[replaceComma.length-1] == "0") {
+            setValue(replaceComma)
+            return
+        }
 
         if (max && _value > max) {
             setValue(max)
@@ -286,38 +305,48 @@ export const NumberInput = ({ label, value, setValue, min=0, max=undefined, clas
         <S.InputBox className={`justify-between h-8 space-x-2 ${className}`}>
             <span className="font-light text-sm text-slate-400/80 text-nowrap select-none">{label}</span>
             <input 
-                className="input text-right"
+                className="input text-right w-full"
                 value={CommonUtils.textFormat(value, TextFormats.NUMBER)} 
+                // value={value}
                 onChange={handleValue}
                 min={min}
                 max={max}
             />
+            {!CommonUtils.isStringNullOrEmpty(suffix) && (
+                <span className="!ml-0.5 input !text-slate-400">{suffix}</span>
+            )}
         </S.InputBox>
     )
 }
 
-interface LimitAmountInputProps {
+interface LimitSizeInputProps {
     amount: number
     setAmount: (amount: number) => void
     maxAmount: number
 }
-export const LimitAmountInput = ({ amount, setAmount, maxAmount }: LimitAmountInputProps) => {
+export const LimitSizeInput = ({ amount, setAmount, maxAmount }: LimitSizeInputProps) => {
+    const stepValue = maxAmount / 100
+    const step = isNaN(stepValue) ? 1 : stepValue
+
+    const percentValue = amount / maxAmount
+    const percent = isNaN(percentValue) ? 0 : percentValue
+
     return (
         <div className="flex flex-col w-full space-y-2">
             <NumberInput 
-                label={"수량"}
+                label={"크기"}
                 value={amount}
                 setValue={setAmount}
             />
             <div className="flex items-center px-2 space-x-2">
                 <span className="font-light text-xs text-slate-400/80 w-12">
-                    {`수량(잔고)`}
+                    {`크기`}
                 </span>
                 <div className="flex-1">
-                    <SlideInput value={amount} setValue={setAmount} min={0} max={maxAmount} step={maxAmount/100} />
+                    <SlideInput value={amount} setValue={setAmount} min={0} max={maxAmount} step={step} />
                 </div>
                 <span className="font-light text-xs text-slate-400/80 text-right w-6">
-                    {TypeUtils.percent((amount/maxAmount), 1)}
+                    {TypeUtils.percent((percent), 1)}
                 </span>
             </div>
         </div>
@@ -340,7 +369,7 @@ export const LimitPriceInput = ({ price, setPrice, initPrice }: LimitPriceInputP
                 />
             </div>
             <button 
-                className="text-sm text-slate-500 hover:text-slate-400"
+                className="w-4 text-sm text-slate-500 hover:text-slate-400"
                 onClick={() => {initPrice()}}
             >
                 <i className="fa-solid fa-rotate-right"></i>
@@ -356,6 +385,9 @@ interface MarketPriceInputProps {
     userBudget: number
 }
 export const MarketPriceInput = ({ targetPrice, setTargetPrice, userBudget }: MarketPriceInputProps) => {
+    const percentValue = targetPrice / userBudget
+    const percent = isNaN(percentValue) ? 0 : percentValue
+
     return (
         <div className="flex flex-col w-full space-y-2">
             <NumberInput 
@@ -371,8 +403,156 @@ export const MarketPriceInput = ({ targetPrice, setTargetPrice, userBudget }: Ma
                     <SlideInput value={targetPrice} setValue={setTargetPrice} min={0} max={userBudget} step={userBudget/100} />
                 </div>
                 <span className="font-light text-xs text-slate-400/80 text-right w-6">
-                    {TypeUtils.percent((targetPrice/userBudget), 1)}
+                    {TypeUtils.percent((percent), 1)}
                 </span>
+            </div>
+        </div>
+    )
+}
+
+
+interface TradeSizeInputProps {
+    size: number
+    setQuantity: (quantity: number) => void
+    setSize: (size: number) => void
+    setCost: (cost: number) => void
+    userBudget: number
+    unit: string
+    leverage: number
+    price: number
+    fee: number
+    sizeUnitType: SizeUnitTypes
+    setSizeUnitType: (unit: SizeUnitTypes) => void
+}
+export const TradeSizeInput = ({ size, setQuantity, setSize, userBudget, setCost, unit, leverage, price, fee, sizeUnitType, setSizeUnitType }: TradeSizeInputProps) => {
+    const [isPercent, setIsPercent] = useState<boolean>(false)
+    
+    // 여기서 사용되는 값
+    const [percentValue, setPercentValue] = useState<number>(0) // 자산 비율
+    const [sizeValue, setSizeValue] = useState<number>(0) // 레버리지를 곱한 총 구매 크기
+    const [quantityValue, setQuantityValue] = useState<number>(0) // 레버리지를 곱한 총 구매 수량
+
+    useEffect(() => {
+        setQuantity(0)
+        setSize(0)
+
+        setPercentValue(0)
+        setSizeValue(0)
+        setQuantityValue(0)
+    }, [isPercent, sizeUnitType])
+
+    const handlePercent = (_percentValue: number) => {
+        if (!isPercent) {
+            return
+        }
+
+        const _size = Math.floor(userBudget * (_percentValue / 100))
+        setSize(_size * leverage)
+        setCost(_size)
+
+        setPercentValue(_percentValue)
+    }
+
+    const handleSize = (_size: number) => {
+        if (isPercent) {
+            return
+        }
+
+        setSize(_size * leverage)
+        setCost(_size)
+
+        setSizeValue(_size)
+    }
+
+    const handleQuantity = (_quantity: number) => {
+        if (isPercent) {
+            return
+        }
+        // _quantity엔 이미 레버리지 포함되어있음
+
+        setQuantity(_quantity)
+        setSize(_quantity * price)
+        setCost((_quantity * price) / leverage)
+
+        setQuantityValue(_quantity)
+    }
+
+    return (
+        <div className="flex flex-col w-full space-y-2">
+            {/* 숫자 입력 */}
+            <div 
+                className="flex justify-between items-center w-full [&>div]:w-[calc(100%-24px)]" 
+                onMouseDown={() => {setIsPercent(false)}} 
+                onFocus={() => {setIsPercent(false)}}
+            >
+                {!isPercent ? (
+                    sizeUnitType === SizeUnitTypes.PRICE ? (
+                        <NumberInput 
+                            label={"크기"}
+                            value={sizeValue}
+                            setValue={handleSize}
+                            max={userBudget}
+                            suffix={"TW"}
+                        />
+                    ) : (
+                        <NumberInput 
+                            label={"크기"}
+                            value={quantityValue}
+                            setValue={handleQuantity}
+                            max={(userBudget / price) * leverage}
+                            suffix={unit}
+                        />
+                    )
+                ) : (
+                    <NumberInput 
+                        label={"크기"}
+                        value={percentValue}
+                        setValue={handlePercent}
+                        max={100}
+                        suffix={"%"}
+                    />
+                )}
+
+                <button 
+                    className="w-4 text-sm text-slate-500 hover:text-slate-400"
+                    onClick={() => {setSizeUnitType(sizeUnitType === SizeUnitTypes.PRICE ? SizeUnitTypes.QUANTITY : SizeUnitTypes.PRICE)}}
+                >
+                    <i className="fa-solid fa-arrows-rotate"></i>
+                </button>
+            </div>
+
+            {/* 자산 비율 슬라이더 */}
+            <div className="flex items-center pl-2 space-x-0">
+                <span className="font-light text-xs text-slate-400/80 w-12">
+                    자산 비율
+                </span>
+                <div className="flex-1" onMouseDown={() => {setIsPercent(true)}}>
+                    <SlideInput value={percentValue} setValue={handlePercent} min={0} max={100} step={1} mark={100} />
+                </div>
+            </div>
+            
+            {/* 총 크기 */}
+            <div className="flex justify-between items-center w-full [&>span]:px-1 [&>span]:text-[11px] [&>span]:text-slate-300/90 [&>span]:truncate">
+                {sizeUnitType === SizeUnitTypes.PRICE && (
+                    <>
+                        <span className="border-l-2 border-position-long-3" title="롱 포지션 크기">
+                            {`${CommonUtils.textFormat(TypeUtils.round(size * (1-fee), 4), TextFormats.KOREAN_PRICE)}TW`}
+                        </span>
+                        <span className="border-r-2 border-position-short-3" title="숏 포지션 크기">
+                            {`${CommonUtils.textFormat(TypeUtils.round(size * (1-fee), 4), TextFormats.KOREAN_PRICE)}TW`}
+                        </span>
+                    </>
+                )}
+                {sizeUnitType === SizeUnitTypes.QUANTITY && (
+                    <>
+                        <span className="border-l-2 border-position-long-3" title="롱 포지션 크기">
+                            {`${CommonUtils.textFormat(TypeUtils.round((size * (1-fee)) / price, 10), TextFormats.NUMBER)}${unit}`}
+                        </span>
+                        <span className="border-r-2 border-position-short-3" title="숏 포지션 크기">
+                            {`${CommonUtils.textFormat(TypeUtils.round((size * (1-fee)) / price, 10), TextFormats.NUMBER)}${unit}`}
+                        </span>
+                    </>
+                )}
             </div>
         </div>
     )

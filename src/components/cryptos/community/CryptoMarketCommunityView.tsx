@@ -96,7 +96,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
         if (isCommentLoading) {
             return
         }
-        if (CommonUtils.isStringNullOrEmpty(user.id)) {
+        if (CommonUtils.isStringNullOrEmpty(user.uuid)) {
             alert("회원 정보를 찾을 수 없습니다.")
             return
         }
@@ -141,7 +141,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
     }
 
     const handleLike = async (_type: LikeTypes) => {
-        if (CommonUtils.isStringNullOrEmpty(user.id)) {
+        if (CommonUtils.isStringNullOrEmpty(user.uuid)) {
             alert("로그인 후 이용 가능합니다.")
             return
         }
@@ -279,7 +279,7 @@ const Comment = ({ user, comment, handleComment }: IComment) => {
         if (isEditLoading) {
             return
         }
-        if (CommonUtils.isStringNullOrEmpty(user.id)) {
+        if (CommonUtils.isStringNullOrEmpty(user.uuid)) {
             alert("회원 정보를 찾을 수 없습니다.")
             return
         }

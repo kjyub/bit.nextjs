@@ -13,9 +13,11 @@ import CryptoUtils from "@/utils/CryptoUtils"
 import Image from "next/image"
 import CommonUtils from "@/utils/CommonUtils"
 import { TextFormats } from "@/types/CommonTypes"
-import { PriceChangeTypes } from "@/types/cryptos/CryptoTypes"
+import { PriceChangeTypes, SizeUnitTypes } from "@/types/cryptos/CryptoTypes"
 import CountUp from "react-countup"
 import CryptoMarketTrade from "./CryptoMarketTrade"
+import CryptoMyTrade from "./mytrade/CryptoMyTradeMain"
+import { useUser } from "@/hooks/useUser"
 
 interface ICryptoMarket {
     marketCode: string
@@ -24,14 +26,16 @@ interface ICryptoMarket {
     communityNode: React.ReactNode
 }
 export default function CryptoMarketMain({ marketCode, marketData, marketCurrent, communityNode }: ICryptoMarket) {
-    const market = new CryptoMarket()
-    market.parseResponse(marketData)
+    const [user, isUserLoading] = useUser()
+    
+    // 설정 정보
+    const [sizeUnitType, setSizeUnitType] = useState<SizeUnitTypes>(SizeUnitTypes.PRICE) // 단위 타입
 
+    // 현재 시장 정보
     const imageCode = marketCode.split('-')[1]
     const currency = marketCode.split('-')[0]
-
     const socketData = useMarketPriceStore((state) => state.marketDic[marketCode])
-
+    const [market, setMarket] = useState<CryptoMarket>(new CryptoMarket())
     const [changeType, setChangeType] = useState<PriceChangeTypes>(market.change)
     const [openingPrice, setOpeningPrice] = useState<number>(market.openingPrice)
     const [price, setPrice] = useState<number>(marketCurrent.trade_price)
@@ -55,6 +59,13 @@ export default function CryptoMarketMain({ marketCode, marketData, marketCurrent
             window.removeEventListener("scroll", handleScroll)
         }
     }, [])
+
+    useEffect(() => {
+        const _market = new CryptoMarket()
+        _market.parseResponse(marketData)
+
+        setMarket(_market)
+    }, [marketData])
 
     useEffect(() => {
         if (!socketData) return
@@ -148,8 +159,12 @@ export default function CryptoMarketMain({ marketCode, marketData, marketCurrent
                     </S.ChartLayout>
                     <S.TradeLayout>
                         <CryptoMarketTrade
+                            user={user}
                             marketCode={marketCode}
                             marketPrice={price}
+                            unit={imageCode}
+                            sizeUnitType={sizeUnitType}
+                            setSizeUnitType={setSizeUnitType}
                         />
                     </S.TradeLayout>
                 </S.ChartAndTradeLayout>
@@ -157,8 +172,13 @@ export default function CryptoMarketMain({ marketCode, marketData, marketCurrent
 
             {/* 커뮤니티 */}
             <S.BottomLayout>
-                <S.MyTradeLayout className="test-border">
-
+                <S.MyTradeLayout>
+                    <CryptoMyTrade
+                        user={user}
+                        sizeUnitType={sizeUnitType}
+                        market={market}
+                        marketPrice={price}
+                    />
                 </S.MyTradeLayout>
                 <S.CommunityLayout>
                     {communityNode}

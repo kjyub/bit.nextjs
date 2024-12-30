@@ -94,11 +94,11 @@ export default class CommonUtils {
         e.target.value = CommonUtils.telFormat(value)
     }
     static textFormat(text: string, format: TextFormats): string {
-        let result = text
+        let result = this.isStringNullOrEmpty(text) ? "" : String(text)
 
         if (format === TextFormats.NUMBER) {
             const number = Number(text)
-            if (!isNaN(number)) {
+            if (!isNaN(number) && result[result.length - 1] !== "." && result !== "" && !(result.includes(".") && result[result.length - 1] === "0")) {
                 result = number.toLocaleString()
             }
             // // 숫자를 문자열로 변환

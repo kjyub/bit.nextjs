@@ -1,6 +1,7 @@
-import { PriceChangeTypes } from "@/types/cryptos/CryptoTypes"
+import { PositionType, PriceChangeTypes } from "@/types/cryptos/CryptoTypes"
 import CommonUtils from "./CommonUtils"
 import { TextFormats } from "@/types/CommonTypes"
+import TypeUtils from "./TypeUtils"
 
 
 export default class CryptoUtils{
@@ -29,8 +30,21 @@ export default class CryptoUtils{
             return decimalPlaces + 4
         }
     }
-    static getPriceText(price: number): string {
-        return CommonUtils.textFormat(price, TextFormats.NUMBER)
+    static getPriceRound(price: number): number {
+        if (price >= 1000) {
+            return TypeUtils.round(price, 0)
+        } else if (price >= 100) {
+            return TypeUtils.round(price, 1)
+        } else if (price >= 10) {
+            return TypeUtils.round(price, 2)
+        } else if (price >= 1) {
+            return TypeUtils.round(price, 3)
+        }
+        
+        return price
+    }
+    static getPriceText(price: number): string {        
+        return CommonUtils.textFormat(this.getPriceRound(price), TextFormats.NUMBER)
     }
     static getTradePriceText(price: number): string {
         if (price >= 1000000) {
@@ -40,6 +54,14 @@ export default class CryptoUtils{
             return CommonUtils.textFormat((price / 10000).toFixed(0), TextFormats.NUMBER) + "만"
         } else {
             return price.toString()
+        }
+    }
+
+    static getPnl(currentPrice: number, quantity: number, entryPrice: number, positionType: PositionType): number {
+        if (positionType === PositionType.LONG) {
+            return (currentPrice - entryPrice) * quantity
+        } else {
+            return (entryPrice - currentPrice) * quantity
         }
     }
 }

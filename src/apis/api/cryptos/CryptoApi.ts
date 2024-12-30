@@ -8,6 +8,8 @@ import MarketCommunity from '@/types/cryptos/MarketCommunity';
 import MarketCommunityComment from '@/types/cryptos/MarketCommunityComment';
 import { LikeTypes } from '@/types/common/CommonTypes';
 import CryptoWallet from '@/types/cryptos/CryptoWallet';
+import TradePosition from '@/types/cryptos/TradePosition';
+import TradeOrder from '@/types/cryptos/TradeOrder';
 
 class CryptoApi {
     // region Wallet
@@ -75,7 +77,7 @@ class CryptoApi {
     }
     // endregion
 
-    // region Trade
+    // region Order
     static async orderMarket(requestData: object): Promise<boolean> {
         let result = false
 
@@ -103,6 +105,43 @@ class CryptoApi {
 
         await authInstance.post("/api/cryptos/order_limit_cancel/", requestData).then(({ data }) => {
             result = data
+        }).catch((error) => {
+            console.log(error)
+        })
+
+        return result
+    }
+    // endregion
+
+    // region Trade
+    static async getTradePostions(marketCode: string): Promise<Array<TradePosition>> {
+        const result: Array<TradePosition> = []
+
+        await authInstance.get("/api/cryptos/my_position/", { params: { market_code: marketCode } }).then(({ data }) => {
+            if (Array.isArray(data)) {
+                data.forEach((item) => {
+                    const tradePosition: TradePosition = new TradePosition()
+                    tradePosition.parseResponse(item)
+                    result.push(tradePosition)
+                })
+            }
+        }).catch((error) => {
+            console.log(error)
+        })
+
+        return result
+    }
+    static async getTradeOrders(marketCode: string): Promise<Array<TradeOrder>> {
+        const result: Array<TradeOrder> = []
+
+        await authInstance.get("/api/cryptos/my_order/", { params: { market_code: marketCode } }).then(({ data }) => {
+            if (Array.isArray(data)) {
+                data.forEach((item) => {
+                    const tradePosition: TradeOrder = new TradeOrder()
+                    tradePosition.parseResponse(item)
+                    result.push(tradePosition)
+                })
+            }
         }).catch((error) => {
             console.log(error)
         })
