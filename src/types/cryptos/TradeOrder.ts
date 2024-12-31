@@ -31,7 +31,7 @@ export default class TradeOrder extends AbsApiObject {
         this._marginMode = MarginModeType.CROSSED
         this._orderType = OrderType.LIMIT
         this._positionType = PositionType.LONG
-        this._tradeType = TradeType.BUY
+        this._tradeType = TradeType.OPEN
         this._tradeTime = ""
         this._entryPrice = 0
         this._quantity = 0

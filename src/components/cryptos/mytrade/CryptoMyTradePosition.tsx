@@ -2,7 +2,7 @@
 
 import * as S from "@/styles/CryptoMyTradeStyles"
 import * as I from "@/components/inputs/TradeInputs"
-import { MarginModeType, OrderType, PositionType, TradeType } from "@/types/cryptos/CryptoTypes"
+import { MarginModeType, OrderType, PositionType, PriceChangeTypes, SizeUnitTypes, TradeType } from "@/types/cryptos/CryptoTypes"
 import { useCallback, useEffect, useState } from "react"
 import CommonUtils from "@/utils/CommonUtils"
 import { TextFormats } from "@/types/CommonTypes"
@@ -52,12 +52,26 @@ const Position = ({ market, position }: IPosition) => {
     const socketData = useMarketPriceStore((state) => state.marketDic[position.market.code])
     const marketPrice = socketData ? socketData.trade_price : 0
 
+    const [changeType, setChangeType] = useState<PriceChangeTypes>(position.market.change)
+
     const [bep, setBep] = useState<number>(0)
     const [size, setSize] = useState<number>(0)
     const [marginRatio, setMarginRatio] = useState<number>(0)
     const [pnl, setPnl] = useState<number>(0)
 
+    const [closePrice, setClosePrice] = useState<number>(0)
+    const [closeQuantity, setCloseQuantity] = useState<number>(position.quantity)
+
     useEffect(() => {
+        setClosePrice(marketPrice)
+        setCloseQuantity(position.quantity)
+    }, [position])
+
+    useEffect(() => {
+        if (socketData === undefined) {
+            return
+        }
+        
         const _size = position.quantity * marketPrice
         setSize(_size)
 
@@ -65,7 +79,39 @@ const Position = ({ market, position }: IPosition) => {
         setBep(position.averagePrice + CryptoUtils.getPriceRound(breakEvenPrice))
         setMarginRatio(position.marginPrice / position.quantity)
         setPnl(CryptoUtils.getPnl(marketPrice, position.quantity, position.averagePrice, position.positionType))
-    }, [position, marketPrice])
+
+        setChangeType(CryptoUtils.getPriceChangeType(socketData.trade_price, socketData.opening_price))
+    }, [position, socketData])
+
+    const orderClose = useCallback(async (_orderType: OrderType) => {
+        const data = {
+            market_code: position.market.code,
+            trade_type: TradeType.CLOSE,
+            margin_mode: position.marginMode,
+            position_type: position.positionType === PositionType.LONG ? PositionType.SHORT : PositionType.LONG,
+            cost: position.cost,
+            price: marketPrice,
+            quantity: closeQuantity,
+            size: closeQuantity * closePrice,
+            leverage: position.averageLeverage,
+            size_unit_type: SizeUnitTypes.QUANTITY,
+        }
+        console.log(position, data)
+        
+        let result = false
+        if (_orderType === OrderType.LIMIT) {
+            result = await CryptoApi.orderLimit(data)
+        } else if (_orderType === OrderType.MARKET) {
+            result = await CryptoApi.orderMarket(data)
+        }
+
+        if (result) {
+            alert("거래가 성공적으로 완료되었습니다.")
+            updateInfo()
+        } else {
+            alert("거래에 실패하였습니다.")
+        }
+    }, [position, marketPrice, closePrice, closeQuantity])
 
     return (
         <S.PositionBox>
@@ -86,9 +132,16 @@ const Position = ({ market, position }: IPosition) => {
                             {position.market.code}
                         </span>
                     </p>
+
+                    <p className={`${changeType === PriceChangeTypes.RISE ? "rise" : changeType === PriceChangeTypes.FALL ? "fall" : ""} price`}>
+                        {CryptoUtils.getPriceText(marketPrice)}{"KRW"}
+                    </p>
                 </div>
 
                 <div className="right">
+                    <button className="value">
+                        TP/SL
+                    </button>
                     <div className="value">
                         {CommonUtils.round(position.averageLeverage, 2)}x
                     </div>
@@ -96,10 +149,10 @@ const Position = ({ market, position }: IPosition) => {
             </S.PositionHeader>
 
             <S.PositionBody>
-                <S.PositionItem className={``}>
+                {/* <S.PositionItem className={`[&>dd]:font-medium`}>
                     <dt>현재가격 <span>Price</span></dt>
                     <dd>{CryptoUtils.getPriceText(marketPrice)}</dd>
-                </S.PositionItem>
+                </S.PositionItem> */}
                 <S.PositionItem className={``}>
                     <dt>진입가격 <span>Entry Price</span></dt>
                     <dd>{CryptoUtils.getPriceText(position.averagePrice)}</dd>
@@ -108,9 +161,16 @@ const Position = ({ market, position }: IPosition) => {
                     <dt>손익분기점 <span>Break Even Price</span></dt>
                     <dd>{CryptoUtils.getPriceText(bep)}</dd>
                 </S.PositionItem>
-                <S.PositionItem className={`${position.positionType === PositionType.LONG ? "long" : "short"}`}>
+                <S.PositionItem className={`col-span-2 ${position.positionType === PositionType.LONG ? "long" : "short"}`}>
                     <dt>포지션 크기 <span>Size</span></dt>
-                    <dd>{position.positionType === PositionType.SHORT && "-"}{CryptoUtils.getPriceText(size)}</dd>
+                    <dd className="flex justify-between items-center w-full">
+                        <span>
+                            {position.positionType === PositionType.SHORT && "-"}{CryptoUtils.getPriceText(size)}{"TW"}
+                        </span>
+                        <span>
+                            {position.quantity}{position.market.unit}
+                        </span>
+                    </dd>
                 </S.PositionItem>
                 <S.PositionItem>
                     <dt>청산가격 <span>Liq.Price</span></dt>
@@ -124,11 +184,23 @@ const Position = ({ market, position }: IPosition) => {
                     <dt>증거금 <span>Margin</span></dt>
                     <dd>{CryptoUtils.getPriceText(position.marginPrice)}</dd>
                 </S.PositionItem>
-                <S.PositionItem className={pnl < 0 ? "short" : "long"}>
+                <S.PositionItem className={`[&>dd]:font-medium ${pnl < 0 ? "short" : "long"}`}>
                     <dt>실현손익 <span>PNL</span></dt>
                     <dd>{CryptoUtils.getPriceText(pnl)}</dd>
                 </S.PositionItem>
             </S.PositionBody>
+
+            <S.PositionClose>
+                <div className="title">포지션 종료</div>
+                <div className="buttons">
+                    <button onClick={() => {orderClose(OrderType.LIMIT)}}>지정가</button>
+                    <button onClick={() => {orderClose(OrderType.MARKET)}}>시장가</button>
+                </div>
+                <div className="inputs">
+                    <I.NumberInput label={"가격"} value={closePrice} setValue={setClosePrice} />
+                    <I.PositionCloseSizeInput label={"크기"} value={closeQuantity} setValue={setCloseQuantity} max={position.quantity} />
+                </div>
+            </S.PositionClose>
         </S.PositionBox>
     )
 }

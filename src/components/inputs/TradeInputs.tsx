@@ -5,6 +5,7 @@ import { useMouseHover } from "@/hooks/useMouseHover"
 import CommonUtils from "@/utils/CommonUtils"
 import { TextFormats } from "@/types/CommonTypes"
 import TypeUtils from "@/utils/TypeUtils"
+import { useDetectClose } from "@/hooks/useDetectClose"
 
 const HelpBox = ({ children }: {children: React.ReactNode}) => {
     const [ref, isHover] = useMouseHover()
@@ -594,6 +595,48 @@ export const TpSlLayout = ({ children }: {children: React.ReactNode}) => {
             {isShow && (
                 <div className="flex flex-col w-full space-y-1">
                     {children}
+                </div>
+            )}
+        </div>
+    )
+}
+
+interface PositionCloseSizeInputProps {
+    label: string
+    value: number
+    setValue: (value: number) => void
+    max: number
+}
+export const PositionCloseSizeInput = ({ label, value, setValue, max }: PositionCloseSizeInputProps) => {
+    const [ref, isSliderShow, setSliderShow] = useDetectClose()
+
+    useEffect(() => {
+        if (ref.current && ref.current.querySelector("input.input")) {
+            const closeSizeInput = ref.current.getElementsByClassName("close-size-input")[0]
+            
+            const handler = (e: MouseEvent) => {
+                setSliderShow(true)
+            }
+            closeSizeInput.addEventListener("click", handler)
+
+            return () => {
+                closeSizeInput.removeEventListener("click", handler)
+            }
+        }
+    }, [])
+
+    return (
+        <div ref={ref} className="relative w-full h-8">
+            <NumberInput label={label} value={value} setValue={setValue} max={max} className="close-size-input"  />
+
+            {isSliderShow && (
+                <div className="absolute top-10 right-0 flex items-center w-[90%] h-9 px-3 space-x-2 rounded-lg bg-slate-800 border border-slate-700 shadow-lg">
+                    <div className="flex-1">
+                        <SlideInput value={value} setValue={setValue} min={0} max={max} step={max/100} mark={max/4} />
+                    </div>
+                    <span className="font-light text-xs text-slate-400 text-right w-6 pr-1">
+                        {TypeUtils.percent((value/max), 1)}
+                    </span>
                 </div>
             )}
         </div>

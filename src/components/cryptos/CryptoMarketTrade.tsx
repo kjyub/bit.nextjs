@@ -102,7 +102,7 @@ export default function CryptoMarketTrade({
 
         const data = {
             market_code: marketCode,
-            trade_type: TradeType.BUY,
+            trade_type: TradeType.OPEN,
             margin_mode: marginMode,
             position_type: _positionType,
             cost: cost,

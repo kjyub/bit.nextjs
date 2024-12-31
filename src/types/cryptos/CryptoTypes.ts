@@ -27,8 +27,8 @@ export const PositionType = {
 }
 
 export const TradeType = {
-    BUY: 0,
-    SELL: 1,
+    OPEN: 0,
+    CLOSE: 1,
     LIQ: 2,
 }
 

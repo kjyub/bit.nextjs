@@ -47,10 +47,15 @@ export const PositionHeader = tw.div`
     [&>.left>.title>.english]:text-xs [&>.left>.title>.english]:text-slate-400
     [&>.left>.title>.code]:text-xs [&>.left>.title>.code]:text-slate-500
 
+    [&>.left>.price]:text-sm [&>.left>.price]:text-slate-400
+    [&>.left>.price.rise]:text-red-500 [&>.left>.price.fall]:text-blue-500
+
     [&>.right]:flex [&>.right]:items-center [&>.right]:space-x-2
     [&>.right>.value]:px-2 [&>.right>.value]:py-0.5
     [&>.right>.value]:rounded-md [&>.right>.value]:bg-slate-600/50
     [&>.right>.value]:text-xs [&>.right>.value]:text-slate-300 [&>.right>.value]:font-medium
+    hover:[&>.right>button.value]:bg-slate-600/70 hover:[&>.right>button.value]:text-slate-400
+    [&>.right>button.value]:transition-colors
 `
 export const PositionBody = tw.div`
     grid grid-cols-4 gap-2 w-full
@@ -60,9 +65,21 @@ export const PositionItem = tw.dl`
 
     [&>dt]:text-xs [&>dt]:text-slate-400
     [&>dt>span]:text-slate-400/80 [&>dt>span]:font-light
-    [&>dd]:text-sm [&>dd]:text-slate-300 [&>dd]:font-medium
+    [&>dd]:text-sm [&>dd]:text-slate-300 [&>dd]:font-light
     [&.long>dd]:text-position-long-3  [&.short>dd]:text-position-short-3
 `
 export const PositionClose = tw.div`
+    flex items-center w-full pt-2 space-x-3
+    border-t border-violet-500/20
 
+    [&>.title]:text-sm [&>.title]:text-violet-500 [&>.title]:font-medium
+
+    [&>.buttons]:flex [&>.buttons]:items-center [&>.buttons]:space-x-1
+
+    [&>.buttons>button]:px-2 [&>.buttons>button]:py-0.5
+    [&>.buttons>button]:rounded-md hover:[&>.buttons>button]:bg-slate-600/50
+    [&>.buttons>button]:text-sm [&>.buttons>button]:text-violet-400 hover:[&>.buttons>button]:text-violet-300
+    [&>.buttons>button]:duration-200
+
+    [&>.inputs]:grid [&>.inputs]:grid-cols-2 [&>.inputs]:gap-2 [&>.inputs]:flex-1
 `

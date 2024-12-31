@@ -70,4 +70,12 @@ export default class CryptoMarket extends AbsApiObject {
 
         return ((this._price - this._openingPrice) / this._openingPrice) * 100
     }
+
+    public get unit(): string {
+        if (!this._code.includes("-")) {
+            return ""
+        }
+
+        return this._code.split('-')[1]
+    }
 }
