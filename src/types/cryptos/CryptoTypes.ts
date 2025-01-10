@@ -20,6 +20,10 @@ export const MarginModeType = {
     ISOLATED: 0,
     CROSSED: 1
 }
+export const MarginModeTypeNames = {
+    0: "격리",
+    1: "교차",
+}
 
 export const PositionType = {
     LONG: 0,
@@ -42,6 +46,11 @@ export const OrderType = {
     NONE: 0,
     LIMIT: 1,
     MARKET: 2,
+}
+export const OrderTypeNames = {
+    0: "-",
+    1: "지정가",
+    2: "시장가",
 }
 
 export const MarketTypes = {

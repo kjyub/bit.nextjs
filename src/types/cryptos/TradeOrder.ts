@@ -2,11 +2,13 @@ import React from "react"
 import CommonUtils from "@/utils/CommonUtils"
 import { AbsApiObject } from "../ApiTypes"
 import { MarginModeType, OrderType, PositionType, TradeType } from "./CryptoTypes"
+import CryptoMarket from "./CryptoMarket"
 
 export default class TradeOrder extends AbsApiObject {
     private _id: number
     
     private _marketCode: string
+    private _market: CryptoMarket
     private _isOpen: boolean
     private _marginMode: MarginModeType
     private _orderType: OrderType
@@ -17,16 +19,21 @@ export default class TradeOrder extends AbsApiObject {
     private _quantity: number
     private _leverage: number
     private _fee: number
-    private _totalPrice: number
+    private _size: number
+    private _cost: number
+    private _totalCost: number
     private _closeTime: string
     private _isOpen: boolean
     private _isCancel: boolean
     private _pnl: number
 
+    private _createdDate: string
+
     constructor() {
         super()
         this._id = -1
         this._marketCode = ""
+        this._market = new CryptoMarket()
         this._isOpen = false
         this._marginMode = MarginModeType.CROSSED
         this._orderType = OrderType.LIMIT
@@ -37,11 +44,15 @@ export default class TradeOrder extends AbsApiObject {
         this._quantity = 0
         this._leverage = 1
         this._fee = 0
-        this._totalPrice = 0
+        this._size = 0
+        this._cost = 0
+        this._totalCost = 0
         this._closeTime = ""
         this._isOpen = false
         this._isCancel = false
         this._pnl = 0
+
+        this._createdDate = ""
     }
 
     parseResponse(json: object): void {
@@ -50,6 +61,7 @@ export default class TradeOrder extends AbsApiObject {
         
         this._id = json["id"]
         this._marketCode = json["market_code"]
+        this._market.parseResponse(json["market"])
         this._isOpen = json["is_open"]
         this._marginMode = json["margin_mode"]
         this._orderType = json["order_type"]
@@ -60,11 +72,15 @@ export default class TradeOrder extends AbsApiObject {
         this._quantity = json["quantity"]
         this._leverage = json["leverage"]
         this._fee = json["fee"]
-        this._totalPrice = json["total_price"]
+        this._size = json["size"]
+        this._cost = json["cost"]
+        this._totalCost = json["total_cost"]
         this._closeTime = json["close_time"]
         this._isOpen = json["is_open"]
         this._isCancel = json["is_cancel"]
         this._pnl = json["pnl"]
+
+        this._createdDate = json["created_date"]
     }
 
     public get id(): number {
@@ -72,6 +88,9 @@ export default class TradeOrder extends AbsApiObject {
     }
     public get marketCode(): string {
         return this._marketCode
+    }
+    public get market(): CryptoMarket {
+        return this._market
     }
     public get isOpen(): boolean {
         return this._isOpen
@@ -103,8 +122,14 @@ export default class TradeOrder extends AbsApiObject {
     public get fee(): number {
         return this._fee
     }
-    public get totalPrice(): number {
-        return this._totalPrice
+    public get size(): number {
+        return this._size
+    }
+    public get cost(): number {
+        return this._cost
+    }
+    public get totalCost(): number {
+        return this._totalCost
     }
     public get closeTime(): string {
         return this._closeTime
@@ -117,5 +142,8 @@ export default class TradeOrder extends AbsApiObject {
     }
     public get pnl(): number {
         return this._pnl
+    }
+    public get createdDate(): string {
+        return this._createdDate
     }
 }

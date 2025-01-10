@@ -12,7 +12,7 @@ export default function Navigation() {
     const pathname = usePathname()
 
     // 회원 관련
-    const [user, isUserLoading] = useUser()
+    const [user, isUserLoading] = useUser(true, true)
     const [isAuth, setAuth] = useState<boolean>(false)
 
     useEffect(() => {

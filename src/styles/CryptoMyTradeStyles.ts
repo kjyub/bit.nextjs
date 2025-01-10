@@ -83,3 +83,66 @@ export const PositionClose = tw.div`
 
     [&>.inputs]:grid [&>.inputs]:grid-cols-2 [&>.inputs]:gap-2 [&>.inputs]:flex-1
 `
+
+
+export const OrderBox = tw(ItemBox)`
+    p-3 space-y-3
+
+    [&>.header]:flex [&>.header]:justify-between [&>.header]:items-center [&>.header]:space-x-2
+    [&>.header>.position]:w-16 [&>.header>.position]:px-2 [&>.header>.position]:py-1
+    [&>.header>.position]:rounded-md [&>.header>.position]:text-sm [&>.header>.position]:text-white
+    [&>.header>.position.long]:bg-position-long-1 [&>.header>.position.short]:bg-position-short-1
+`
+export const OrderHeader = tw.div`
+    flex justify-between items-center space-x-2
+
+    [&>.left]:flex [&>.left]:items-center [&>.left]:space-x-2
+    [&>.left>.datetime]:w-[8.5rem]
+    [&>.left>.datetime>i]:mr-1
+    [&>.left>.datetime>i]:text-xs [&>.left>.datetime>i]:text-slate-400
+    [&>.left>.datetime]:rounded-md [&>.left>.datetime]:text-left
+    [&>.left>.datetime]:text-[13px] [&>.left>.datetime]:text-slate-300 [&>.left>.datetime]:font-light
+
+    [&>.left>.title]:flex [&>.left>.title]:items-baseline [&>.left>.title]:space-x-1
+    [&>.left>.title>.korean]:text-sm [&>.left>.title>.korean]:text-slate-200
+    [&>.left>.title>.english]:text-xs [&>.left>.title>.english]:text-slate-400
+    [&>.left>.title>.code]:text-xs [&>.left>.title>.code]:text-slate-500
+
+    [&>.left>.price]:text-sm [&>.left>.price]:text-slate-400
+    [&>.left>.price.rise]:text-red-500 [&>.left>.price.fall]:text-blue-500
+
+    [&>.right]:flex [&>.right]:items-center [&>.right]:space-x-2
+    [&>.right>.value]:px-2 [&>.right>.value]:py-0.5
+    [&>.right>.value]:rounded-md [&>.right>.value]:bg-slate-600/50
+    [&>.right>.value]:text-xs [&>.right>.value]:text-slate-300 [&>.right>.value]:font-medium
+    hover:[&>.right>button.value]:bg-slate-600/70 hover:[&>.right>button.value]:text-slate-400
+
+    [&>.right>.position]:text-xs 
+    [&>.right>.position.long]:text-position-long-2 [&>.right>.position.short]:text-position-short-2
+`
+export const OrderBody = tw.div`
+    grid grid-cols-4 gap-2 w-full
+`
+export const OrderItem = tw.dl`
+    flex flex-col w-full space-y-1
+
+    [&>dt]:text-xs [&>dt]:text-slate-400
+    [&>dt>span]:text-slate-400/80 [&>dt>span]:font-light
+    [&>dd]:text-sm [&>dd]:text-slate-300 [&>dd]:font-light
+    [&.long>dd]:text-position-long-3  [&.short>dd]:text-position-short-3
+`
+export const OrderClose = tw.div`
+    flex items-center w-full pt-2 space-x-3
+    border-t border-violet-500/20
+
+    [&>.title]:text-sm [&>.title]:text-violet-500 [&>.title]:font-medium
+
+    [&>.buttons]:flex [&>.buttons]:items-center [&>.buttons]:space-x-1
+
+    [&>.buttons>button]:px-2 [&>.buttons>button]:py-0.5
+    [&>.buttons>button]:rounded-md hover:[&>.buttons>button]:bg-slate-600/50
+    [&>.buttons>button]:text-sm [&>.buttons>button]:text-violet-400 hover:[&>.buttons>button]:text-violet-300
+    [&>.buttons>button]:duration-200
+
+    [&>.inputs]:grid [&>.inputs]:grid-cols-2 [&>.inputs]:gap-2 [&>.inputs]:flex-1
+`

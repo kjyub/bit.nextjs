@@ -112,7 +112,6 @@ export default function CryptoMarketTrade({
             leverage: leverageRatio,
             size_unit_type: sizeUnitType,
         }
-        console.log(data)
         
         let result = false
         if (orderType === OrderType.LIMIT) {
@@ -197,6 +196,7 @@ export default function CryptoMarketTrade({
 
             <div className="flex flex-col w-full space-y-1 !mt-auto">
                 {/* <S.Title2>정보</S.Title2> */}
+                {quantity}
                 <S.SummaryItem>
                     <span className="label">현재 잔액</span>
                     <span className="value">{CommonUtils.textFormat(userBudget, TextFormats.NUMBER)}</span>

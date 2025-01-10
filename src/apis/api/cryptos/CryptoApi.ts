@@ -100,10 +100,10 @@ class CryptoApi {
 
         return result
     }
-    static async orderLimitCancel(requestData: object): Promise<boolean> {
+    static async orderLimitCancel(orderId: number): Promise<boolean> {
         let result = false
 
-        await authInstance.post("/api/cryptos/order_limit_cancel/", requestData).then(({ data }) => {
+        await authInstance.post("/api/cryptos/order_limit_cancel/", { order_id: orderId }).then(({ data }) => {
             result = data
         }).catch((error) => {
             console.log(error)

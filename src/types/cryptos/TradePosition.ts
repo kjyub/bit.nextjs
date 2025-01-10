@@ -85,7 +85,8 @@ export default class TradePosition extends AbsApiObject {
         return this._quantity
     }
     public get marginPrice(): number {
-        return this._marginPrice
+        const price = Number(this._marginPrice)
+        return isNaN(price) ? 0 : price
     }
     public get averageLeverage(): number {
         const leverage = Number(this._averageLeverage)

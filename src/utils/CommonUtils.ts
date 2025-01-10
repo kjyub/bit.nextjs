@@ -1,8 +1,7 @@
 import { TextFormats } from "@/types/CommonTypes"
-import moment, { Moment } from "moment"
-import 'moment/locale/ko'
 import { FormEventHandler } from "react"
 import Inko from 'inko'
+import dayjs from "dayjs"
 
 export default class CommonUtils {
     static getBaseUrl(): string {
@@ -215,10 +214,6 @@ export default class CommonUtils {
         const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/
         return regex.test(value)
     }
-    static getMoment(dateString: string | null): Moment {
-        const m = new moment(dateString)
-        return m
-    }
     static setTextareaAutoHeight(e: any) {
         const element = e.target
 
@@ -272,8 +267,8 @@ export default class CommonUtils {
     }
     static getDateShorten(date: string): string {
         try {
-            const now = moment()
-            const inputDate = moment(date)
+            const now = dayjs()
+            const inputDate = dayjs(date)
             const diffSeconds = now.diff(inputDate, 'seconds')
             const diffMinutes = now.diff(inputDate, 'minutes')
             const diffHours = now.diff(inputDate, 'hours')
