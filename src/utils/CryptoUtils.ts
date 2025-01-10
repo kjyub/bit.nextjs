@@ -1,4 +1,4 @@
-import { PositionType, PriceChangeTypes } from "@/types/cryptos/CryptoTypes"
+import { PositionType, PriceChangeTypes, PriceChangeTypeValues } from "@/types/cryptos/CryptoTypes"
 import CommonUtils from "./CommonUtils"
 import { TextFormats } from "@/types/CommonTypes"
 import TypeUtils from "./TypeUtils"
@@ -6,7 +6,7 @@ import TypeUtils from "./TypeUtils"
 
 export default class CryptoUtils{
     // 유저 타입에따라 쓰기가 가능한 현황만 가져온다.
-    static getPriceChangeType(price: number, openingPrice: number): PriceChangeTypes {
+    static getPriceChangeType(price: number, openingPrice: number): PriceChangeTypeValues {
         let changeType = PriceChangeTypes.EVEN
 
         if (price > openingPrice) {

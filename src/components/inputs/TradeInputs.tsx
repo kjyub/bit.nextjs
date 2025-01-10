@@ -1,4 +1,4 @@
-import { MarginModeType, OrderType, SizeUnitTypes } from "@/types/cryptos/CryptoTypes"
+import { MarginModeType, MarginModeTypeValues, TradeOrderType, SizeUnitTypes, TradeOrderTypeValues, SizeUnitTypeValues } from "@/types/cryptos/CryptoTypes"
 import * as S from "@/styles/CryptoTradeStyles"
 import React, { useEffect, useRef, useState } from "react"
 import { useMouseHover } from "@/hooks/useMouseHover"
@@ -74,8 +74,8 @@ export const SlideInput = ({ value, setValue, min, max, step=1, mark=undefined }
 }
 
 interface MarginModeInputProps {
-    marginMode: MarginModeType
-    setMarginMode: (mode: MarginModeType) => void
+    marginMode: MarginModeTypeValues
+    setMarginMode: (mode: MarginModeTypeValues) => void
 }
 export const MarginModeInput = ({ marginMode, setMarginMode }: MarginModeInputProps) => {
     const [isBgActive, setBgActive] = useState<boolean>(false)
@@ -226,22 +226,22 @@ export const LeverageInput = ({ leverageRatio, setLeverageRatio, maxRatio=75 }: 
 }
 
 interface OrderTypeInputProps {
-    orderType: OrderType
-    setOrderType: (mode: OrderType) => void
+    orderType: TradeOrderTypeValues
+    setOrderType: (mode: TradeOrderTypeValues) => void
 }
 export const OrderTypeInput = ({ orderType, setOrderType }: OrderTypeInputProps) => {
     return (
         <div className="flex items-center w-full h-5 space-x-4">
             <S.OrderTypeBox> 
                 <button 
-                    className={orderType === OrderType.LIMIT ? "active" : ""}
-                    onClick={() => {setOrderType(OrderType.LIMIT)}}
+                    className={orderType === TradeOrderType.LIMIT ? "active" : ""}
+                    onClick={() => {setOrderType(TradeOrderType.LIMIT)}}
                 >
                     <span>지정가</span>
                 </button>
                 <button 
-                    className={orderType === OrderType.MARKET ? "active" : ""}
-                    onClick={() => {setOrderType(OrderType.MARKET)}}
+                    className={orderType === TradeOrderType.MARKET ? "active" : ""}
+                    onClick={() => {setOrderType(TradeOrderType.MARKET)}}
                 >
                     <span>시장가</span>
                 </button>
@@ -422,8 +422,8 @@ interface TradeSizeInputProps {
     leverage: number
     price: number
     fee: number
-    sizeUnitType: SizeUnitTypes
-    setSizeUnitType: (unit: SizeUnitTypes) => void
+    sizeUnitType: SizeUnitTypeValues
+    setSizeUnitType: (unit: SizeUnitTypeValues) => void
 }
 export const TradeSizeInput = ({ size, setQuantity, setSize, userBudget, setCost, unit, leverage, price, fee, sizeUnitType, setSizeUnitType }: TradeSizeInputProps) => {
     const [isPercent, setIsPercent] = useState<boolean>(false)

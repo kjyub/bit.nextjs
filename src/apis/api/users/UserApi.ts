@@ -1,4 +1,4 @@
-import { UserTypes } from '@/types/users/UserTypes';
+import { UserTypeValues } from '@/types/users/UserTypeValues';
 import { authInstance, defaultInstance, fileInstance, fileNoneAuthInstance } from '../../utils/clientApis';
 import User from '@/types/users/User';
 import ApiUtils from '@/utils/ApiUtils';
@@ -16,7 +16,7 @@ class UserApi {
 
     //     return result
     // }
-    static async getLogin(email: string, password: string, userType: UserTypes): Promise<User> {
+    static async getLogin(email: string, password: string, userType: UserTypeValues): Promise<User> {
         const user: User = new User()
 
         await defaultInstance.post(
@@ -24,14 +24,14 @@ class UserApi {
             { email: email, password: password, user_type: userType }    
         ).then(({data}) => {
             const userData = data.user
-            user.parseResponse(userData)
+            user.parseResponse(userData as object)
         }).catch(error => {
             console.log(error)
         })
 
         return user
     }
-    static async kakaoAuth(code: string, userType: UserTypes): Promise<User> {
+    static async kakaoAuth(code: string, userType: UserTypeValues): Promise<User> {
         const user: User = new User()
 
         await defaultInstance.post(
@@ -39,7 +39,7 @@ class UserApi {
             { code: code, user_type: userType }    
         ).then(({data}) => {
             const userData = data.user
-            user.parseResponse(userData)
+            user.parseResponse(userData as object)
         }).catch(error => {
             console.log(error)
         })
@@ -60,7 +60,7 @@ class UserApi {
 
         return responseData
     }
-    static async checkEmail(email: string, userType: UserTypes): Promise<boolean> {
+    static async checkEmail(email: string, userType: UserTypeValues): Promise<boolean> {
         let result = false
 
         await defaultInstance.post(
@@ -88,7 +88,7 @@ class UserApi {
 
         return result
     }
-    static async findEmail(name: string, tel: string, userType: UserTypes): Promise<Array<string>> {
+    static async findEmail(name: string, tel: string, userType: UserTypeValues): Promise<Array<string>> {
         let result: Array<string> = []
 
         await defaultInstance.post(
@@ -102,7 +102,7 @@ class UserApi {
 
         return result
     }
-    static async findPasswordCheck(email: string, name: string, tel: string, userType: UserTypes): Promise<boolean> {
+    static async findPasswordCheck(email: string, name: string, tel: string, userType: UserTypeValues): Promise<boolean> {
         let result = false
 
         await defaultInstance.post(
@@ -116,7 +116,7 @@ class UserApi {
 
         return result
     }
-    static async findPasswordUpdate(email: string, name: string, tel: string, userType: UserTypes, password: string): Promise<boolean> {
+    static async findPasswordUpdate(email: string, name: string, tel: string, userType: UserTypeValues, password: string): Promise<boolean> {
         let result = false
 
         await defaultInstance.put(
@@ -136,7 +136,7 @@ class UserApi {
 
         await defaultInstance.post("/api/users/signup/", data).then((response) => {
             const userData = response.data.user
-            user.parseResponse(userData)
+            user.parseResponse(userData as object)
         }).catch(error => {
             console.log(error)
         })
@@ -147,7 +147,7 @@ class UserApi {
         const result = new User()
 
         await authInstance.get("/api/users/detail_info_auth/").then(({data}) => {
-            result.parseResponse(data)
+            result.parseResponse(data as object)
         }).catch(error => {
             console.log(error)
         })

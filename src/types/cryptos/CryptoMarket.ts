@@ -1,7 +1,7 @@
 import React from "react"
 import CommonUtils from "@/utils/CommonUtils"
 import { AbsApiObject } from "../ApiTypes"
-import { PriceChangeTypes } from "./CryptoTypes"
+import { PriceChangeTypes, PriceChangeTypeValues } from "./CryptoTypes"
 import CryptoUtils from "@/utils/CryptoUtils"
 
 export default class CryptoMarket extends AbsApiObject {
@@ -59,7 +59,7 @@ export default class CryptoMarket extends AbsApiObject {
     public get isClosed(): boolean {
         return this._isClosed
     }
-    public get change(): PriceChangeTypes {
+    public get change(): PriceChangeTypeValues {
         return CryptoUtils.getPriceChangeType(this._price, this._openingPrice)
     }
     public get changePrice(): number {

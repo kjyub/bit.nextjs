@@ -5,7 +5,7 @@ import * as S from "@/styles/CryptoWalletStyles"
 import CryptoNavigation from "./CryptoNavigation"
 import CommonButton from "../atomics/buttons/CommonButton"
 import ModalContainer from "../ModalContainer"
-import { TransferTypes } from "@/types/cryptos/CryptoTypes"
+import { TransferTypeValues, TransferTypes } from "@/types/cryptos/CryptoTypes"
 import CryptoTransferModal from "./CryptoTransferModal"
 import { useEffect, useState } from "react"
 import CryptoApi from "@/apis/api/cryptos/CryptoApi"
@@ -16,7 +16,7 @@ import { TextFormats } from "@/types/CommonTypes"
 
 export default function CryptoMain() {
     const [isTransferModalOpen, setTransferModalOpen] = useState<boolean>(false)
-    const [transferType, setTransferType] = useState<TransferTypes>(TransferTypes.TO_WALLET)
+    const [transferType, setTransferType] = useState<TransferTypeValues>(TransferTypes.TO_WALLET)
 
     const { cash, balance, updateInfo } = useUserInfoStore()
 
@@ -24,7 +24,7 @@ export default function CryptoMain() {
         updateInfo()
     }, [])
 
-    const handleTransferModal = (type: TransferTypes) => {
+    const handleTransferModal = (type: TransferTypeValues) => {
         setTransferType(type)
         setTransferModalOpen(true)
     }

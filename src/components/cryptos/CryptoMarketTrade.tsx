@@ -2,7 +2,7 @@
 
 import * as S from "@/styles/CryptoTradeStyles"
 import * as I from "@/components/inputs/TradeInputs"
-import { MarginModeType, OrderType, PositionType, SizeUnitTypes, TradeType } from "@/types/cryptos/CryptoTypes"
+import { MarginModeType, MarginModeTypeValues, TradeOrderType, PositionType, PositionTypeValues, SizeUnitTypes, TradeType, TradeOrderTypeValues, SizeUnitTypeValues } from "@/types/cryptos/CryptoTypes"
 import { useCallback, useEffect, useState } from "react"
 import CommonUtils from "@/utils/CommonUtils"
 import { TextFormats } from "@/types/CommonTypes"
@@ -20,8 +20,8 @@ interface ICryptoMarketTrade {
     marketCode: string
     marketPrice: number
     unit: string
-    sizeUnitType: SizeUnitTypes
-    setSizeUnitType: (type: SizeUnitTypes) => void
+    sizeUnitType: SizeUnitTypeValues
+    setSizeUnitType: (type: SizeUnitTypeValues) => void
 }
 export default function CryptoMarketTrade({ 
     user, 
@@ -34,9 +34,9 @@ export default function CryptoMarketTrade({
     const { balance, updateInfo } = useUserInfoStore()
     const userBudget = balance
     
-    const [marginMode, setMarginMode] = useState<MarginModeType>(MarginModeType.CROSSED) // 마진모드 (CROSSED, ISOLATED)
+    const [marginMode, setMarginMode] = useState<MarginModeTypeValues>(MarginModeType.CROSSED) // 마진모드 (CROSSED, ISOLATED)
     const [leverageRatio, setLeverageRatio] = useState<number>(1) // 레버리지 비율
-    const [orderType, setOrderType] = useState<OrderType>(OrderType.LIMIT) // 지정가/시장가
+    const [orderType, setOrderType] = useState<TradeOrderTypeValues>(TradeOrderType.LIMIT) // 지정가/시장가
     const [price, setPrice] = useState<number>(0) // 구매가
     const [quantity, setQuantity] = useState<number>(0) // 구매 수량
     const [cost, setCost] = useState<number>(0) // 구매 비용
@@ -67,10 +67,10 @@ export default function CryptoMarketTrade({
     }, [leverageRatio])
 
     useEffect(() => {
-        if (orderType === OrderType.MARKET) {
+        if (orderType === TradeOrderType.MARKET) {
             setPrice(marketPrice)
             setFee(CryptoFee.TAKER)
-        } else if (orderType === OrderType.LIMIT) {
+        } else if (orderType === TradeOrderType.LIMIT) {
             setFee(CryptoFee.MAKER)
         }
     }, [orderType, marketPrice])
@@ -79,7 +79,7 @@ export default function CryptoMarketTrade({
         setPrice(marketPrice)
     }
 
-    const handleTrade = useCallback(async (_positionType: PositionType) => {
+    const handleTrade = useCallback(async (_positionType: PositionTypeValues) => {
         if (CommonUtils.isStringNullOrEmpty(user.uuid)) {
             alert("로그인이 필요합니다.")
             return
@@ -114,9 +114,9 @@ export default function CryptoMarketTrade({
         }
         
         let result = false
-        if (orderType === OrderType.LIMIT) {
+        if (orderType === TradeOrderType.LIMIT) {
             result = await CryptoApi.orderLimit(data)
-        } else if (orderType === OrderType.MARKET) {
+        } else if (orderType === TradeOrderType.MARKET) {
             result = await CryptoApi.orderMarket(data)
         }
         
@@ -140,7 +140,7 @@ export default function CryptoMarketTrade({
             <div className="!mt-6 !mb-1 border-b border-slate-600/30" />
             <I.OrderTypeInput orderType={orderType} setOrderType={setOrderType} />
             
-            {orderType === OrderType.LIMIT && (
+            {orderType === TradeOrderType.LIMIT && (
                 <>
                     <I.LimitPriceInput 
                         price={price}
@@ -163,7 +163,7 @@ export default function CryptoMarketTrade({
                 </>
             )}
 
-            {orderType === OrderType.MARKET && (
+            {orderType === TradeOrderType.MARKET && (
                 <>
                     <I.TradeSizeInput 
                         size={size}

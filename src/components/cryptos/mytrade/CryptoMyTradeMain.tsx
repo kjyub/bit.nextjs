@@ -2,7 +2,6 @@
 
 import * as S from "@/styles/CryptoMyTradeStyles"
 import * as I from "@/components/inputs/TradeInputs"
-import { MarginModeType, OrderType, PositionType, TradeType } from "@/types/cryptos/CryptoTypes"
 import { useCallback, useEffect, useState } from "react"
 import CommonUtils from "@/utils/CommonUtils"
 import { TextFormats } from "@/types/CommonTypes"

@@ -2,7 +2,7 @@
 
 import * as S from "@/styles/CryptoMyTradeStyles"
 import * as I from "@/components/inputs/TradeInputs"
-import { MarginModeType, OrderType, OrderTypeNames, PositionType, PriceChangeTypes, SizeUnitTypes, TradeType } from "@/types/cryptos/CryptoTypes"
+import { MarginModeType, TradeOrderTypeNames, PositionType, PriceChangeTypes, SizeUnitTypes, TradeType } from "@/types/cryptos/CryptoTypes"
 import { useCallback, useEffect, useRef, useState } from "react"
 import CommonUtils from "@/utils/CommonUtils"
 import { TextFormats } from "@/types/CommonTypes"
@@ -16,6 +16,8 @@ import CryptoUtils from "@/utils/CryptoUtils"
 import useMarketPriceStore from "@/store/useMarketPriceStore"
 import TradeOrder from "@/types/cryptos/TradeOrder"
 import dayjs from "dayjs"
+import TradeGoApi from "@/apis/api/cryptos/TradeGoApi"
+import { IUpbitMarketTicker } from "@/types/cryptos/CryptoInterfaces"
 
 interface ICryptoMyTradeOrder {
     user: User
@@ -66,6 +68,24 @@ const Order = ({ market, order }: IOrder) => {
         }
     }
 
+    const handleChase = async () => {
+        if (!confirm("주문을 추격하시겠습니까?")) {
+            return
+        }
+
+        const market: IUpbitMarketTicker = await TradeGoApi.getMarketCurrent(order.market.code)
+        if (CommonUtils.isNullOrUndefined(market) || CommonUtils.isNullOrUndefined(String(market.trade_price))) {
+            alert("마켓 정보를 가져오는데 실패했습니다.")
+            return
+        }
+        
+        const response = await CryptoApi.orderLimitChase(order.id, market.trade_price)
+
+        if (!response) {
+            alert("주문 추격에 실패했습니다.")
+        }
+    }
+
     return (
         <S.OrderBox ref={ref}>
             <S.OrderHeader>
@@ -89,8 +109,11 @@ const Order = ({ market, order }: IOrder) => {
 
                 <div className="right">
                     <div className="value">
-                        {OrderTypeNames[order.orderType]}
+                        {TradeOrderTypeNames[order.orderType]}
                     </div>
+                    <button className="value !text-violet-400" onClick={() => {handleChase()}}>
+                        추격
+                    </button>
                     <button className="value !text-yellow-500" onClick={() => {handleCancel()}}>
                         취소
                     </button>

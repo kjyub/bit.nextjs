@@ -1,6 +1,6 @@
 import React from "react"
 import CommonUtils from "@/utils/CommonUtils"
-import { AccountStatusTypes, UserTypes } from "@/types/users/UserTypes"
+import { AccountStatusTypes, UserTypes, UserTypeValues } from "@/types/users/UserTypes"
 import { Expose } from "class-transformer"
 import { AbsApiObject } from "../ApiTypes"
 import UserBrand from "./UserBrand"
@@ -11,7 +11,7 @@ export default class User extends AbsApiObject {
     private _id: number
     
     private _uuid: string
-    private _userType: UserTypes
+    private _userType: UserTypeValues
     private _accountStatus: AccountStatusTypes
     private _email: string
     private _nickname: string
@@ -53,7 +53,7 @@ export default class User extends AbsApiObject {
     public get uuid(): string {
         return this._uuid
     }
-    public get userType(): UserTypes {
+    public get userType(): UserTypeValues {
         return this._userType
     }
     public get accountStatus(): AccountStatusTypes {

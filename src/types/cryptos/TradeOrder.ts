@@ -1,7 +1,7 @@
 import React from "react"
 import CommonUtils from "@/utils/CommonUtils"
 import { AbsApiObject } from "../ApiTypes"
-import { MarginModeType, OrderType, PositionType, TradeType } from "./CryptoTypes"
+import { MarginModeType, MarginModeTypeValues, TradeOrderType, PositionType, TradeType, TradeTypeValues, TradeOrderTypeValues } from "./CryptoTypes"
 import CryptoMarket from "./CryptoMarket"
 
 export default class TradeOrder extends AbsApiObject {
@@ -10,10 +10,10 @@ export default class TradeOrder extends AbsApiObject {
     private _marketCode: string
     private _market: CryptoMarket
     private _isOpen: boolean
-    private _marginMode: MarginModeType
-    private _orderType: OrderType
+    private _marginMode: MarginModeTypeValues
+    private _orderType: TradeOrderTypeValues
     private _positionType: PositionType
-    private _tradeType: TradeType
+    private _tradeType: TradeTypeValues
     private _tradeTime: string
     private _entryPrice: number
     private _quantity: number
@@ -36,7 +36,7 @@ export default class TradeOrder extends AbsApiObject {
         this._market = new CryptoMarket()
         this._isOpen = false
         this._marginMode = MarginModeType.CROSSED
-        this._orderType = OrderType.LIMIT
+        this._orderType = TradeOrderType.LIMIT
         this._positionType = PositionType.LONG
         this._tradeType = TradeType.OPEN
         this._tradeTime = ""
@@ -61,7 +61,7 @@ export default class TradeOrder extends AbsApiObject {
         
         this._id = json["id"]
         this._marketCode = json["market_code"]
-        this._market.parseResponse(json["market"])
+        this._market.parseResponse(json["market"] as object)
         this._isOpen = json["is_open"]
         this._marginMode = json["margin_mode"]
         this._orderType = json["order_type"]
@@ -95,16 +95,16 @@ export default class TradeOrder extends AbsApiObject {
     public get isOpen(): boolean {
         return this._isOpen
     }
-    public get marginMode(): MarginModeType {
+    public get marginMode(): MarginModeTypeValues {
         return this._marginMode
     }
-    public get orderType(): OrderType {
+    public get orderType(): TradeOrderTypeValues {
         return this._orderType
     }
     public get positionType(): PositionType {
         return this._positionType
     }
-    public get tradeType(): TradeType {
+    public get tradeType(): TradeTypeValues {
         return this._tradeType
     }
     public get tradeTime(): string {

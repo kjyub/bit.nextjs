@@ -3,7 +3,8 @@ export const WalletTransactionType = {
     DEPOSIT: 1,
     WITHDRAW: 2,
     TRADE: 3,
-}
+} as const
+export type WalletTransactionTypeValues = typeof WalletTransactionType[keyof typeof WalletTransactionType]
 export const WalletTransactionTypeNames = {
     0: "시스템",
     1: "입금",
@@ -14,12 +15,14 @@ export const WalletTransactionTypeNames = {
 export const TransferTypes = {
     TO_WALLET: 0,
     TO_ACCOUNT: 1,
-}
+} as const
+export type TransferTypeValues = typeof TransferTypes[keyof typeof TransferTypes]
 
 export const MarginModeType = {
     ISOLATED: 0,
     CROSSED: 1
-}
+} as const
+export type MarginModeTypeValues = typeof MarginModeType[keyof typeof MarginModeType]
 export const MarginModeTypeNames = {
     0: "격리",
     1: "교차",
@@ -28,26 +31,30 @@ export const MarginModeTypeNames = {
 export const PositionType = {
     LONG: 0,
     SHORT: 1
-}
+} as const
+export type PositionTypeValues = typeof PositionType[keyof typeof PositionType]
 
 export const TradeType = {
     OPEN: 0,
     CLOSE: 1,
     LIQ: 2,
-}
+} as const
+export type TradeTypeValues = typeof TradeType[keyof typeof TradeType]
 
 export const TradeStatus = {
     WAIT: 0,
     DONE: 1,
     FAIL: 2,
 }
+export type TradeStatusKeys = typeof TradeStatus[keyof typeof TradeStatus]
 
-export const OrderType = {
+export const TradeOrderType = {
     NONE: 0,
     LIMIT: 1,
     MARKET: 2,
-}
-export const OrderTypeNames = {
+} as const
+export type TradeOrderTypeValues = typeof TradeOrderType[keyof typeof TradeOrderType]
+export const TradeOrderTypeNames = {
     0: "-",
     1: "지정가",
     2: "시장가",
@@ -58,7 +65,8 @@ export const MarketTypes = {
     BTC: "BTC",
     USDT: "USDT",
     HOLD: "HOLD",
-}
+} as const
+export type MarketTypeValues = typeof MarketTypes[keyof typeof MarketTypes]
 export const MarketTypeNames = {
     KRW: "KRW",
     BTC: "BTC",
@@ -70,14 +78,16 @@ export const PriceChangeTypes = {
     EVEN: "EVEN",
     RISE: "RISE",
     FALL: "FALL",
-}
+} as const
+export type PriceChangeTypeValues = typeof PriceChangeTypes[keyof typeof PriceChangeTypes]
 
 export const MarketSortTypes = {
     NAME: "korean_name",
     PRICE: "price",
     CHANGE: "change_rate",
     TRADE_PRICE: "trade_price",
-}
+} as const
+export type MarketSortTypeValues = typeof MarketSortTypes[keyof typeof MarketSortTypes]
 export const MarketSortTypeNames = {
     "korean_name": "이름",
     "price": "가격",
@@ -88,4 +98,5 @@ export const MarketSortTypeNames = {
 export const SizeUnitTypes = {
     PRICE: 0,
     QUANTITY: 1,
-}
+} as const
+export type SizeUnitTypeValues = typeof SizeUnitTypes[keyof typeof SizeUnitTypes]

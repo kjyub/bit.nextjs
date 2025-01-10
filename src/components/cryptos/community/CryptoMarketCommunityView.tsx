@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from "react"
 import User from "@/types/users/User"
 import { TextFormats } from "@/types/CommonTypes"
 import CommunityPagination from "@/components/atomics/community/CommunityPagination"
-import { LikeTypes } from "@/types/common/CommonTypes"
+import { LikeTypeValues, LikeTypes } from "@/types/common/CommonTypes"
 import { MARKET_COMMUNITY_COMMENT_PAGE_SIZE } from "@/constants/CryptoConsts"
 import { UserTypes } from "@/types/users/UserTypes"
 
@@ -21,7 +21,7 @@ interface ICryptoMarketCommunityView {
 export default function CryptoMarketCommunityView({ user, communityNanoId }: ICryptoMarketCommunityView) {
     const [community, setCommunity] = useState<MarketCommunity>(new MarketCommunity())
 
-    const [myLikeType, setMyLikeType] = useState<LikeTypes>(LikeTypes.NONE)
+    const [myLikeType, setMyLikeType] = useState<LikeTypeValues>(LikeTypes.NONE)
     const [likes, setLikes] = useState<number>(0)
     const [dislikes, setDislikes] = useState<number>(0)
 
@@ -140,7 +140,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
         }
     }
 
-    const handleLike = async (_type: LikeTypes) => {
+    const handleLike = async (_type: LikeTypeValues) => {
         if (CommonUtils.isStringNullOrEmpty(user.uuid)) {
             alert("로그인 후 이용 가능합니다.")
             return

@@ -17,7 +17,7 @@ class CryptoApi {
         const result: CryptoWallet = new CryptoWallet()
 
         await authInstance.get("/api/cryptos/wallet/").then(({ data }) => {
-            result.parseResponse(data)
+            result.parseResponse(data as object)
         }).catch((error) => {
             console.log(error)
         })
@@ -44,10 +44,10 @@ class CryptoApi {
             search: search,
             market_type: marketType,
         }}).then(({ data }) => {
-            if (Array.isArray(data)) {
+            if (Array.isArray(data as object)) {
                 data.forEach((item) => {
                     const market: CryptoMarket = new CryptoMarket()
-                    market.parseResponse(item)
+                    market.parseResponse(item as object)
                     result.push(market)
                 })
             }
@@ -62,10 +62,10 @@ class CryptoApi {
         const result: Array<CryptoMarket> = []
 
         await defaultInstance.get("/api/cryptos/market_all/",).then(({ data }) => {
-            if (Array.isArray(data)) {
+            if (Array.isArray(data as object)) {
                 data.forEach((item) => {
                     const market: CryptoMarket = new CryptoMarket()
-                    market.parseResponse(item)
+                    market.parseResponse(item as object)
                     result.push(market)
                 })
             }
@@ -111,6 +111,17 @@ class CryptoApi {
 
         return result
     }
+    static async orderLimitChase(orderId: number, price: number): Promise<boolean> {
+        let result = false
+
+        await authInstance.post("/api/cryptos/order_limit_chase/", { order_id: orderId, price }).then(({ data }) => {
+            result = data
+        }).catch((error) => {
+            console.log(error)
+        })
+
+        return result
+    }
     // endregion
 
     // region Trade
@@ -118,10 +129,10 @@ class CryptoApi {
         const result: Array<TradePosition> = []
 
         await authInstance.get("/api/cryptos/my_position/", { params: { market_code: marketCode } }).then(({ data }) => {
-            if (Array.isArray(data)) {
+            if (Array.isArray(data as object)) {
                 data.forEach((item) => {
                     const tradePosition: TradePosition = new TradePosition()
-                    tradePosition.parseResponse(item)
+                    tradePosition.parseResponse(item as object)
                     result.push(tradePosition)
                 })
             }
@@ -135,10 +146,10 @@ class CryptoApi {
         const result: Array<TradeOrder> = []
 
         await authInstance.get("/api/cryptos/my_order/", { params: { market_code: marketCode } }).then(({ data }) => {
-            if (Array.isArray(data)) {
+            if (Array.isArray(data as object)) {
                 data.forEach((item) => {
                     const tradePosition: TradeOrder = new TradeOrder()
-                    tradePosition.parseResponse(item)
+                    tradePosition.parseResponse(item as object)
                     result.push(tradePosition)
                 })
             }
@@ -160,7 +171,7 @@ class CryptoApi {
             page: page,
             page_size: pageSize,
         }}).then(({ data }) => {
-            result.parseResponse(data, MarketCommunity)
+            result.parseResponse(data as object, MarketCommunity)
         }).catch((error) => {
             console.log(error)
         })
@@ -171,7 +182,7 @@ class CryptoApi {
         const result: MarketCommunity = new MarketCommunity()
 
         await authInstance.get(`/api/cryptos/community/${nanoId}/`).then(({ data }) => {
-            result.parseResponse(data)
+            result.parseResponse(data as object)
         }).catch((error) => {
             console.log(error)
         })
@@ -182,7 +193,7 @@ class CryptoApi {
         const result: MarketCommunity = new MarketCommunity()
 
         await authInstance.post("/api/cryptos/community_create/", requestData).then(({ data }) => {
-            result.parseResponse(data)
+            result.parseResponse(data as object)
         }).catch((error) => {
             console.log(error)
         })
@@ -193,7 +204,7 @@ class CryptoApi {
         const result: MarketCommunity = new MarketCommunity()
 
         await authInstance.put(`/api/cryptos/community_update/${nanoId}/`, requestData).then(({ data }) => {
-            result.parseResponse(data)
+            result.parseResponse(data as object)
         }).catch((error) => {
             console.log(error)
         })
@@ -211,7 +222,7 @@ class CryptoApi {
 
         return result
     }
-    static async likeCommunity(nanoId: string, likeType: LikeTypes): Promise<boolean> {
+    static async likeCommunity(nanoId: string, likeType: LikeTypeValues): Promise<boolean> {
         let result = false
 
         await authInstance.post(`/api/cryptos/community_like/${nanoId}/`, { like_type: likeType }).then(() => {
@@ -232,7 +243,7 @@ class CryptoApi {
             page: pageIndex,
             page_size: pageSize,
         }}).then(({ data }) => {
-            result.parseResponse(data, MarketCommunityComment)
+            result.parseResponse(data as object, MarketCommunityComment)
         }).catch((error) => {
             console.log(error)
         })
@@ -243,7 +254,7 @@ class CryptoApi {
         const result: MarketCommunityComment = new MarketCommunityComment()
 
         await authInstance.post("/api/cryptos/community_comment_create/", requestData).then(({ data }) => {
-            result.parseResponse(data)
+            result.parseResponse(data as object)
         }).catch((error) => {
             console.log(error)
         })
@@ -254,7 +265,7 @@ class CryptoApi {
         const result: MarketCommunityComment = new MarketCommunityComment()
 
         await authInstance.put(`/api/cryptos/community_comment_update/${id}/`, requestData).then(({ data }) => {
-            result.parseResponse(data)
+            result.parseResponse(data as object)
         }).catch((error) => {
             console.log(error)
         })

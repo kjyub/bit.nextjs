@@ -1,7 +1,7 @@
 import React from "react"
 import CommonUtils from "@/utils/CommonUtils"
 import { AbsApiObject } from "../ApiTypes"
-import { MarginModeType, PositionType } from "./CryptoTypes"
+import { MarginModeType, MarginModeTypeValues, PositionType } from "./CryptoTypes"
 import CryptoMarket from "./CryptoMarket"
 
 export default class TradePosition extends AbsApiObject {
@@ -10,7 +10,7 @@ export default class TradePosition extends AbsApiObject {
     private _marketCode: string
     private _market: CryptoMarket
     private _isOpen: boolean
-    private _marginMode: MarginModeType
+    private _marginMode: MarginModeTypeValues
     private _positionType: PositionType
     private _entryTime: string
     private _averagePrice: number
@@ -68,7 +68,7 @@ export default class TradePosition extends AbsApiObject {
     public get isOpen(): boolean {
         return this._isOpen
     }
-    public get marginMode(): MarginModeType {
+    public get marginMode(): MarginModeTypeValues {
         return this._marginMode
     }
     public get positionType(): PositionType {

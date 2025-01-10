@@ -2,7 +2,7 @@
 import * as S from "@/styles/CryptoWalletStyles"
 import * as I from "@/components/inputs/UserInputs"
 import ModalLayout from "../atomics/ModalLayout"
-import { TransferTypes, WalletTransactionType } from "@/types/cryptos/CryptoTypes"
+import { TransferTypeValues, TransferTypes, WalletTransactionType } from "@/types/cryptos/CryptoTypes"
 import { useEffect, useState } from "react"
 import CommonUtils from "@/utils/CommonUtils"
 import { TextFormats } from "@/types/CommonTypes"
@@ -18,14 +18,14 @@ const TransferSuffix = {
 }
 
 interface CryptoTransferModalProps {
-    defaultTransferType: TransferTypes
+    defaultTransferType: TransferTypeValues
     cash: number
     balance: number
 
 }
 export default function CryptoTransferModal({ defaultTransferType }: CryptoTransferModalProps) {
     // 타입 및 스타일
-    const [transferType, setTransferType] = useState<TransferTypes>(defaultTransferType)
+    const [transferType, setTransferType] = useState<TransferTypeValues>(defaultTransferType)
     const [isBgActive, setBgActive] = useState<boolean>(false)
 
     // 잔액

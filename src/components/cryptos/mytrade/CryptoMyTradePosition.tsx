@@ -2,7 +2,7 @@
 
 import * as S from "@/styles/CryptoMyTradeStyles"
 import * as I from "@/components/inputs/TradeInputs"
-import { MarginModeType, MarginModeTypeNames, OrderType, PositionType, PriceChangeTypes, SizeUnitTypes, TradeType } from "@/types/cryptos/CryptoTypes"
+import { MarginModeType, MarginModeTypeNames, TradeOrderType, TradeOrderTypeValues, PositionType, PriceChangeTypes, SizeUnitTypes, TradeType } from "@/types/cryptos/CryptoTypes"
 import { useCallback, useEffect, useState } from "react"
 import CommonUtils from "@/utils/CommonUtils"
 import { TextFormats } from "@/types/CommonTypes"
@@ -94,7 +94,7 @@ const Position = ({ position, userBudget }: IPosition) => {
         setChangeType(CryptoUtils.getPriceChangeType(socketData.trade_price, socketData.opening_price))
     }, [position, marketPrice])
 
-    const orderClose = useCallback(async (_orderType: OrderType) => {
+    const orderClose = useCallback(async (_orderType: TradeOrderTypeValues) => {
         const data = {
             market_code: position.market.code,
             trade_type: TradeType.CLOSE,
@@ -110,13 +110,13 @@ const Position = ({ position, userBudget }: IPosition) => {
         console.log(position, data)
         
         let result = false
-        if (_orderType === OrderType.LIMIT) {
+        if (_orderType === TradeOrderType.LIMIT) {
             data["price"] = Number(closePrice)
             data["quantity"] = Number(closeQuantity)
             data["size"] = Number(closeQuantity) * Number(closePrice)
 
             result = await CryptoApi.orderLimit(data)
-        } else if (_orderType === OrderType.MARKET) {
+        } else if (_orderType === TradeOrderType.MARKET) {
             data["price"] = marketPrice
             data["quantity"] = Number(closeQuantity)
             data["size"] = Number(closeQuantity) * marketPrice
@@ -223,8 +223,8 @@ const Position = ({ position, userBudget }: IPosition) => {
             <S.PositionClose>
                 <div className="title">포지션 종료</div>
                 <div className="buttons">
-                    <button onClick={() => {orderClose(OrderType.LIMIT)}}>지정가</button>
-                    <button onClick={() => {orderClose(OrderType.MARKET)}}>시장가</button>
+                    <button onClick={() => {orderClose(TradeOrderType.LIMIT)}}>지정가</button>
+                    <button onClick={() => {orderClose(TradeOrderType.MARKET)}}>시장가</button>
                 </div>
                 <div className="inputs">
                     <I.NumberInput label={"가격"} value={closePrice} setValue={setClosePrice} />

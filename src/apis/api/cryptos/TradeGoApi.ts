@@ -67,8 +67,8 @@ class TradeGoApi {
       
         socket.onmessage = (event: MessageEvent) => {
             try {
-                const data = JSON.parse(event.data)
-                updateMarketPriceDic(data)
+                const data = JSON.parse(event.data as string)
+                updateMarketPriceDic(data as object)
             } catch (error) {
                 console.error('Failed to parse WebSocket message', error)
             }

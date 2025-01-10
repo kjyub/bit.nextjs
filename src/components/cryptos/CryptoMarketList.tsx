@@ -6,8 +6,8 @@ import useMarketPriceStore from "@/store/useMarketPriceStore"
 import * as S from "@/styles/CryptoMarketStyles"
 import { IUpbitMarketTicker } from "@/types/cryptos/CryptoInterfaces"
 import CryptoMarket from "@/types/cryptos/CryptoMarket"
-import { MarketSortTypeNames, MarketSortTypes, MarketTypeNames, MarketTypes, PriceChangeTypes } from "@/types/cryptos/CryptoTypes"
-import { OrderTypes } from "@/types/common/CommonTypes"
+import { MarketSortTypeNames, MarketSortTypes, MarketSortTypeValues, MarketTypeNames, MarketTypes, MarketTypeValues, PriceChangeTypes, PriceChangeTypeValues } from "@/types/cryptos/CryptoTypes"
+import { OrderTypeValues, OrderTypes } from "@/types/common/CommonTypes"
 import { TextFormats } from "@/types/CommonTypes"
 import CryptoUtils from "@/utils/CryptoUtils"
 import CommonUtils from "@/utils/CommonUtils"
@@ -24,7 +24,7 @@ export default function CryptoMarketList() {
     const [search, setSearch] = useState<string>("") // 검색어
 
     const [sortType, setSortType] = useState<MarketSortTypes>(MarketSortTypes.TRADE_PRICE) // 정렬 기준
-    const [orderType, setOrderType] = useState<OrderTypes>(OrderTypes.DESC) // 정렬 방식
+    const [orderType, setOrderType] = useState<OrderTypeValues>(OrderTypes.DESC) // 정렬 방식
     const [sortIndexes, setSortIndexes] = useState<number[]>([]) // 정렬된 인덱스
     const [sortedCodes, setSortedCodes] = useState<string[]>([]) // 정렬된 코드
 
@@ -87,7 +87,7 @@ export default function CryptoMarketList() {
     }
  
     // 코드 정렬하기
-    const getSortedCodes = useCallback(async (_sortType: MarketSortTypes, _orderType: OrderTypes): string[] => {
+    const getSortedCodes = useCallback(async (_sortType: MarketSortTypeValues, _orderType: OrderTypeValues): string[] => {
         const socketDataDic = await TradeGoApi.getMarketsCurrentDic()
 
         return Object.keys(marketDic).sort((a, b) => {
@@ -192,9 +192,9 @@ export default function CryptoMarketList() {
 }
 
 interface IMarketType {
-    marketType: MarketTypes
-    currentMarketType: MarketTypes
-    setMarketType: (marketType: MarketTypes) => void
+    marketType: MarketTypeValues
+    currentMarketType: MarketTypeValues
+    setMarketType: (marketType: MarketTypeValues) => void
 }
 const MarketType = ({ marketType, currentMarketType, setMarketType }: IMarketType) => {
     return (
@@ -208,11 +208,11 @@ const MarketType = ({ marketType, currentMarketType, setMarketType }: IMarketTyp
 }
 
 interface IMarketSortType {
-    sortType: MarketSortTypes
-    currentSortType: MarketSortTypes
-    setSortType: (sortType: MarketSortTypes) => void
-    currentOrderType: OrderTypes
-    setOrderType: (orderType: OrderTypes) => void
+    sortType: MarketSortTypeValues
+    currentSortType: MarketSortTypeValues
+    setSortType: (sortType: MarketSortTypeValues) => void
+    currentOrderType: OrderTypeValues
+    setOrderType: (orderType: OrderTypeValues) => void
 }
 const MarketSortType = ({ sortType, currentSortType, setSortType, currentOrderType, setOrderType }: IMarketSortType) => {
     const handleClick = () => {
@@ -245,7 +245,7 @@ const MarketSortType = ({ sortType, currentSortType, setSortType, currentOrderTy
 }
 
 interface IMarketData {
-    changeType: PriceChangeTypes
+    changeType: PriceChangeTypeValues
     openingPrice: number
     price: number
     startPrice: number

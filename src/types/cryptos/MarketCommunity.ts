@@ -1,7 +1,7 @@
 import CommonUtils from "@/utils/CommonUtils"
 import { AbsApiObject } from "../ApiTypes"
 import User from "@/types/users/User"
-import { LikeTypes } from "../common/CommonTypes"
+import { LikeTypeValues, LikeTypes } from "../common/CommonTypes"
 
 export default class MarketCommunity extends AbsApiObject {
     private _id: number
@@ -13,7 +13,7 @@ export default class MarketCommunity extends AbsApiObject {
     private _content: string
     private _views: number
     private _likes: number
-    private _likeType: LikeTypes
+    private _likeType: LikeTypeValues
     private _dislikes: number
     private _comments: number
     private _createdDate: string
@@ -83,7 +83,7 @@ export default class MarketCommunity extends AbsApiObject {
     public get dislikes(): number {
         return this._dislikes
     }
-    public get likeType(): LikeTypes {
+    public get likeType(): LikeTypeValues {
         return this._likeType
     }
     public get comments(): number {
