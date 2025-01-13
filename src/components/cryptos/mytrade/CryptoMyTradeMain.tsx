@@ -12,6 +12,7 @@ import CryptoMarket from "@/types/cryptos/CryptoMarket"
 import CryptoMyTradePosition from "./CryptoMyTradePosition"
 import User from "@/types/users/User"
 import CryptoMyTradeOrder from "./CryptoMyTradeOrder"
+import CryptoMyTradeOrderHistory from "./CryptoMyTradeOrderHistory"
 
 export enum MyTradePage {
     POSITION,
@@ -52,6 +53,9 @@ export default function CryptoMyTrade({ user, market, marketPrice }: ICryptoMyTr
             )}
             {page === MyTradePage.ORDER && (
                 <CryptoMyTradeOrder user={user} market={market} />
+            )}
+            {page === MyTradePage.ORDER_HISTORY && (
+                <CryptoMyTradeOrderHistory user={user} market={market} />
             )}
         </S.Layout>
     )

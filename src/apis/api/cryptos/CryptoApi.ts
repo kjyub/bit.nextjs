@@ -161,6 +161,26 @@ class CryptoApi {
     }
     // endregion
 
+    // region History
+    static async getTradeOrderHistories(marketCode: string, pageIndex: number = 1, pageSize: number = 50): Promise<Pagination<TradeOrder>> {
+        const result = new Pagination<TradeOrder>()
+
+        const params = {
+            market_code: marketCode,
+            page: pageIndex,
+            page_size: pageSize,
+        }
+
+        await authInstance.get("/api/cryptos/my_order_history/", { params }).then(({ data }) => {
+            result.parseResponse(data as object, TradeOrder)
+        }).catch((error) => {
+            console.log(error)
+        })
+
+        return result
+    }
+    // endregion
+
     // region Community
     static async getCommunityList(search: string, marketCode: string, page: number, pageSize: number): Promise<Pagination<MarketCommunity>> {
         const result: Pagination<MarketCommunity> = new Pagination<MarketCommunity>()

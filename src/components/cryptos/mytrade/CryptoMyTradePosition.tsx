@@ -107,7 +107,6 @@ const Position = ({ position, userBudget }: IPosition) => {
             leverage: position.averageLeverage,
             size_unit_type: SizeUnitTypes.QUANTITY,
         }
-        console.log(position, data)
         
         let result = false
         if (_orderType === TradeOrderType.LIMIT) {
@@ -150,10 +149,6 @@ const Position = ({ position, userBudget }: IPosition) => {
                         <span className="code">
                             {position.market.code}
                         </span>
-                    </p>
-
-                    <p className={`${changeType === PriceChangeTypes.RISE ? "rise" : changeType === PriceChangeTypes.FALL ? "fall" : ""} price`}>
-                        {CryptoUtils.getPriceText(marketPrice)}{"KRW"}
                     </p>
                 </div>
 

@@ -31,6 +31,6 @@ export default class Pagination<T extends AbsApiObject> {
         })
 
         this._count = data["count"] ?? 0
-        this._pageIndex = data["current_page"] ?? 1
+        this._pageIndex = data["current_page"] ?? -1
     }
 }
