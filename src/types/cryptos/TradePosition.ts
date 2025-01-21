@@ -19,6 +19,10 @@ export default class TradePosition extends AbsApiObject {
     private _averageLeverage: number
     private _liquidatePrice: number
     private _totalFee: number
+    private _entryPrice: number
+    private _averageClosePrice: number
+    private _pnl: number
+    private _closeTime: string
 
     constructor() {
         super()
@@ -35,6 +39,10 @@ export default class TradePosition extends AbsApiObject {
         this._averageLeverage = 1
         this._liquidatePrice = 0
         this._totalFee = 0
+        this._entryPrice = ""
+        this._averageClosePrice = 0
+        this._pnl = 0
+        this._closeTime = ""
     }
 
     parseResponse(json: object): void {
@@ -43,7 +51,7 @@ export default class TradePosition extends AbsApiObject {
         
         this._id = json["id"]
         this._marketCode = json["market_code"]
-        this._market.parseResponse(json["market"])
+        this._market.parseResponse(json["market"] as object)
         this._isOpen = json["is_open"]
         this._marginMode = json["margin_mode"]
         this._positionType = json["position_type"]
@@ -54,6 +62,10 @@ export default class TradePosition extends AbsApiObject {
         this._averageLeverage = json["average_leverage"]
         this._liquidatePrice = json["liquidate_price"]
         this._totalFee = json["total_fee"]
+        this._entryPrice = json["entry_price"]
+        this._averageClosePrice = json["average_close_price"]
+        this._pnl = json["pnl"]
+        this._closeTime = json["close_time"]
     }
 
     public get id(): number {
@@ -82,7 +94,8 @@ export default class TradePosition extends AbsApiObject {
         return isNaN(price) ? 0 : price
     }
     public get quantity(): number {
-        return this._quantity
+        const quantity = Number(this._quantity)
+        return isNaN(quantity) ? 0 : quantity
     }
     public get marginPrice(): number {
         const price = Number(this._marginPrice)
@@ -97,5 +110,17 @@ export default class TradePosition extends AbsApiObject {
     }
     public get totalFee(): number {
         return this._totalFee
+    }
+    public get entryPrice(): number {
+        return this._entryPrice
+    }
+    public get averageClosePrice(): number {
+        return this._averageClosePrice
+    }
+    public get pnl(): number {
+        return this._pnl
+    }
+    public get closeTime(): string {
+        return this._closeTime
     }
 }

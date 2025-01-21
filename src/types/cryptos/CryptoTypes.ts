@@ -52,12 +52,16 @@ export const TradeOrderType = {
     NONE: 0,
     LIMIT: 1,
     MARKET: 2,
+    TAKE_PROFIT: 3,
+    STOP_LOSS: 4,
+    LIQUIDATE: 5,
 } as const
 export type TradeOrderTypeValues = typeof TradeOrderType[keyof typeof TradeOrderType]
 export const TradeOrderTypeNames = {
     0: "-",
     1: "지정가",
     2: "시장가",
+    3: "청산",
 }
 
 export const MarketTypes = {

@@ -3,7 +3,7 @@ import Link from "next/link"
 import tw from "tailwind-styled-components"
 
 export const Layout = tw.div`
-    flex flex-col w-full h-full space-y-2
+    flex flex-col w-full h-[calc(100vh-208px)] space-y-2
 `
 export const PageTabBar = tw.div`
     flex items-center w-full space-x-1
@@ -15,9 +15,15 @@ export const PageTabBar = tw.div`
     [&>button]:duration-200
 `
 
-export const PageLayout = tw.div`
-    flex flex-col w-full h-full
+export const PageLayout = tw.div<StyleProps>`
+    flex flex-col w-full h-full min-h-[12rem]
     rounded-lg bg-slate-900/30
+`
+export const PageList = tw.div<StyleProps>`
+    ${({$is_active}) => $is_active ? "opacity-100" : "opacity-50"}
+    flex flex-col w-full h-full space-y-2
+    overflow-y-auto
+    duration-200
 `
 
 export const ItemBox = tw.div`
@@ -107,6 +113,11 @@ export const OrderHeader = tw.div`
     [&>.left>.title>.korean]:text-sm [&>.left>.title>.korean]:text-slate-200
     [&>.left>.title>.english]:text-xs [&>.left>.title>.english]:text-slate-400
     [&>.left>.title>.code]:text-xs [&>.left>.title>.code]:text-slate-500
+    
+    [&>.left>.position]:w-12 [&>.left>.position]:py-[1px]
+    [&>.left>.position]:rounded-md [&>.left>.position]:text-center
+    [&>.left>.position]:text-[11px] [&>.left>.position]:text-white
+    [&>.left>.position.long]:bg-position-long-1 [&>.left>.position.short]:bg-position-short-1
 
     [&>.left>.price]:text-sm [&>.left>.price]:text-slate-400
     [&>.left>.price.rise]:text-red-500 [&>.left>.price.fall]:text-blue-500
@@ -145,4 +156,27 @@ export const OrderClose = tw.div`
     [&>.buttons>button]:duration-200
 
     [&>.inputs]:grid [&>.inputs]:grid-cols-2 [&>.inputs]:gap-2 [&>.inputs]:flex-1
+`
+
+export const FilterBox = tw.div<StyleProps>`
+    flex flex-center px-2 py-1
+    rounded-md 
+    text-xs
+
+    ${({$is_active}) => $is_active ? 
+        "bg-slate-500/30 text-slate-300 hover:text-slate-200" : 
+        "text-slate-400 hover:bg-slate-500/30 hover:text-slate-200"
+    }
+    transition-colors
+`
+export const FilterButton = tw(FilterBox)`
+    cursor-pointer
+`
+export const FilterDateInputBox = tw(FilterBox)`
+    px-1 space-x-1 
+    [&>input]:bg-transparent [&>input]:text-center 
+    [&>input]:pt-[1px] 
+    [&>input]:border-b [&>input]:border-transparent 
+    focus:[&>input]:border-violet-500/70 hover:[&>input]:border-violet-500/70
+    [&>input]:transition-colors
 `

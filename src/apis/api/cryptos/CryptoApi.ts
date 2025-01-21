@@ -10,6 +10,8 @@ import { LikeTypes } from '@/types/common/CommonTypes';
 import CryptoWallet from '@/types/cryptos/CryptoWallet';
 import TradePosition from '@/types/cryptos/TradePosition';
 import TradeOrder from '@/types/cryptos/TradeOrder';
+import TradeHistory from '@/types/cryptos/TradeHistory';
+import CommonUtils from '@/utils/CommonUtils';
 
 class CryptoApi {
     // region Wallet
@@ -125,10 +127,10 @@ class CryptoApi {
     // endregion
 
     // region Trade
-    static async getTradePostions(marketCode: string): Promise<Array<TradePosition>> {
+    static async getTradePostions(): Promise<Array<TradePosition>> {
         const result: Array<TradePosition> = []
 
-        await authInstance.get("/api/cryptos/my_position/", { params: { market_code: marketCode } }).then(({ data }) => {
+        await authInstance.get("/api/cryptos/my_position/").then(({ data }) => {
             if (Array.isArray(data as object)) {
                 data.forEach((item) => {
                     const tradePosition: TradePosition = new TradePosition()
@@ -142,15 +144,15 @@ class CryptoApi {
 
         return result
     }
-    static async getTradeOrders(marketCode: string): Promise<Array<TradeOrder>> {
+    static async getTradeOrders(): Promise<Array<TradeOrder>> {
         const result: Array<TradeOrder> = []
 
-        await authInstance.get("/api/cryptos/my_order/", { params: { market_code: marketCode } }).then(({ data }) => {
+        await authInstance.get("/api/cryptos/my_order/").then(({ data }) => {
             if (Array.isArray(data as object)) {
                 data.forEach((item) => {
-                    const tradePosition: TradeOrder = new TradeOrder()
-                    tradePosition.parseResponse(item as object)
-                    result.push(tradePosition)
+                    const tradeOrder: TradeOrder = new TradeOrder()
+                    tradeOrder.parseResponse(item as object)
+                    result.push(tradeOrder)
                 })
             }
         }).catch((error) => {
@@ -162,17 +164,69 @@ class CryptoApi {
     // endregion
 
     // region History
-    static async getTradeOrderHistories(marketCode: string, pageIndex: number = 1, pageSize: number = 50): Promise<Pagination<TradeOrder>> {
+    static async getTradeOrderHistories(pageIndex: number = 1, pageSize: number = 50, dateStart: string = "", dateEnd: string = ""): Promise<Pagination<TradeOrder>> {
         const result = new Pagination<TradeOrder>()
 
         const params = {
-            market_code: marketCode,
             page: pageIndex,
             page_size: pageSize,
         }
 
+        if (!CommonUtils.isStringNullOrEmpty(dateStart)) {
+            params["date_start"] = dateStart
+        }
+        if (!CommonUtils.isStringNullOrEmpty(dateEnd)) {
+            params["date_end"] = dateEnd
+        }
+
         await authInstance.get("/api/cryptos/my_order_history/", { params }).then(({ data }) => {
             result.parseResponse(data as object, TradeOrder)
+        }).catch((error) => {
+            console.log(error)
+        })
+
+        return result
+    }
+    static async getTradeHistories(pageIndex: number = 1, pageSize: number = 50, dateStart: string = "", dateEnd: string = ""): Promise<Pagination<TradeHistory>> {
+        const result = new Pagination<TradeHistory>()
+
+        const params = {
+            page: pageIndex,
+            page_size: pageSize,
+        }
+
+        if (!CommonUtils.isStringNullOrEmpty(dateStart)) {
+            params["date_start"] = dateStart
+        }
+        if (!CommonUtils.isStringNullOrEmpty(dateEnd)) {
+            params["date_end"] = dateEnd
+        }
+
+        await authInstance.get("/api/cryptos/my_trade_history/", { params }).then(({ data }) => {
+            result.parseResponse(data as object, TradeHistory)
+        }).catch((error) => {
+            console.log(error)
+        })
+
+        return result
+    }
+    static async getTradePositionHistories(pageIndex: number = 1, pageSize: number = 50, dateStart: string = "", dateEnd: string = ""): Promise<Pagination<TradePosition>> {
+        const result = new Pagination<TradePosition>()
+
+        const params = {
+            page: pageIndex,
+            page_size: pageSize,
+        }
+
+        if (!CommonUtils.isStringNullOrEmpty(dateStart)) {
+            params["date_start"] = dateStart
+        }
+        if (!CommonUtils.isStringNullOrEmpty(dateEnd)) {
+            params["date_end"] = dateEnd
+        }
+
+        await authInstance.get("/api/cryptos/my_position_history/", { params }).then(({ data }) => {
+            result.parseResponse(data as object, TradePosition)
         }).catch((error) => {
             console.log(error)
         })

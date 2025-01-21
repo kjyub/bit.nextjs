@@ -21,28 +21,29 @@ import { IUpbitMarketTicker } from "@/types/cryptos/CryptoInterfaces"
 
 interface ICryptoMyTradeOrder {
     user: User
-    market: CryptoMarket
 }
-export default function CryptoMyTradeOrder({ user, market }: ICryptoMyTradeOrder) {
+export default function CryptoMyTradeOrder({ user }: ICryptoMyTradeOrder) {
     const [orders, setOrders] = useState<Array<TradePosition>>([])
 
     useEffect(() => {
         if (!CommonUtils.isStringNullOrEmpty(user.uuid)) {
             getPositions()
         }    
-    }, [user.uuid, market])
+    }, [user.uuid])
 
     const getPositions = useCallback(() => {
         CryptoApi.getTradeOrders().then((response) => {
             setOrders(response)
         })
-    }, [market.code])
+    }, [])
 
     return (
-        <S.PageLayout className="min-h-[48rem] h-fit p-2 space-y-2">
-            {orders.map((order, index) => (
-                <Order key={index} order={order} />
-            ))}
+        <S.PageLayout className="p-2 space-y-2">
+            <S.PageList $is_active={orders.length > 0}>
+                {orders.map((order, index) => (
+                    <Order key={index} order={order} />
+                ))}
+            </S.PageList>
         </S.PageLayout>
     )
 }

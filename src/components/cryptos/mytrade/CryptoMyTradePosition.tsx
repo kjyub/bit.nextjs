@@ -17,9 +17,8 @@ import useMarketPriceStore from "@/store/useMarketPriceStore"
 
 interface ICryptoMyTradePosition {
     user: User
-    market: CryptoMarket
 }
-export default function CryptoMyTradePosition({ user, market }: ICryptoMyTradePosition) {
+export default function CryptoMyTradePosition({ user }: ICryptoMyTradePosition) {
     const { balance, updateInfo } = useUserInfoStore()
     
     const [positions, setPositions] = useState<Array<TradePosition>>([])
@@ -28,19 +27,21 @@ export default function CryptoMyTradePosition({ user, market }: ICryptoMyTradePo
         if (!CommonUtils.isStringNullOrEmpty(user.uuid)) {
             getPositions()
         }    
-    }, [user.uuid, market])
+    }, [user.uuid])
 
     const getPositions = useCallback(() => {
         CryptoApi.getTradePostions().then((response) => {
             setPositions(response)
         })
-    }, [market.code])
+    }, [])
 
     return (
-        <S.PageLayout className="min-h-[48rem] h-fit p-2 space-y-2">
-            {positions.map((position, index) => (
-                <Position key={index} position={position} userBudget={balance} />
-            ))}
+        <S.PageLayout className="p-2 space-y-2">
+            <S.PageList $is_active={positions.length > 0}>
+                {positions.map((position, index) => (
+                    <Position key={index} position={position} userBudget={balance} />
+                ))}
+            </S.PageList>
         </S.PageLayout>
     )
 }

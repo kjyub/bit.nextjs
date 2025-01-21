@@ -25,7 +25,6 @@ export default class TradeOrder extends AbsApiObject {
     private _closeTime: string
     private _isOpen: boolean
     private _isCancel: boolean
-    private _pnl: number
 
     private _createdDate: string
 
@@ -50,7 +49,6 @@ export default class TradeOrder extends AbsApiObject {
         this._closeTime = ""
         this._isOpen = false
         this._isCancel = false
-        this._pnl = 0
 
         this._createdDate = ""
     }
@@ -78,7 +76,6 @@ export default class TradeOrder extends AbsApiObject {
         this._closeTime = json["close_time"]
         this._isOpen = json["is_open"]
         this._isCancel = json["is_cancel"]
-        this._pnl = json["pnl"]
 
         this._createdDate = json["created_date"]
     }
@@ -139,9 +136,6 @@ export default class TradeOrder extends AbsApiObject {
     }
     public get isCancel(): boolean {
         return this._isCancel
-    }
-    public get pnl(): number {
-        return this._pnl
     }
     public get createdDate(): string {
         return this._createdDate

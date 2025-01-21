@@ -2,7 +2,7 @@
 
 import * as S from "@/styles/CryptoMyTradeStyles"
 import * as I from "@/components/inputs/TradeInputs"
-import { MarginModeType, TradeOrderTypeNames, PositionType, PriceChangeTypes, SizeUnitTypes, TradeType } from "@/types/cryptos/CryptoTypes"
+import { MarginModeType, TradeOrderTypeNames, PositionType, PriceChangeTypes, SizeUnitTypes, TradeType, MarginModeTypeNames } from "@/types/cryptos/CryptoTypes"
 import { useCallback, useEffect, useRef, useState } from "react"
 import CommonUtils from "@/utils/CommonUtils"
 import { TextFormats } from "@/types/CommonTypes"
@@ -19,17 +19,16 @@ import dayjs from "dayjs"
 import TradeGoApi from "@/apis/api/cryptos/TradeGoApi"
 import { IUpbitMarketTicker } from "@/types/cryptos/CryptoInterfaces"
 import CryptoMyTradeFilter from "./Filter"
-import usePageScroll from "@/hooks/usePageScroll"
-import Pagination from "@/types/api/pagination"
 import CryptoMyTradeItemSkeleton from "./ItemSkeleton"
+import usePageScroll from "@/hooks/usePageScroll"
 
 const PAGE_SIZE = 10
 
-interface ICryptoMyTradeOrderHistory {
+interface ICryptoMyTradePositionHistory {
     user: User
 }
-export default function CryptoMyTradeOrderHistory({ user }: ICryptoMyTradeOrderHistory) {
-    const [orders, setOrders] = useState<Array<TradeOrder>>([])
+export default function CryptoMyTradePositionHistory({ user }: ICryptoMyTradePositionHistory) {
+    const [positions, setPositions] = useState<Array<TradePosition>>([])
     const [pageIndex, setPageIndex] = useState<number>(1)
     const [itemCount, setItemCount] = useState<number>(0)
     const [isLoading, setLoading] = useState<boolean>(false)
@@ -43,12 +42,12 @@ export default function CryptoMyTradeOrderHistory({ user }: ICryptoMyTradeOrderH
         }
 
         setLoading(true)
-        const response = await CryptoApi.getTradeOrderHistories(_pageIndex, PAGE_SIZE, dateStart, dateEnd)
+        const response = await CryptoApi.getTradePositionHistories(_pageIndex, 50, dateStart, dateEnd)
         
         if (_pageIndex === 1) {
-            setOrders(response.items)
+            setPositions(response.items)
         } else {
-            setOrders([...orders, ...response.items])
+            setPositions([...positions, ...response.items])
         }
         setPageIndex(response.pageIndex >= 0 ? response.pageIndex : _pageIndex)
         setItemCount(response.count)
@@ -56,7 +55,7 @@ export default function CryptoMyTradeOrderHistory({ user }: ICryptoMyTradeOrderH
         setDateEnd(dateEnd)
         setLoading(false)
     }
-
+        
     const handleNextPage = () => {
         getHistories(pageIndex + 1, dateStart, dateEnd)
     }
@@ -75,10 +74,10 @@ export default function CryptoMyTradeOrderHistory({ user }: ICryptoMyTradeOrderH
     return (
         <S.PageLayout className="p-2 space-y-2">
             <CryptoMyTradeFilter onSearch={handleSearch} />
-
-            <S.PageList $is_active={orders.length > 0}>
-                {orders.map((order, index) => (
-                    <Order key={index} order={order} />
+        
+            <S.PageList $is_active={positions.length > 0}>
+                {positions.map((position, index) => (
+                    <Position key={index} position={position} />
                 ))}
 
                 <CryptoMyTradeItemSkeleton ref={scrollRef} pageIndex={pageIndex} itemCount={itemCount} pageSize={PAGE_SIZE} />
@@ -87,58 +86,56 @@ export default function CryptoMyTradeOrderHistory({ user }: ICryptoMyTradeOrderH
     )
 }
 
-interface IOrder {
-    order: TradeOrder
+interface IPosition {
+    position: TradePosition
 }
-const Order = ({ order }: IOrder) => {
+const Position = ({ position }: IPosition) => {
     return (
         <S.OrderBox>
             <S.OrderHeader>
                 <div className="left">
-                    <div className="datetime">
-                        <i className="fa-solid fa-clock"></i>
-                        <span>
-                            {dayjs(order.createdDate).format("YYYY-MM-DD HH:mm:ss")}
-                        </span>
-                    </div>
-                    
-                    <div className={`position ${order.positionType === PositionType.LONG ? "long" : "short"}`}>
-                        {order.positionType === PositionType.LONG ? "LONG" : "SHORT"}
+                    <div className={`position ${position.positionType !== PositionType.LONG ? "long" : "short"}`}>
+                        {position.positionType === PositionType.LONG ? "LONG" : "SHORT"}
                     </div>
 
                     <p className="title">
                         <span className="korean">
-                            {order.market.koreanName}
+                            {position.market.koreanName}
                         </span>
                         <span className="code">
-                            {order.market.code}
+                            {position.market.code}
                         </span>
                     </p>
                 </div>
 
                 <div className="right">
-                    <div className={`value ${order.isCancel ? "!text-slate-400" : "!text-violet-500"}`}>
-                        {order.isCancel ? "취소됨" : "처리됨"}
+                    <div className="value">
+                        {MarginModeTypeNames[position.marginMode]}
                     </div>
                 </div>
             </S.OrderHeader>
+        
 
             <S.OrderBody>
                 <S.OrderItem className={``}>
-                    <dt>가격 <span>Price</span></dt>
-                    <dd>{CryptoUtils.getPriceText(order.entryPrice)}</dd>
+                    <dt>진입 가격 <span>Entry Price</span></dt>
+                    <dd>{CryptoUtils.getPriceText(position.entryPrice)}</dd>
                 </S.OrderItem>
                 <S.OrderItem className={``}>
-                    <dt>수량 <span>Amount</span></dt>
-                    <dd>{CryptoUtils.getPriceText(order.size)}TW</dd>
+                    <dt>평균 종료 가격 <span>Avg. Close Price</span></dt>
+                    <dd>{CryptoUtils.getPriceText(position.averageClosePrice)}</dd>
+                </S.OrderItem>
+                <S.OrderItem className={`col-span-2 ${position.pnl > 0 ? "long" : "short"}`}>
+                    <dt>손익 <span>Closing PNL</span></dt>
+                    <dd>{CryptoUtils.getPriceText(position.pnl)}TW</dd>
                 </S.OrderItem>
                 <S.OrderItem className={``}>
-                    <dt>타입 <span>Type</span></dt>
-                    <dd>{TradeOrderTypeNames[order.orderType]}</dd>
+                    <dt>시작 일시 <span>Opened</span></dt>
+                    <dd>{dayjs(position.entryTime).format("YYYY-MM-DD HH:mm:ss")}</dd>
                 </S.OrderItem>
                 <S.OrderItem className={``}>
-                    <dt>트리거 <span>Trigger</span></dt>
-                    <dd>-</dd>
+                    <dt>종료 일시 <span>Closed</span></dt>
+                    <dd>{dayjs(position.closeTime).format("YYYY-MM-DD HH:mm:ss")}</dd>
                 </S.OrderItem>
             </S.OrderBody>
         </S.OrderBox>
