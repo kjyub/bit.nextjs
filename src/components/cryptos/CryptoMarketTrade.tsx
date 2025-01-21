@@ -195,8 +195,6 @@ export default function CryptoMarketTrade({
             </I.TpSlLayout>
 
             <div className="flex flex-col w-full space-y-1 !mt-auto">
-                {/* <S.Title2>정보</S.Title2> */}
-                {quantity}
                 <S.SummaryItem>
                     <span className="label">현재 잔액</span>
                     <span className="value">{CommonUtils.textFormat(userBudget, TextFormats.NUMBER)}</span>
