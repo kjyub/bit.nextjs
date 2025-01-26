@@ -35,17 +35,15 @@ interface ICryptoMyTrade {
     user: User
 }
 export default function CryptoMyTrade({ user }: ICryptoMyTrade) {
-    const { balance, updateInfo } = useUserInfoStore()
-    const userBudget = balance
+    const { balance, myTrades } = useUserInfoStore()
 
     const [page, setPage] = useState<MyTradePage>(MyTradePage.POSITION)
-
 
     return (
         <S.Layout>
             <S.PageTabBar>
-                <PageTab page={MyTradePage.POSITION} setPage={setPage} currentPage={page} />
-                <PageTab page={MyTradePage.ORDER} setPage={setPage} currentPage={page} />
+                <PageTab page={MyTradePage.POSITION} setPage={setPage} currentPage={page} count={myTrades.positions.length} />
+                <PageTab page={MyTradePage.ORDER} setPage={setPage} currentPage={page} count={myTrades.orders.length} />
                 <PageTab page={MyTradePage.ORDER_HISTORY} setPage={setPage} currentPage={page} />
                 <PageTab page={MyTradePage.TRADE_HISTORY} setPage={setPage} currentPage={page} />
                 <PageTab page={MyTradePage.POSITION_HISTORY} setPage={setPage} currentPage={page} />
@@ -74,14 +72,16 @@ interface IPageTabBar {
     page: MyTradePage
     setPage: React.Dispatch<React.SetStateAction<MyTradePage>>
     currentPage: MyTradePage
+    count?: number
 }
-const PageTab = ({ page, setPage, currentPage }: IPageTabBar) => {
+const PageTab = ({ page, setPage, currentPage, count }: IPageTabBar) => {
     return (
         <button 
             onClick={() => {setPage(page)}}
             className={`tab ${page === currentPage ? "active" : ""}`}
         >
             {MyTradePageNames[page]}
+            {count && (`(${count})`)}
         </button>
     )
 }

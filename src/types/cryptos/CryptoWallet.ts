@@ -1,15 +1,15 @@
 import React from "react"
 import CommonUtils from "@/utils/CommonUtils"
 import { AbsApiObject } from "../ApiTypes"
-import { PriceChangeTypes } from "./CryptoTypes"
-import CryptoUtils from "@/utils/CryptoUtils"
 
 export default class CryptoWallet extends AbsApiObject {
     private _balance: number
+    private _locked: number
 
     constructor() {
         super()
         this._balance = 0
+        this._locked = 0
     }
 
     parseResponse(json: object): void {
@@ -17,9 +17,13 @@ export default class CryptoWallet extends AbsApiObject {
         // ApiUtils.parseData(this, json)
         
         this._balance = Number(json["balance"] ?? "0")
+        this._locked = Number(json["locked"] ?? "0")
     }
 
     public get balance(): number {
         return this._balance
+    }
+    public get locked(): number {
+        return this._locked
     }
 }

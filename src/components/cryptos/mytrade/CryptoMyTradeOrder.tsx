@@ -23,19 +23,22 @@ interface ICryptoMyTradeOrder {
     user: User
 }
 export default function CryptoMyTradeOrder({ user }: ICryptoMyTradeOrder) {
-    const [orders, setOrders] = useState<Array<TradePosition>>([])
+    const { balance, myTrades } = useUserInfoStore()
+    const orders = myTrades.orders
 
-    useEffect(() => {
-        if (!CommonUtils.isStringNullOrEmpty(user.uuid)) {
-            getPositions()
-        }    
-    }, [user.uuid])
+    // const [orders, setOrders] = useState<Array<TradePosition>>([])
 
-    const getPositions = useCallback(() => {
-        CryptoApi.getTradeOrders().then((response) => {
-            setOrders(response)
-        })
-    }, [])
+    // useEffect(() => {
+    //     if (!CommonUtils.isStringNullOrEmpty(user.uuid)) {
+    //         getPositions()
+    //     }    
+    // }, [user.uuid])
+
+    // const getPositions = useCallback(() => {
+    //     CryptoApi.getTradeOrders().then((response) => {
+    //         setOrders(response)
+    //     })
+    // }, [])
 
     return (
         <S.PageLayout className="p-2 space-y-2">

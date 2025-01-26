@@ -1,3 +1,6 @@
+import TradeOrder from "./TradeOrder"
+import TradePosition from "./TradePosition"
+
 export interface IMarketPrice {
     marketCode: string
     price: number
@@ -35,4 +38,9 @@ export interface IUpbitMarketTicker {
     lowest_52_week_price: number
     lowest_52_week_date: string
     timestamp: number
+}
+
+export interface IMyTradeData {
+    positions: Array<TradePosition>
+    orders: Array<TradeOrder>
 }

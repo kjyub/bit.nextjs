@@ -6,7 +6,7 @@ export const Layout = tw.div`
     flex flex-col w-full h-[calc(100vh-208px)] space-y-2
 `
 export const PageTabBar = tw.div`
-    flex items-center w-full space-x-1
+    flex items-center w-full px-1 space-x-1
 
     [&>button]:px-2 [&>button]:py-1
     [&>button]:text-sm [&>button]:text-slate-300/70 hover:[&>button]:text-slate-300

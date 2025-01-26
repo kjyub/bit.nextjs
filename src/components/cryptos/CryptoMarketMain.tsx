@@ -18,6 +18,7 @@ import CountUp from "react-countup"
 import CryptoMarketTrade from "./CryptoMarketTrade"
 import CryptoMyTrade from "./mytrade/CryptoMyTradeMain"
 import { useUser } from "@/hooks/useUser"
+import useUserInfoStore from "@/store/useUserInfo"
 
 interface ICryptoMarket {
     marketCode: string
@@ -27,6 +28,7 @@ interface ICryptoMarket {
 }
 export default function CryptoMarketMain({ marketCode, marketData, marketCurrent, communityNode }: ICryptoMarket) {
     const [user, isUserLoading] = useUser()
+    const { updateInfo } = useUserInfoStore()
     
     // 설정 정보
     const [sizeUnitType, setSizeUnitType] = useState<SizeUnitTypes>(SizeUnitTypes.PRICE) // 단위 타입
@@ -49,6 +51,8 @@ export default function CryptoMarketMain({ marketCode, marketData, marketCurrent
     const [isTitleSticky, setTitleSticky] = useState<boolean>(false)
 
     useEffect(() => {
+        updateInfo()
+        
         const handleScroll = () => {
             setTitleSticky(window.scrollY > 56)
         }

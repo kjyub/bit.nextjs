@@ -51,10 +51,6 @@ export default function CryptoMarketTrade({
 
     useEffect(() => {
         initPrice()
-        
-        if (!CommonUtils.isStringNullOrEmpty(user.uuid)) {
-            updateInfo()
-        }
     }, [marketCode, user.uuid])
 
     useEffect(() => {

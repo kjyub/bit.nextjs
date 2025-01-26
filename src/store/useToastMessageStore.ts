@@ -1,0 +1,42 @@
+import { TOAST_MESSAGE_ANIMATION_DURATION, TOAST_MESSAGE_DURATION } from '@/constants/ToastConsts'
+import { randomUUID } from 'crypto'
+import React from 'react'
+import { create } from 'zustand'
+
+export interface ToastMessage {
+    key: number
+    content: string | React.ReactNode
+}
+
+interface IToastMessageStore {
+    messages: ToastMessage[]
+    addMessage: (content: string | React.ReactNode) => void
+}
+const useToastMessageStore = create<IToastMessageStore>((set) => ({
+    messages: [],
+    addMessage: (content: string | React.ReactNode) => {
+        const timestamp = new Date().getTime()
+
+        const message: ToastMessage = {
+            key: timestamp,
+            content,
+        };
+
+        set((state) => ({
+            messages: [message, ...state.messages],
+        }));
+
+        setTimeout(() => {
+            set((state) => ({
+                messages: state.messages.filter((m) => m.key !== message.key),
+            }));
+        }, TOAST_MESSAGE_DURATION + TOAST_MESSAGE_ANIMATION_DURATION);
+    },
+    deleteMessage: (key: number) => {
+        set((state) => ({
+            messages: state.messages.filter((m) => m.key !== key),
+        }));
+    }
+}))
+
+export default useToastMessageStore

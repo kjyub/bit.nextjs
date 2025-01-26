@@ -8,11 +8,11 @@ import { getSession, signIn, useSession } from "next-auth/react"
 // const URL = "http://127.0.0.1:8000"
 const URL = process.env.NEXT_PUBLIC_DJANGO_SERVER
 
-const axiosApi = (options) => {
+const axiosApi = (options: object): axios.AxiosInstance => {
     return axios.create({ baseURL: URL, ...options })
 }
 
-const axiosCredentialApi = (options) => {
+const axiosCredentialApi = (options: object) => {
     const api = axios.create({
         baseURL: URL,
         withCredentials: true,
@@ -23,7 +23,7 @@ const axiosCredentialApi = (options) => {
     return api
 }
 
-const axiosAuthApi = (options) => {
+const axiosAuthApi = (options: object) => {
     const api = axios.create({
         baseURL: URL,
         withCredentials: true,
@@ -35,6 +35,11 @@ const axiosAuthApi = (options) => {
     api.interceptors.request.use(
         async (config) => {
             const session = await getSession()
+
+            if (session === null) {
+                return config
+            }
+            
             const djangoToken = session.accessToken
             
             // 쿠키가 없는 경우 http only 쿠키에서 보낸다.
@@ -54,7 +59,7 @@ const axiosAuthApi = (options) => {
             return config
         },
         async (error) => {
-            const originalRequest = error.config
+            const originalRequest = error.config as object
             console.log(error)
 
             // 재요청 실패
@@ -75,7 +80,7 @@ const axiosAuthApi = (options) => {
     return api
 }
 
-const axiosBothApi = (options) => {
+const axiosBothApi = (options: object) => {
     const api = axiosAuthApi(options)
     // 기존 request 를 지운다.
     api.interceptors.request.clear()

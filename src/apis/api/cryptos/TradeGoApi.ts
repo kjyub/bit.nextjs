@@ -6,6 +6,7 @@ import CryptoMarket from '@/types/cryptos/CryptoMarket';
 import useMarketPriceStore from '@/store/useMarketPriceStore';
 import { io, Socket } from "socket.io-client"
 import { tradeDefaultInstance } from '@/apis/utils/clientTradeApis';
+import useToastMessageStore from '@/store/useToastMessageStore';
 
 class TradeGoApi {
     // region Market
@@ -53,7 +54,7 @@ class TradeGoApi {
 
     static initPriceWebSocket(sendMessage: string | null): WebSocket {
         // const socket = new WebSocket('wss://api.upbit.com/websocket/v1')
-        const socket = new WebSocket(`${process.env.NEXT_PUBLIC_TRADE_SOCKET_SERVER}/ws`)
+        const socket = new WebSocket(`${process.env.NEXT_PUBLIC_TRADE_SOCKET_SERVER}/market`)
         socket.binaryType = "arraybuffer"
         const updateMarketPriceDic = useMarketPriceStore.getState().updateMarketPriceDic
       
@@ -69,6 +70,37 @@ class TradeGoApi {
             try {
                 const data = JSON.parse(event.data as string)
                 updateMarketPriceDic(data as object)
+            } catch (error) {
+                console.error('Failed to parse WebSocket message', error)
+            }
+        }
+      
+        socket.onerror = (event) => {
+            console.error('WebSocket error', event)
+        }
+      
+        socket.onclose = () => {
+            console.log('WebSocket disconnected')
+        }
+      
+        return socket
+    }
+
+    static initUserAlarmWebSocket(userUUID: string): WebSocket {
+        const addToastMessage = useToastMessageStore.getState().addMessage
+
+        const socket = new WebSocket(`${process.env.NEXT_PUBLIC_USER_ALARM_SOCKET_SERVER}/user?user_id=${userUUID}`)
+        socket.binaryType = "arraybuffer"
+      
+        socket.onopen = () => {
+            console.log('WebSocket connected')
+        }
+      
+        socket.onmessage = (event: MessageEvent) => {
+            try {
+                const data = JSON.parse(event.data as string)
+                addToastMessage(String(data.content))
+                console.log("USER ALARM", data)
             } catch (error) {
                 console.error('Failed to parse WebSocket message', error)
             }

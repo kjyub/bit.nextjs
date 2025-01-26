@@ -1,3 +1,6 @@
+import clsx from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
 export default class StyleUtils {
     static rollbackScreen() {
         window.scrollTo({
@@ -49,3 +52,7 @@ export default class StyleUtils {
         }
     }
 }
+
+export function cn(...inputs: ClassValue[]) {
+    return twMerge(clsx(inputs));
+  }

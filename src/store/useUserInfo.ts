@@ -3,7 +3,7 @@ import CryptoApi from '@/apis/api/cryptos/CryptoApi'
 import TradeGoApi from '@/apis/api/cryptos/TradeGoApi'
 import UpbitServerApi from '@/apis/api/cryptos/UpbitServerApi'
 import UserApi from '@/apis/api/users/UserApi'
-import { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces'
+import { IMyTradeData, IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces'
 import CommonUtils from '@/utils/CommonUtils'
 import { create } from 'zustand'
 
@@ -11,9 +11,12 @@ const getInitData = async () => {
     const wallet = await CryptoApi.getWallet()
     const user = await UserApi.getUserCurrent()
 
+    const myTrades = await CryptoApi.getMyTrades()
+
     return { 
         cash: user.cash,
         balance: wallet.balance,
+        myTrades: myTrades,
     }
 }
 
@@ -21,7 +24,8 @@ interface IUserInfoStore {
     init: () => void
     cash: number
     balance: number
-    updateInfo: (data: IUpbitMarketTicker) => void
+    myTrades: IMyTradeData
+    updateInfo: () => void
 }
 const useUserInfoStore = create<IUserInfoStore>((set) => ({
     init: () => {
@@ -31,7 +35,11 @@ const useUserInfoStore = create<IUserInfoStore>((set) => ({
     },
     cash: 0,
     balance: 0,
-    updateInfo: async (data) => {
+    myTrades: {
+        positions: [],
+        orders: [],
+    },
+    updateInfo: async () => {
         set(await getInitData())
     },
 }))

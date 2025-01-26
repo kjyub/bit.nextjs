@@ -33,8 +33,8 @@ export default async function RootLayout({
             <body
                 className={`${pretendard.variable}`}
             >
-                <AppClientLayout />
                 <SessionProvider session={session}>
+                    <AppClientLayout />
                     {children}
                 </SessionProvider>
             </body>

@@ -12,8 +12,44 @@ import TradePosition from '@/types/cryptos/TradePosition';
 import TradeOrder from '@/types/cryptos/TradeOrder';
 import TradeHistory from '@/types/cryptos/TradeHistory';
 import CommonUtils from '@/utils/CommonUtils';
+import { IMyTradeData } from '@/types/cryptos/CryptoInterfaces';
 
 class CryptoApi {
+    // region MyTrades
+    static async getMyTrades(): Promise<IMyTradeData> {
+        const result: IMyTradeData = {
+            wallet: new CryptoWallet(),
+            positions: [],
+            orders: [],
+        }
+
+        await authInstance.post("/api/cryptos/my_trades/").then(({ data }) => {
+            try {
+                result.wallet.parseResponse(data.wallet as object)
+                if (data.positions && Array.isArray(data.positions)) {
+                    data.positions.forEach((item) => {
+                        const tradePosition: TradePosition = new TradePosition()
+                        tradePosition.parseResponse(item as object)
+                        result.positions.push(tradePosition)
+                    })
+                }
+                if (data.orders && Array.isArray(data.orders)) {
+                    data.orders.forEach((item) => {
+                        const tradeOrder: TradeOrder = new TradeOrder()
+                        tradeOrder.parseResponse(item as object)
+                        result.orders.push(tradeOrder)
+                    })
+                }
+            } catch {
+                //
+            }
+        }).catch((error) => {
+            console.log(error)
+        })
+
+        return result
+    }
+    // endregion
     // region Wallet
     static async getWallet(): Promise<CryptoWallet> {
         const result: CryptoWallet = new CryptoWallet()

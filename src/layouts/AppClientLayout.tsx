@@ -1,30 +1,56 @@
 "use client"
 
+import TradeGoApi from "@/apis/api/cryptos/TradeGoApi"
+import ToastPopup from "@/components/commons/ToastPopup"
 import ModalContainer from "@/components/ModalContainer"
+import { useUser } from "@/hooks/useUser"
+import useUserInfoStore from "@/store/useUserInfo"
 import { CookieConsts } from "@/types/ApiTypes"
 import ApiUtils from "@/utils/ApiUtils"
 import BrowserUtils from "@/utils/BrowserUtils"
 import CommonUtils from "@/utils/CommonUtils"
 import StyleUtils from "@/utils/StyleUtils"
 import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 export default function AppClientLayout({
     children,
 }: {
     children: React.ReactNode
 }) {
+    const pathname = usePathname()
+    
+    const [user, isUserLoading] = useUser()
     const [isInAppBrowser, setIsInAppBrowser] = useState<boolean>(false)
 
-    const pathname = usePathname()
+    // 유저 거래 정보 알람
+    const userAlarmSocketRef = useRef<WebSocket | null>(null)
+    const userInfoUpdate = useUserInfoStore.getState().updateInfo
 
+    // 카카오
     useEffect(() => {
-        setTimeout(() => {
-            if (!window.Kakao.isInitialized()) {
-                window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID)
+        if (typeof window !== "undefined") {
+            const { Kakao } = window
+
+            if (Kakao && !Kakao.isInitialized()) {
+                Kakao.init(process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID)
             }
-        }, [1000])
-    }, [])
+        }
+    }, [typeof window !== "undefined" ? window.Kakao : null])
+
+    // 유저 거래 정보 알람 소켓 초기화
+    useEffect(() => {
+        if (!CommonUtils.isStringNullOrEmpty(user.uuid)) {
+            userInfoUpdate()
+            userAlarmSocketRef.current = TradeGoApi.initUserAlarmWebSocket(user.uuid)
+        }
+
+        return () => {
+            if (!CommonUtils.isStringNullOrEmpty(user.uuid)) {
+                userAlarmSocketRef.current.close()
+            }
+        }
+    }, [user.uuid, userInfoUpdate])
 
     useEffect(() => {
         // 인앱 브라우저 인식 후 외부 브라우저로 이동
@@ -34,23 +60,7 @@ export default function AppClientLayout({
 
     return (
         <>
-            {/* <ModalContainer
-                isOpen={isInAppBrowser}
-                setIsOpen={()=>{}}
-            >
-                <div className="flex flex-col rounded-xl bg-white/70 backdrop-blur" style={{padding: "1.5rem"}}>
-                    <span className="text-lg font-semibold text-stone-800">
-                        추즈밍은 외부 웹브라우저에서 사용 가능합니다
-                    </span>
-
-                    <button
-                        className="p-2 mt-4 rounded-xl bg-rose-500 text-white"
-                        onClick={()=>{BrowserUtils.redirectToExternalBrowser()}}
-                    >
-                        웹브라우저 열기
-                    </button>
-                </div>
-            </ModalContainer> */}
+            <ToastPopup />
             {children}
         </>
     )
