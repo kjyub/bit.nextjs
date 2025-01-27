@@ -18,7 +18,8 @@ export default function CommunitySearch({ onSearch, defaultValue="", width="80px
     return (
         <div className={`flex items-center h-10 px-3 space-x-2 rounded-lg bg-slate-500/30 backdrop-blur-sm`}>
             <input 
-                className={`w-[${width}] bg-transparent text-sm text-slate-300 placeholder:text-slate-500`}
+                style={{ width: width }} // tailwind 변수 테스트
+                className={`bg-transparent text-sm text-slate-300 placeholder:text-slate-500`}
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 onKeyPress={(e) => e.key === "Enter" && onSearch(value)}

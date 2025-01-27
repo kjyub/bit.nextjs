@@ -50,16 +50,15 @@ const Message = ({ index, message }: {index: number, message: ToastMessage}) => 
         <div 
             className={cn([
                 "absolute z-50 flex flex-center h-9 px-4 space-x-3",
-                `top-[${top}px]`,
                 "rounded-full bg-slate-600/30 backdrop-blur-sm",
                 "border border-slate-200/10",
                 "text-slate-100/90",
-                `duration-[${TOAST_MESSAGE_ANIMATION_DURATION}ms]`,
                 { "-translate-y-10 opacity-0": !isShow },
                 { "translate-y-0 opacity-100": isShow },
                 { "opacity-100": !isHide },
                 { "opacity-0 translate-x-36": isHide },
             ])}
+            style={{ top: `${top}px`, transitionDuration: `${TOAST_MESSAGE_ANIMATION_DURATION}ms` }} // tailwind 변수 테스트
         >
             <div className="">
                 {message.content}
