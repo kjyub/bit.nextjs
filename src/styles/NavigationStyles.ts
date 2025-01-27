@@ -9,7 +9,7 @@ export const Layout = tw.div`
     duration-300
 
     [&>.content]:flex [&>.content]:justify-between [&>.content]:items-center [&>.content]:w-full
-    [&>.content]:max-w-screen-xl
+    [&>.content]:max-w-(--breakpoint-xl)
 `
 
 export const Section = tw.div`
@@ -17,8 +17,8 @@ export const Section = tw.div`
     text-slate-300
 
     [&>.btn]:flex [&>.btn]:justify-center [&>.btn]:items-center [&>.btn]:px-3 [&>.btn]:py-3 [&>.btn]:space-x-1
-    [&>.btn]:rounded-lg hover:[&>.btn]:bg-white/10
-    [&>.btn]:text-slate-300/70 hover:[&>.btn]:text-slate-100 [&>.btn]:font-semibold
+    [&>.btn]:rounded-lg [&>.btn]:hover:bg-white/10
+    [&>.btn]:text-slate-300/70 [&>.btn]:hover:text-slate-100 [&>.btn]:font-semibold
     [&>.btn.active]:text-slate-100
     [&>.btn]:transition-colors [&>.btn]:select-none
     [&>.btn>i]:text-xs

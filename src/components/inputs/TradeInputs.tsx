@@ -314,7 +314,7 @@ export const NumberInput = ({ label, value, setValue, min=0, max=undefined, clas
                 max={max}
             />
             {!CommonUtils.isStringNullOrEmpty(suffix) && (
-                <span className="!ml-0.5 input !text-slate-400">{suffix}</span>
+                <span className="ml-0.5! input text-slate-400!">{suffix}</span>
             )}
         </S.InputBox>
     )

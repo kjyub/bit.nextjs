@@ -115,10 +115,10 @@ const Order = ({ market, order }: IOrder) => {
                     <div className="value">
                         {TradeOrderTypeNames[order.orderType]}
                     </div>
-                    <button className="value !text-violet-400" onClick={() => {handleChase()}}>
+                    <button className="value text-violet-400!" onClick={() => {handleChase()}}>
                         추격
                     </button>
-                    <button className="value !text-yellow-500" onClick={() => {handleCancel()}}>
+                    <button className="value text-yellow-500!" onClick={() => {handleCancel()}}>
                         취소
                     </button>
                 </div>

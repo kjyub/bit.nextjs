@@ -133,7 +133,7 @@ export default function CryptoMarketTrade({
                 setLeverageRatio={setLeverageRatio}
                 maxRatio={75}
             />
-            <div className="!mt-6 !mb-1 border-b border-slate-600/30" />
+            <div className="mt-6! mb-1! border-b border-slate-600/30" />
             <I.OrderTypeInput orderType={orderType} setOrderType={setOrderType} />
             
             {orderType === TradeOrderType.LIMIT && (
@@ -190,7 +190,7 @@ export default function CryptoMarketTrade({
                 />
             </I.TpSlLayout>
 
-            <div className="flex flex-col w-full space-y-1 !mt-auto">
+            <div className="flex flex-col w-full space-y-1 mt-auto!">
                 <S.SummaryItem>
                     <span className="label">현재 잔액</span>
                     <span className="value">{CommonUtils.textFormat(userBudget, TextFormats.NUMBER)}</span>

@@ -237,7 +237,7 @@ const MarketSortType = ({ sortType, currentSortType, setSortType, currentOrderTy
             <span>
                 {MarketSortTypeNames[sortType]}
             </span>
-            <div className="icon !opacity-0">
+            <div className="icon opacity-0!">
                 <i className="fa-solid fa-sort"></i>
             </div>
         </button>

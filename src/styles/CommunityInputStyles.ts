@@ -15,9 +15,9 @@ export const InputColor = tw.div`
     border-slate-200 dark:border-slate-600
     bg-slate-100 dark:bg-slate-700
     text-slate-800 dark:text-slate-100
-    [&>.value]:text-slate-800 [&>.value]:dark:text-slate-100
+    [&>.value]:text-slate-800 dark:[&>.value]:text-slate-100
     disabled:bg-slate-200 dark:disabled:bg-slate-600
-    [&>.value]:disabled:text-slate-600 [&>.value]:dark:disabled:text-slate-300
+    disabled:[&>.value]:text-slate-600 dark:disabled:[&>.value]:text-slate-300
 `
 
 export const InputContainer = tw.div`
@@ -28,7 +28,7 @@ export const InputBox = tw(InputColor)`
     flex items-center justify-between w-full h-full p-4
     rounded-lg 
 
-    ${({$is_active}: StyleProps) => $is_active ? "border-2 !border-blue-500" : "border"}
+    ${({$is_active}: StyleProps) => $is_active ? "border-2 border-blue-500!" : "border"}
     ${({$is_error}: StyleProps) => $is_error ? "border-red-500" : ""}
     duration-200
 `
@@ -36,7 +36,7 @@ export const Input = tw.input`
     w-full bg-transparent
 `
 export const FeatureButton = tw.button`
-    flex-shrink-0
+    shrink-0
     flex flex-center h-full p-4
     rounded-lg border 
     border-blue-500 text-blue-500
@@ -77,9 +77,9 @@ export const OptionBox = tw(InputColor)`
     rounded-lg border 
     overflow-y-auto
 
-    [&>option]:flex [&>option]:items-center [&>option]:flex-shrink-0 [&>option]:px-2 [&>option]:py-1 
-    [&>option]:rounded-lg hover:[&>option]:bg-slate-200 dark:hover:[&>option]:bg-slate-600
-    [&>option]:text-slate-800 [&>option]:dark:text-slate-100
+    [&>option]:flex [&>option]:items-center [&>option]:shrink-0 [&>option]:px-2 [&>option]:py-1 
+    [&>option]:rounded-lg [&>option]:hover:bg-slate-200 dark:[&>option]:hover:bg-slate-600
+    [&>option]:text-slate-800 dark:[&>option]:text-slate-100
 `
 
 export const TitleBox = tw.div`
@@ -87,7 +87,7 @@ export const TitleBox = tw.div`
     flex w-full p-2
     border-b border-slate-600
     focus-within:border-blue-500
-    duration-200 [&>*]:duration-200
+    duration-200 *:duration-200
     overflow-visible
 
     [&>input]:w-full [&>input]:bg-transparent
@@ -108,6 +108,6 @@ export const ContentTextArea = tw.textarea`
     text-slate-200
     border-slate-600
     rounded-lg border
-    focus:outline-none focus:border-blue-500
+    focus:outline-hidden focus:border-blue-500
     transition-colors resize-none
 `

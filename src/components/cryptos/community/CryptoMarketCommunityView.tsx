@@ -371,7 +371,7 @@ const Comment = ({ user, comment, handleComment }: IComment) => {
 
             {/* 답글 작성 */}
             {isShowReply && (
-                <CS.ItemCommentWriteBox className="!mt-4 pl-6 [&>button]:w-24">
+                <CS.ItemCommentWriteBox className="mt-4! pl-6 [&>button]:w-24">
                     <textarea
                         ref={commentInputRef}
                         type={"text"}
@@ -430,7 +430,7 @@ const CommentContent = ({ content, hasParent, parentName, isEdit, handleComment 
     return (
         <>
             {isEdit ? (
-                <CS.ItemCommentWriteBox className="!mt-4 [&>button]:w-24">
+                <CS.ItemCommentWriteBox className="mt-4! [&>button]:w-24">
                     <textarea
                         ref={commentInputRef}
                         type={"text"}
@@ -449,7 +449,7 @@ const CommentContent = ({ content, hasParent, parentName, isEdit, handleComment 
             ) : (
                 <pre className="content font-pretendard">
                     {hasParent && (
-                        <div className="h-fit mt-1 mr-1 px-1 py-0.5 -translate-y-0.5 rounded bg-[#edfcf1] text-brand_green-4 text-xs font-light">
+                        <div className="h-fit mt-1 mr-1 px-1 py-0.5 -translate-y-0.5 rounded-sm bg-[#edfcf1] text-brand_green-4 text-xs font-light">
                             {parentName}
                         </div>
                     )}

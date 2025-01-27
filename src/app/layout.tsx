@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
+import "@/styles/css/globals.css";
 import Script from "next/script";
 import { auth } from "@/auth";
 import { SessionProvider } from "next-auth/react";

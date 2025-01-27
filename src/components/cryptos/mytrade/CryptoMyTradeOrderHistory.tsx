@@ -117,7 +117,7 @@ const Order = ({ order }: IOrder) => {
                 </div>
 
                 <div className="right">
-                    <div className={`value ${order.isCancel ? "!text-slate-400" : "!text-violet-500"}`}>
+                    <div className={`value ${order.isCancel ? "text-slate-400!" : "text-violet-500!"}`}>
                         {order.isCancel ? "취소됨" : "처리됨"}
                     </div>
                 </div>

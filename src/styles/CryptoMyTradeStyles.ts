@@ -9,7 +9,7 @@ export const PageTabBar = tw.div`
     flex items-center w-full px-1 space-x-1
 
     [&>button]:px-2 [&>button]:py-1
-    [&>button]:text-sm [&>button]:text-slate-300/70 hover:[&>button]:text-slate-300
+    [&>button]:text-sm [&>button]:text-slate-300/70 [&>button]:hover:text-slate-300
     [&>button.active]:text-slate-200 [&>button.active]:bg-slate-500/40
     [&>button]:rounded-lg
     [&>button]:duration-200
@@ -60,7 +60,7 @@ export const PositionHeader = tw.div`
     [&>.right>.value]:px-2 [&>.right>.value]:py-0.5
     [&>.right>.value]:rounded-md [&>.right>.value]:bg-slate-600/50
     [&>.right>.value]:text-xs [&>.right>.value]:text-slate-300 [&>.right>.value]:font-medium
-    hover:[&>.right>button.value]:bg-slate-600/70 hover:[&>.right>button.value]:text-slate-400
+    [&>.right>button.value]:hover:bg-slate-600/70 [&>.right>button.value]:hover:text-slate-400
     [&>.right>button.value]:transition-colors
 `
 export const PositionBody = tw.div`
@@ -83,8 +83,8 @@ export const PositionClose = tw.div`
     [&>.buttons]:flex [&>.buttons]:items-center [&>.buttons]:space-x-1
 
     [&>.buttons>button]:px-2 [&>.buttons>button]:py-0.5
-    [&>.buttons>button]:rounded-md hover:[&>.buttons>button]:bg-slate-600/50
-    [&>.buttons>button]:text-sm [&>.buttons>button]:text-violet-400 hover:[&>.buttons>button]:text-violet-300
+    [&>.buttons>button]:rounded-md [&>.buttons>button]:hover:bg-slate-600/50
+    [&>.buttons>button]:text-sm [&>.buttons>button]:text-violet-400 [&>.buttons>button]:hover:text-violet-300
     [&>.buttons>button]:duration-200
 
     [&>.inputs]:grid [&>.inputs]:grid-cols-2 [&>.inputs]:gap-2 [&>.inputs]:flex-1
@@ -126,7 +126,7 @@ export const OrderHeader = tw.div`
     [&>.right>.value]:px-2 [&>.right>.value]:py-0.5
     [&>.right>.value]:rounded-md [&>.right>.value]:bg-slate-600/50
     [&>.right>.value]:text-xs [&>.right>.value]:text-slate-300 [&>.right>.value]:font-medium
-    hover:[&>.right>button.value]:bg-slate-600/70 hover:[&>.right>button.value]:text-slate-400
+    [&>.right>button.value]:hover:bg-slate-600/70 [&>.right>button.value]:hover:text-slate-400
 
     [&>.right>.position]:text-xs 
     [&>.right>.position.long]:text-position-long-2 [&>.right>.position.short]:text-position-short-2
@@ -151,8 +151,8 @@ export const OrderClose = tw.div`
     [&>.buttons]:flex [&>.buttons]:items-center [&>.buttons]:space-x-1
 
     [&>.buttons>button]:px-2 [&>.buttons>button]:py-0.5
-    [&>.buttons>button]:rounded-md hover:[&>.buttons>button]:bg-slate-600/50
-    [&>.buttons>button]:text-sm [&>.buttons>button]:text-violet-400 hover:[&>.buttons>button]:text-violet-300
+    [&>.buttons>button]:rounded-md [&>.buttons>button]:hover:bg-slate-600/50
+    [&>.buttons>button]:text-sm [&>.buttons>button]:text-violet-400 [&>.buttons>button]:hover:text-violet-300
     [&>.buttons>button]:duration-200
 
     [&>.inputs]:grid [&>.inputs]:grid-cols-2 [&>.inputs]:gap-2 [&>.inputs]:flex-1
@@ -177,6 +177,6 @@ export const FilterDateInputBox = tw(FilterBox)`
     [&>input]:bg-transparent [&>input]:text-center 
     [&>input]:pt-[1px] 
     [&>input]:border-b [&>input]:border-transparent 
-    focus:[&>input]:border-violet-500/70 hover:[&>input]:border-violet-500/70
+    [&>input]:focus:border-violet-500/70 [&>input]:hover:border-violet-500/70
     [&>input]:transition-colors
 `

@@ -27,7 +27,7 @@ export const AuthTypeSection = tw.div`
     [&>.types]:flex [&>.types]:flex-col [&>.types]:space-y-4
 
     [&>.agreement]:flex [&>.agreement]:text-sm [&>.agreement]:text-slate-400
-    [&>.agreement>button]:ml-1 [&>.agreement>button]:text-blue-500 hover:[&>.agreement>button]:underline [&>.agreement>button]:underline-offset-2
+    [&>.agreement>button]:ml-1 [&>.agreement>button]:text-blue-500 [&>.agreement>button]:hover:underline [&>.agreement>button]:underline-offset-2
 `
 
 export const SignupSection = tw.div`

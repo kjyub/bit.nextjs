@@ -16,7 +16,7 @@ export const HelpBox = tw.div`
     [&>div]:absolute [&>div]:-z-10 [&>div]:bottom-8 [&>div]:right-0
     [&>div]:opacity-0 [&>div.show]:opacity-100 [&>div.show]:z-50 [&>div]:transition-opacity
     [&>div]:flex [&>div]:flex-col [&>div]:space-y-2
-    [&>div]:w-64 [&>div]:px-2 [&>div]:py-1.5 [&>div]:rounded [&>div]:bg-slate-700
+    [&>div]:w-64 [&>div]:px-2 [&>div]:py-1.5 [&>div]:rounded-sm [&>div]:bg-slate-700
     [&>div]:text-slate-300 [&>div]:text-xs
 `
 
@@ -33,7 +33,7 @@ export const InputBox = tw.div<StyleProps>`
     hover:ring-1 hover:ring-violet-700
     focus-within:ring-1 focus-within:ring-violet-500
     [&>.input]:text-sm [&>.input]:text-slate-300 [&>.input]:bg-transparent
-    [&>.input]:outline-none focus:[&>.input]:outline-none
+    [&>.input]:outline-hidden [&>.input]:focus:outline-hidden
 
     ${({ $is_focus }) => $is_focus ? "ring-1 ring-violet-500" : ""}
     duration-200
@@ -44,7 +44,7 @@ export const MarginModeBox = tw.div`
     flex items-center w-full h-full
     text-sm
 
-    [&>*]:duration-300
+    *:duration-300
     [&>button]:z-20 [&>button]:w-1/2 [&>button]:h-full [&>button]:space-x-2
     [&>button]:text-slate-400 [&>button.active]:text-slate-100
 
@@ -155,10 +155,10 @@ export const OrderTypeBox = tw.div`
     flex items-center w-full h-full
     text-sm
 
-    [&>*]:duration-300
+    *:duration-300
     [&>button]:z-20 [&>button]:w-1/2 [&>button]:h-full [&>button]:space-x-2
-    [&>button]:text-slate-500/80 hover:[&>button]:text-slate-400
-    [&>button.active]:text-violet-500 hover:[&>button.active]:text-violet-500 [&>button.active]:font-semibold
+    [&>button]:text-slate-500/80 [&>button]:hover:text-slate-400
+    [&>button.active]:text-violet-500 [&>button.active]:hover:text-violet-500 [&>button.active]:font-semibold
 `
 
 const TradeButton = tw.button`

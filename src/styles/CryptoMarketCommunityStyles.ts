@@ -23,9 +23,9 @@ export const ListLayout = tw.div`
     [&>.control]:flex [&>.control]:justify-between [&>.control]:items-center [&>.control]:w-full
     [&>.control>button]:px-4 [&>.control>button]:h-10
     [&>.control>button]:rounded-full 
-    [&>.control>button]:bg-slate-500/20 hover:[&>.control>button]:bg-slate-500/30
+    [&>.control>button]:bg-slate-500/20 [&>.control>button]:hover:bg-slate-500/30
     [&>.control>button]:text-sm [&>.control>button]:text-slate-300
-    active:[&>.control>button]:animate-pulse
+    [&>.control>button]:active:animate-pulse
     [&>.control>button]:transition-colors
     [&>.control>button>i]:mr-2 [&>.control>button>i]:text-[11px]
 `
@@ -62,7 +62,7 @@ export const ItemViewLikeBox = tw.div`
     flex items-center space-x-2
 
     [&>button]:px-4 [&>button]:h-8 [&>button]:space-x-2
-    [&>button]:rounded-full [&>button]:bg-slate-600/50 hover:[&>button]:bg-slate-500/50
+    [&>button]:rounded-full [&>button]:bg-slate-600/50 [&>button]:hover:bg-slate-500/50
     [&>button]:text-sm [&>button]:text-slate-300
     [&>button]:duration-200
     [&>button>i]:text-xs
@@ -82,12 +82,12 @@ export const ItemCommentWriteBox = tw.div`
     flex flex-col w-full space-y-2
     [&>textarea]:w-full [&>textarea]:min-h-[2rem] [&>textarea]:max-h-[8rem] [&>textarea]:p-3
     [&>textarea]:rounded-lg [&>textarea]:bg-slate-500/30 
-    [&>textarea]:border [&>textarea]:border-slate-500/20 focus:[&>textarea]:border-blue-500
+    [&>textarea]:border [&>textarea]:border-slate-500/20 [&>textarea]:focus:border-blue-500
     [&>textarea]:text-slate-300 
     [&>textarea]:resize-none [&>textarea]:transition-colors
 
     [&>button]:w-24 [&>button]:h-9 [&>button]:ml-auto
-    [&>button]:rounded-full [&>button]:bg-blue-500/40 hover:[&>button]:bg-blue-500/50
+    [&>button]:rounded-full [&>button]:bg-blue-500/40 [&>button]:hover:bg-blue-500/50
     [&>button]:text-sm [&>button]:text-white
     [&>button]:transition-colors
 `

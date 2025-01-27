@@ -28,7 +28,7 @@ export const TransferTypeBox = tw.div`
     flex items-center w-full h-12
     text-sm
 
-    [&>*]:duration-300
+    *:duration-300
     [&>button]:z-20 [&>button]:w-1/2 [&>button]:h-full [&>button]:space-x-2
     [&>button]:text-slate-400 [&>button.active]:text-slate-100
 

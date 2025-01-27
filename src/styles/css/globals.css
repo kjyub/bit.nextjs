@@ -1,0 +1,158 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-pretendard: var(--font-pretendard);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-price-rise: #ff0000;
+  --color-price-fall: #0000ff;
+
+  --color-position-long-1: #ad2c2c;
+  --color-position-long-2: #c43a3a;
+  --color-position-long-3: #d74848;
+
+  --color-position-short-1: #2d5ab9;
+  --color-position-short-2: #3b69cb;
+  --color-position-short-3: #4978dd;
+
+  --color-gray-75: #f6f7f8;
+  --color-gray-150: #eceef1;
+  --color-gray-250: #c7ccd4;
+  --color-gray-275: #cbced1;
+
+  --color-kakao-container: #fee500;
+  --color-kakao-symbol: #000000;
+  --color-kakao-text: rgba(0, 0, 0, 0.85);
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+
+  body {
+    /* color: rgb(var(--foreground-rgb));
+    background: rgb(var(--background-rgb)); */
+
+    font-family: 'Pretendard', sans-serif !important;
+    line-height: normal;
+
+    letter-spacing: -0.02em;
+    line-height: 100% !important;
+
+    background-attachment: fixed !important;
+    background: linear-gradient(
+      188deg,
+      rgba(1, 0, 24, 1) 0%,
+      rgb(12, 12, 46) 49%,
+      rgb(26, 26, 70) 83%,
+      rgb(32, 60, 91) 100%
+    );
+
+    @apply overflow-x-hidden text-slate-100;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 140% !important;
+  }
+
+  input,
+  textarea,
+  button {
+    appearance: none;
+    border-radius: 0;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    outline: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  button {
+    @apply flex justify-center items-center;
+  }
+  input:focus {
+    outline: none !important;
+    outline-offset: 2px !important;
+  }
+  select:focus {
+    outline: 2px solid transparent !important;
+    outline-offset: 2px !important;
+  }
+  button:focus {
+    outline: none !important;
+    outline-offset: none !important;
+  }
+  textarea:focus {
+    outline: none !important;
+    outline-offset: none !important;
+  }
+}
+
+@layer components {
+  .test {
+    @apply top-[24px];
+  }
+}
+
+@layer utilities {
+  .prevent-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .scroll-transparent {
+    overflow-y: overlay;
+  }
+  .scroll-transparent::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: transparent;
+  }
+  .scroll-transparent::-webkit-scrollbar-track {
+    box-shadow: none;
+    background-color: transparent;
+  }
+  .scroll-transparent::-webkit-scrollbar-thumb {
+    background-color: #425167;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+    border-radius: 9999px;
+    transition: all 0.3s;
+    outline: none;
+  }
+  .scroll-overlay {
+    scrollbar-gutter: both-edges;
+  }
+
+  .flex-center {
+    @apply items-center justify-center;
+  }
+  .absolute-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

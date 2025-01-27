@@ -65,13 +65,13 @@ export const MarketListBox = tw.div`
 
     [&>.market-type]:grid [&>.market-type]:grid-cols-4 [&>.market-type]:gap-2 [&>.market-type]:w-full [&>.market-type]:min-h-[2rem]
     [&>.market-type>button]:w-full [&>.market-type>button]:h-full
-    [&>.market-type>button]:rounded-lg hover:[&>.market-type>button]:bg-slate-700/30
-    [&>.market-type>button]:text-slate-300 hover:[&>.market-type>button]:text-slate-100
+    [&>.market-type>button]:rounded-lg [&>.market-type>button]:hover:bg-slate-700/30
+    [&>.market-type>button]:text-slate-300 [&>.market-type>button]:hover:text-slate-100
     [&>.market-type>button.active]:bg-slate-700/70
     [&>.market-type>button]:transition-colors
 
     [&>.market-sort]:grid [&>.market-sort]:grid-cols-4 [&>.market-sort]:w-full [&>.market-sort]:min-h-[1.5rem]
-    [&>.market-sort>button]:text-slate-500 hover:[&>.market-sort>button]:text-slate-300 [&>.market-sort>button]:font-light
+    [&>.market-sort>button]:text-slate-500 [&>.market-sort>button]:hover:text-slate-300 [&>.market-sort>button]:font-light
     [&>.market-sort>button.active]:text-slate-200
     [&>.market-sort>button]:text-sm [&>.market-sort>button]:space-x-1
     [&>.market-sort>button]:transition-colors
@@ -84,7 +84,7 @@ export const MarketListBox = tw.div`
 `
 
 export const MarketListItem = tw(Link)`
-    flex flex-shrink-0 items-center w-full h-12 px-2
+    flex shrink-0 items-center w-full h-12 px-2
     rounded-md hover:bg-slate-700/30 
     text-sm text-slate-200
     transition-colors

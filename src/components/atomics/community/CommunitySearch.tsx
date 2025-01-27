@@ -16,7 +16,7 @@ export default function CommunitySearch({ onSearch, defaultValue="", width="80px
     }, [defaultValue])
 
     return (
-        <div className={`flex items-center h-10 px-3 space-x-2 rounded-lg bg-slate-500/30 backdrop-blur`}>
+        <div className={`flex items-center h-10 px-3 space-x-2 rounded-lg bg-slate-500/30 backdrop-blur-sm`}>
             <input 
                 className={`w-[${width}] bg-transparent text-sm text-slate-300 placeholder:text-slate-500`}
                 value={value}

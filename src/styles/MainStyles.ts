@@ -2,7 +2,7 @@ import { StyleProps } from "@/types/StyleTypes"
 import tw from "tailwind-styled-components"
 
 export const PageWidth = tw.div`
-    max-w-screen-xl
+    max-w-(--breakpoint-xl)
 `
 
 export const PageLayout = tw.div`

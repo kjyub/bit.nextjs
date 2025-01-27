@@ -51,7 +51,7 @@ const Message = ({ index, message }: {index: number, message: ToastMessage}) => 
             className={cn([
                 "absolute z-50 flex flex-center h-9 px-4 space-x-3",
                 `top-[${top}px]`,
-                "rounded-full bg-slate-600/30 backdrop-blur",
+                "rounded-full bg-slate-600/30 backdrop-blur-sm",
                 "border border-slate-200/10",
                 "text-slate-100/90",
                 `duration-[${TOAST_MESSAGE_ANIMATION_DURATION}ms]`,
