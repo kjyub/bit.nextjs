@@ -104,3 +104,5 @@ export const SizeUnitTypes = {
     QUANTITY: 1,
 } as const
 export type SizeUnitTypeValues = typeof SizeUnitTypes[keyof typeof SizeUnitTypes]
+
+export type CandleMinuteUnits = 1 | 3 | 5 | 15 | 30 | 60 | 240

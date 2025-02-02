@@ -6,6 +6,8 @@ import { EditStateTypes } from '@/types/DataTypes';
 import CryptoMarket from '@/types/cryptos/CryptoMarket';
 import useMarketPriceStore from '@/store/useMarketPriceStore';
 import { io, Socket } from "socket.io-client"
+import { IUpbitCandle } from '@/types/cryptos/CryptoInterfaces';
+import { CandleMinuteUnits } from '@/types/cryptos/CryptoTypes';
 
 class UpbitApi {
     // region Market
@@ -88,6 +90,70 @@ class UpbitApi {
       
         return socket
     }
+
+    // region Candle
+    // to: ISO8061 포맷 (yyyy-MM-dd'T'HH:mm:ss'Z' or yyyy-MM-dd HH:mm:ss).
+    static getCandleSeconds(marketCode: string, count: number = 200, to: string): Promise<Array<IUpbitCandle>> {
+        return defaultInstance.get("https://api.upbit.com/v1/candles/seconds", { params: {
+            market: marketCode,
+            to: to,
+            count: count
+        }}).then(({ data }) => {
+            return data
+        }).catch((error) => {
+            console.log(error)
+            return []
+        })
+    }
+    static getCandleMinutes(marketCode: string, count: number = 200, unit: CandleMinuteUnits, to: string): Promise<Array<IUpbitCandle>> {
+        return defaultInstance.get(`https://api.upbit.com/v1/candles/minutes/${unit}`, { params: {
+            market: marketCode,
+            to: to,
+            count: count
+        }}).then(({ data }) => {
+            return data
+        }).catch((error) => {
+            console.log(error)
+            return []
+        })
+    }
+    static getCandleDays(marketCode: string, count: number = 200, to: string): Promise<Array<IUpbitCandle>> {
+        return defaultInstance.get("https://api.upbit.com/v1/candles/days", { params: {
+            market: marketCode,
+            to: to,
+            count: count
+        }}).then(({ data }) => {
+            return data
+        }).catch((error) => {
+            console.log(error)
+            return []
+        })
+    }
+    static getCandleWeeks(marketCode: string, count: number = 200, to: string): Promise<Array<IUpbitCandle>> {
+        return defaultInstance.get("https://api.upbit.com/v1/candles/weeks", { params: {
+            market: marketCode,
+            to: to,
+            count: count
+        }}).then(({ data }) => {
+            return data
+        }).catch((error) => {
+            console.log(error)
+            return []
+        })
+    }
+    static getCandleMonths(marketCode: string, count: number = 200, to: string): Promise<Array<IUpbitCandle>> {
+        return defaultInstance.get("https://api.upbit.com/v1/candles/months", { params: {
+            market: marketCode,
+            to: to,
+            count: count
+        }}).then(({ data }) => {
+            return data
+        }).catch((error) => {
+            console.log(error)
+            return []
+        })
+    }
+    // endregion
 }
 
 export default UpbitApi
