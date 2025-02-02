@@ -7,10 +7,10 @@ import KakaoImage from "@/static/svgs/btn_kakao.svg"
 import ModalContainer from "../ModalContainer"
 import InfoModal from "../commons/InfoModal"
 import AuthUtils from "@/utils/AuthUtils"
+import KakaoContainer from "@/layouts/KakaoContainer"
 
 export default function SignupLobby() {
     const [isShowAgreement, setShowAgreement] = React.useState<boolean>(false)
-    console.log(KakaoImage)
 
     const handleKakao = () => {
         AuthUtils.authKakao()
@@ -31,13 +31,15 @@ export default function SignupLobby() {
                     </span>
 
                     <div className="types animate-fade-in">
-                        <button 
-                            className="bg-kakao-container rounded-xl px-5 py-1"
-                            onClick={() => {handleKakao()}}
-                        >
-                            <KakaoImage width={30} height={30} viewBox="0 0 20 20" />
-                            <span className="pr-1 text-kakao-text">카카오 로그인</span>
-                        </button>
+                        <KakaoContainer>
+                            <button 
+                                className="bg-kakao-container rounded-xl px-5 py-1"
+                                onClick={() => {handleKakao()}}
+                            >
+                                <KakaoImage width={30} height={30} viewBox="0 0 20 20" />
+                                <span className="pr-1 text-kakao-text">카카오 로그인</span>
+                            </button>
+                        </KakaoContainer>
                     </div>
 
                     <div className="agreement">

@@ -27,17 +27,6 @@ export default function AppClientLayout({
     const userAlarmSocketRef = useRef<WebSocket | null>(null)
     const userInfoUpdate = useUserInfoStore.getState().updateInfo
 
-    // 카카오
-    useEffect(() => {
-        if (typeof window !== "undefined") {
-            const { Kakao } = window
-
-            if (Kakao && !Kakao.isInitialized()) {
-                Kakao.init(process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID)
-            }
-        }
-    }, [typeof window !== "undefined" ? window.Kakao : null])
-
     // 유저 거래 정보 알람 소켓 초기화
     useEffect(() => {
         if (!CommonUtils.isStringNullOrEmpty(user.uuid)) {

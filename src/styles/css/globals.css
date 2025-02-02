@@ -81,6 +81,7 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    background-color: none;
   }
   input[type='number']::-webkit-inner-spin-button,
   input[type='number']::-webkit-outer-spin-button {
