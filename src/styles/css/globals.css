@@ -89,7 +89,7 @@
     margin: 0;
   }
   button {
-    @apply flex justify-center items-center;
+    @apply flex justify-center items-center cursor-pointer;
   }
   input:focus {
     outline: none !important;

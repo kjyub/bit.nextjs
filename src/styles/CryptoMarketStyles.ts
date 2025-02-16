@@ -32,7 +32,7 @@ export const ChartAndTradeLayout = tw.div`
     flex w-full h-full space-x-4
 `
 export const ChartLayout = tw.div`
-    flex flex-col flex-1 h-full
+    flex flex-col flex-1 h-full p-3
     rounded-lg bg-slate-800/60
 `
 export const TradeLayout = tw.div`

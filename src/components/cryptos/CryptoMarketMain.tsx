@@ -19,7 +19,7 @@ import CryptoMarketTrade from "./CryptoMarketTrade"
 import CryptoMyTrade from "./mytrade/CryptoMyTradeMain"
 import { useUser } from "@/hooks/useUser"
 import useUserInfoStore from "@/store/useUserInfo"
-import CryptoMarketChart from "./CryptoMarketChart"
+import CryptoMarketChart from "./chart/CryptoMarketChart"
 
 interface ICryptoMarket {
     marketCode: string
@@ -161,7 +161,7 @@ export default function CryptoMarketMain({ marketCode, marketData, marketCurrent
             <S.MainLayout>
                 <S.ChartAndTradeLayout>
                     <S.ChartLayout>
-                        <CryptoMarketChart />
+                        <CryptoMarketChart marketCode="KRW-BTC" />
                     </S.ChartLayout>
                     <S.TradeLayout>
                         <CryptoMarketTrade

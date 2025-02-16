@@ -71,12 +71,12 @@ class TradeGoApi {
                 const data = JSON.parse(event.data as string)
                 updateMarketPriceDic(data as object)
             } catch (error) {
-                console.error('Failed to parse WebSocket message', error)
+                console.log('Failed to parse WebSocket message', error)
             }
         }
       
         socket.onerror = (event) => {
-            console.error('WebSocket error', event)
+            console.log('WebSocket error', event)
         }
       
         socket.onclose = () => {
@@ -102,12 +102,12 @@ class TradeGoApi {
                 addToastMessage(String(data.content))
                 console.log("USER ALARM", data)
             } catch (error) {
-                console.error('Failed to parse WebSocket message', error)
+                console.log('Failed to parse WebSocket message', error)
             }
         }
       
         socket.onerror = (event) => {
-            console.error('WebSocket error', event)
+            console.log('WebSocket error', event)
         }
       
         socket.onclose = () => {

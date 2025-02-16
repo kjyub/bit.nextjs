@@ -36,6 +36,7 @@ const nextConfig = {
         ignoreDuringBuilds: true,
     },
     reactStrictMode: false, // RootLayout 2번 실행되므로 false
+    swcMinify: true,
     webpack: config => {
         config.module.rules.push({
             test: /\.svg$/,
