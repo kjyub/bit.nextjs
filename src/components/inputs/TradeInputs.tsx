@@ -76,8 +76,9 @@ export const SlideInput = ({ value, setValue, min, max, step=1, mark=undefined }
 interface MarginModeInputProps {
     marginMode: MarginModeTypeValues
     setMarginMode: (mode: MarginModeTypeValues) => void
+    disabled?: boolean
 }
-export const MarginModeInput = ({ marginMode, setMarginMode }: MarginModeInputProps) => {
+export const MarginModeInput = ({ marginMode, setMarginMode, disabled=false }: MarginModeInputProps) => {
     const [isBgActive, setBgActive] = useState<boolean>(false)
 
     return (
@@ -88,6 +89,7 @@ export const MarginModeInput = ({ marginMode, setMarginMode }: MarginModeInputPr
                     onClick={() => {setMarginMode(MarginModeType.CROSSED)}}
                     onMouseEnter={() => {if (marginMode === MarginModeType.ISOLATED) setBgActive(true)}}
                     onMouseLeave={() => {setBgActive(false)}}
+                    disabled={disabled}
                 >
                     <i className="fa-solid fa-shuffle"></i>
                     <span>교차</span>
@@ -97,6 +99,7 @@ export const MarginModeInput = ({ marginMode, setMarginMode }: MarginModeInputPr
                     onClick={() => {setMarginMode(MarginModeType.ISOLATED)}}
                     onMouseEnter={() => {if (marginMode === MarginModeType.CROSSED) setBgActive(true)}}
                     onMouseLeave={() => {setBgActive(false)}}
+                    disabled={disabled}
                 >
                     <i className="fa-solid fa-right-left"></i>
                     <span>격리</span>

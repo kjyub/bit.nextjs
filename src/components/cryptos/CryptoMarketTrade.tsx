@@ -31,9 +31,10 @@ export default function CryptoMarketTrade({
     sizeUnitType,
     setSizeUnitType
 }: ICryptoMarketTrade) {
-    const { balance, locked, updateInfo } = useUserInfoStore()
+    const { balance, locked, updateInfo, myTrades } = useUserInfoStore()
     const userBudget = balance - locked
     
+    const [isMarginModeDisabled, setMarginModeDisabled] = useState<boolean>(false)
     const [marginMode, setMarginMode] = useState<MarginModeTypeValues>(MarginModeType.CROSSED) // 마진모드 (CROSSED, ISOLATED)
     const [leverageRatio, setLeverageRatio] = useState<number>(1) // 레버리지 비율
     const [orderType, setOrderType] = useState<TradeOrderTypeValues>(TradeOrderType.LIMIT) // 지정가/시장가
@@ -52,6 +53,18 @@ export default function CryptoMarketTrade({
     useEffect(() => {
         initPrice()
     }, [marketCode, user.uuid])
+
+    useEffect(() => {
+        // 이미 포지션이 있으면 해당 포지션으로 고정
+        const position = myTrades.positions.find((position) => position.market.code === marketCode)
+        console.log(position)
+        if (position) {
+            setMarginMode(position.marginMode)
+            setMarginModeDisabled(true)
+        } else {
+            setMarginModeDisabled(false)
+        }
+    }, [marketCode, myTrades.positions])
 
     useEffect(() => {
         setLiqLongPrice(price * (1 - (1/leverageRatio)) + R)
@@ -126,7 +139,7 @@ export default function CryptoMarketTrade({
 
     return (
         <S.TradeBox>
-            <I.MarginModeInput marginMode={marginMode} setMarginMode={setMarginMode} />
+            <I.MarginModeInput marginMode={marginMode} setMarginMode={setMarginMode} disabled={isMarginModeDisabled} />
 
             <I.LeverageInput
                 leverageRatio={leverageRatio}
