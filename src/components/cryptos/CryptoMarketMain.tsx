@@ -123,7 +123,7 @@ export default function CryptoMarketMain({ marketCode, marketData, marketCurrent
                         className={`${changeType === PriceChangeTypes.RISE ? "rise" : changeType === PriceChangeTypes.FALL ? "fall" : ""} change`}
                     >
                         {/* tailwind 변수 테스트 */}
-                        <span className={`price`} style={{ width: `${priceWidth}px` }}> 
+                        <span className={`price`} style={{ width: `${priceWidth + 12}px` }}> 
                             {/* <CountUp start={startPrice} end={price} duration={0.3} separator="," />  */}
                             {CryptoUtils.getPriceText(price)}
                             <span className="currency">{currency}</span>

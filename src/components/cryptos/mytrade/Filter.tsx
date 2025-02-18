@@ -58,21 +58,26 @@ export default function CryptoMyTradeFilter({
     const handleDateType = (_dateType: DateType) => {
         const today = dayjs()
 
+        let _startDate = ""
+        const _endDate = today.format("YYYY-MM-DD")
+
         if (_dateType === DateType.DAY) {
             const yesterday = today.subtract(1, "day")
-            setDateStart(yesterday.format("YYYY-MM-DD"))
+            _startDate = yesterday.format("YYYY-MM-DD")
         } else if (_dateType === DateType.WEEK) {
             const lastWeek = today.subtract(1, "week")
-            setDateStart(lastWeek.format("YYYY-MM-DD"))
+            _startDate = lastWeek.format("YYYY-MM-DD")
         } else if (_dateType === DateType.MONTH1) {
             const lastMonth = today.subtract(1, "month")
-            setDateStart(lastMonth.format("YYYY-MM-DD"))
+            _startDate = lastMonth.format("YYYY-MM-DD")
         } else if (_dateType === DateType.MONTH3) {
             const last3Month = today.subtract(3, "month")
-            setDateStart(last3Month.format("YYYY-MM-DD"))
+            _startDate = last3Month.format("YYYY-MM-DD")
         }
 
-        setDateEnd(today.format("YYYY-MM-DD"))
+        setDateStart(_startDate)
+        setDateEnd(_endDate)
+        onSearch(_startDate, _endDate, marketSearch)
     }
 
     const handleSearch = () => {
