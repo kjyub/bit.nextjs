@@ -22,10 +22,12 @@ const useToastMessageStore = create<IToastMessageStore>((set) => ({
             content,
         };
 
+        // 메세지 추가
         set((state) => ({
-            messages: [message, ...state.messages],
+            messages: [message, ...state.messages.filter((m) => m.key !== message.key)],
         }));
 
+        // 시간 경과 후 메시지 삭제
         setTimeout(() => {
             set((state) => ({
                 messages: state.messages.filter((m) => m.key !== message.key),

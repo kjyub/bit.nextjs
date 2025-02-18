@@ -29,9 +29,9 @@ export default function AppClientLayout({
 
     // 유저 거래 정보 알람 소켓 초기화
     useEffect(() => {
-        if (!CommonUtils.isStringNullOrEmpty(user.uuid)) {
+        if (user.id >= 0) {
             userInfoUpdate()
-            userAlarmSocketRef.current = TradeGoApi.initUserAlarmWebSocket(user.uuid)
+            userAlarmSocketRef.current = TradeGoApi.initUserAlarmWebSocket(user.id)
         }
 
         return () => {

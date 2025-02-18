@@ -48,6 +48,10 @@ export default class User extends AbsApiObject {
     }
 
     public get id(): number {
+        if (typeof this._id === "string") {
+            return parseInt(this._id)
+        }
+
         return this._id
     }
     public get uuid(): string {
