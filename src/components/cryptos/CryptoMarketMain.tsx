@@ -52,8 +52,6 @@ export default function CryptoMarketMain({ marketCode, marketData, marketCurrent
     const [isTitleSticky, setTitleSticky] = useState<boolean>(false)
 
     useEffect(() => {
-        updateInfo()
-        
         const handleScroll = () => {
             setTitleSticky(window.scrollY > 56)
         }
@@ -64,6 +62,10 @@ export default function CryptoMarketMain({ marketCode, marketData, marketCurrent
             window.removeEventListener("scroll", handleScroll)
         }
     }, [])
+
+    useEffect(() => {
+        updateInfo()
+    }, [marketCode])
 
     useEffect(() => {
         const _market = new CryptoMarket()
@@ -161,7 +163,7 @@ export default function CryptoMarketMain({ marketCode, marketData, marketCurrent
             <S.MainLayout>
                 <S.ChartAndTradeLayout>
                     <S.ChartLayout>
-                        <CryptoMarketChart marketCode="KRW-BTC" />
+                        <CryptoMarketChart marketCode={marketCode} />
                     </S.ChartLayout>
                     <S.TradeLayout>
                         <CryptoMarketTrade

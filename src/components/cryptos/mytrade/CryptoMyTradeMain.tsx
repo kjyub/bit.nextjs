@@ -35,9 +35,13 @@ interface ICryptoMyTrade {
     user: User
 }
 export default function CryptoMyTrade({ user }: ICryptoMyTrade) {
-    const { balance, myTrades } = useUserInfoStore()
+    const { balance, myTrades, updateInfo } = useUserInfoStore()
 
     const [page, setPage] = useState<MyTradePage>(MyTradePage.POSITION)
+
+    // useEffect(() => {
+    //     updateInfo()
+    // }, [page])
 
     return (
         <S.Layout>
@@ -81,7 +85,7 @@ const PageTab = ({ page, setPage, currentPage, count }: IPageTabBar) => {
             className={`tab ${page === currentPage ? "active" : ""}`}
         >
             {MyTradePageNames[page]}
-            {count && (`(${count})`)}
+            {count > 0 && (` (${count})`)}
         </button>
     )
 }

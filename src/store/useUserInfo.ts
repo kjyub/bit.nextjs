@@ -16,6 +16,7 @@ const getInitData = async () => {
     return { 
         cash: user.cash,
         balance: wallet.balance,
+        locked: wallet.locked,
         myTrades: myTrades,
     }
 }
@@ -24,6 +25,7 @@ interface IUserInfoStore {
     init: () => void
     cash: number
     balance: number
+    locked: number
     myTrades: IMyTradeData
     updateInfo: () => void
 }
@@ -35,6 +37,7 @@ const useUserInfoStore = create<IUserInfoStore>((set) => ({
     },
     cash: 0,
     balance: 0,
+    locked: 0,
     myTrades: {
         positions: [],
         orders: [],

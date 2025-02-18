@@ -7,7 +7,7 @@ import CommonButton from "../atomics/buttons/CommonButton"
 import ModalContainer from "../ModalContainer"
 import { TransferTypeValues, TransferTypes } from "@/types/cryptos/CryptoTypes"
 import CryptoTransferModal from "./CryptoTransferModal"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import CryptoApi from "@/apis/api/cryptos/CryptoApi"
 import UserApi from "@/apis/api/users/UserApi"
 import useUserInfoStore from "@/store/useUserInfo"
@@ -18,7 +18,7 @@ export default function CryptoMain() {
     const [isTransferModalOpen, setTransferModalOpen] = useState<boolean>(false)
     const [transferType, setTransferType] = useState<TransferTypeValues>(TransferTypes.TO_WALLET)
 
-    const { cash, balance, updateInfo } = useUserInfoStore()
+    const { cash, balance, locked, updateInfo } = useUserInfoStore()
 
     useEffect(() => {
         updateInfo()
@@ -28,6 +28,12 @@ export default function CryptoMain() {
         setTransferType(type)
         setTransferModalOpen(true)
     }
+
+    const availableBalance = useMemo(() => {
+        const a = balance - locked
+        
+        return a < 0 ? 0 : a
+    }, [balance, locked])
 
     return (
         <S.Layout>
@@ -71,12 +77,18 @@ export default function CryptoMain() {
                             </CommonButton>
                         </div>
                         <div className="content">
-                            <div className="label">거래 중</div>
-                            <div className="value">0</div>
+                            <div className="label">지갑 총액</div>
+                            <div className="value">{CommonUtils.textFormat(Math.floor(balance), TextFormats.NUMBER)}C</div>
                         </div>
                         <div className="content">
-                            <div className="label">거래 대기</div>
-                            <div className="value">{CommonUtils.textFormat(balance, TextFormats.NUMBER)}C</div>
+                            <div className="label">사용 중</div>
+                            <div className="value">{CommonUtils.textFormat(Math.floor(locked), TextFormats.NUMBER)}C</div>
+                        </div>
+                        <div className="content">
+                            <div className="label">사용 가능</div>
+                            <div className="value">
+                                {CommonUtils.textFormat(Math.floor(availableBalance), TextFormats.NUMBER)}C
+                            </div>
                         </div>
                     </S.WalletBox>
                 </div>

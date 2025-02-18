@@ -132,7 +132,7 @@ const ema12 = ema().id(1).options({ windowSize: 12 }).merge((d: IChartData, c: n
 const ema26 = ema().id(2).options({ windowSize: 26 }).merge((d: IChartData, c: number) => {
     d.ema26 = c;
 })
-.accessor((d: IChartData) => d.ema26).stroke(EMA26_COLOR)
+.accessor((d: IChartData) => "ema26" in d ? d.ema26 : null).stroke(EMA26_COLOR)
   
 const elder = elderRay()
 
@@ -157,7 +157,7 @@ const parseCandleData = (candles: IUpbitCandle[]): [TimeScaleProvider, number[] 
     } catch {
         //
     }
-    
+
     const scaleData = ScaleProvider(chartData as any[])
     const { data, xScale, xAccessor, displayXAccessor } = scaleData
     

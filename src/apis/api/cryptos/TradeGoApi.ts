@@ -86,7 +86,7 @@ class TradeGoApi {
         return socket
     }
 
-    static initUserAlarmWebSocket(userUUID: string): WebSocket {
+    static initUserAlarmWebSocket(userUUID: string, updateInfo: () => void): WebSocket {
         const addToastMessage = useToastMessageStore.getState().addMessage
 
         const socket = new WebSocket(`${process.env.NEXT_PUBLIC_USER_ALARM_SOCKET_SERVER}/user?user_id=${userUUID}`)
@@ -100,7 +100,7 @@ class TradeGoApi {
             try {
                 const data = JSON.parse(event.data as string)
                 addToastMessage(String(data.content))
-                console.log("USER ALARM", data)
+                updateInfo()
             } catch (error) {
                 console.log('Failed to parse WebSocket message', error)
             }

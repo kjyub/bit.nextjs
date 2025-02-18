@@ -127,7 +127,7 @@ export default function CryptoMarketList() {
                 onChange={(e) => setSearch(e.target.value)}
             />
 
-            <div className="market-type">
+            {/* <div className="market-type">
                 <MarketType 
                     marketType={MarketTypes.KRW}
                     currentMarketType={marketType}
@@ -148,7 +148,7 @@ export default function CryptoMarketList() {
                     currentMarketType={marketType}
                     setMarketType={setMarketType}
                 />
-            </div>
+            </div> */}
 
             <div className="market-sort">
                 <MarketSortType 

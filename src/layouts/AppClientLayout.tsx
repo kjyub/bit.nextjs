@@ -31,7 +31,7 @@ export default function AppClientLayout({
     useEffect(() => {
         if (user.id >= 0) {
             userInfoUpdate()
-            userAlarmSocketRef.current = TradeGoApi.initUserAlarmWebSocket(user.id)
+            userAlarmSocketRef.current = TradeGoApi.initUserAlarmWebSocket(user.id, userInfoUpdate)
         }
 
         return () => {

@@ -31,8 +31,8 @@ export default function CryptoMarketTrade({
     sizeUnitType,
     setSizeUnitType
 }: ICryptoMarketTrade) {
-    const { balance, updateInfo } = useUserInfoStore()
-    const userBudget = balance
+    const { balance, locked, updateInfo } = useUserInfoStore()
+    const userBudget = balance - locked
     
     const [marginMode, setMarginMode] = useState<MarginModeTypeValues>(MarginModeType.CROSSED) // 마진모드 (CROSSED, ISOLATED)
     const [leverageRatio, setLeverageRatio] = useState<number>(1) // 레버리지 비율
@@ -133,7 +133,7 @@ export default function CryptoMarketTrade({
                 setLeverageRatio={setLeverageRatio}
                 maxRatio={75}
             />
-            <div className="mt-6! mb-1! border-b border-slate-600/30" />
+            <div className="mt-2! mb-2! border-b border-slate-600/30" />
             <I.OrderTypeInput orderType={orderType} setOrderType={setOrderType} />
             
             {orderType === TradeOrderType.LIMIT && (
@@ -199,14 +199,18 @@ export default function CryptoMarketTrade({
                     <span className="label">구매 비용</span>
                     <span className="value">{CommonUtils.textFormat(cost, TextFormats.NUMBER)}</span>
                 </S.SummaryItem>
-                <S.SummaryItem>
-                    <span className="label">청산가 (롱)</span>
-                    <span className="value">{CommonUtils.textFormat(liqLongPrice, TextFormats.NUMBER)}</span>
-                </S.SummaryItem>
-                <S.SummaryItem>
-                    <span className="label">청산가 (숏)</span>
-                    <span className="value">{CommonUtils.textFormat(liqShortPrice, TextFormats.NUMBER)}</span>
-                </S.SummaryItem>
+                {marginMode === MarginModeType.ISOLATED && (
+                    <>
+                        <S.SummaryItem>
+                            <span className="label">청산가 (롱)</span>
+                            <span className="value">{CommonUtils.textFormat(liqLongPrice, TextFormats.NUMBER)}</span>
+                        </S.SummaryItem>
+                        <S.SummaryItem>
+                            <span className="label">청산가 (숏)</span>
+                            <span className="value">{CommonUtils.textFormat(liqShortPrice, TextFormats.NUMBER)}</span>
+                        </S.SummaryItem>
+                    </>
+                )}
                 <S.SummaryItem>
                     <span className="label">수수료</span>
                     <span className="value">{TypeUtils.percent(fee, 3)}</span>

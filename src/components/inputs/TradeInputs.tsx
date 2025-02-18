@@ -231,7 +231,7 @@ interface OrderTypeInputProps {
 }
 export const OrderTypeInput = ({ orderType, setOrderType }: OrderTypeInputProps) => {
     return (
-        <div className="flex items-center w-full h-5 space-x-4">
+        <div className="flex items-center w-full h-6 space-x-4">
             <S.OrderTypeBox> 
                 <button 
                     className={orderType === TradeOrderType.LIMIT ? "active" : ""}

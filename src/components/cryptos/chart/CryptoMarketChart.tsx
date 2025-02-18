@@ -26,36 +26,37 @@ export default function CryptoMarketChart({ marketCode }: ICryptoMarketChart) {
 
     useEffect(() => {
         connectChart()
-    }, [timeType])
+    }, [marketCode, timeType])
 
     const connectChart = useCallback(() => {
-        if (!socketRef.current) {
-            const newSocket = new WebSocket('wss://api.upbit.com/websocket/v1')
-            newSocket.binaryType = "arraybuffer"
-            newSocket.onmessage = (event: MessageEvent) => {
-                try {
-                    const dataString = new TextDecoder("utf-8").decode(event.data as object);
-                    const data = JSON.parse(dataString as string)
-                    addCandles(data as IUpbitCandle)
-                } catch (error) {
-                    console.error('Failed to parse WebSocket message', error)
-                }
-            }
-            socketRef.current = newSocket
-        } else {
+        if (socketRef.current) {
             console.log("기존 연결 종료")
             socketRef.current.close()
         }
-        const socket: WebSocket = socketRef.current
 
-        socket.onopen = () => {
+        setCandles([])
+
+        const newSocket = new WebSocket('wss://api.upbit.com/websocket/v1')
+        newSocket.binaryType = "arraybuffer"
+        newSocket.onmessage = (event: MessageEvent) => {
+            try {
+                const dataString = new TextDecoder("utf-8").decode(event.data as object);
+                const data = JSON.parse(dataString as string)
+                addCandles(data as IUpbitCandle)
+            } catch (error) {
+                console.error('Failed to parse WebSocket message', error)
+            }
+        }
+        socketRef.current = newSocket
+
+        newSocket.onopen = () => {
             const requestData = [
                 {ticket: ticket},
                 {type: `candle.${timeType}`, codes: [marketCode]},
             ]
-            socket.send(JSON.stringify(requestData))
+            newSocket.send(JSON.stringify(requestData))
         }
-    }, [ticket, timeType, candles])
+    }, [marketCode, ticket, timeType, candles])
     
     const addCandles = useCallback((data: IUpbitCandle) => {
         setCandles((prev) => [data, ...prev])

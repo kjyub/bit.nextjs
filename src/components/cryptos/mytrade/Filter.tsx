@@ -1,7 +1,7 @@
 "use client"
 
 import dayjs from "dayjs"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import * as S from "@/styles/CryptoMyTradeStyles"
 import CommonUtils from "@/utils/CommonUtils"
 
@@ -15,21 +15,25 @@ enum DateType {
 
 interface ICryptoMyTradeFilter {
     onSearch: (dateStart: string, dateEnd: string, marketSearch: string) => void
+    isInitSearch?: boolean
 }
 export default function CryptoMyTradeFilter({
-    onSearch
+    onSearch,
+    isInitSearch = true,
 }: ICryptoMyTradeFilter) {
-    const [dateStart, setDateStart] = useState<string>("")
-    const [dateEnd, setDateEnd] = useState<string>("")
+    const today = useMemo(() => dayjs(), [])
+    const yesterday = useMemo(() => today.subtract(1, "day"), [])
+
+    const [dateStart, setDateStart] = useState<string>(yesterday.format("YYYY-MM-DD"))
+    const [dateEnd, setDateEnd] = useState<string>(today.format("YYYY-MM-DD"))
     const [marketSearch, setMarketSearch] = useState<string>("")
 
     const [dateType, setDateType] = useState<DateType>(DateType.DAY)
 
     useEffect(() => {
-        const today = dayjs()
-        const yesterday = today.subtract(1, "day")
-        setDateStart(yesterday.format("YYYY-MM-DD"))
-        setDateEnd(today.format("YYYY-MM-DD"))
+        if (isInitSearch) {
+            onSearch(dateStart, dateEnd, marketSearch)
+        }
     }, [])
 
     useEffect(() => {
