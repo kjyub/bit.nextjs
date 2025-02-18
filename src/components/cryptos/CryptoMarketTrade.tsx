@@ -54,8 +54,8 @@ export default function CryptoMarketTrade({
     }, [marketCode, user.uuid])
 
     useEffect(() => {
-        setLiqLongPrice(price * (1 - (1/leverageRatio) + R))
-        setLiqShortPrice(price * (1 + (1/leverageRatio) - R))
+        setLiqLongPrice(price * (1 - (1/leverageRatio)) + R)
+        setLiqShortPrice(price * (1 + (1/leverageRatio)) - R)
     }, [price, leverageRatio])
 
     useEffect(() => {

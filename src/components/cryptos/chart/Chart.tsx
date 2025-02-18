@@ -147,11 +147,17 @@ const positionColor = (data: IChartData) => {
 const parseCandleData = (candles: IUpbitCandle[]): [TimeScaleProvider, number[] ] => {
     const parsedData = parseCandleToChart(candles)
 
-    const _ema12 = ema12(parsedData)
-    const _ema26 = ema26(_ema12 as object[])
-    const _elder = elder(_ema26 as object[])
-    const chartData = elder(_elder as object[])
-
+    let chartData = parsedData
+    
+    try {
+        const _ema12 = ema12(parsedData)
+        const _ema26 = ema26(_ema12 as object[])
+        const _elder = elder(_ema26 as object[])
+        chartData = elder(_elder as object[])
+    } catch {
+        //
+    }
+    
     const scaleData = ScaleProvider(chartData as any[])
     const { data, xScale, xAccessor, displayXAccessor } = scaleData
     
