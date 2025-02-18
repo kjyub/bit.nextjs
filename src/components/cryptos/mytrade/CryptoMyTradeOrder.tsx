@@ -23,28 +23,14 @@ interface ICryptoMyTradeOrder {
     user: User
 }
 export default function CryptoMyTradeOrder({ user }: ICryptoMyTradeOrder) {
-    const { balance, myTrades } = useUserInfoStore()
+    const { balance, myTrades, updateInfo } = useUserInfoStore()
     const orders = myTrades.orders
-
-    // const [orders, setOrders] = useState<Array<TradePosition>>([])
-
-    // useEffect(() => {
-    //     if (!CommonUtils.isStringNullOrEmpty(user.uuid)) {
-    //         getPositions()
-    //     }    
-    // }, [user.uuid])
-
-    // const getPositions = useCallback(() => {
-    //     CryptoApi.getTradeOrders().then((response) => {
-    //         setOrders(response)
-    //     })
-    // }, [])
 
     return (
         <S.PageLayout className="p-2 space-y-2">
             <S.PageList $is_active={orders.length > 0}>
                 {orders.map((order, index) => (
-                    <Order key={index} order={order} />
+                    <Order key={index} order={order} updateInfo={updateInfo} />
                 ))}
             </S.PageList>
         </S.PageLayout>
@@ -53,10 +39,9 @@ export default function CryptoMyTradeOrder({ user }: ICryptoMyTradeOrder) {
 
 interface IOrder {
     order: TradeOrder
+    updateInfo: () => Promise<void>
 }
-const Order = ({ market, order }: IOrder) => {
-    const ref = useRef<HTMLDivElement>(null)
-
+const Order = ({ market, order, updateInfo }: IOrder) => {
     const handleCancel = async () => {
         if (!confirm("주문을 취소하시겠습니까?")) {
             return
@@ -65,8 +50,8 @@ const Order = ({ market, order }: IOrder) => {
         const response = await CryptoApi.orderLimitCancel(order.id)
 
         if (response) {
+            updateInfo()
             alert("주문이 취소되었습니다.")
-            ref.current?.remove()
         } else {
             alert("주문 취소에 실패했습니다.")
         }
@@ -88,10 +73,11 @@ const Order = ({ market, order }: IOrder) => {
         if (!response) {
             alert("주문 추격에 실패했습니다.")
         }
+        updateInfo()
     }
 
     return (
-        <S.OrderBox ref={ref}>
+        <S.OrderBox>
             <S.OrderHeader>
                 <div className="left">
                     <div className="datetime">

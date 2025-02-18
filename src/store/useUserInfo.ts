@@ -27,7 +27,7 @@ interface IUserInfoStore {
     balance: number
     locked: number
     myTrades: IMyTradeData
-    updateInfo: () => void
+    updateInfo: () => Promise<void>
 }
 const useUserInfoStore = create<IUserInfoStore>((set) => ({
     init: () => {
