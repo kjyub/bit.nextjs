@@ -2,5 +2,8 @@
     "editor.tabSize": 4,
     "editor.insertSpaces": true,
     "editor.formatOnSave": false,
-    "editor.detectIndentation": false
+    "editor.detectIndentation": false,
+    "workbench.colorCustomizations": {
+      "titleBar.activeBackground": "#2f0d68",
+    }
 }
