@@ -1,6 +1,4 @@
-import { StyleProps } from "@/types/StyleTypes"
-import Link from "next/link"
-import tw from "tailwind-styled-components"
+import tw from 'tailwind-styled-components'
 
 export const Layout = tw.div`
     flex flex-col flex-1 max-w-[800px] py-12 space-y-4

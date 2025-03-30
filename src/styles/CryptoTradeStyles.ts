@@ -1,7 +1,6 @@
-import { StyleProps } from "@/types/StyleTypes"
-import Link from "next/link"
-import tw from "tailwind-styled-components"
-import styled from "styled-components"
+import { StyleProps } from '@/types/StyleTypes'
+import styled from 'styled-components'
+import tw from 'tailwind-styled-components'
 
 export const TradeBox = tw.div`
     flex flex-col w-full h-full space-y-3
@@ -35,7 +34,7 @@ export const InputBox = tw.div<StyleProps>`
     [&>.input]:text-sm [&>.input]:text-slate-300 [&>.input]:bg-transparent
     [&>.input]:outline-hidden [&>.input]:focus:outline-hidden
 
-    ${({ $is_focus }) => $is_focus ? "ring-1 ring-violet-500" : ""}
+    ${({ $is_focus }) => ($is_focus ? 'ring-1 ring-violet-500' : '')}
     duration-200
 `
 

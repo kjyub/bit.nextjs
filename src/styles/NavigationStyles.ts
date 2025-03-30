@@ -1,5 +1,4 @@
-import { StyleProps } from "@/types/StyleTypes"
-import tw from "tailwind-styled-components"
+import tw from 'tailwind-styled-components'
 
 export const Layout = tw.div`
     sticky top-0 z-40 

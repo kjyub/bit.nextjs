@@ -1,5 +1,4 @@
-import { StyleProps } from "@/types/StyleTypes"
-import tw from "tailwind-styled-components"
+import tw from 'tailwind-styled-components'
 
 export const PageWidth = tw.div`
     max-w-(--breakpoint-xl)

@@ -1,4 +1,4 @@
-import tw from "tailwind-styled-components"
+import tw from 'tailwind-styled-components'
 
 const Button = tw.button`
     px-3 py-1 
@@ -8,32 +8,25 @@ const Button = tw.button`
 `
 
 interface CommonButtonProps {
-    children?: React.ReactNode
-    onClick: () => void
-    className?: string
-    disabled?: boolean
-    type?: "button" | "submit" | "reset"
-    style?: React.CSSProperties
+  children?: React.ReactNode
+  onClick: () => void
+  className?: string
+  disabled?: boolean
+  type?: 'button' | 'submit' | 'reset'
+  style?: React.CSSProperties
 }
 export default function CommonButton({
-    children,
-    onClick,
-    className = "",
-    disabled = false,
-    type = "button",
-    style = {},
-    ...props
+  children,
+  onClick,
+  className = '',
+  disabled = false,
+  type = 'button',
+  style = {},
+  ...props
 }: CommonButtonProps) {
-    return (
-        <Button
-            type={type}
-            onClick={onClick}
-            className={`${className}`}
-            disabled={disabled}
-            style={style}
-            {...props}
-        >
-            {children}
-        </Button>
-    )
+  return (
+    <Button type={type} onClick={onClick} className={`${className}`} disabled={disabled} style={style} {...props}>
+      {children}
+    </Button>
+  )
 }

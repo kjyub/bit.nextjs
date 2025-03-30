@@ -1,6 +1,4 @@
-import { StyleProps } from "@/types/StyleTypes"
-import Link from "next/link"
-import tw from "tailwind-styled-components"
+import tw from 'tailwind-styled-components'
 
 export const ControlBar = tw.div`
     flex flex-wrap w-full pb-2 space-x-1

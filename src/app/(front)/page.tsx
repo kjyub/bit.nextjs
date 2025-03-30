@@ -1,50 +1,48 @@
-import Image from "next/image";
-
 export default function Home() {
-    return (
-        <div className="flex flex-col w-full space-y-4 [&>span]:text-slate-100">
-            <span>test</span>
-            <span>test23</span>
-            <span>test</span>
-            <span>test23</span>
-            <span>test</span>
-            <span>test23</span>
-            <span>test</span>
-            <span>test23</span>
-            <span>test</span>
-            <span>test23</span>
-            <span>test</span>
-            <span>test23</span>
-            <span>test</span>
-            <span>test23</span>
-            <span>test</span>
-            <span>test23</span>
-            <span>test</span>
-            <span>test23</span>
-            <span>test</span>
-            <span>test23</span>
-            <span>test</span>
-            <span>test23</span>
-            <span>test</span>
-            <span>test23</span>
-            <span>test</span>
-            <span>test23</span>
-            <span>test</span>
-            <span>test23</span>
-            <span>test</span>
-            <span>test23</span>
-            <span>test</span>
-            <span>test23</span>
-            <span>test</span>
-            <span>test23</span>
-            <span>test</span>
-            <span>test23</span>
-            <span>test</span>
-            <span>test23</span>
-            <span>test</span>
-            <span>test23</span>
-            <span>test</span>
-            <span>test23</span>
-        </div>
-    )
+  return (
+    <div className="flex flex-col w-full space-y-4 [&>span]:text-slate-100">
+      <span>test</span>
+      <span>test23</span>
+      <span>test</span>
+      <span>test23</span>
+      <span>test</span>
+      <span>test23</span>
+      <span>test</span>
+      <span>test23</span>
+      <span>test</span>
+      <span>test23</span>
+      <span>test</span>
+      <span>test23</span>
+      <span>test</span>
+      <span>test23</span>
+      <span>test</span>
+      <span>test23</span>
+      <span>test</span>
+      <span>test23</span>
+      <span>test</span>
+      <span>test23</span>
+      <span>test</span>
+      <span>test23</span>
+      <span>test</span>
+      <span>test23</span>
+      <span>test</span>
+      <span>test23</span>
+      <span>test</span>
+      <span>test23</span>
+      <span>test</span>
+      <span>test23</span>
+      <span>test</span>
+      <span>test23</span>
+      <span>test</span>
+      <span>test23</span>
+      <span>test</span>
+      <span>test23</span>
+      <span>test</span>
+      <span>test23</span>
+      <span>test</span>
+      <span>test23</span>
+      <span>test</span>
+      <span>test23</span>
+    </div>
+  )
 }

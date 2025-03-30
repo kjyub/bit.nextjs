@@ -1,5 +1,5 @@
-import { StyleProps } from "@/types/StyleTypes"
-import tw from "tailwind-styled-components"
+import { StyleProps } from '@/types/StyleTypes'
+import tw from 'tailwind-styled-components'
 
 export const Layout = tw.div`
     flex flex-col w-full space-y-1
@@ -28,8 +28,8 @@ export const InputBox = tw(InputColor)`
     flex items-center justify-between w-full h-full p-4
     rounded-lg 
 
-    ${({$is_active}: StyleProps) => $is_active ? "border-2 border-blue-500!" : "border"}
-    ${({$is_error}: StyleProps) => $is_error ? "border-red-500" : ""}
+    ${({ $is_active }: StyleProps) => ($is_active ? 'border-2 border-blue-500!' : 'border')}
+    ${({ $is_error }: StyleProps) => ($is_error ? 'border-red-500' : '')}
     duration-200
 `
 export const Input = tw.input`
@@ -55,18 +55,18 @@ export const BoolButton = tw(InputColor)`
     flex flex-center w-full
     rounded-lg border
 
-    ${({$is_active}: StyleProps) => $is_active ? 
-        `
+    ${({ $is_active }: StyleProps) =>
+      $is_active
+        ? `
         border-blue-200 dark:border-blue-600
         bg-blue-100 dark:bg-blue-700
         text-blue-800 dark:text-blue-100
-        ` : 
         `
+        : `
         border-slate-200 dark:border-slate-600
         bg-slate-100 dark:bg-slate-700
         text-slate-800 dark:text-slate-100
-        `
-    }
+        `}
 `
 
 export const Combo = tw(InputBox)`

@@ -1,34 +1,28 @@
-"use client"
+'use client'
 
-import { useEffect, useRef, useState } from "react"
-import { v4 as uuid } from 'uuid'
-import useMarketPriceStore from "@/store/useMarketPriceStore"
-import TradeGoApi from "@/apis/api/cryptos/TradeGoApi"
-import { useUser } from "@/hooks/useUser"
-import CommonUtils from "@/utils/CommonUtils"
-import useUserInfoStore from "@/store/useUserInfo"
+import TradeGoApi from '@/apis/api/cryptos/TradeGoApi'
+import { useUser } from '@/hooks/useUser'
+import useMarketPriceStore from '@/store/useMarketPriceStore'
+import { useEffect, useRef } from 'react'
 
 export default function MarketPriceLayout({
-    children,
+  children,
 }: {
-    children: React.ReactNode
+  children: React.ReactNode
 }) {
-    const [user, isUserLoading] = useUser()
-    const marketSocketRef = useRef<WebSocket | null>(null)
-    const marketPriceInit = useMarketPriceStore.getState().init
+  const [user, _isUserLoading] = useUser()
+  const marketSocketRef = useRef<WebSocket | null>(null)
+  const marketPriceInit = useMarketPriceStore.getState().init
 
-    useEffect(() => {      
-        marketPriceInit()
+  useEffect(() => {
+    marketPriceInit()
 
-        marketSocketRef.current = TradeGoApi.initPriceWebSocket()
+    marketSocketRef.current = TradeGoApi.initPriceWebSocket()
 
-        return () => {
-            marketSocketRef.current.close()
-        }
-    }, [user.uuid])
+    return () => {
+      marketSocketRef.current.close()
+    }
+  }, [user.uuid])
 
-    return (
-        <>
-        </>
-    )
+  return <>{children}</>
 }

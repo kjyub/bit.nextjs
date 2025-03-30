@@ -1,6 +1,6 @@
-import { StyleProps } from "@/types/StyleTypes"
-import Link from "next/link"
-import tw from "tailwind-styled-components"
+import { StyleProps } from '@/types/StyleTypes'
+import Link from 'next/link'
+import tw from 'tailwind-styled-components'
 
 export const Layout = tw.div`
     flex justify-center w-full
@@ -21,10 +21,8 @@ export const TitleLayout = tw.div<StyleProps>`
     flex justify-between items-center w-full
     border-b
 
-    ${({$is_active}: StyleProps) => $is_active ? 
-        "h-32 border-slate-500/20 backdrop-blur-lg" : 
-        "h-32 border-transparent"
-    }
+    ${({ $is_active }: StyleProps) =>
+      $is_active ? 'h-32 border-slate-500/20 backdrop-blur-lg' : 'h-32 border-transparent'}
 
     duration-300
 `

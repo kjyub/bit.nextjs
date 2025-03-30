@@ -1,28 +1,27 @@
-import { UserTypes } from '@/types/users/UserTypes';
-import ApiUtils from '@/utils/ApiUtils';
-import Pagination from '@/types/api/pagination';
-import { EditStateTypes } from '@/types/DataTypes';
-import { tradeDefaultServerInstance } from '@/apis/utils/serverTradeApis';
-import { IUpbitMarket, IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
+import { tradeDefaultServerInstance } from '@/apis/utils/serverTradeApis'
+import { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces'
 
 class TradeGoServerApi {
-    // region Market
-    static async getMarketCurrent(marketCode: string): Promise<IUpbitMarketTicker> {
-        let result: IUpbitMarketTicker = {}
+  // region Market
+  static async getMarketCurrent(marketCode: string): Promise<IUpbitMarketTicker> {
+    let result: IUpbitMarketTicker = {}
 
-        await tradeDefaultServerInstance.post("/markets", { 
-            codes: [marketCode]
-        }).then(({ data }) => {
-            if (Array.isArray(data) && data.length > 0) {
-                result = data[0]
-            }
-        }).catch((error) => {
-            console.log(error)
-        })
+    await tradeDefaultServerInstance
+      .post('/markets', {
+        codes: [marketCode],
+      })
+      .then(({ data }) => {
+        if (Array.isArray(data) && data.length > 0) {
+          result = data[0]
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
 
-        return result
-    }
-    // endregion
+    return result
+  }
+  // endregion
 }
 
 export default TradeGoServerApi

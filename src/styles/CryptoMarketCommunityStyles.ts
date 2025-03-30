@@ -1,6 +1,5 @@
-import { StyleProps } from "@/types/StyleTypes"
-import Link from "next/link"
-import tw from "tailwind-styled-components"
+import { StyleProps } from '@/types/StyleTypes'
+import tw from 'tailwind-styled-components'
 
 export const Layout = tw.div`
     flex flex-col w-full max-w-[960px] space-y-5
@@ -38,7 +37,7 @@ export const SaveButton = tw.button`
 `
 
 export const ItemLayout = tw.div`
-    ${({$is_deleted}: StyleProps) => $is_deleted ? "hidden" : "flex"}
+    ${({ $is_deleted }: StyleProps) => ($is_deleted ? 'hidden' : 'flex')}
     flex-col items-center w-full p-3 space-y-2
 
 `
@@ -46,7 +45,7 @@ export const ItemRow = tw.div<StyleProps>`
     flex flex-col w-full px-3 py-2 space-y-2
     rounded-lg hover:bg-slate-500/30 
     transition-colors cursor-pointer
-    ${({$is_active}: StyleProps) => $is_active ? "bg-slate-500/20" : ""}
+    ${({ $is_active }: StyleProps) => ($is_active ? 'bg-slate-500/20' : '')}
 
     [&>.row]:flex [&>.row]:justify-between [&>.row]:items-center [&>.row]:w-full
     [&>.row>.infos]:flex [&>.row>.infos]:items-center [&>.row>.infos]:space-x-2
@@ -92,7 +91,7 @@ export const ItemCommentWriteBox = tw.div`
     [&>button]:transition-colors
 `
 export const ItemCommentBox = tw.div`
-    ${({$is_deleted}: StyleProps) => $is_deleted ? "hidden" : "flex"}
+    ${({ $is_deleted }: StyleProps) => ($is_deleted ? 'hidden' : 'flex')}
     flex-col w-full p-3 space-y-2
     rounded-lg bg-slate-500/20
 

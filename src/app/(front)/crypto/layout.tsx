@@ -1,28 +1,27 @@
-import CryptoNavigation from "@/components/cryptos/CryptoNavigation"
-import * as MS from "@/styles/MainStyles"
-import * as S from "@/styles/CryptoMarketStyles"
-import CryptoMarketList from "@/components/cryptos/CryptoMarketList"
-import MarketPriceLayout from "@/layouts/MarketPriceLayout"
-import { Suspense } from "react"
-import CryptoFallback from "@/components/fallbacks/CryptoFallback"
+import CryptoMarketList from '@/components/cryptos/CryptoMarketList'
+import CryptoNavigation from '@/components/cryptos/CryptoNavigation'
+import CryptoFallback from '@/components/fallbacks/CryptoFallback'
+import MarketPriceLayout from '@/layouts/MarketPriceLayout'
+import * as S from '@/styles/CryptoMarketStyles'
+import * as MS from '@/styles/MainStyles'
+import { Suspense } from 'react'
 
-export default function CryptoLayout({ children }: Readonly<{children: React.ReactNode}>) {
-    return (
-        <MS.PageLayout>
-            <MarketPriceLayout />
-            <S.Layout>
-                <Suspense fallback={<CryptoFallback />}>
-                    {children}
-                </Suspense>
+export default function CryptoLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <MS.PageLayout>
+      <MarketPriceLayout />
+      <div className="flex w-full h-10 bg-red-500"></div>
+      <S.Layout>
+        <Suspense fallback={<CryptoFallback />}>{children}</Suspense>
 
-                <S.MarketListLayout>
-                    <div className="py-2 border-b border-slate-600/50">
-                        <CryptoNavigation />
-                    </div>
-                    
-                    <CryptoMarketList />
-                </S.MarketListLayout>
-            </S.Layout>
-        </MS.PageLayout>
-    )
+        <S.MarketListLayout>
+          <div className="py-2 border-b border-slate-600/50">
+            <CryptoNavigation />
+          </div>
+
+          <CryptoMarketList />
+        </S.MarketListLayout>
+      </S.Layout>
+    </MS.PageLayout>
+  )
 }
