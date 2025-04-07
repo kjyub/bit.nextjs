@@ -54,12 +54,12 @@ class TradeGoApi {
     return new WebSocket(`${process.env.NEXT_PUBLIC_TRADE_SOCKET_SERVER}/market`)
   }
 
-  static getAlarmSocket(userUUID?: string): WebSocket | null {
-    if (!userUUID) {
+  static getAlarmSocket(userId?: number): WebSocket | null {
+    if (!userId) {
       return null
     }
 
-    const socket = new WebSocket(`${process.env.NEXT_PUBLIC_USER_ALARM_SOCKET_SERVER}/user?user_id=${userUUID}`)
+    const socket = new WebSocket(`${process.env.NEXT_PUBLIC_USER_ALARM_SOCKET_SERVER}/user?user_id=${userId}`)
     return socket
   }
 }
