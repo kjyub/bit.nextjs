@@ -1,7 +1,6 @@
 // store.js
 import TradeGoApi from '@/apis/api/cryptos/TradeGoApi'
 import { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces'
-import CommonUtils from '@/utils/CommonUtils'
 import { create } from 'zustand'
 
 const getInitData = async () => {
@@ -12,36 +11,35 @@ interface IMarketPriceStore {
   marketDic: {
     [key: string]: IUpbitMarketTicker
   }
-  init: () => void
+  init: () => Promise<void>
   updateMarketPriceDic: (data: IUpbitMarketTicker) => void
 }
-const useMarketPriceStore = create<IMarketPriceStore>((set) => ({
+const useMarketPriceStore = create<IMarketPriceStore>((set, get) => ({
   marketDic: {},
-  init: () => {
-    getInitData().then((data) => {
-      set({
-        marketDic: data,
-      })
-    })
+  init: async () => {
+    const data = await getInitData()
+
+    set({ marketDic: data })
   },
   updateMarketPriceDic: (data) => {
-    set((state) => {
-      let marketCode: string = ''
+    let marketCode: string = ''
 
-      if (!CommonUtils.isStringNullOrEmpty(data.code)) {
-        marketCode = data.code
-      } else if (!CommonUtils.isStringNullOrEmpty(data.market)) {
-        marketCode = data.market
-      } else {
-        return state
-      }
+    if (data.code) {
+      marketCode = data.code
+    } else if (data.market) {
+      marketCode = data.market
+    }
 
-      return {
-        marketDic: {
-          ...state.marketDic,
-          [marketCode]: data,
-        },
-      }
+    if (!marketCode) {
+      return
+    }
+
+    const marketDic = get().marketDic
+    set({
+      marketDic: {
+        ...marketDic,
+        [marketCode]: data,
+      },
     })
   },
 }))

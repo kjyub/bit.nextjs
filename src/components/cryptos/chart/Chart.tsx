@@ -123,7 +123,13 @@ const ema12 = ema()
   .merge((d: IChartData, c: number) => {
     d.ema12 = c
   })
-  .accessor((d: IChartData) => d.ema12)
+  .accessor((d: IChartData) => {
+    try {
+      return d.ema12
+    } catch {
+      return null
+    }
+  })
   .stroke(EMA12_COLOR)
 
 const ema26 = ema()
@@ -132,7 +138,13 @@ const ema26 = ema()
   .merge((d: IChartData, c: number) => {
     d.ema26 = c
   })
-  .accessor((d: IChartData) => ('ema26' in d ? d.ema26 : null))
+  .accessor((d: IChartData) => {
+    try {
+      return d.ema26
+    } catch {
+      return null
+    }
+  })
   .stroke(EMA26_COLOR)
 
 const elder = elderRay()

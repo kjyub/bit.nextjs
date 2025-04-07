@@ -76,7 +76,9 @@ export default function CryptoMarketList() {
       _markets
         .filter((market) => {
           return (
-            market.koreanName.includes(search) || market.englishName.includes(search) || market.code.includes(search)
+            market.koreanName.includes(search) ||
+            market.englishName.includes(search) ||
+            market.code.includes(search.toUpperCase())
           )
         })
         .map((market) => {
@@ -90,7 +92,7 @@ export default function CryptoMarketList() {
   // 코드 정렬하기
   const getSortedCodes = useCallback(
     async (_sortType: MarketSortTypeValues, _orderType: OrderTypeValues): string[] => {
-      const socketDataDic = await TradeGoApi.getMarketsCurrentDic()
+      const currentMarketData = await TradeGoApi.getMarketsCurrentDic()
 
       return Object.keys(marketDic).sort((a, b) => {
         let valueA: string | number
@@ -100,14 +102,14 @@ export default function CryptoMarketList() {
           valueA = marketDic[a].koreanName
           valueB = marketDic[b].koreanName
         } else if (_sortType === MarketSortTypes.PRICE) {
-          valueA = socketDataDic[a].trade_price
-          valueB = socketDataDic[b].trade_price
+          valueA = currentMarketData[a].trade_price
+          valueB = currentMarketData[b].trade_price
         } else if (_sortType === MarketSortTypes.CHANGE) {
-          valueA = socketDataDic[a].signed_change_rate
-          valueB = socketDataDic[b].signed_change_rate
+          valueA = currentMarketData[a].signed_change_rate
+          valueB = currentMarketData[b].signed_change_rate
         } else if (_sortType === MarketSortTypes.TRADE_PRICE) {
-          valueA = socketDataDic[a]?.acc_trade_price_24h
-          valueB = socketDataDic[b]?.acc_trade_price_24h
+          valueA = currentMarketData[a]?.acc_trade_price_24h
+          valueB = currentMarketData[b]?.acc_trade_price_24h
         }
 
         if (valueA < valueB) {

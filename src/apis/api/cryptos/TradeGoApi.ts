@@ -1,6 +1,4 @@
 import { tradeDefaultInstance } from '@/apis/utils/clientTradeApis'
-import useMarketPriceStore from '@/store/useMarketPriceStore'
-import useToastMessageStore from '@/store/useToastMessageStore'
 
 class TradeGoApi {
   // region Market
@@ -52,68 +50,16 @@ class TradeGoApi {
   }
   // endregion
 
-  static initPriceWebSocket(sendMessage: string | null): WebSocket {
-    // const socket = new WebSocket('wss://api.upbit.com/websocket/v1')
-    const socket = new WebSocket(`${process.env.NEXT_PUBLIC_TRADE_SOCKET_SERVER}/market`)
-    socket.binaryType = 'arraybuffer'
-    const updateMarketPriceDic = useMarketPriceStore.getState().updateMarketPriceDic
-
-    socket.onopen = () => {
-      console.log('WebSocket connected')
-
-      if (sendMessage) {
-        socket.send(sendMessage)
-      }
-    }
-
-    socket.onmessage = (event: MessageEvent) => {
-      try {
-        const data = JSON.parse(event.data as string)
-        updateMarketPriceDic(data as object)
-      } catch (error) {
-        console.log('Failed to parse WebSocket message', error)
-      }
-    }
-
-    socket.onerror = (event) => {
-      console.log('WebSocket error', event)
-    }
-
-    socket.onclose = () => {
-      console.log('WebSocket disconnected')
-    }
-
-    return socket
+  static getMarketSocket(): WebSocket {
+    return new WebSocket(`${process.env.NEXT_PUBLIC_TRADE_SOCKET_SERVER}/market`)
   }
 
-  static initUserAlarmWebSocket(userUUID: string, updateInfo: () => void): WebSocket {
-    const addToastMessage = useToastMessageStore.getState().addMessage
+  static getAlarmSocket(userUUID?: string): WebSocket | null {
+    if (!userUUID) {
+      return null
+    }
 
     const socket = new WebSocket(`${process.env.NEXT_PUBLIC_USER_ALARM_SOCKET_SERVER}/user?user_id=${userUUID}`)
-    socket.binaryType = 'arraybuffer'
-
-    socket.onopen = () => {
-      console.log('WebSocket connected')
-    }
-
-    socket.onmessage = (event: MessageEvent) => {
-      try {
-        const data = JSON.parse(event.data as string)
-        addToastMessage(String(data.content))
-        updateInfo()
-      } catch (error) {
-        console.log('Failed to parse WebSocket message', error)
-      }
-    }
-
-    socket.onerror = (event) => {
-      console.log('WebSocket error', event)
-    }
-
-    socket.onclose = () => {
-      console.log('WebSocket disconnected')
-    }
-
     return socket
   }
 }

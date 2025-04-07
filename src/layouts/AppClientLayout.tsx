@@ -3,11 +3,11 @@
 import TradeGoApi from '@/apis/api/cryptos/TradeGoApi'
 import ToastPopup from '@/components/commons/ToastPopup'
 import { useUser } from '@/hooks/useUser'
+import useToastMessageStore from '@/store/useToastMessageStore'
 import useUserInfoStore from '@/store/useUserInfo'
 import BrowserUtils from '@/utils/BrowserUtils'
-import CommonUtils from '@/utils/CommonUtils'
 import { usePathname } from 'next/navigation'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function AppClientLayout({
   children,
@@ -17,25 +17,34 @@ export default function AppClientLayout({
   const pathname = usePathname()
 
   const [user, _isUserLoading] = useUser()
+
   const [_isInAppBrowser, setIsInAppBrowser] = useState<boolean>(false)
 
   // 유저 거래 정보 알람
-  const userAlarmSocketRef = useRef<WebSocket | null>(null)
-  const userInfoUpdate = useUserInfoStore.getState().updateInfo
+  const userInfoUpdate = useUserInfoStore((state) => state.updateInfo)
+  const addToastMessage = useToastMessageStore((state) => state.addMessage)
 
   // 유저 거래 정보 알람 소켓 초기화
   useEffect(() => {
-    if (user.id >= 0) {
-      userInfoUpdate()
-      userAlarmSocketRef.current = TradeGoApi.initUserAlarmWebSocket(user.id, userInfoUpdate)
+    const userAlarmSocket = TradeGoApi.getAlarmSocket()
+    if (userAlarmSocket) {
+      userAlarmSocket.onmessage = (event: MessageEvent) => {
+        try {
+          const data = JSON.parse(event.data as string)
+          addToastMessage(String(data.content))
+          userInfoUpdate()
+        } catch (error) {
+          console.log('Failed to parse WebSocket message', error)
+        }
+      }
     }
 
     return () => {
-      if (!CommonUtils.isStringNullOrEmpty(user.uuid)) {
-        userAlarmSocketRef.current.close()
+      if (userAlarmSocket) {
+        userAlarmSocket.close()
       }
     }
-  }, [user.uuid, userInfoUpdate])
+  }, [user.id])
 
   useEffect(() => {
     // 인앱 브라우저 인식 후 외부 브라우저로 이동
