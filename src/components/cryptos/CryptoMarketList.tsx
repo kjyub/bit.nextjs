@@ -18,8 +18,6 @@ import CryptoUtils from '@/utils/CryptoUtils'
 import { useCallback, useEffect, useState } from 'react'
 
 export default function CryptoMarketList() {
-  // const socketDataDic = useMarketPriceStore((state) => state.marketDic)
-
   const [marketDic, setMarketDic] = useState<{ [key: string]: CryptoMarket }>({}) // 코인 목록
   const [marketFilteredCodeSet, setMarketFilteredCodeSet] = useState<Set<string>>(new Set<string>()) // 검색한 코인 목록
   const [marketType, _setMarketType] = useState<MarketTypes>(MarketTypes.KRW) // 마켓 종류 (KRW, BTC, USDT, HOLD)
@@ -244,61 +242,33 @@ const MarketSortType = ({
   )
 }
 
-interface IMarketData {
-  changeType: PriceChangeTypeValues
-  openingPrice: number
-  price: number
-  startPrice: number
-  tradePrice24: number
-  changeRate: number
-  changePrice: number
-}
-
 interface IMarket {
   market: CryptoMarket
-  // socketData: IUpbitMarketTicker
 }
 const Market = ({ market }: IMarket) => {
   const socketData = useMarketPriceStore((state) => state.marketDic[market.code])
-
   const [isPriceChangeShow, setIsPriceChangeShow] = useState<boolean>(false)
-  const [d, setMarketData] = useState<IMarketData>({
-    changeType: market.change,
-    openingPrice: market.openingPrice,
-    price: market.price,
-    startPrice: market.price,
-    tradePrice24: 0,
-    changeRate: market.changeRate,
-    changePrice: market.changePrice,
-  })
 
   useEffect(() => {
     setIsPriceChangeShow(market.code.includes('KRW-'))
   }, [market])
 
-  useEffect(() => {
-    if (!socketData) return
+  if (!socketData || socketData.trade_price < 0) return null
 
-    setMarketData({
-      changeType: CryptoUtils.getPriceChangeType(socketData.trade_price, socketData.opening_price),
-      openingPrice: socketData.opening_price,
-      price: socketData.trade_price,
-      startPrice: socketData.trade_price,
-      tradePrice24: socketData.acc_trade_price_24h,
-      changeRate: socketData.signed_change_rate,
-      changePrice: socketData.signed_change_price,
-    })
-  }, [socketData])
-
-  if (d.price < 0) return null
-
-  const changeRateText = !isNaN(d.changeRate) ? `${(d.changeRate * 100).toFixed(2)}%` : '-'
+  const changeType = CryptoUtils.getPriceChangeType(socketData.trade_price, socketData.opening_price)
+  // const openingPrice = socketData.opening_price
+  const price = socketData.trade_price
+  // const startPrice = socketData.trade_price
+  const tradePrice24 = socketData.acc_trade_price_24h || 0
+  const changeRate = socketData.signed_change_rate
+  const changePrice = socketData.signed_change_price
+  const changeRateText = !isNaN(changeRate) ? `${(changeRate * 100).toFixed(2)}%` : '-'
 
   return (
     <S.MarketListItem
       href={`/crypto/${market.code}`}
       id={`market-list-${market.code}`}
-      className={`${d.changeType === PriceChangeTypes.RISE ? 'rise' : d.changeType === PriceChangeTypes.FALL ? 'fall' : ''}`}
+      className={`${changeType === PriceChangeTypes.RISE ? 'rise' : changeType === PriceChangeTypes.FALL ? 'fall' : ''}`}
     >
       <div className="name">
         <span className="korean">{market.koreanName}</span>
@@ -307,10 +277,10 @@ const Market = ({ market }: IMarket) => {
       <div className="price change-color">
         <span className="price">
           {/* <CountUp start={startPrice} end={price} duration={0.3} separator="," /> */}
-          {CryptoUtils.getPriceText(d.price)}
+          {CryptoUtils.getPriceText(price)}
         </span>
         <span className="volume" title="거래대금 (24h)">
-          {CryptoUtils.getTradePriceText(d.tradePrice24)}
+          {CryptoUtils.getTradePriceText(tradePrice24)}
         </span>
       </div>
       <div className="change change-color">
@@ -319,7 +289,7 @@ const Market = ({ market }: IMarket) => {
         </span>
         {isPriceChangeShow && (
           <span className="price" title="전일 대비 변화율">
-            {CryptoUtils.getPriceText(d.changePrice)}
+            {CryptoUtils.getPriceText(changePrice)}
           </span>
         )}
       </div>

@@ -11,36 +11,51 @@ interface IMarketPriceStore {
   marketDic: {
     [key: string]: IUpbitMarketTicker
   }
-  init: () => Promise<void>
-  updateMarketPriceDic: (data: IUpbitMarketTicker) => void
+  initMarketPriceData: () => Promise<void>
+  marketPriceSocket: WebSocket | null
+  connectMarketPriceSocket: () => void
+  disconnectMarketPriceSocket: () => void
 }
 const useMarketPriceStore = create<IMarketPriceStore>((set, get) => ({
   marketDic: {},
-  init: async () => {
+  initMarketPriceData: async () => {
     const data = await getInitData()
 
     set({ marketDic: data })
   },
-  updateMarketPriceDic: (data) => {
-    let marketCode: string = ''
+  connectMarketPriceSocket: () => {
+    const socket = TradeGoApi.getMarketSocket()
+    set({ marketPriceSocket: socket })
 
-    if (data.code) {
-      marketCode = data.code
-    } else if (data.market) {
-      marketCode = data.market
+    socket.onmessage = (event: MessageEvent) => {
+      try {
+        const data = JSON.parse(event.data as string)
+        const marketTicker = data as IUpbitMarketTicker
+
+        if (!marketTicker.code) {
+          return
+        }
+
+        set((state) => ({
+          ...state,
+          marketDic: {
+            ...state.marketDic,
+            [marketTicker.code]: marketTicker,
+          },
+        }))
+      } catch (error) {
+        // console.log('Failed to parse WebSocket message', error)
+      }
     }
+  },
+  disconnectMarketPriceSocket: () => {
+    const socket = get().marketPriceSocket
 
-    if (!marketCode) {
-      return
+    if (socket) {
+      socket.close()
+
+      set({ marketPriceSocket: null })
     }
-
-    const marketDic = get().marketDic
-    set({
-      marketDic: {
-        ...marketDic,
-        [marketCode]: data,
-      },
-    })
   },
 }))
 

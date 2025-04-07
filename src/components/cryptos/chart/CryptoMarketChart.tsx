@@ -3,10 +3,10 @@
 import UpbitApi from '@/apis/api/cryptos/UpbitApi'
 import { IUpbitCandle } from '@/types/cryptos/CryptoInterfaces'
 import dynamic from 'next/dynamic'
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { v4 as uuid } from 'uuid'
+import { useCallback, useEffect, useState } from 'react'
 import CryptoMarketChartControlBar from './ControlBar'
 import { CANDLE_SIZE, CandleTimeType, CandleTimes, ChartType, ChartTypes } from './Types'
+import useTradeMarketChartSocket from '@/hooks/sockets/useTradeMarketChartSocket'
 
 const CryptoMarketFinancialChart = dynamic(() => import('./Chart'), { ssr: false })
 
@@ -46,8 +46,6 @@ interface ICryptoMarketChart {
   marketCode: string
 }
 export default function CryptoMarketChart({ marketCode }: ICryptoMarketChart) {
-  const socketRef = useRef<WebSocket | null>(null)
-
   const [isCandleLoading, setCandleLoading] = useState<boolean>(false)
   const [candles, setCandles] = useState<IUpbitCandle[]>([])
   const [timeType, setTimeType] = useState<CandleTimeType>(CandleTimes.SECOND)
@@ -64,37 +62,6 @@ export default function CryptoMarketChart({ marketCode }: ICryptoMarketChart) {
     },
     [marketCode],
   )
-
-  const connectChart = useCallback(async (marketCode: string, timeType: CandleTimeType) => {
-    if (socketRef.current) {
-      console.log('기존 연결 종료')
-      socketRef.current.close()
-    }
-
-    const newSocket = new WebSocket('wss://api.upbit.com/websocket/v1')
-    newSocket.binaryType = 'arraybuffer'
-    newSocket.onmessage = (event: MessageEvent) => {
-      try {
-        const dataString = new TextDecoder('utf-8').decode(event.data as object)
-        const data = JSON.parse(dataString as string)
-        if (data.error) {
-          console.error('WebSocket error:', data)
-          return
-        }
-        const candleData = data as IUpbitCandle
-        addCandle(candleData, timeType)
-      } catch (error) {
-        console.error('Failed to parse WebSocket message', error)
-      }
-    }
-    socketRef.current = newSocket
-
-    newSocket.onopen = () => {
-      const ticket = String(uuid())
-      const requestData = [{ ticket: ticket }, { type: `candle.1s`, codes: [marketCode] }]
-      newSocket.send(JSON.stringify(requestData))
-    }
-  }, [])
 
   const getBeforeCandleData = useCallback(async () => {
     if (isCandleLoading) {
@@ -218,6 +185,8 @@ export default function CryptoMarketChart({ marketCode }: ICryptoMarketChart) {
       return newCandles
     })
   }, [])
+
+  const connectChart = useTradeMarketChartSocket(marketCode, addCandle)
 
   return (
     <div className="flex flex-col w-full h-full">

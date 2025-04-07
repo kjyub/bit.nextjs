@@ -29,10 +29,6 @@ export default function CryptoMyTrade() {
 
   const [page, setPage] = useState<MyTradePage>(MyTradePage.POSITION)
 
-  // useEffect(() => {
-  //     updateInfo()
-  // }, [page])
-
   return (
     <S.Layout>
       <S.PageTabBar>

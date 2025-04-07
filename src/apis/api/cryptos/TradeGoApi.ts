@@ -35,7 +35,7 @@ class TradeGoApi {
 
     await tradeDefaultInstance
       .post('/markets', {
-        markets: [marketCode],
+        codes: [marketCode],
       })
       .then(({ data }) => {
         if (Array.isArray(data) && data.length > 0) {

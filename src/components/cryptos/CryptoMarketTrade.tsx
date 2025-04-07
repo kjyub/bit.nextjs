@@ -2,6 +2,7 @@
 
 import CryptoApi from '@/apis/api/cryptos/CryptoApi'
 import * as I from '@/components/inputs/TradeInputs'
+import useMarketPriceStore from '@/store/useMarketPriceStore'
 import useUserInfoStore from '@/store/useUserInfo'
 import * as S from '@/styles/CryptoTradeStyles'
 import { TextFormats } from '@/types/CommonTypes'
@@ -26,7 +27,6 @@ const R = 0.005 // 유지 증거금률
 interface ICryptoMarketTrade {
   user: User
   marketCode: string
-  marketPrice: number
   unit: string
   sizeUnitType: SizeUnitTypeValues
   setSizeUnitType: (type: SizeUnitTypeValues) => void
@@ -34,13 +34,15 @@ interface ICryptoMarketTrade {
 export default function CryptoMarketTrade({
   user,
   marketCode,
-  marketPrice,
   unit,
   sizeUnitType,
   setSizeUnitType,
 }: ICryptoMarketTrade) {
   const { balance, locked, updateInfo, myTrades } = useUserInfoStore()
   const userBudget = balance - locked
+
+  const socketData = useMarketPriceStore((state) => state.marketDic[marketCode])
+  const marketPrice = socketData ? socketData.trade_price : 0
 
   const [isMarginModeDisabled, setMarginModeDisabled] = useState<boolean>(false)
   const [marginMode, setMarginMode] = useState<MarginModeTypeValues>(MarginModeType.CROSSED) // 마진모드 (CROSSED, ISOLATED)
@@ -64,7 +66,6 @@ export default function CryptoMarketTrade({
   useEffect(() => {
     // 이미 포지션이 있으면 해당 포지션으로 고정
     const position = myTrades.positions.find((position) => position.market.code === marketCode)
-    console.log(position)
     if (position) {
       setMarginMode(position.marginMode)
       setMarginModeDisabled(true)

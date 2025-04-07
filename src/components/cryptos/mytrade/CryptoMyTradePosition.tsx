@@ -53,14 +53,11 @@ const Position = ({ position, userBudget }: IPosition) => {
   const [closeQuantity, setCloseQuantity] = useState<number>(position.quantity)
 
   useEffect(() => {
-    setClosePrice(marketPrice)
     setCloseQuantity(position.quantity)
   }, [position])
 
   useEffect(() => {
-    if (socketData === undefined) {
-      return
-    }
+    setClosePrice(marketPrice)
 
     const _size = position.quantity * marketPrice
     setSize(_size)
@@ -68,7 +65,7 @@ const Position = ({ position, userBudget }: IPosition) => {
     const breakEvenPrice = position.totalFee / position.quantity
     setBep(
       position.averagePrice +
-        CryptoUtils.getPriceRound(breakEvenPrice) * (position.positionType === PositionType.LONG ? 1 : -1),
+      CryptoUtils.getPriceRound(breakEvenPrice) * (position.positionType === PositionType.LONG ? 1 : -1),
     )
     const _pnl =
       CryptoUtils.getPnl(marketPrice, position.quantity, position.averagePrice, position.positionType) -
