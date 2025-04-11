@@ -1,11 +1,7 @@
 'use client'
 
-import TradeGoApi from '@/apis/api/cryptos/TradeGoApi'
 import ToastPopup from '@/components/commons/ToastPopup'
 import useAlarmSocket from '@/hooks/sockets/useAlarmSocket'
-import { useUser } from '@/hooks/useUser'
-import useToastMessageStore from '@/store/useToastMessageStore'
-import useUserInfoStore from '@/store/useUserInfo'
 import BrowserUtils from '@/utils/BrowserUtils'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'

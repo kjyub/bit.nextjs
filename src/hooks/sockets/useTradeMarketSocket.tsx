@@ -1,50 +1,43 @@
 'use client'
 
-import TradeGoApi from '@/apis/api/cryptos/TradeGoApi'
 import useMarketPriceStore from '@/store/useMarketPriceStore'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useShallow } from 'zustand/shallow'
+import useVisibility from '../useVisibility'
+import useToastMessageStore from '@/store/useToastMessageStore'
 
 export default function useTradeMarketSocket() {
-  const { updateMarketPriceDic, initMarketPrice } = useMarketPriceStore(
+  const { initMarketPriceData, connectMarketPriceSocket, disconnectMarketPriceSocket } = useMarketPriceStore(
     useShallow((state) => ({
-      updateMarketPriceDic: state.updateMarketPriceDic,
-      initMarketPrice: state.init,
+      initMarketPriceData: state.initMarketPriceData,
+      marketPriceSocket: state.marketPriceSocket,
+      connectMarketPriceSocket: state.connectMarketPriceSocket,
+      disconnectMarketPriceSocket: state.disconnectMarketPriceSocket,
     })),
   )
+  const addToastMessage = useToastMessageStore((state) => state.addMessage)
+
+  const isVisible = useVisibility({ wait: 1000 })
+
+  const [isInitialized, setIsInitialized] = useState<boolean>(false)
 
   useEffect(() => {
-    let isMounted = true
-    initMarketPrice()
-    const socket = TradeGoApi.getMarketSocket()
-
-    socket.onopen = () => {
-      //
-    }
-
-    socket.onmessage = (event: MessageEvent) => {
-      if (!isMounted) {
-        return
-      }
-      try {
-        const data = JSON.parse(event.data as string)
-        updateMarketPriceDic(data as object)
-      } catch (error) {
-        console.log('Failed to parse WebSocket message', error)
-      }
-    }
-
-    socket.onerror = (event) => {
-      console.log('WebSocket error', event)
-    }
-
-    socket.onclose = () => {
-      console.log('WebSocket disconnected')
-    }
-
+    setIsInitialized(true)
     return () => {
-      isMounted = false
-      socket.close()
+      disconnectMarketPriceSocket()
     }
   }, [])
+
+  useEffect(() => {
+    if (isVisible) {
+      initMarketPriceData()
+      connectMarketPriceSocket()
+
+      if (isInitialized) {
+        addToastMessage('시세 데이터 연결 완료')
+      }
+    } else {
+      disconnectMarketPriceSocket()
+    }
+  }, [isVisible])
 }

@@ -1,5 +1,3 @@
-'use client'
-
 import CryptoMarketList from '@/components/cryptos/CryptoMarketList'
 import CryptoNavigation from '@/components/cryptos/CryptoNavigation'
 import CryptoFallback from '@/components/fallbacks/CryptoFallback'
