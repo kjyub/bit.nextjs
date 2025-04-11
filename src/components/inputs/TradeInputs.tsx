@@ -399,10 +399,10 @@ export const LimitPriceInput = ({ price, setPrice, initPrice }: LimitPriceInputP
 interface MarketPriceInputProps {
   targetPrice: number
   setTargetPrice: (targetPrice: number) => void
-  userBudget: number
+  maxSize: number
 }
-export const MarketPriceInput = ({ targetPrice, setTargetPrice, userBudget }: MarketPriceInputProps) => {
-  const percentValue = targetPrice / userBudget
+export const MarketPriceInput = ({ targetPrice, setTargetPrice, maxSize }: MarketPriceInputProps) => {
+  const percentValue = targetPrice / maxSize
   const percent = isNaN(percentValue) ? 0 : percentValue
 
   return (
@@ -411,7 +411,7 @@ export const MarketPriceInput = ({ targetPrice, setTargetPrice, userBudget }: Ma
       <div className="flex items-center px-2 space-x-2">
         <span className="font-light text-xs text-slate-400/80 w-12">{`총액(잔고)`}</span>
         <div className="flex-1">
-          <SlideInput value={targetPrice} setValue={setTargetPrice} min={0} max={userBudget} step={userBudget / 100} />
+          <SlideInput value={targetPrice} setValue={setTargetPrice} min={0} max={maxSize} step={maxSize / 100} />
         </div>
         <span className="font-light text-xs text-slate-400/80 text-right w-6">{TypeUtils.percent(percent, 1)}</span>
       </div>
@@ -424,7 +424,7 @@ interface TradeSizeInputProps {
   setQuantity: (quantity: number) => void
   setSize: (size: number) => void
   setCost: (cost: number) => void
-  userBudget: number
+  maxSize: number
   unit: string
   leverage: number
   price: number
@@ -436,7 +436,7 @@ export const TradeSizeInput = ({
   size,
   setQuantity,
   setSize,
-  userBudget,
+  maxSize,
   setCost,
   unit,
   leverage,
@@ -459,14 +459,14 @@ export const TradeSizeInput = ({
     setPercentValue(0)
     setSizeValue(0)
     setQuantityValue(0)
-  }, [isPercent, sizeUnitType])
+  }, [price, isPercent, sizeUnitType])
 
   const handlePercent = (_percentValue: number) => {
     if (!isPercent) {
       return
     }
 
-    const _size = Math.floor(userBudget * (_percentValue / 100))
+    const _size = Math.floor(maxSize * (_percentValue / 100))
     setSize(_size * leverage)
     setCost(_size)
 
@@ -511,13 +511,13 @@ export const TradeSizeInput = ({
       >
         {!isPercent ? (
           sizeUnitType === SizeUnitTypes.PRICE ? (
-            <NumberInput label={'크기'} value={sizeValue} setValue={handleSize} max={userBudget} suffix={'TW'} />
+            <NumberInput label={'크기'} value={sizeValue} setValue={handleSize} max={maxSize} suffix={'TW'} />
           ) : (
             <NumberInput
               label={'크기'}
               value={quantityValue}
               setValue={handleQuantity}
-              max={(userBudget / price) * leverage}
+              max={(maxSize / price) * leverage}
               suffix={unit}
             />
           )

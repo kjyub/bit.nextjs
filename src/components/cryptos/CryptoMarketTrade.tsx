@@ -6,7 +6,7 @@ import useMarketPriceStore from '@/store/useMarketPriceStore'
 import useUserInfoStore from '@/store/useUserInfo'
 import * as S from '@/styles/CryptoTradeStyles'
 import { TextFormats } from '@/types/CommonTypes'
-import { CryptoFee } from '@/types/cryptos/CryptoConsts'
+import { CryptoFee, MAX_COST_RATIO } from '@/types/cryptos/CryptoConsts'
 import {
   MarginModeType,
   MarginModeTypeValues,
@@ -40,6 +40,7 @@ export default function CryptoMarketTrade({
 }: ICryptoMarketTrade) {
   const { balance, locked, updateInfo, myTrades } = useUserInfoStore()
   const userBudget = balance - locked
+  const maxCost = userBudget * MAX_COST_RATIO
 
   const socketData = useMarketPriceStore((state) => state.marketDic[marketCode])
   const marketPrice = socketData ? socketData.trade_price : 0
@@ -163,7 +164,7 @@ export default function CryptoMarketTrade({
             size={size}
             setQuantity={setQuantity}
             setSize={setSize}
-            userBudget={userBudget}
+            maxSize={maxCost}
             setCost={setCost}
             leverage={leverageRatio}
             price={price}
@@ -181,7 +182,7 @@ export default function CryptoMarketTrade({
             size={size}
             setQuantity={setQuantity}
             setSize={setSize}
-            userBudget={userBudget}
+            maxSize={maxCost}
             setCost={setCost}
             leverage={leverageRatio}
             price={price}
