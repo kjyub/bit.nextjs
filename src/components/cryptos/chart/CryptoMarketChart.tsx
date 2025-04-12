@@ -10,36 +10,63 @@ import useTradeMarketChartSocket from '@/hooks/sockets/useTradeMarketChartSocket
 
 const CryptoMarketFinancialChart = dynamic(() => import('./Chart'), { ssr: false })
 
-const isAddCandle = (lastCandle?: IUpbitCandle, candle: IUpbitCandle, timeType: CandleTimeType) => {
+const isSameTimeCandle = (lastCandle?: IUpbitCandle, candle: IUpbitCandle, timeType: CandleTimeType) => {
   if (!lastCandle) {
     return true
   }
 
-  const lastCandleTime = new Date(lastCandle.candle_date_time_kst).getTime()
-  const candleTime = new Date(candle.candle_date_time_kst).getTime()
+  const lastCandleTime = new Date(lastCandle.candle_date_time_kst)
+  const candleTime = new Date(candle.candle_date_time_kst)
 
   switch (timeType) {
     case CandleTimes.SECOND:
-      return lastCandleTime + 1000 < candleTime
+      return lastCandleTime.getTime() + 1000 < candleTime.getTime()
     case CandleTimes.MINUTE1:
-      return lastCandleTime + 60 * 1000 < candleTime
+      return lastCandleTime.getMinutes() != candleTime.getMinutes()
     case CandleTimes.MINUTE3:
-      return lastCandleTime + 3 * 60 * 1000 < candleTime
+      return Math.floor(lastCandleTime.getMinutes() / 3) != Math.floor(candleTime.getMinutes() / 3)
     case CandleTimes.MINUTE5:
-      return lastCandleTime + 5 * 60 * 1000 < candleTime
+      return Math.floor(lastCandleTime.getMinutes() / 5) != Math.floor(candleTime.getMinutes() / 5)
     case CandleTimes.MINUTE10:
-      return lastCandleTime + 10 * 60 * 1000 < candleTime
+      return Math.floor(lastCandleTime.getMinutes() / 10) != Math.floor(candleTime.getMinutes() / 10)
     case CandleTimes.MINUTE15:
-      return lastCandleTime + 15 * 60 * 1000 < candleTime
+      return Math.floor(lastCandleTime.getMinutes() / 15) != Math.floor(candleTime.getMinutes() / 15)
     case CandleTimes.DAY:
-      return lastCandleTime + 24 * 60 * 60 * 1000 < candleTime
+      return lastCandleTime.getDate() != candleTime.getDate()
     case CandleTimes.WEEK:
-      return lastCandleTime + 7 * 24 * 60 * 60 * 1000 < candleTime
+      return (
+        lastCandleTime.getDate() - candleTime.getDate() > 7 ||
+        (lastCandleTime.getDay() == 0 && candleTime.getDay() == 6) ||
+        (lastCandleTime.getDay() == 6 && candleTime.getDay() == 0)
+      )
     case CandleTimes.MONTH:
-      return lastCandleTime + 30 * 24 * 60 * 60 * 1000 < candleTime
+      return lastCandleTime.getMonth() != candleTime.getMonth()
     default:
       return false
   }
+}
+
+const mergeCandle = (candles: IUpbitCandle[], candle: IUpbitCandle, timeType: CandleTimeType) => {
+  const isAdd = isSameTimeCandle(candles[0], candle, timeType)
+  if (isAdd) {
+    return [candle, ...candles]
+  }
+  if (candles.length === 0) {
+    return [candle]
+  }
+
+  // 마지막 캔들이 같은 시간이라면, 마지막 캔들을 업데이트
+  const newCandles = [...candles]
+  const lastCandle = candle
+  if (candles[0].high_price > lastCandle.high_price) {
+    lastCandle.high_price = candles[0].high_price
+  }
+  if (candles[0].low_price < lastCandle.low_price) {
+    lastCandle.low_price = candles[0].low_price
+  }
+  lastCandle.candle_acc_trade_volume += candles[0].candle_acc_trade_volume
+  newCandles[0] = lastCandle
+  return newCandles
 }
 
 interface ICryptoMarketChart {
@@ -170,19 +197,7 @@ export default function CryptoMarketChart({ marketCode }: ICryptoMarketChart) {
 
   const addCandle = useCallback((candle: IUpbitCandle, timeType: CandleTimeType) => {
     setCandles((candles) => {
-      // 마지막 캔들이 같은 시간인지 확인
-      const isAdd = isAddCandle(candles[0], candle, timeType)
-      if (isAdd) {
-        return [candle, ...candles]
-      }
-      if (candles.length === 0) {
-        return []
-      }
-
-      // 마지막 캔들이 같은 시간이라면, 마지막 캔들을 업데이트
-      const newCandles = [...candles]
-      newCandles[0] = candle
-      return newCandles
+      return mergeCandle(candles, candle, timeType)
     })
   }, [])
 
