@@ -420,6 +420,7 @@ export const MarketPriceInput = ({ targetPrice, setTargetPrice, maxSize }: Marke
 }
 
 interface TradeSizeInputProps {
+  orderType: TradeOrderTypeValues
   size: number
   setQuantity: (quantity: number) => void
   setSize: (size: number) => void
@@ -433,6 +434,7 @@ interface TradeSizeInputProps {
   setSizeUnitType: (unit: SizeUnitTypeValues) => void
 }
 export const TradeSizeInput = ({
+  orderType,
   size,
   setQuantity,
   setSize,
@@ -453,13 +455,23 @@ export const TradeSizeInput = ({
   const [quantityValue, setQuantityValue] = useState<number>(0) // 레버리지를 곱한 총 구매 수량
 
   useEffect(() => {
-    setQuantity(0)
-    setSize(0)
+    initValue()
+  }, [isPercent, sizeUnitType])
 
+  useEffect(() => {
+    if (orderType === TradeOrderType.LIMIT) {
+      initValue()
+    }
+  }, [price])
+
+  const initValue = () => {
     setPercentValue(0)
     setSizeValue(0)
     setQuantityValue(0)
-  }, [price, isPercent, sizeUnitType])
+
+    setSize(0)
+    setQuantity(0)
+  }
 
   const handlePercent = (_percentValue: number) => {
     if (!isPercent) {

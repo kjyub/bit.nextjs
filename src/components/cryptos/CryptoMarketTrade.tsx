@@ -114,6 +114,9 @@ export default function CryptoMarketTrade({
       if (leverageRatio <= 0) {
         errorMessages.push('레버리지를 입력해주세요.')
       }
+      if (cost > maxCost) {
+        errorMessages.push('잔액이 부족합니다.')
+      }
       if (errorMessages.length > 0) {
         alert(errorMessages.join('\n'))
         return
@@ -146,7 +149,7 @@ export default function CryptoMarketTrade({
         alert('거래에 실패하였습니다.')
       }
     },
-    [user, marginMode, orderType, marketCode, cost, price, quantity, size, leverageRatio, sizeUnitType],
+    [user, marginMode, orderType, marketCode, cost, price, quantity, size, leverageRatio, sizeUnitType, maxCost],
   )
 
   return (
@@ -161,6 +164,7 @@ export default function CryptoMarketTrade({
         <>
           <I.LimitPriceInput price={price} setPrice={setPrice} initPrice={initPrice} />
           <I.TradeSizeInput
+            orderType={orderType}
             size={size}
             setQuantity={setQuantity}
             setSize={setSize}
@@ -179,6 +183,7 @@ export default function CryptoMarketTrade({
       {orderType === TradeOrderType.MARKET && (
         <>
           <I.TradeSizeInput
+            orderType={orderType}
             size={size}
             setQuantity={setQuantity}
             setSize={setSize}
