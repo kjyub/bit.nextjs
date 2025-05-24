@@ -1,38 +1,38 @@
-'use client'
-import { useUser } from '@/hooks/useUser'
-import useMarketPriceStore from '@/store/useMarketPriceStore'
-import useUserInfoStore from '@/store/useUserInfo'
-import * as S from '@/styles/CryptoMarketStyles'
-import { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces'
-import CryptoMarket from '@/types/cryptos/CryptoMarket'
-import { PriceChangeTypes, SizeUnitTypes } from '@/types/cryptos/CryptoTypes'
-import CryptoUtils from '@/utils/CryptoUtils'
-import Image from 'next/image'
-import { useEffect, useMemo, useState } from 'react'
-import CryptoMarketTrade from './CryptoMarketTrade'
-import CryptoMarketChart from './chart/CryptoMarketChart'
-import CryptoMyTrade from './mytrade/CryptoMyTradeMain'
+"use client";
+import { useUser } from "@/hooks/useUser";
+import useMarketPriceStore from "@/store/useMarketPriceStore";
+import useUserInfoStore from "@/store/useUserInfo";
+import * as S from "@/styles/CryptoMarketStyles";
+import { IUpbitMarketTicker } from "@/types/cryptos/CryptoInterfaces";
+import CryptoMarket from "@/types/cryptos/CryptoMarket";
+import { PriceChangeTypes, SizeUnitTypes } from "@/types/cryptos/CryptoTypes";
+import CryptoUtils from "@/utils/CryptoUtils";
+import Image from "next/image";
+import { useEffect, useMemo, useState } from "react";
+import CryptoMarketTrade from "./CryptoMarketTrade";
+import CryptoMarketChart from "./chart/CryptoMarketChart";
+import CryptoMyTrade from "./mytrade/CryptoMyTradeMain";
 
 interface ICryptoMarket {
-  marketCode: string
-  marketData: object
-  marketCurrent: IUpbitMarketTicker
-  communityNode: React.ReactNode
+  marketCode: string;
+  marketData: object;
+  marketCurrent: IUpbitMarketTicker;
+  communityNode: React.ReactNode;
 }
 export default function CryptoMarketMain({ marketCode, marketData, marketCurrent, communityNode }: ICryptoMarket) {
-  const [user, _isUserLoading] = useUser()
-  const { updateInfo } = useUserInfoStore()
+  const { user } = useUser();
+  const { updateInfo } = useUserInfoStore();
 
   useEffect(() => {
-    updateInfo()
-  }, [marketCode])
+    updateInfo();
+  }, [marketCode]);
 
   // 설정 정보
-  const [sizeUnitType, setSizeUnitType] = useState<SizeUnitTypes>(SizeUnitTypes.PRICE) // 단위 타입
-  const imageCode = marketCode.split('-')[1]
+  const [sizeUnitType, setSizeUnitType] = useState<SizeUnitTypes>(SizeUnitTypes.PRICE); // 단위 타입
+  const imageCode = marketCode.split("-")[1];
 
   if (Object.keys(marketCurrent).length === 0) {
-    return
+    return;
   }
 
   return (
@@ -65,21 +65,21 @@ export default function CryptoMarketMain({ marketCode, marketData, marketCurrent
         <S.CommunityLayout>{communityNode}</S.CommunityLayout>
       </S.BottomLayout>
     </S.MarketLayout>
-  )
+  );
 }
 
 interface MarketInfoProps {
-  marketCode: string
-  marketData: object
-  marketCurrent: IUpbitMarketTicker
+  marketCode: string;
+  marketData: object;
+  marketCurrent: IUpbitMarketTicker;
 }
 const MarketInfo = ({ marketCode, marketData, marketCurrent }: MarketInfoProps) => {
   // 현재 시장 정보
-  const imageCode = marketCode.split('-')[1]
-  const currency = marketCode.split('-')[0]
+  const imageCode = marketCode.split("-")[1];
+  const currency = marketCode.split("-")[0];
 
-  const socketData = useMarketPriceStore((state) => state.marketDic[marketCode])
-  const [market, setMarket] = useState<CryptoMarket>(new CryptoMarket())
+  const socketData = useMarketPriceStore((state) => state.marketDic[marketCode]);
+  const [market, setMarket] = useState<CryptoMarket>(new CryptoMarket());
 
   const { changeType, price, changeRate, changePrice } = useMemo(() => {
     if (!socketData) {
@@ -88,53 +88,53 @@ const MarketInfo = ({ marketCode, marketData, marketCurrent }: MarketInfoProps) 
         price: marketCurrent.trade_price,
         changeRate: market.changeRate,
         changePrice: market.changePrice,
-      }
+      };
     }
     return {
       changeType: CryptoUtils.getPriceChangeType(socketData.trade_price, socketData.opening_price),
       price: socketData.trade_price,
       changeRate: socketData.signed_change_rate,
       changePrice: socketData.signed_change_price,
-    }
-  }, [socketData])
+    };
+  }, [socketData]);
 
-  const [priceWidth, setPriceWidth] = useState<number>(0)
+  const [priceWidth, setPriceWidth] = useState<number>(0);
 
   // 디자인 관련
-  const [isTitleSticky, setTitleSticky] = useState<boolean>(false)
+  const [isTitleSticky, setTitleSticky] = useState<boolean>(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setTitleSticky(window.scrollY > 56)
-    }
+      setTitleSticky(window.scrollY > 56);
+    };
 
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
-    const _market = new CryptoMarket()
-    _market.parseResponse(marketData)
+    const _market = new CryptoMarket();
+    _market.parseResponse(marketData);
 
-    setMarket(_market)
-  }, [marketData])
+    setMarket(_market);
+  }, [marketData]);
 
   useEffect(() => {
-    setPriceWidth(CryptoUtils.getPriceTextLength(price) * 15 + 30)
-  }, [price])
+    setPriceWidth(CryptoUtils.getPriceTextLength(price) * 15 + 30);
+  }, [price]);
 
   const handleScrollTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <S.TitleLayout
       $is_active={isTitleSticky}
       onClick={() => {
-        handleScrollTop()
+        handleScrollTop();
       }}
     >
       <div className="flex flex-col">
@@ -152,7 +152,9 @@ const MarketInfo = ({ marketCode, marketData, marketCurrent }: MarketInfoProps) 
 
         {/* 코인 가격 */}
         <S.MainPriceBox
-          className={`${changeType === PriceChangeTypes.RISE ? 'rise' : changeType === PriceChangeTypes.FALL ? 'fall' : ''} change`}
+          className={`${
+            changeType === PriceChangeTypes.RISE ? "rise" : changeType === PriceChangeTypes.FALL ? "fall" : ""
+          } change`}
         >
           {/* tailwind 변수 테스트 */}
           <span className={`price`} style={{ width: `${priceWidth + 12}px` }}>
@@ -192,5 +194,5 @@ const MarketInfo = ({ marketCode, marketData, marketCurrent }: MarketInfoProps) 
         </S.MainPriceInfoGrid>
       </div>
     </S.TitleLayout>
-  )
-}
+  );
+};

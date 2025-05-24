@@ -1,26 +1,26 @@
-'use client'
+"use client";
 
-import { useUser } from '@/hooks/useUser'
-import * as NS from '@/styles/NavigationStyles'
-import { AccountStatusTypes } from '@/types/users/UserTypes'
-import { signOut } from 'next-auth/react'
-import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useUser } from "@/hooks/useUser";
+import * as NS from "@/styles/NavigationStyles";
+import { AccountStatusTypes } from "@/types/users/UserTypes";
+import { signOut } from "next-auth/react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Navigation() {
   // 회원 관련
-  const [user, isUserLoading] = useUser(true, true)
-  const [isAuth, setAuth] = useState<boolean>(false)
+  const { user, isLoading: isUserLoading } = useUser();
+  const [isAuth, setAuth] = useState<boolean>(false);
 
   useEffect(() => {
-    setAuth(user.accountStatus === AccountStatusTypes.NORMAL)
-  }, [user])
+    setAuth(user.accountStatus === AccountStatusTypes.NORMAL);
+  }, [user]);
 
   const handleLogout = async () => {
     signOut().then(() => {
-      setAuth(false)
-    })
-  }
+      setAuth(false);
+    });
+  };
 
   return (
     <NS.Layout>
@@ -45,7 +45,7 @@ export default function Navigation() {
               <button
                 className="btn"
                 onClick={() => {
-                  handleLogout()
+                  handleLogout();
                 }}
               >
                 <span>로그아웃</span>
@@ -65,5 +65,5 @@ export default function Navigation() {
         </NS.Section>
       </div>
     </NS.Layout>
-  )
+  );
 }

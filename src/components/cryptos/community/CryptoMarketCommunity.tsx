@@ -1,62 +1,61 @@
-'use client'
-import CryptoApi from '@/apis/api/cryptos/CryptoApi'
-import { IMarketPageSearchParams } from '@/app/(front)/crypto/[code]/page'
-import { MARKET_COMMUNITY_PAGE_SIZE } from '@/constants/CryptoConsts'
-import { useUser } from '@/hooks/useUser'
-import * as CS from '@/styles/CryptoMarketCommunityStyles'
-import { TextFormats } from '@/types/CommonTypes'
-import Pagination from '@/types/api/pagination'
-import MarketCommunity from '@/types/cryptos/MarketCommunity'
-import User from '@/types/users/User'
-import { UserTypes } from '@/types/users/UserTypes'
-import CommonUtils from '@/utils/CommonUtils'
-import FrontUtils from '@/utils/FrontUtils'
-import { usePathname, useRouter } from 'next/navigation'
-import { useState } from 'react'
-import ModalContainer from '../../ModalContainer'
-import CommunityPagination from '../../atomics/community/CommunityPagination'
-import CommunitySearch from '../../atomics/community/CommunitySearch'
-import CryptoMarketCommunityEditor from './CryptoMarketCommunityEditor'
-import CryptoMarketCommunityView from './CryptoMarketCommunityView'
+"use client";
+import CryptoApi from "@/apis/api/cryptos/CryptoApi";
+import { IMarketPageSearchParams } from "@/app/(front)/crypto/[code]/page";
+import { MARKET_COMMUNITY_PAGE_SIZE } from "@/constants/CryptoConsts";
+import * as CS from "@/styles/CryptoMarketCommunityStyles";
+import { TextFormats } from "@/types/CommonTypes";
+import Pagination from "@/types/api/pagination";
+import MarketCommunity from "@/types/cryptos/MarketCommunity";
+import User from "@/types/users/User";
+import { UserTypes } from "@/types/users/UserTypes";
+import CommonUtils from "@/utils/CommonUtils";
+import FrontUtils from "@/utils/FrontUtils";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
+import ModalContainer from "../../ModalContainer";
+import CommunityPagination from "../../atomics/community/CommunityPagination";
+import CommunitySearch from "../../atomics/community/CommunitySearch";
+import CryptoMarketCommunityEditor from "./CryptoMarketCommunityEditor";
+import CryptoMarketCommunityView from "./CryptoMarketCommunityView";
+import { useSessionUser } from "@/hooks/useSessionUser";
 
 interface ICryptoMarketCommunity {
-  marketCode: string
-  params: IMarketPageSearchParams
-  communityListData: object
+  marketCode: string;
+  params: IMarketPageSearchParams;
+  communityListData: object;
 }
 export default function CryptoMarketCommunity({ marketCode, params, communityListData }: ICryptoMarketCommunity) {
-  const pagination = new Pagination<MarketCommunity>()
-  pagination.parseResponse(communityListData, MarketCommunity)
+  const pagination = new Pagination<MarketCommunity>();
+  pagination.parseResponse(communityListData, MarketCommunity);
+  const pageIndex = Number(params.page ?? 1);
 
-  const pageIndex = Number(params.page ?? 1)
+  const user = useSessionUser();
 
-  // client side
-  const router = useRouter()
-  const pathname = usePathname()
-  const [user, _isUserLoading] = useUser()
+  const router = useRouter();
+  const pathname = usePathname();
 
-  const [isShowEditor, setShowEditor] = useState<boolean>(false)
-  const [selectedCommunity, setSelectedCommunity] = useState<MarketCommunity>(new MarketCommunity())
+  const [isShowEditor, setShowEditor] = useState<boolean>(false);
+  const [selectedCommunity, setSelectedCommunity] = useState<MarketCommunity>(new MarketCommunity());
 
   const handlePageIndex = (_pageIndex: number) => {
-    const url = FrontUtils.getSearchUrl(pathname, params, 'page', _pageIndex.toString())
-    router.push(url, { scroll: true })
-  }
+    const url = FrontUtils.getSearchUrl(pathname, params, "page", _pageIndex.toString());
+    router.push(url, { scroll: true });
+  };
 
   const handleSearch = (_search: string) => {
-    const url = FrontUtils.getSearchUrl(pathname, params, 'search', _search)
-    router.push(url, { scroll: true })
-  }
+    const url = FrontUtils.getSearchUrl(pathname, params, "search", _search);
+    router.push(url, { scroll: true });
+  };
 
   const handleCreate = () => {
-    setSelectedCommunity(new MarketCommunity())
-    setShowEditor(true)
-  }
+    setSelectedCommunity(new MarketCommunity());
+    setShowEditor(true);
+  };
 
   const handleUpdate = (_community: MarketCommunity) => {
-    setSelectedCommunity(_community)
-    setShowEditor(true)
-  }
+    setSelectedCommunity(_community);
+    setShowEditor(true);
+  };
 
   return (
     <CS.Layout>
@@ -90,7 +89,7 @@ export default function CryptoMarketCommunity({ marketCode, params, communityLis
                 setSelectedCommunity={setSelectedCommunity}
                 handleUpdate={handleUpdate}
               />
-            )
+            );
           })}
         </div>
 
@@ -106,7 +105,7 @@ export default function CryptoMarketCommunity({ marketCode, params, communityLis
 
           <button
             onClick={() => {
-              handleCreate()
+              handleCreate();
             }}
           >
             <i className="fa-solid fa-pen"></i>
@@ -120,60 +119,60 @@ export default function CryptoMarketCommunity({ marketCode, params, communityLis
           marketCode={marketCode}
           community={selectedCommunity}
           onClose={() => {
-            setShowEditor(false)
+            setShowEditor(false);
           }}
         />
       </ModalContainer>
     </CS.Layout>
-  )
+  );
 }
 
 interface CommunityProps {
-  user: User
-  community: MarketCommunity
-  selectedCommunity: MarketCommunity
-  setSelectedCommunity: React.Dispatch<React.SetStateAction<MarketCommunity>>
-  handleUpdate: (community: MarketCommunity) => void
+  user: User;
+  community: MarketCommunity;
+  selectedCommunity: MarketCommunity;
+  setSelectedCommunity: React.Dispatch<React.SetStateAction<MarketCommunity>>;
+  handleUpdate: (community: MarketCommunity) => void;
 }
 const Community = ({ user, community, selectedCommunity, setSelectedCommunity, handleUpdate }: CommunityProps) => {
-  const isMaster = user.uuid === community.user.uuid || user.userType === UserTypes.STAFF
-  const isSelected = selectedCommunity.nanoId === community.nanoId
+  const isMaster = user.uuid === community.user.uuid || user.userType === UserTypes.STAFF;
+  const isSelected = selectedCommunity.nanoId === community.nanoId;
 
-  const [isDeleted, setIsDeleted] = useState<boolean>(false)
+  const [isDeleted, setIsDeleted] = useState<boolean>(false);
 
   const handleClick = () => {
     if (isSelected) {
-      setSelectedCommunity(new MarketCommunity())
+      setSelectedCommunity(new MarketCommunity());
     } else {
-      setSelectedCommunity(community)
+      setSelectedCommunity(community);
     }
-  }
+  };
 
   const handleEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation()
-    handleUpdate(community)
-  }
+    e.stopPropagation();
+    handleUpdate(community);
+  };
 
   const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation()
+    e.stopPropagation();
 
-    if (!confirm('정말 삭제하시겠습니까?')) return
+    if (!confirm("정말 삭제하시겠습니까?")) return;
 
-    const response = await CryptoApi.deleteCommunity(community.nanoId)
+    const response = await CryptoApi.deleteCommunity(community.nanoId);
     if (!response) {
-      alert('삭제에 실패했습니다.')
-      return
+      alert("삭제에 실패했습니다.");
+      return;
     }
 
-    alert('삭제되었습니다.')
-    setIsDeleted(true)
-  }
+    alert("삭제되었습니다.");
+    setIsDeleted(true);
+  };
 
   return (
     <CS.ItemLayout $is_deleted={isDeleted}>
       <CS.ItemRow
         onClick={() => {
-          handleClick()
+          handleClick();
         }}
         $is_active={isSelected}
       >
@@ -224,5 +223,5 @@ const Community = ({ user, community, selectedCommunity, setSelectedCommunity, h
         <CryptoMarketCommunityView user={user} communityNanoId={community.nanoId} />
       )}
     </CS.ItemLayout>
-  )
-}
+  );
+};

@@ -41,4 +41,7 @@ export default class BrowserUtils {
 
     return isRedirect
   }
+  static isClient(): boolean {
+    return typeof window !== 'undefined' && typeof window.document !== 'undefined'
+  }
 }
