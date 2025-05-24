@@ -3,5 +3,5 @@ export default function CryptoFallback() {
     <div className="flex flex-center w-full h-full">
       <span>loading</span>
     </div>
-  )
+  );
 }

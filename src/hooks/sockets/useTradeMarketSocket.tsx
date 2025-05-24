@@ -1,10 +1,10 @@
-'use client'
+'use client';
 
-import useMarketPriceStore from '@/store/useMarketPriceStore'
-import { useEffect, useState } from 'react'
-import { useShallow } from 'zustand/shallow'
-import useVisibility from '../useVisibility'
-import useToastMessageStore from '@/store/useToastMessageStore'
+import useMarketPriceStore from '@/store/useMarketPriceStore';
+import useToastMessageStore from '@/store/useToastMessageStore';
+import { useEffect, useState } from 'react';
+import { useShallow } from 'zustand/shallow';
+import useVisibility from '../useVisibility';
 
 export default function useTradeMarketSocket() {
   const { initMarketPriceData, connectMarketPriceSocket, disconnectMarketPriceSocket } = useMarketPriceStore(
@@ -14,30 +14,30 @@ export default function useTradeMarketSocket() {
       connectMarketPriceSocket: state.connectMarketPriceSocket,
       disconnectMarketPriceSocket: state.disconnectMarketPriceSocket,
     })),
-  )
-  const addToastMessage = useToastMessageStore((state) => state.addMessage)
+  );
+  const addToastMessage = useToastMessageStore((state) => state.addMessage);
 
-  const isVisible = useVisibility({ wait: 1000 })
+  const isVisible = useVisibility({ wait: 1000 });
 
-  const [isInitialized, setIsInitialized] = useState<boolean>(false)
+  const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
   useEffect(() => {
-    setIsInitialized(true)
+    setIsInitialized(true);
     return () => {
-      disconnectMarketPriceSocket()
-    }
-  }, [])
+      disconnectMarketPriceSocket();
+    };
+  }, []);
 
   useEffect(() => {
     if (isVisible) {
-      initMarketPriceData()
-      connectMarketPriceSocket()
+      initMarketPriceData();
+      connectMarketPriceSocket();
 
       if (isInitialized) {
-        addToastMessage('시세 데이터 연결 완료')
+        addToastMessage('시세 데이터 연결 완료');
       }
     } else {
-      disconnectMarketPriceSocket()
+      disconnectMarketPriceSocket();
     }
-  }, [isVisible])
+  }, [isVisible]);
 }

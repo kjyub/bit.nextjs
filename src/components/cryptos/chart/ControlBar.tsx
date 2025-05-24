@@ -1,11 +1,11 @@
-import * as CS from '@/styles/CryptoChartStyles'
-import { CandleTimeType, CandleTimes, ChartType, ChartTypes } from './Types'
+import * as CS from '@/styles/CryptoChartStyles';
+import { CandleTimeType, CandleTimes, ChartType, ChartTypes } from './Types';
 
 interface ICryptoMarketChartControlBar {
-  timeType: CandleTimeType
-  chartType: ChartType
-  setChartType: (chartType: ChartType) => void
-  initChart: (timeType: CandleTimeType) => Promise<void>
+  timeType: CandleTimeType;
+  chartType: ChartType;
+  setChartType: (chartType: ChartType) => void;
+  initChart: (timeType: CandleTimeType) => Promise<void>;
 }
 export default function CryptoMarketChartControlBar({
   timeType,
@@ -52,5 +52,5 @@ export default function CryptoMarketChartControlBar({
         <i className="fa-solid fa-chart-line"></i>
       </button>
     </CS.ControlBar>
-  )
+  );
 }

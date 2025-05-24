@@ -1,13 +1,13 @@
-'use client'
+'use client';
 
-import useUserInfoStore from '@/store/useUserInfo'
-import * as S from '@/styles/CryptoMyTradeStyles'
-import { useState } from 'react'
-import CryptoMyTradeHistory from './CryptoMyTradeHistory'
-import CryptoMyTradeOrder from './CryptoMyTradeOrder'
-import CryptoMyTradeOrderHistory from './CryptoMyTradeOrderHistory'
-import CryptoMyTradePosition from './CryptoMyTradePosition'
-import CryptoMyTradePositionHistory from './CryptoMyTradePositionHistory'
+import useUserInfoStore from '@/store/useUserInfo';
+import * as S from '@/styles/CryptoMyTradeStyles';
+import { useState } from 'react';
+import CryptoMyTradeHistory from './CryptoMyTradeHistory';
+import CryptoMyTradeOrder from './CryptoMyTradeOrder';
+import CryptoMyTradeOrderHistory from './CryptoMyTradeOrderHistory';
+import CryptoMyTradePosition from './CryptoMyTradePosition';
+import CryptoMyTradePositionHistory from './CryptoMyTradePositionHistory';
 
 export enum MyTradePage {
   POSITION,
@@ -22,12 +22,12 @@ const MyTradePageNames = {
   [MyTradePage.ORDER_HISTORY]: '주문 내역',
   [MyTradePage.TRADE_HISTORY]: '거래 내역',
   [MyTradePage.POSITION_HISTORY]: '포지션 내역',
-}
+};
 
 export default function CryptoMyTrade() {
-  const { myTrades } = useUserInfoStore()
+  const { myTrades } = useUserInfoStore();
 
-  const [page, setPage] = useState<MyTradePage>(MyTradePage.POSITION)
+  const [page, setPage] = useState<MyTradePage>(MyTradePage.POSITION);
 
   return (
     <S.Layout>
@@ -45,25 +45,25 @@ export default function CryptoMyTrade() {
       {page === MyTradePage.TRADE_HISTORY && <CryptoMyTradeHistory />}
       {page === MyTradePage.POSITION_HISTORY && <CryptoMyTradePositionHistory />}
     </S.Layout>
-  )
+  );
 }
 
 interface IPageTabBar {
-  page: MyTradePage
-  setPage: React.Dispatch<React.SetStateAction<MyTradePage>>
-  currentPage: MyTradePage
-  count?: number
+  page: MyTradePage;
+  setPage: React.Dispatch<React.SetStateAction<MyTradePage>>;
+  currentPage: MyTradePage;
+  count?: number;
 }
 const PageTab = ({ page, setPage, currentPage, count }: IPageTabBar) => {
   return (
     <button
       onClick={() => {
-        setPage(page)
+        setPage(page);
       }}
       className={`tab ${page === currentPage ? 'active' : ''}`}
     >
       {MyTradePageNames[page]}
       {count > 0 && ` (${count})`}
     </button>
-  )
-}
+  );
+};

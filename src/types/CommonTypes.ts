@@ -9,12 +9,12 @@ export enum TextFormats {
 }
 
 export type objectType = {
-  [key: string | number]: any
-}
+  [key: string | number]: any;
+};
 
 export interface IRawData {
-  pageIndex: number
-  lastId: string
-  items: Array<object>
-  scrollLocation: number
+  pageIndex: number;
+  lastId: string;
+  items: Array<object>;
+  scrollLocation: number;
 }

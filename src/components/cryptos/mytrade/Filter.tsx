@@ -1,9 +1,9 @@
-'use client'
+'use client';
 
-import * as S from '@/styles/CryptoMyTradeStyles'
-import CommonUtils from '@/utils/CommonUtils'
-import dayjs from 'dayjs'
-import { useEffect, useMemo, useState } from 'react'
+import * as S from '@/styles/CryptoMyTradeStyles';
+import CommonUtils from '@/utils/CommonUtils';
+import dayjs from 'dayjs';
+import { useEffect, useMemo, useState } from 'react';
 
 enum DateType {
   NONE = 'none',
@@ -14,72 +14,72 @@ enum DateType {
 }
 
 interface ICryptoMyTradeFilter {
-  onSearch: (dateStart: string, dateEnd: string, marketSearch: string) => void
-  isInitSearch?: boolean
+  onSearch: (dateStart: string, dateEnd: string, marketSearch: string) => void;
+  isInitSearch?: boolean;
 }
 export default function CryptoMyTradeFilter({ onSearch, isInitSearch = true }: ICryptoMyTradeFilter) {
-  const today = useMemo(() => dayjs(), [])
-  const yesterday = useMemo(() => today.subtract(1, 'day'), [])
+  const today = useMemo(() => dayjs(), []);
+  const yesterday = useMemo(() => today.subtract(1, 'day'), []);
 
-  const [dateStart, setDateStart] = useState<string>(yesterday.format('YYYY-MM-DD'))
-  const [dateEnd, setDateEnd] = useState<string>(today.format('YYYY-MM-DD'))
-  const [marketSearch, _setMarketSearch] = useState<string>('')
+  const [dateStart, setDateStart] = useState<string>(yesterday.format('YYYY-MM-DD'));
+  const [dateEnd, setDateEnd] = useState<string>(today.format('YYYY-MM-DD'));
+  const [marketSearch, _setMarketSearch] = useState<string>('');
 
-  const [dateType, setDateType] = useState<DateType>(DateType.DAY)
+  const [dateType, setDateType] = useState<DateType>(DateType.DAY);
 
   useEffect(() => {
     if (isInitSearch) {
-      onSearch(dateStart, dateEnd, marketSearch)
+      onSearch(dateStart, dateEnd, marketSearch);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
-    const today = dayjs()
+    const today = dayjs();
     if (today.format('YYYY-MM-DD') !== dateEnd) {
-      setDateType(DateType.NONE)
+      setDateType(DateType.NONE);
     } else {
       if (today.subtract(1, 'day').format('YYYY-MM-DD') === dateStart) {
-        setDateType(DateType.DAY)
+        setDateType(DateType.DAY);
       } else if (today.subtract(1, 'week').format('YYYY-MM-DD') === dateStart) {
-        setDateType(DateType.WEEK)
+        setDateType(DateType.WEEK);
       } else if (today.subtract(1, 'month').format('YYYY-MM-DD') === dateStart) {
-        setDateType(DateType.MONTH1)
+        setDateType(DateType.MONTH1);
       } else if (today.subtract(3, 'month').format('YYYY-MM-DD') === dateStart) {
-        setDateType(DateType.MONTH3)
+        setDateType(DateType.MONTH3);
       } else {
-        setDateType(DateType.NONE)
+        setDateType(DateType.NONE);
       }
     }
-  }, [dateStart, dateEnd])
+  }, [dateStart, dateEnd]);
 
   const handleDateType = (_dateType: DateType) => {
-    const today = dayjs()
+    const today = dayjs();
 
-    let _startDate = ''
-    const _endDate = today.format('YYYY-MM-DD')
+    let _startDate = '';
+    const _endDate = today.format('YYYY-MM-DD');
 
     if (_dateType === DateType.DAY) {
-      const yesterday = today.subtract(1, 'day')
-      _startDate = yesterday.format('YYYY-MM-DD')
+      const yesterday = today.subtract(1, 'day');
+      _startDate = yesterday.format('YYYY-MM-DD');
     } else if (_dateType === DateType.WEEK) {
-      const lastWeek = today.subtract(1, 'week')
-      _startDate = lastWeek.format('YYYY-MM-DD')
+      const lastWeek = today.subtract(1, 'week');
+      _startDate = lastWeek.format('YYYY-MM-DD');
     } else if (_dateType === DateType.MONTH1) {
-      const lastMonth = today.subtract(1, 'month')
-      _startDate = lastMonth.format('YYYY-MM-DD')
+      const lastMonth = today.subtract(1, 'month');
+      _startDate = lastMonth.format('YYYY-MM-DD');
     } else if (_dateType === DateType.MONTH3) {
-      const last3Month = today.subtract(3, 'month')
-      _startDate = last3Month.format('YYYY-MM-DD')
+      const last3Month = today.subtract(3, 'month');
+      _startDate = last3Month.format('YYYY-MM-DD');
     }
 
-    setDateStart(_startDate)
-    setDateEnd(_endDate)
-    onSearch(_startDate, _endDate, marketSearch)
-  }
+    setDateStart(_startDate);
+    setDateEnd(_endDate);
+    onSearch(_startDate, _endDate, marketSearch);
+  };
 
   const handleSearch = () => {
-    onSearch(dateStart, dateEnd, marketSearch)
-  }
+    onSearch(dateStart, dateEnd, marketSearch);
+  };
 
   return (
     <div className="flex items-center mb-1 [&>.split]:h-4 [&>.split]:border-l [&>.split]:border-slate-700">
@@ -107,54 +107,54 @@ export default function CryptoMyTradeFilter({ onSearch, isInitSearch = true }: I
         검색
       </S.FilterButton>
     </div>
-  )
+  );
 }
 
 interface IDate {
-  date: string
-  setDate: (date: string) => void
+  date: string;
+  setDate: (date: string) => void;
 }
 const Date = ({ date, setDate }: IDate) => {
-  const [year, setYear] = useState<string>('')
-  const [month, setMonth] = useState<string>('')
-  const [day, setDay] = useState<string>('')
+  const [year, setYear] = useState<string>('');
+  const [month, setMonth] = useState<string>('');
+  const [day, setDay] = useState<string>('');
 
   useEffect(() => {
     if (!dayjs(date).isValid()) {
-      return
+      return;
     }
 
-    setYear(Number(date.split('-')[0]))
-    setMonth(Number(date.split('-')[1]))
-    setDay(Number(date.split('-')[2]))
-  }, [date])
+    setYear(Number(date.split('-')[0]));
+    setMonth(Number(date.split('-')[1]));
+    setDay(Number(date.split('-')[2]));
+  }, [date]);
 
   const handleYear = (year: number) => {
     if (!CommonUtils.isStringNullOrEmpty(year) && (isNaN(Number(year)) || Number(year) < 0 || Number(year) > 2100))
-      return
+      return;
 
-    const _date = `${year}-${month}-${day}`
+    const _date = `${year}-${month}-${day}`;
     if (dayjs(_date).isValid()) {
-      setDate(_date)
+      setDate(_date);
     }
-  }
+  };
   const handleMonth = (month: number) => {
     if (!CommonUtils.isStringNullOrEmpty(month) && (isNaN(Number(month)) || Number(month) < 0 || Number(month) > 12))
-      return
+      return;
 
-    const _date = `${year}-${month}-${day}`
+    const _date = `${year}-${month}-${day}`;
     if (dayjs(_date).isValid()) {
-      setDate(_date)
+      setDate(_date);
     }
-  }
+  };
   const handleDay = (day: number) => {
-    if (!CommonUtils.isStringNullOrEmpty(day) && (isNaN(Number(day)) || Number(day) < 0 || Number(day) > 31)) return
+    if (!CommonUtils.isStringNullOrEmpty(day) && (isNaN(Number(day)) || Number(day) < 0 || Number(day) > 31)) return;
 
-    const _date = `${year}-${month}-${day}`
+    const _date = `${year}-${month}-${day}`;
     if (dayjs(_date).isValid()) {
-      setDate(_date)
+      setDate(_date);
     }
-  }
+  };
 
   return (
     <S.FilterDateInputBox>
@@ -164,5 +164,5 @@ const Date = ({ date, setDate }: IDate) => {
       <span>-</span>
       <input type="text" className="w-4" value={day} onChange={(e) => handleDay(e.target.value)} />
     </S.FilterDateInputBox>
-  )
-}
+  );
+};

@@ -1,94 +1,94 @@
-'use client'
+'use client';
 
-import UserApi from '@/apis/api/users/UserApi'
-import Alerts from '@/components/Alerts'
-import * as I from '@/components/inputs/UserInputs'
-import * as SS from '@/styles/SignupStyles'
-import User from '@/types/users/User'
-import CommonUtils from '@/utils/CommonUtils'
-import { debounce } from 'lodash'
-import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
-import { useCallback, useEffect, useRef, useState } from 'react'
-import CountUp from 'react-countup'
+import UserApi from '@/apis/api/users/UserApi';
+import Alerts from '@/components/Alerts';
+import * as I from '@/components/inputs/UserInputs';
+import * as SS from '@/styles/SignupStyles';
+import User from '@/types/users/User';
+import CommonUtils from '@/utils/CommonUtils';
+import { debounce } from 'lodash';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import CountUp from 'react-countup';
 
 export default function SignupInfo() {
-  const router = useRouter()
+  const router = useRouter();
 
-  const { data: session, update } = useSession()
+  const { data: session, update } = useSession();
 
-  const [nickname, setNickname] = useState<string>('')
+  const [nickname, setNickname] = useState<string>('');
 
-  const isDuplicateNicknameRef = useRef<boolean>(false)
-  const isValidNicknameRef = useRef<boolean>(false)
+  const isDuplicateNicknameRef = useRef<boolean>(false);
+  const isValidNicknameRef = useRef<boolean>(false);
 
-  const [isValidUserInfo, setValidUserInfo] = useState<boolean>(false)
+  const [isValidUserInfo, setValidUserInfo] = useState<boolean>(false);
 
-  const [isActiveGameInfo, setActiveGameInfo] = useState<boolean>(false) // 게임 정보 활성화 여부
-  const [isActiveSave, setActiveSave] = useState<boolean>(false) // 회원가입 버튼 활성화 여부
+  const [isActiveGameInfo, setActiveGameInfo] = useState<boolean>(false); // 게임 정보 활성화 여부
+  const [isActiveSave, setActiveSave] = useState<boolean>(false); // 회원가입 버튼 활성화 여부
 
   useEffect(() => {
     if (nickname.length < 2) {
-      isValidNicknameRef.current = false
-      isDuplicateNicknameRef.current = false
-      return
+      isValidNicknameRef.current = false;
+      isDuplicateNicknameRef.current = false;
+      return;
     }
 
     if (nickname.length > 10) {
-      isValidNicknameRef.current = false
+      isValidNicknameRef.current = false;
     }
 
-    isValidNicknameRef.current = true
-    checkNicknameDuplicate()
-  }, [nickname])
+    isValidNicknameRef.current = true;
+    checkNicknameDuplicate();
+  }, [nickname]);
 
   useEffect(() => {
-    setValidUserInfo(isValidNicknameRef.current)
+    setValidUserInfo(isValidNicknameRef.current);
 
     if (isValidNicknameRef.current) {
-      setActiveGameInfo(true)
+      setActiveGameInfo(true);
 
       // 효과를 위한 코드
       if (isActiveGameInfo) {
-        setActiveSave(true)
+        setActiveSave(true);
       }
     } else {
-      setActiveSave(false)
+      setActiveSave(false);
     }
-  }, [isValidNicknameRef.current])
+  }, [isValidNicknameRef.current]);
 
   const checkNicknameDuplicate = useCallback(() => {
     debounce(() => {
       UserApi.checkNickname(nickname).then((isExist) => {
-        isDuplicateNicknameRef.current = isExist
-      })
-    }, 500)
-  }, [nickname])
+        isDuplicateNicknameRef.current = isExist;
+      });
+    }, 500);
+  }, [nickname]);
 
   const handleSave = async () => {
     if (!isValidUserInfo) {
-      return
+      return;
     }
 
     const userData = await UserApi.kakaoAuthSignup({
       nickname: nickname,
-    })
+    });
 
-    const user = new User()
-    user.parseResponse(userData)
+    const user = new User();
+    user.parseResponse(userData);
 
     if (!CommonUtils.isStringNullOrEmpty(user.uuid)) {
       await update({
         ...session,
         user: userData,
-      })
+      });
 
-      router.push('/')
-      return
+      router.push('/');
+      return;
     } else {
-      Alerts.alert('회원가입 실패', '회원가입에 실패했습니다. 다시 시도해주세요.', 'error')
+      Alerts.alert('회원가입 실패', '회원가입에 실패했습니다. 다시 시도해주세요.', 'error');
     }
-  }
+  };
 
   return (
     <SS.Layout className="space-y-4">
@@ -107,9 +107,9 @@ export default function SignupInfo() {
             value={nickname}
             onChange={(e) => {
               if (e.target.value.length > 10) {
-                return
+                return;
               }
-              setNickname(e.target.value)
+              setNickname(e.target.value);
             }}
             helpText="2자 이상 10자 이하로 입력해주세요."
             errorMessage={isDuplicateNicknameRef.current ? '이미 사용중인 닉네임입니다.' : ''}
@@ -133,7 +133,7 @@ export default function SignupInfo() {
                     suffix=" C"
                     onEnd={() => {
                       if (isValidNicknameRef.current) {
-                        setActiveSave(true)
+                        setActiveSave(true);
                       }
                     }}
                   />
@@ -147,7 +147,7 @@ export default function SignupInfo() {
           <SS.SignupButton
             $is_active={isActiveSave}
             onClick={() => {
-              handleSave()
+              handleSave();
             }}
           >
             회원가입
@@ -155,5 +155,5 @@ export default function SignupInfo() {
         </SS.SignupSection>
       </SS.BoxContainer>
     </SS.Layout>
-  )
+  );
 }

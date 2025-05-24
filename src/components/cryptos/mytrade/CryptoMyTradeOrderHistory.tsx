@@ -1,61 +1,61 @@
-'use client'
+'use client';
 
-import CryptoApi from '@/apis/api/cryptos/CryptoApi'
-import usePageScroll from '@/hooks/usePageScroll'
-import * as S from '@/styles/CryptoMyTradeStyles'
-import { PositionType, TradeOrderTypeNames } from '@/types/cryptos/CryptoTypes'
-import TradeOrder from '@/types/cryptos/TradeOrder'
-import CryptoUtils from '@/utils/CryptoUtils'
-import dayjs from 'dayjs'
-import { useState } from 'react'
-import CryptoMyTradeFilter from './Filter'
-import CryptoMyTradeItemSkeleton from './ItemSkeleton'
+import CryptoApi from '@/apis/api/cryptos/CryptoApi';
+import usePageScroll from '@/hooks/usePageScroll';
+import * as S from '@/styles/CryptoMyTradeStyles';
+import { PositionType, TradeOrderTypeNames } from '@/types/cryptos/CryptoTypes';
+import TradeOrder from '@/types/cryptos/TradeOrder';
+import CryptoUtils from '@/utils/CryptoUtils';
+import dayjs from 'dayjs';
+import { useState } from 'react';
+import CryptoMyTradeFilter from './Filter';
+import CryptoMyTradeItemSkeleton from './ItemSkeleton';
 
-const PAGE_SIZE = 10
+const PAGE_SIZE = 10;
 
 export default function CryptoMyTradeOrderHistory() {
-  const [orders, setOrders] = useState<Array<TradeOrder>>([])
-  const [pageIndex, setPageIndex] = useState<number>(1)
-  const [itemCount, setItemCount] = useState<number>(0)
-  const [isLoading, setLoading] = useState<boolean>(false)
+  const [orders, setOrders] = useState<Array<TradeOrder>>([]);
+  const [pageIndex, setPageIndex] = useState<number>(1);
+  const [itemCount, setItemCount] = useState<number>(0);
+  const [isLoading, setLoading] = useState<boolean>(false);
 
-  const [dateStart, setDateStart] = useState<string>('')
-  const [dateEnd, setDateEnd] = useState<string>('')
+  const [dateStart, setDateStart] = useState<string>('');
+  const [dateEnd, setDateEnd] = useState<string>('');
 
   const getHistories = async (_pageIndex: number, dateStart: string = '', dateEnd: string = '') => {
     if (isLoading) {
-      return
+      return;
     }
 
-    setLoading(true)
-    const response = await CryptoApi.getTradeOrderHistories(_pageIndex, PAGE_SIZE, dateStart, dateEnd)
+    setLoading(true);
+    const response = await CryptoApi.getTradeOrderHistories(_pageIndex, PAGE_SIZE, dateStart, dateEnd);
 
     if (_pageIndex === 1) {
-      setOrders(response.items)
+      setOrders(response.items);
     } else {
-      setOrders([...orders, ...response.items])
+      setOrders([...orders, ...response.items]);
     }
-    setPageIndex(response.pageIndex >= 0 ? response.pageIndex : _pageIndex)
-    setItemCount(response.count)
-    setDateStart(dateStart)
-    setDateEnd(dateEnd)
-    setLoading(false)
-  }
+    setPageIndex(response.pageIndex >= 0 ? response.pageIndex : _pageIndex);
+    setItemCount(response.count);
+    setDateStart(dateStart);
+    setDateEnd(dateEnd);
+    setLoading(false);
+  };
 
   const handleNextPage = () => {
-    getHistories(pageIndex + 1, dateStart, dateEnd)
-  }
+    getHistories(pageIndex + 1, dateStart, dateEnd);
+  };
 
   const handleSearch = (_dateStart: string, _dateEnd: string) => {
-    getHistories(1, _dateStart, _dateEnd)
-  }
+    getHistories(1, _dateStart, _dateEnd);
+  };
 
   const scrollRef = usePageScroll({
     nextPage: handleNextPage,
     pageIndex: pageIndex,
     itemCount: itemCount,
     pageSize: PAGE_SIZE,
-  })
+  });
 
   return (
     <S.PageLayout className="p-2 space-y-2">
@@ -69,11 +69,11 @@ export default function CryptoMyTradeOrderHistory() {
         <CryptoMyTradeItemSkeleton ref={scrollRef} pageIndex={pageIndex} itemCount={itemCount} pageSize={PAGE_SIZE} />
       </S.PageList>
     </S.PageLayout>
-  )
+  );
 }
 
 interface IOrder {
-  order: TradeOrder
+  order: TradeOrder;
 }
 const Order = ({ order }: IOrder) => {
   return (
@@ -129,5 +129,5 @@ const Order = ({ order }: IOrder) => {
         </S.OrderItem>
       </S.OrderBody>
     </S.OrderBox>
-  )
-}
+  );
+};

@@ -1,5 +1,5 @@
-import CryptoMain from '@/components/cryptos/CryptoMain'
+import CryptoMain from '@/components/cryptos/CryptoMain';
 
 export default function CryptoMainPage() {
-  return <CryptoMain />
+  return <CryptoMain />;
 }

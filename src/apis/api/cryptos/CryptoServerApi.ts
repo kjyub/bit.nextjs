@@ -1,9 +1,9 @@
-import { defaultServerInstance } from '@/apis/utils/serverApis'
+import { defaultServerInstance } from '@/apis/utils/serverApis';
 
 class CryptoServerApi {
   // region Market
   static async getMarkets(search: string, marketType: string): Promise<object> {
-    let result: object = {}
+    let result: object = {};
 
     await defaultServerInstance
       .get('/api/cryptos/market/', {
@@ -13,48 +13,48 @@ class CryptoServerApi {
         },
       })
       .then(({ data }) => {
-        result = data
+        result = data;
       })
       .catch((error) => {
-        console.log(error)
-      })
+        console.log(error);
+      });
 
-    return result
+    return result;
   }
   // 가격을 제외한 심플한 데이터 전부 가져온다
   static async getMarketAll(): Promise<object> {
-    let result: object = {}
+    let result: object = {};
 
     await defaultServerInstance
       .get('/api/cryptos/market_all/')
       .then(({ data }) => {
-        result = data
+        result = data;
       })
       .catch((error) => {
-        console.log(error)
-      })
+        console.log(error);
+      });
 
-    return result
+    return result;
   }
   static async getMarket(code: string): Promise<object> {
-    let result: object = {}
+    let result: object = {};
 
     await defaultServerInstance
       .get(`/api/cryptos/market/${code}/`)
       .then(({ data }) => {
-        result = data
+        result = data;
       })
       .catch((error) => {
-        console.log(error)
-      })
+        console.log(error);
+      });
 
-    return result
+    return result;
   }
   // endregion
 
   // region Community
   static async getCommunityList(search: string, marketCode: string, page: number, pageSize: number): Promise<object> {
-    let result: object = {}
+    let result: object = {};
 
     await defaultServerInstance
       .get('/api/cryptos/community/', {
@@ -66,32 +66,32 @@ class CryptoServerApi {
         },
       })
       .then(({ data }) => {
-        result = data
+        result = data;
       })
       .catch((error) => {
-        console.log(error)
-      })
+        console.log(error);
+      });
 
-    return result
+    return result;
   }
   static async getCommunityDetail(nanoId: string): Promise<object> {
-    let result: object = {}
+    let result: object = {};
 
     await defaultServerInstance
       .get(`/api/cryptos/community/${nanoId}/`)
       .then(({ data }) => {
-        result = data
+        result = data;
       })
       .catch((error) => {
-        console.log(error)
-      })
+        console.log(error);
+      });
 
-    return result
+    return result;
   }
   // endregion
   // region Community Comment
   static async getCommunityCommentList(communityId: number, pageIndex: number, pageSize: number): Promise<object> {
-    let result: object = {}
+    let result: object = {};
 
     await defaultServerInstance
       .get('/api/cryptos/community_comment/', {
@@ -102,15 +102,15 @@ class CryptoServerApi {
         },
       })
       .then(({ data }) => {
-        result = data
+        result = data;
       })
       .catch((error) => {
-        console.log(error)
-      })
+        console.log(error);
+      });
 
-    return result
+    return result;
   }
   // endregion
 }
 
-export default CryptoServerApi
+export default CryptoServerApi;

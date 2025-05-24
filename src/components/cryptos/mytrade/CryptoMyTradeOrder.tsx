@@ -1,19 +1,19 @@
-'use client'
+'use client';
 
-import CryptoApi from '@/apis/api/cryptos/CryptoApi'
-import TradeGoApi from '@/apis/api/cryptos/TradeGoApi'
-import useUserInfoStore from '@/store/useUserInfo'
-import * as S from '@/styles/CryptoMyTradeStyles'
-import { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces'
-import { PositionType, TradeOrderTypeNames } from '@/types/cryptos/CryptoTypes'
-import TradeOrder from '@/types/cryptos/TradeOrder'
-import CommonUtils from '@/utils/CommonUtils'
-import CryptoUtils from '@/utils/CryptoUtils'
-import dayjs from 'dayjs'
+import CryptoApi from '@/apis/api/cryptos/CryptoApi';
+import TradeGoApi from '@/apis/api/cryptos/TradeGoApi';
+import useUserInfoStore from '@/store/useUserInfo';
+import * as S from '@/styles/CryptoMyTradeStyles';
+import { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
+import { PositionType, TradeOrderTypeNames } from '@/types/cryptos/CryptoTypes';
+import TradeOrder from '@/types/cryptos/TradeOrder';
+import CommonUtils from '@/utils/CommonUtils';
+import CryptoUtils from '@/utils/CryptoUtils';
+import dayjs from 'dayjs';
 
 export default function CryptoMyTradeOrder() {
-  const { myTrades, updateInfo } = useUserInfoStore()
-  const orders = myTrades.orders
+  const { myTrades, updateInfo } = useUserInfoStore();
+  const orders = myTrades.orders;
 
   return (
     <S.PageLayout className="p-2 space-y-2">
@@ -23,47 +23,47 @@ export default function CryptoMyTradeOrder() {
         ))}
       </S.PageList>
     </S.PageLayout>
-  )
+  );
 }
 
 interface IOrder {
-  order: TradeOrder
-  updateInfo: () => Promise<void>
+  order: TradeOrder;
+  updateInfo: () => Promise<void>;
 }
 const Order = ({ order, updateInfo }: IOrder) => {
   const handleCancel = async () => {
     if (!confirm('주문을 취소하시겠습니까?')) {
-      return
+      return;
     }
 
-    const response = await CryptoApi.orderLimitCancel(order.id)
+    const response = await CryptoApi.orderLimitCancel(order.id);
 
     if (response) {
-      updateInfo()
-      alert('주문이 취소되었습니다.')
+      updateInfo();
+      alert('주문이 취소되었습니다.');
     } else {
-      alert('주문 취소에 실패했습니다.')
+      alert('주문 취소에 실패했습니다.');
     }
-  }
+  };
 
   const handleChase = async () => {
     if (!confirm('주문을 추격하시겠습니까?')) {
-      return
+      return;
     }
 
-    const market: IUpbitMarketTicker = await TradeGoApi.getMarketCurrent(order.market.code)
+    const market: IUpbitMarketTicker = await TradeGoApi.getMarketCurrent(order.market.code);
     if (CommonUtils.isNullOrUndefined(market) || CommonUtils.isNullOrUndefined(String(market.trade_price))) {
-      alert('마켓 정보를 가져오는데 실패했습니다.')
-      return
+      alert('마켓 정보를 가져오는데 실패했습니다.');
+      return;
     }
 
-    const response = await CryptoApi.orderLimitChase(order.id, market.trade_price)
+    const response = await CryptoApi.orderLimitChase(order.id, market.trade_price);
 
     if (!response) {
-      alert('주문 추격에 실패했습니다.')
+      alert('주문 추격에 실패했습니다.');
     }
-    updateInfo()
-  }
+    updateInfo();
+  };
 
   return (
     <S.OrderBox>
@@ -85,7 +85,7 @@ const Order = ({ order, updateInfo }: IOrder) => {
           <button
             className="value text-violet-400!"
             onClick={() => {
-              handleChase()
+              handleChase();
             }}
           >
             추격
@@ -93,7 +93,7 @@ const Order = ({ order, updateInfo }: IOrder) => {
           <button
             className="value text-yellow-500!"
             onClick={() => {
-              handleCancel()
+              handleCancel();
             }}
           >
             취소
@@ -134,5 +134,5 @@ const Order = ({ order, updateInfo }: IOrder) => {
                 </div>
             </S.PositionClose> */}
     </S.OrderBox>
-  )
-}
+  );
+};

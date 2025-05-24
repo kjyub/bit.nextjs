@@ -1,12 +1,12 @@
-'use client'
+'use client';
 
-import CryptoApi from '@/apis/api/cryptos/CryptoApi'
-import * as I from '@/components/inputs/TradeInputs'
-import useMarketPriceStore from '@/store/useMarketPriceStore'
-import useUserInfoStore from '@/store/useUserInfo'
-import * as S from '@/styles/CryptoTradeStyles'
-import { TextFormats } from '@/types/CommonTypes'
-import { CryptoFee, MAX_COST_RATIO } from '@/types/cryptos/CryptoConsts'
+import CryptoApi from '@/apis/api/cryptos/CryptoApi';
+import * as I from '@/components/inputs/TradeInputs';
+import useMarketPriceStore from '@/store/useMarketPriceStore';
+import useUserInfoStore from '@/store/useUserInfo';
+import * as S from '@/styles/CryptoTradeStyles';
+import { TextFormats } from '@/types/CommonTypes';
+import { CryptoFee, MAX_COST_RATIO } from '@/types/cryptos/CryptoConsts';
 import {
   MarginModeType,
   MarginModeTypeValues,
@@ -16,20 +16,20 @@ import {
   TradeOrderType,
   TradeOrderTypeValues,
   TradeType,
-} from '@/types/cryptos/CryptoTypes'
-import User from '@/types/users/User'
-import CommonUtils from '@/utils/CommonUtils'
-import TypeUtils from '@/utils/TypeUtils'
-import { useCallback, useEffect, useState } from 'react'
+} from '@/types/cryptos/CryptoTypes';
+import User from '@/types/users/User';
+import CommonUtils from '@/utils/CommonUtils';
+import TypeUtils from '@/utils/TypeUtils';
+import { useCallback, useEffect, useState } from 'react';
 
-const R = 0.005 // 유지 증거금률
+const R = 0.005; // 유지 증거금률
 
 interface ICryptoMarketTrade {
-  user: User
-  marketCode: string
-  unit: string
-  sizeUnitType: SizeUnitTypeValues
-  setSizeUnitType: (type: SizeUnitTypeValues) => void
+  user: User;
+  marketCode: string;
+  unit: string;
+  sizeUnitType: SizeUnitTypeValues;
+  setSizeUnitType: (type: SizeUnitTypeValues) => void;
 }
 export default function CryptoMarketTrade({
   user,
@@ -38,88 +38,88 @@ export default function CryptoMarketTrade({
   sizeUnitType,
   setSizeUnitType,
 }: ICryptoMarketTrade) {
-  const { balance, locked, updateInfo, myTrades } = useUserInfoStore()
-  const userBudget = balance - locked
-  const maxCost = userBudget * MAX_COST_RATIO
+  const { balance, locked, updateInfo, myTrades } = useUserInfoStore();
+  const userBudget = balance - locked;
+  const maxCost = userBudget * MAX_COST_RATIO;
 
-  const socketData = useMarketPriceStore((state) => state.marketDic[marketCode])
-  const marketPrice = socketData ? socketData.trade_price : 0
+  const socketData = useMarketPriceStore((state) => state.marketDic[marketCode]);
+  const marketPrice = socketData ? socketData.trade_price : 0;
 
-  const [isMarginModeDisabled, setMarginModeDisabled] = useState<boolean>(false)
-  const [marginMode, setMarginMode] = useState<MarginModeTypeValues>(MarginModeType.CROSSED) // 마진모드 (CROSSED, ISOLATED)
-  const [leverageRatio, setLeverageRatio] = useState<number>(1) // 레버리지 비율
-  const [orderType, setOrderType] = useState<TradeOrderTypeValues>(TradeOrderType.LIMIT) // 지정가/시장가
-  const [price, setPrice] = useState<number>(0) // 구매가
-  const [quantity, setQuantity] = useState<number>(0) // 구매 수량
-  const [cost, setCost] = useState<number>(0) // 구매 비용
-  const [size, setSize] = useState<number>(0) // 레버리지 포함 크기
-  const [takeProfit, setTakeProfit] = useState<number>(0)
-  const [stopLoss, setStopLoss] = useState<number>(0)
-  const [fee, setFee] = useState<number>(CryptoFee.MAKER) // 구매 수수료
+  const [isMarginModeDisabled, setMarginModeDisabled] = useState<boolean>(false);
+  const [marginMode, setMarginMode] = useState<MarginModeTypeValues>(MarginModeType.CROSSED); // 마진모드 (CROSSED, ISOLATED)
+  const [leverageRatio, setLeverageRatio] = useState<number>(1); // 레버리지 비율
+  const [orderType, setOrderType] = useState<TradeOrderTypeValues>(TradeOrderType.LIMIT); // 지정가/시장가
+  const [price, setPrice] = useState<number>(0); // 구매가
+  const [quantity, setQuantity] = useState<number>(0); // 구매 수량
+  const [cost, setCost] = useState<number>(0); // 구매 비용
+  const [size, setSize] = useState<number>(0); // 레버리지 포함 크기
+  const [takeProfit, setTakeProfit] = useState<number>(0);
+  const [stopLoss, setStopLoss] = useState<number>(0);
+  const [fee, setFee] = useState<number>(CryptoFee.MAKER); // 구매 수수료
 
-  const [liqLongPrice, setLiqLongPrice] = useState<number>(0) // 청산가 (롱)
-  const [liqShortPrice, setLiqShortPrice] = useState<number>(0) // 청산가 (숏)
+  const [liqLongPrice, setLiqLongPrice] = useState<number>(0); // 청산가 (롱)
+  const [liqShortPrice, setLiqShortPrice] = useState<number>(0); // 청산가 (숏)
 
   useEffect(() => {
-    initPrice()
-  }, [marketCode, user.uuid])
+    initPrice();
+  }, [marketCode, user.uuid]);
 
   useEffect(() => {
     // 이미 포지션이 있으면 해당 포지션으로 고정
-    const position = myTrades.positions.find((position) => position.market.code === marketCode)
+    const position = myTrades.positions.find((position) => position.market.code === marketCode);
     if (position) {
-      setMarginMode(position.marginMode)
-      setMarginModeDisabled(true)
+      setMarginMode(position.marginMode);
+      setMarginModeDisabled(true);
     } else {
-      setMarginModeDisabled(false)
+      setMarginModeDisabled(false);
     }
-  }, [marketCode, myTrades.positions])
+  }, [marketCode, myTrades.positions]);
 
   useEffect(() => {
-    setLiqLongPrice(price * (1 - 1 / leverageRatio) + R)
-    setLiqShortPrice(price * (1 + 1 / leverageRatio) - R)
-  }, [price, leverageRatio])
+    setLiqLongPrice(price * (1 - 1 / leverageRatio) + R);
+    setLiqShortPrice(price * (1 + 1 / leverageRatio) - R);
+  }, [price, leverageRatio]);
 
   useEffect(() => {
-    setSize(cost * leverageRatio)
-  }, [leverageRatio])
+    setSize(cost * leverageRatio);
+  }, [leverageRatio]);
 
   useEffect(() => {
     if (orderType === TradeOrderType.MARKET) {
-      setPrice(marketPrice)
-      setFee(CryptoFee.TAKER)
+      setPrice(marketPrice);
+      setFee(CryptoFee.TAKER);
     } else if (orderType === TradeOrderType.LIMIT) {
-      setFee(CryptoFee.MAKER)
+      setFee(CryptoFee.MAKER);
     }
-  }, [orderType, marketPrice])
+  }, [orderType, marketPrice]);
 
   const initPrice = () => {
-    setPrice(marketPrice)
-  }
+    setPrice(marketPrice);
+  };
 
   const handleTrade = useCallback(
     async (_positionType: PositionTypeValues) => {
       if (CommonUtils.isStringNullOrEmpty(user.uuid)) {
-        alert('로그인이 필요합니다.')
-        return
+        alert('로그인이 필요합니다.');
+        return;
       }
 
-      const errorMessages: Array<string> = []
+      const errorMessages: Array<string> = [];
       if (cost <= 0) {
-        errorMessages.push('거래수량을 입력해주세요.')
+        errorMessages.push('거래수량을 입력해주세요.');
       }
       if (price <= 0) {
-        errorMessages.push('거래 가격을 입력해주세요.')
+        errorMessages.push('거래 가격을 입력해주세요.');
       }
       if (leverageRatio <= 0) {
-        errorMessages.push('레버리지를 입력해주세요.')
+        errorMessages.push('레버리지를 입력해주세요.');
       }
       if (cost > maxCost) {
-        errorMessages.push('잔액이 부족합니다.')
+        errorMessages.push('잔액이 부족합니다.');
       }
       if (errorMessages.length > 0) {
-        alert(errorMessages.join('\n'))
-        return
+        alert(errorMessages.join('\n'));
+        return;
       }
 
       const data = {
@@ -133,24 +133,24 @@ export default function CryptoMarketTrade({
         size: size,
         leverage: leverageRatio,
         size_unit_type: sizeUnitType,
-      }
+      };
 
-      let result = false
+      let result = false;
       if (orderType === TradeOrderType.LIMIT) {
-        result = await CryptoApi.orderLimit(data)
+        result = await CryptoApi.orderLimit(data);
       } else if (orderType === TradeOrderType.MARKET) {
-        result = await CryptoApi.orderMarket(data)
+        result = await CryptoApi.orderMarket(data);
       }
 
       if (result) {
-        alert('거래가 성공적으로 완료되었습니다.')
-        updateInfo()
+        alert('거래가 성공적으로 완료되었습니다.');
+        updateInfo();
       } else {
-        alert('거래에 실패하였습니다.')
+        alert('거래에 실패하였습니다.');
       }
     },
     [user, marginMode, orderType, marketCode, cost, price, quantity, size, leverageRatio, sizeUnitType, maxCost],
-  )
+  );
 
   return (
     <S.TradeBox>
@@ -234,19 +234,19 @@ export default function CryptoMarketTrade({
       <div className="grid grid-cols-2 gap-2 w-full">
         <S.TradeLongButton
           onClick={() => {
-            handleTrade(PositionType.LONG)
+            handleTrade(PositionType.LONG);
           }}
         >
           매수/롱
         </S.TradeLongButton>
         <S.TradeShortButton
           onClick={() => {
-            handleTrade(PositionType.SHORT)
+            handleTrade(PositionType.SHORT);
           }}
         >
           매도/숏
         </S.TradeShortButton>
       </div>
     </S.TradeBox>
-  )
+  );
 }

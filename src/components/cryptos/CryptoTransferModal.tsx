@@ -1,92 +1,92 @@
-'use client'
-import CryptoApi from '@/apis/api/cryptos/CryptoApi'
-import * as I from '@/components/inputs/UserInputs'
-import useUserInfoStore from '@/store/useUserInfo'
-import * as S from '@/styles/CryptoWalletStyles'
-import { TextFormats } from '@/types/CommonTypes'
-import { TransferTypeValues, TransferTypes, WalletTransactionType } from '@/types/cryptos/CryptoTypes'
-import CommonUtils from '@/utils/CommonUtils'
-import { useEffect, useState } from 'react'
-import ModalLayout from '../atomics/ModalLayout'
+'use client';
+import CryptoApi from '@/apis/api/cryptos/CryptoApi';
+import * as I from '@/components/inputs/UserInputs';
+import useUserInfoStore from '@/store/useUserInfo';
+import * as S from '@/styles/CryptoWalletStyles';
+import { TextFormats } from '@/types/CommonTypes';
+import { TransferTypeValues, TransferTypes, WalletTransactionType } from '@/types/cryptos/CryptoTypes';
+import CommonUtils from '@/utils/CommonUtils';
+import { useEffect, useState } from 'react';
+import ModalLayout from '../atomics/ModalLayout';
 
 const TransferSuffix = {
   [TransferTypes.TO_ACCOUNT]: 'C',
   [TransferTypes.TO_WALLET]: 'W',
-}
+};
 
 interface CryptoTransferModalProps {
-  defaultTransferType: TransferTypeValues
-  cash: number
-  balance: number
+  defaultTransferType: TransferTypeValues;
+  cash: number;
+  balance: number;
 }
 export default function CryptoTransferModal({ defaultTransferType }: CryptoTransferModalProps) {
   // 타입 및 스타일
-  const [transferType, setTransferType] = useState<TransferTypeValues>(defaultTransferType)
-  const [isBgActive, setBgActive] = useState<boolean>(false)
+  const [transferType, setTransferType] = useState<TransferTypeValues>(defaultTransferType);
+  const [isBgActive, setBgActive] = useState<boolean>(false);
 
   // 잔액
-  const { cash, balance, updateInfo } = useUserInfoStore()
+  const { cash, balance, updateInfo } = useUserInfoStore();
 
   // 이체 값
-  const [value, setValue] = useState<number>(0)
-  const [errorMessage, setErrorMessage] = useState<string>('')
-  const [isValid, setValid] = useState<boolean>(false)
+  const [value, setValue] = useState<number>(0);
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [isValid, setValid] = useState<boolean>(false);
 
   // 잔액 정보 불러오기
   useEffect(() => {
-    updateInfo()
-  }, [])
+    updateInfo();
+  }, []);
 
   // 이체 값 검증
   useEffect(() => {
     if (transferType === TransferTypes.TO_ACCOUNT) {
       if (value > balance) {
-        setErrorMessage('거래 지갑 잔액이 부족합니다.')
-        setValid(false)
+        setErrorMessage('거래 지갑 잔액이 부족합니다.');
+        setValid(false);
       } else {
-        setErrorMessage('')
-        setValid(true)
+        setErrorMessage('');
+        setValid(true);
       }
     } else if (transferType === TransferTypes.TO_WALLET) {
       if (value > cash) {
-        setErrorMessage('통장 잔액이 부족합니다.')
-        setValid(false)
+        setErrorMessage('통장 잔액이 부족합니다.');
+        setValid(false);
       } else {
-        setErrorMessage('')
-        setValid(true)
+        setErrorMessage('');
+        setValid(true);
       }
     }
-  }, [value])
+  }, [value]);
 
   const handleValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const _value = Number(e.target.value.replaceAll(',', ''))
-    if (isNaN(_value)) return
+    const _value = Number(e.target.value.replaceAll(',', ''));
+    if (isNaN(_value)) return;
 
-    if (_value < 0) return
+    if (_value < 0) return;
 
-    setValue(_value)
-  }
+    setValue(_value);
+  };
 
   const handleTransfer = async () => {
-    if (!isValid) return
+    if (!isValid) return;
 
     const data = {
       transaction_type:
         transferType === TransferTypes.TO_ACCOUNT ? WalletTransactionType.WITHDRAW : WalletTransactionType.DEPOSIT,
       amount: value,
-    }
+    };
 
-    const response = await CryptoApi.transactionWallet(data)
+    const response = await CryptoApi.transactionWallet(data);
     if (response) {
-      setValue(0)
-      updateInfo()
-      alert('이체가 완료되었습니다.')
-      return
+      setValue(0);
+      updateInfo();
+      alert('이체가 완료되었습니다.');
+      return;
     } else {
-      alert('이체에 실패하였습니다.')
-      return
+      alert('이체에 실패하였습니다.');
+      return;
     }
-  }
+  };
 
   return (
     <ModalLayout title={`환전`} layoutClassName="max-sm:w-[80vw] sm:w-96" contentClassName="max-h-[80vh]">
@@ -94,13 +94,13 @@ export default function CryptoTransferModal({ defaultTransferType }: CryptoTrans
         <button
           className={transferType === TransferTypes.TO_ACCOUNT ? 'active' : ''}
           onClick={() => {
-            setTransferType(TransferTypes.TO_ACCOUNT)
+            setTransferType(TransferTypes.TO_ACCOUNT);
           }}
           onMouseEnter={() => {
-            if (transferType === TransferTypes.TO_WALLET) setBgActive(true)
+            if (transferType === TransferTypes.TO_WALLET) setBgActive(true);
           }}
           onMouseLeave={() => {
-            setBgActive(false)
+            setBgActive(false);
           }}
         >
           <span>{`거래 지갑 -> 통장`}</span>
@@ -109,13 +109,13 @@ export default function CryptoTransferModal({ defaultTransferType }: CryptoTrans
         <button
           className={transferType === TransferTypes.TO_WALLET ? 'active' : ''}
           onClick={() => {
-            setTransferType(TransferTypes.TO_WALLET)
+            setTransferType(TransferTypes.TO_WALLET);
           }}
           onMouseEnter={() => {
-            if (transferType === TransferTypes.TO_ACCOUNT) setBgActive(true)
+            if (transferType === TransferTypes.TO_ACCOUNT) setBgActive(true);
           }}
           onMouseLeave={() => {
-            setBgActive(false)
+            setBgActive(false);
           }}
         >
           <span>{`통장 -> 거래 지갑`}</span>
@@ -163,7 +163,7 @@ export default function CryptoTransferModal({ defaultTransferType }: CryptoTrans
 
         <S.TransferButton
           onClick={() => {
-            handleTransfer()
+            handleTransfer();
           }}
           disabled={!isValid}
         >
@@ -171,5 +171,5 @@ export default function CryptoTransferModal({ defaultTransferType }: CryptoTrans
         </S.TransferButton>
       </div>
     </ModalLayout>
-  )
+  );
 }

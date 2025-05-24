@@ -15,14 +15,14 @@ export enum EditStateTypes {
 }
 
 export interface Paging<T> {
-  pageCount: number
-  datas: Array<T>
+  pageCount: number;
+  datas: Array<T>;
 }
 
 export const PagingBlank = {
   pageCount: 1,
   datas: [],
-}
+};
 
 export enum DataTypes {
   TEXT,

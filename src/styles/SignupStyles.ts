@@ -1,23 +1,23 @@
-import { StyleProps } from '@/types/StyleTypes'
-import tw from 'tailwind-styled-components'
+import { StyleProps } from '@/types/StyleTypes';
+import tw from 'tailwind-styled-components';
 
 export const Layout = tw.div`
     absolute top-0 left-0 z-0
     flex flex-center w-screen h-screen
-`
+`;
 
 export const BoxContainer = tw.div`
     flex flex-col items-center p-6
     rounded-xl drop-shadow
     bg-white dark:bg-slate-600/30
     border border-slate-500/20
-`
+`;
 
 export const Title = tw.span`
     py-6
     text-2xl font-semibold
     text-slate-800 dark:text-slate-200
-`
+`;
 
 export const AuthTypeSection = tw.div`
     flex flex-col items-center w-full space-y-4
@@ -28,7 +28,7 @@ export const AuthTypeSection = tw.div`
 
     [&>.agreement]:flex [&>.agreement]:text-sm [&>.agreement]:text-slate-400
     [&>.agreement>button]:ml-1 [&>.agreement>button]:text-blue-500 [&>.agreement>button]:hover:underline [&>.agreement>button]:underline-offset-2
-`
+`;
 
 export const SignupSection = tw.div`
     flex flex-col w-full space-y-4
@@ -38,7 +38,7 @@ export const SignupSection = tw.div`
 
     ${({ $is_active }: StyleProps) => ($is_active ? 'opacity-100' : 'opacity-40')} 
     duration-300
-`
+`;
 
 export const SignupSectionItem = tw.div`
     flex justify-between items-center w-full
@@ -47,7 +47,7 @@ export const SignupSectionItem = tw.div`
     [&>.title]:font-normal
     [&>.value]:text-sm [&>.value]:text-slate-700 dark:[&>.value]:text-slate-300 
     [&>.value]:font-light
-`
+`;
 
 export const SignupButton = tw.button`
     w-full h-12
@@ -55,4 +55,4 @@ export const SignupButton = tw.button`
     ${({ $is_active }: StyleProps) =>
       $is_active ? 'bg-blue-500/60 hover:bg-blue-500/80 text-white' : 'bg-slate-500/60 text-slate-300'}
     duration-200
-`
+`;

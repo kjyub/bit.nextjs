@@ -1,4 +1,4 @@
-import tw from 'tailwind-styled-components'
+import tw from 'tailwind-styled-components';
 
 export const Layout = tw.div`
     sticky top-0 z-40 
@@ -9,7 +9,7 @@ export const Layout = tw.div`
 
     [&>.content]:flex [&>.content]:justify-between [&>.content]:items-center [&>.content]:w-full
     [&>.content]:max-w-(--breakpoint-xl)
-`
+`;
 
 export const Section = tw.div`
     flex items-center space-x-2
@@ -21,4 +21,4 @@ export const Section = tw.div`
     [&>.btn.active]:text-slate-100
     [&>.btn]:transition-colors [&>.btn]:select-none
     [&>.btn>i]:text-xs
-`
+`;

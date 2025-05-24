@@ -41,9 +41,9 @@ const nextConfig = {
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack'],
-    })
+    });
 
-    return config
+    return config;
   },
   // turbopack 관련 추가 사항 (webpack 설정)
   experimental: {
@@ -72,9 +72,9 @@ const nextConfig = {
           },
         ],
       },
-    ]
+    ];
   },
   output: 'standalone',
-}
+};
 
-export default nextConfig
+export default nextConfig;

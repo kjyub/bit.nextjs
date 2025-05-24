@@ -1,4 +1,4 @@
-import tw from 'tailwind-styled-components'
+import tw from 'tailwind-styled-components';
 
 export const ControlBar = tw.div`
     flex flex-wrap w-full pb-2 space-x-1
@@ -9,4 +9,4 @@ export const ControlBar = tw.div`
     [&_button]:transition-colors
 
     [&>.split]:border-r [&>.split]:border-slate-500/50
-`
+`;

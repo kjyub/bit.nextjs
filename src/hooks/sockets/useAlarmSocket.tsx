@@ -1,8 +1,8 @@
-import useToastMessageStore from "@/store/useToastMessageStore";
-import useUserInfoStore from "@/store/useUserInfo";
-import { useEffect } from "react";
-import { useUser } from "../useUser";
-import TradeGoApi from "@/apis/api/cryptos/TradeGoApi";
+import TradeGoApi from '@/apis/api/cryptos/TradeGoApi';
+import useToastMessageStore from '@/store/useToastMessageStore';
+import useUserInfoStore from '@/store/useUserInfo';
+import { useEffect } from 'react';
+import { useUser } from '../useUser';
 
 export default function useAlarmSocket() {
   const { user } = useUser();
@@ -20,7 +20,7 @@ export default function useAlarmSocket() {
           addToastMessage(String(data.content));
           userInfoUpdate();
         } catch (error) {
-          console.log("Failed to parse WebSocket message", error);
+          console.log('Failed to parse WebSocket message', error);
         }
       };
     }

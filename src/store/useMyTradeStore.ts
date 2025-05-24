@@ -1,14 +1,14 @@
-import CryptoApi from '@/apis/api/cryptos/CryptoApi'
-import { IMyTradeData } from '@/types/cryptos/CryptoInterfaces'
-import { create } from 'zustand'
+import CryptoApi from '@/apis/api/cryptos/CryptoApi';
+import { IMyTradeData } from '@/types/cryptos/CryptoInterfaces';
+import { create } from 'zustand';
 
 const getInitData = async () => {
-  return await CryptoApi.getMyTrades()
-}
+  return await CryptoApi.getMyTrades();
+};
 
 interface IMyTradeStore {
-  myTrades: IMyTradeData
-  update: () => void
+  myTrades: IMyTradeData;
+  update: () => void;
 }
 const useMyTradeStore = create<IMyTradeStore>((set) => ({
   myTrades: {},
@@ -16,9 +16,9 @@ const useMyTradeStore = create<IMyTradeStore>((set) => ({
     getInitData().then((data) => {
       set({
         myTrades: data,
-      })
-    })
+      });
+    });
   },
-}))
+}));
 
-export default useMyTradeStore
+export default useMyTradeStore;

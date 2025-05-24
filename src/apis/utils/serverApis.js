@@ -1,6 +1,6 @@
-import axios from 'axios'
+import axios from 'axios';
 
-const URL = process.env.NEXT_PUBLIC_DJANGO_SERVER
+const URL = process.env.NEXT_PUBLIC_DJANGO_SERVER;
 
 const axiosApi = (options) => {
   const api = axios.create({
@@ -8,20 +8,20 @@ const axiosApi = (options) => {
     withCredentials: true,
     headers: { 'Content-Type': 'application/json' },
     ...options,
-  })
+  });
 
-  return api
-}
+  return api;
+};
 const axiosNextApi = (options) => {
   const api = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_SERVER,
     withCredentials: true,
     headers: { 'Content-Type': 'application/json' },
     ...options,
-  })
+  });
 
-  return api
-}
+  return api;
+};
 
-export const defaultServerInstance = axiosApi()
-export const defaultApiInstance = axiosNextApi()
+export const defaultServerInstance = axiosApi();
+export const defaultApiInstance = axiosNextApi();

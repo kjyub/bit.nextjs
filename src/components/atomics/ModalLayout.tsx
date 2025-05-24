@@ -1,10 +1,10 @@
-import { cn } from '@/utils/StyleUtils'
+import { cn } from '@/utils/StyleUtils';
 
 interface IModalLayout {
-  title: string
-  layoutClassName?: string
-  contentClassName?: string
-  children: React.ReactNode
+  title: string;
+  layoutClassName?: string;
+  contentClassName?: string;
+  children: React.ReactNode;
 }
 export default function ModalLayout({ title, layoutClassName = 'w-96', contentClassName, children }: IModalLayout) {
   return (
@@ -21,5 +21,5 @@ export default function ModalLayout({ title, layoutClassName = 'w-96', contentCl
       {/* 내용 */}
       <div className={`flex flex-col !pb-5 rounded-b-xl ${contentClassName}`}>{children}</div>
     </div>
-  )
+  );
 }

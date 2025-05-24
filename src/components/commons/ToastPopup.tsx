@@ -1,11 +1,11 @@
-'use client'
-import { TOAST_MESSAGE_ANIMATION_DURATION, TOAST_MESSAGE_DURATION } from '@/constants/ToastConsts'
-import useToastMessageStore, { ToastMessage } from '@/store/useToastMessageStore'
-import { cn } from '@/utils/StyleUtils'
-import { useEffect, useState } from 'react'
+'use client';
+import { TOAST_MESSAGE_ANIMATION_DURATION, TOAST_MESSAGE_DURATION } from '@/constants/ToastConsts';
+import useToastMessageStore, { ToastMessage } from '@/store/useToastMessageStore';
+import { cn } from '@/utils/StyleUtils';
+import { useEffect, useState } from 'react';
 
 const ToastPopup = () => {
-  const messages = useToastMessageStore((state) => state.messages)
+  const messages = useToastMessageStore((state) => state.messages);
 
   return (
     <div className="fixed top-14 left-0 z-50 flex justify-center w-screen pt-3 pointer-events-none">
@@ -15,34 +15,34 @@ const ToastPopup = () => {
         ))}
       </div>
     </div>
-  )
-}
-export default ToastPopup
+  );
+};
+export default ToastPopup;
 
 const Message = ({ message }: { message: ToastMessage }) => {
-  const deleteMessage = useToastMessageStore((state) => state.deleteMessage)
+  const deleteMessage = useToastMessageStore((state) => state.deleteMessage);
 
-  const [isShow, setIsShow] = useState<boolean>(false)
-  const [isHide, setIsHide] = useState<boolean>(false)
+  const [isShow, setIsShow] = useState<boolean>(false);
+  const [isHide, setIsHide] = useState<boolean>(false);
 
   useEffect(() => {
     setTimeout(() => {
-      setIsShow(true)
-    }, 50)
+      setIsShow(true);
+    }, 50);
     setTimeout(() => {
-      setIsHide(true)
-    }, TOAST_MESSAGE_DURATION)
+      setIsHide(true);
+    }, TOAST_MESSAGE_DURATION);
     setTimeout(() => {
-      deleteMessage(message.key)
-    }, TOAST_MESSAGE_DURATION + TOAST_MESSAGE_ANIMATION_DURATION)
-  }, [])
+      deleteMessage(message.key);
+    }, TOAST_MESSAGE_DURATION + TOAST_MESSAGE_ANIMATION_DURATION);
+  }, []);
 
   const handleClose = () => {
-    setIsHide(true)
+    setIsHide(true);
     setTimeout(() => {
-      deleteMessage(message.key)
-    }, TOAST_MESSAGE_ANIMATION_DURATION)
-  }
+      deleteMessage(message.key);
+    }, TOAST_MESSAGE_ANIMATION_DURATION);
+  };
 
   return (
     <div
@@ -53,7 +53,7 @@ const Message = ({ message }: { message: ToastMessage }) => {
         { 'opacity-100': !isHide },
         { 'opacity-0 translate-x-36': isHide },
       ])}
-      style={{ maxHeight: isShow ? "36px" : "0", transitionDuration: `${TOAST_MESSAGE_ANIMATION_DURATION}ms` }} // tailwind 변수 테스트
+      style={{ maxHeight: isShow ? '36px' : '0', transitionDuration: `${TOAST_MESSAGE_ANIMATION_DURATION}ms` }} // tailwind 변수 테스트
     >
       <div
         className={cn([
@@ -69,5 +69,5 @@ const Message = ({ message }: { message: ToastMessage }) => {
         </button>
       </div>
     </div>
-  )
-}
+  );
+};

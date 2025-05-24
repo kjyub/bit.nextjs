@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useUser } from "@/hooks/useUser";
-import * as NS from "@/styles/NavigationStyles";
-import { AccountStatusTypes } from "@/types/users/UserTypes";
-import { signOut } from "next-auth/react";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useUser } from '@/hooks/useUser';
+import * as NS from '@/styles/NavigationStyles';
+import { AccountStatusTypes } from '@/types/users/UserTypes';
+import { signOut } from 'next-auth/react';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function Navigation() {
   // 회원 관련

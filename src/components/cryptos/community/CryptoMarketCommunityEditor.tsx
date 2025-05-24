@@ -1,64 +1,64 @@
-import CryptoApi from '@/apis/api/cryptos/CryptoApi'
-import ModalLayout from '@/components/atomics/ModalLayout'
-import { ContentInput, TitleInput } from '@/components/inputs/CommunityInputs'
-import * as CS from '@/styles/CryptoMarketCommunityStyles'
-import MarketCommunity from '@/types/cryptos/MarketCommunity'
-import CommonUtils from '@/utils/CommonUtils'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import CryptoApi from '@/apis/api/cryptos/CryptoApi';
+import ModalLayout from '@/components/atomics/ModalLayout';
+import { ContentInput, TitleInput } from '@/components/inputs/CommunityInputs';
+import * as CS from '@/styles/CryptoMarketCommunityStyles';
+import MarketCommunity from '@/types/cryptos/MarketCommunity';
+import CommonUtils from '@/utils/CommonUtils';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 interface ICryptoMarketCommunityEditor {
-  marketCode: string
-  community: MarketCommunity
-  onClose: () => void
+  marketCode: string;
+  community: MarketCommunity;
+  onClose: () => void;
 }
 export default function CryptoMarketCommunityEditor({ marketCode, community, onClose }: ICryptoMarketCommunityEditor) {
-  const router = useRouter()
+  const router = useRouter();
 
-  const isCreate = CommonUtils.isStringNullOrEmpty(community.nanoId)
+  const isCreate = CommonUtils.isStringNullOrEmpty(community.nanoId);
 
-  const [title, setTitle] = useState<string>(community.title)
-  const [content, setContent] = useState<string>(community.content)
+  const [title, setTitle] = useState<string>(community.title);
+  const [content, setContent] = useState<string>(community.content);
 
   const handleSave = async () => {
     const data = {
       title: title,
       content: content,
-    }
+    };
 
     if (isCreate) {
       // create
-      data['market_code'] = marketCode
-      create(data)
+      data['market_code'] = marketCode;
+      create(data);
     } else {
       // update
-      update(data)
+      update(data);
     }
-  }
+  };
 
   const create = async (data: object) => {
-    const response = await CryptoApi.createCommunity(data)
+    const response = await CryptoApi.createCommunity(data);
 
     if (!CommonUtils.isStringNullOrEmpty(response.nanoId)) {
-      alert('저장되었습니다.')
-      router.replace(`/crypto/${marketCode}`)
-      onClose()
+      alert('저장되었습니다.');
+      router.replace(`/crypto/${marketCode}`);
+      onClose();
     } else {
-      alert('저장에 실패했습니다.')
+      alert('저장에 실패했습니다.');
     }
-  }
+  };
 
   const update = async (data: object) => {
-    const response = await CryptoApi.updateCommunity(community.nanoId, data)
+    const response = await CryptoApi.updateCommunity(community.nanoId, data);
 
     if (!CommonUtils.isStringNullOrEmpty(response.nanoId)) {
-      alert('수정되었습니다.')
-      router.refresh()
-      onClose()
+      alert('수정되었습니다.');
+      router.refresh();
+      onClose();
     } else {
-      alert('수정에 실패했습니다.')
+      alert('수정에 실패했습니다.');
     }
-  }
+  };
 
   return (
     <ModalLayout
@@ -74,7 +74,7 @@ export default function CryptoMarketCommunityEditor({ marketCode, community, onC
         <div className="flex justify-end items-center space-x-2">
           <CS.SaveButton
             onClick={() => {
-              handleSave()
+              handleSave();
             }}
           >
             저장
@@ -82,5 +82,5 @@ export default function CryptoMarketCommunityEditor({ marketCode, community, onC
         </div>
       </div>
     </ModalLayout>
-  )
+  );
 }

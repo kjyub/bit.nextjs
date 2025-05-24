@@ -1,6 +1,6 @@
-import axios from 'axios'
+import axios from 'axios';
 
-const URL = process.env.NEXT_PUBLIC_TRADE_SERVER
+const URL = process.env.NEXT_PUBLIC_TRADE_SERVER;
 
 const axiosApi = (options) => {
   const api = axios.create({
@@ -8,8 +8,8 @@ const axiosApi = (options) => {
     withCredentials: true,
     headers: { 'Content-Type': 'application/json' },
     ...options,
-  })
+  });
 
-  return api
-}
-export const tradeDefaultServerInstance = axiosApi()
+  return api;
+};
+export const tradeDefaultServerInstance = axiosApi();

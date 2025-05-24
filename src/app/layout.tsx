@@ -1,22 +1,22 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "@/styles/css/globals.css";
-import { auth } from "@/auth";
-import AppClientLayout from "@/layouts/AppClientLayout";
-import { SessionProvider } from "next-auth/react";
-import Script from "next/script";
-import { AuthProvider } from "@/store/providers/AuthProvider";
+import type { Metadata } from 'next';
+import localFont from 'next/font/local';
+import '@/styles/css/globals.css';
+import { auth } from '@/auth';
+import AppClientLayout from '@/layouts/AppClientLayout';
+import { AuthProvider } from '@/store/providers/AuthProvider';
+import { SessionProvider } from 'next-auth/react';
+import Script from 'next/script';
 
 const pretendard = localFont({
-  src: "../static/fonts/PretendardVariable.woff2",
-  variable: "--font-pretendard",
-  weight: "45 920",
-  display: "swap",
+  src: '../static/fonts/PretendardVariable.woff2',
+  variable: '--font-pretendard',
+  weight: '45 920',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: "Bits",
-  description: "빗스",
+  title: 'Bits',
+  description: '빗스',
 };
 
 export default async function RootLayout({
@@ -60,8 +60,8 @@ const FrontHead = () => {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#010018",
-  width: "device-width",
+  themeColor: '#010018',
+  width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,

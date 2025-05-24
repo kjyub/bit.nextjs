@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import axios from "axios";
+import axios from 'axios';
 
 // const URL = "http://172.30.1.46:8000"
 // const URL = "http://127.0.0.1:8000"
@@ -14,7 +14,7 @@ const axiosCredentialApi = (options: object) => {
   const api = axios.create({
     baseURL: URL,
     withCredentials: true,
-    headers: { "Content-Type": "application/json" },
+    headers: { 'Content-Type': 'application/json' },
     ...options,
   });
 
@@ -25,7 +25,7 @@ const axiosAuthApi = (options: object) => {
   const api = axios.create({
     baseURL: URL,
     withCredentials: true,
-    headers: { "Content-Type": "application/json" },
+    headers: { 'Content-Type': 'application/json' },
     ...options,
   });
 
@@ -67,13 +67,13 @@ const axiosAuthApi = (options: object) => {
 
       // 재요청 시도
       if (error.response.status === 401) {
-        console.log("RE SignIn");
+        console.log('RE SignIn');
         // signIn("google")
         return await axios(originalRequest);
       }
 
       return Promise.reject(error);
-    }
+    },
   );
   return api;
 };
@@ -93,7 +93,7 @@ const axiosBothApi = (options: object) => {
     },
     async (error) => {
       return Promise.reject(error);
-    }
+    },
   );
   return api;
 };
@@ -103,16 +103,16 @@ export const defaultInstance = axiosApi();
 export const authInstance = axiosAuthApi();
 export const defaultOrAuthInstance = axiosBothApi();
 export const fileNoneAuthInstance = axiosApi({
-  headers: { "Content-Type": "multipart/form-data" },
+  headers: { 'Content-Type': 'multipart/form-data' },
 });
 export const fileInstance = axiosAuthApi({
-  headers: { "Content-Type": "multipart/form-data" },
+  headers: { 'Content-Type': 'multipart/form-data' },
 });
-export const downloadInstance = axiosApi({ responseType: "blob" });
+export const downloadInstance = axiosApi({ responseType: 'blob' });
 
 export const setAxiosAuthToken = (token: string) => {
-  authInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  authInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 export const removeAxiosAuthToken = () => {
-  delete authInstance.defaults.headers.common["Authorization"];
+  delete authInstance.defaults.headers.common['Authorization'];
 };

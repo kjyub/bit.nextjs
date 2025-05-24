@@ -1,4 +1,4 @@
-export const CANDLE_SIZE = 200
+export const CANDLE_SIZE = 200;
 
 export const CandleTimes = {
   SECOND: '1s',
@@ -10,12 +10,12 @@ export const CandleTimes = {
   DAY: '1d',
   WEEK: '1w',
   MONTH: '1month',
-} as const
-export type CandleTimeType = (typeof CandleTimes)[keyof typeof CandleTimes]
+} as const;
+export type CandleTimeType = (typeof CandleTimes)[keyof typeof CandleTimes];
 
 export const ChartTypes = {
   AREA: 'AREA',
   CANDLE: 'CANDLE',
   BAR: 'BAR',
-} as const
-export type ChartType = (typeof ChartTypes)[keyof typeof ChartTypes]
+} as const;
+export type ChartType = (typeof ChartTypes)[keyof typeof ChartTypes];

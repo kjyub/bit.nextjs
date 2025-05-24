@@ -1,19 +1,19 @@
-'use client'
+'use client';
 
-import KakaoContainer from '@/layouts/KakaoContainer'
-import KakaoImage from '@/static/svgs/btn_kakao.svg'
-import * as SS from '@/styles/SignupStyles'
-import AuthUtils from '@/utils/AuthUtils'
-import React from 'react'
-import ModalContainer from '../ModalContainer'
-import InfoModal from '../commons/InfoModal'
+import KakaoContainer from '@/layouts/KakaoContainer';
+import KakaoImage from '@/static/svgs/btn_kakao.svg';
+import * as SS from '@/styles/SignupStyles';
+import AuthUtils from '@/utils/AuthUtils';
+import React from 'react';
+import ModalContainer from '../ModalContainer';
+import InfoModal from '../commons/InfoModal';
 
 export default function SignupLobby() {
-  const [isShowAgreement, setShowAgreement] = React.useState<boolean>(false)
+  const [isShowAgreement, setShowAgreement] = React.useState<boolean>(false);
 
   const handleKakao = () => {
-    AuthUtils.authKakao()
-  }
+    AuthUtils.authKakao();
+  };
 
   return (
     <SS.Layout>
@@ -30,7 +30,7 @@ export default function SignupLobby() {
               <button
                 className="bg-kakao-container rounded-xl px-5 py-1"
                 onClick={() => {
-                  handleKakao()
+                  handleKakao();
                 }}
               >
                 <KakaoImage width={30} height={30} viewBox="0 0 20 20" />
@@ -43,7 +43,7 @@ export default function SignupLobby() {
             {`로그인 시 `}
             <button
               onClick={() => {
-                setShowAgreement(true)
+                setShowAgreement(true);
               }}
             >
               서비스 이용약관
@@ -62,5 +62,5 @@ export default function SignupLobby() {
         />
       </ModalContainer>
     </SS.Layout>
-  )
+  );
 }

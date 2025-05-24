@@ -1,10 +1,10 @@
-import CryptoMarketList from '@/components/cryptos/CryptoMarketList'
-import CryptoNavigation from '@/components/cryptos/CryptoNavigation'
-import CryptoFallback from '@/components/fallbacks/CryptoFallback'
-import CryptoClientLayout from '@/layouts/CryptoClientLayout'
-import * as S from '@/styles/CryptoMarketStyles'
-import * as MS from '@/styles/MainStyles'
-import { Suspense } from 'react'
+import CryptoMarketList from '@/components/cryptos/CryptoMarketList';
+import CryptoNavigation from '@/components/cryptos/CryptoNavigation';
+import CryptoFallback from '@/components/fallbacks/CryptoFallback';
+import CryptoClientLayout from '@/layouts/CryptoClientLayout';
+import * as S from '@/styles/CryptoMarketStyles';
+import * as MS from '@/styles/MainStyles';
+import { Suspense } from 'react';
 
 export default function CryptoLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
@@ -24,5 +24,5 @@ export default function CryptoLayout({ children }: Readonly<{ children: React.Re
         </S.Layout>
       </MS.PageLayout>
     </CryptoClientLayout>
-  )
+  );
 }

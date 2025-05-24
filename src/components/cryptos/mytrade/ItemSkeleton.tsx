@@ -1,11 +1,11 @@
 interface ICryptoMyTradeItemSkeleton {
-  ref: React.RefObject<HTMLDivElement>
-  pageIndex: number
-  itemCount: number
-  pageSize: number
+  ref: React.RefObject<HTMLDivElement>;
+  pageIndex: number;
+  itemCount: number;
+  pageSize: number;
 }
 export default function CryptoMyTradeItemSkeleton({ ref, pageIndex, itemCount, pageSize }: ICryptoMyTradeItemSkeleton) {
-  const isShow = pageIndex * pageSize < itemCount
+  const isShow = pageIndex * pageSize < itemCount;
 
   return (
     <div
@@ -20,5 +20,5 @@ export default function CryptoMyTradeItemSkeleton({ ref, pageIndex, itemCount, p
         </>
       )}
     </div>
-  )
+  );
 }

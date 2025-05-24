@@ -1,10 +1,10 @@
-import CommonUtils from '@/utils/CommonUtils'
-import React from 'react'
+import CommonUtils from '@/utils/CommonUtils';
+import React from 'react';
 
 interface IInfoModal {
-  title?: string
-  content?: string | React.ReactNode
-  width?: string
+  title?: string;
+  content?: string | React.ReactNode;
+  width?: string;
 }
 export default function InfoModal({ title, content, width = 'max-sm:w-[90vw] sm:w-72' }: IInfoModal) {
   return (
@@ -15,5 +15,5 @@ export default function InfoModal({ title, content, width = 'max-sm:w-[90vw] sm:
       )}
       <div className="w-full text-sm text-slate-600 dark:text-slate-300">{content}</div>
     </div>
-  )
+  );
 }

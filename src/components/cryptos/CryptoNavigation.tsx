@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
-import * as NS from '@/styles/NavigationStyles'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import * as NS from '@/styles/NavigationStyles';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function CryptoNavigation() {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   return (
     <NS.Section>
@@ -18,5 +18,5 @@ export default function CryptoNavigation() {
         <span>거래소</span>
       </Link>
     </NS.Section>
-  )
+  );
 }

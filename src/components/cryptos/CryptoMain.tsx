@@ -1,34 +1,34 @@
-'use client'
-import useUserInfoStore from '@/store/useUserInfo'
-import * as S from '@/styles/CryptoWalletStyles'
-import { TextFormats } from '@/types/CommonTypes'
-import { TransferTypeValues, TransferTypes } from '@/types/cryptos/CryptoTypes'
-import CommonUtils from '@/utils/CommonUtils'
-import { useEffect, useMemo, useState } from 'react'
-import ModalContainer from '../ModalContainer'
-import CommonButton from '../atomics/buttons/CommonButton'
-import CryptoTransferModal from './CryptoTransferModal'
+'use client';
+import useUserInfoStore from '@/store/useUserInfo';
+import * as S from '@/styles/CryptoWalletStyles';
+import { TextFormats } from '@/types/CommonTypes';
+import { TransferTypeValues, TransferTypes } from '@/types/cryptos/CryptoTypes';
+import CommonUtils from '@/utils/CommonUtils';
+import { useEffect, useMemo, useState } from 'react';
+import ModalContainer from '../ModalContainer';
+import CommonButton from '../atomics/buttons/CommonButton';
+import CryptoTransferModal from './CryptoTransferModal';
 
 export default function CryptoMain() {
-  const [isTransferModalOpen, setTransferModalOpen] = useState<boolean>(false)
-  const [transferType, setTransferType] = useState<TransferTypeValues>(TransferTypes.TO_WALLET)
+  const [isTransferModalOpen, setTransferModalOpen] = useState<boolean>(false);
+  const [transferType, setTransferType] = useState<TransferTypeValues>(TransferTypes.TO_WALLET);
 
-  const { cash, balance, locked, updateInfo } = useUserInfoStore()
+  const { cash, balance, locked, updateInfo } = useUserInfoStore();
 
   useEffect(() => {
-    updateInfo()
-  }, [])
+    updateInfo();
+  }, []);
 
   const handleTransferModal = (type: TransferTypeValues) => {
-    setTransferType(type)
-    setTransferModalOpen(true)
-  }
+    setTransferType(type);
+    setTransferModalOpen(true);
+  };
 
   const availableBalance = useMemo(() => {
-    const a = balance - locked
+    const a = balance - locked;
 
-    return a < 0 ? 0 : a
-  }, [balance, locked])
+    return a < 0 ? 0 : a;
+  }, [balance, locked]);
 
   return (
     <S.Layout>
@@ -39,7 +39,7 @@ export default function CryptoMain() {
               <div className="title">내 통장</div>
               <CommonButton
                 onClick={() => {
-                  handleTransferModal(TransferTypes.TO_ACCOUNT)
+                  handleTransferModal(TransferTypes.TO_ACCOUNT);
                 }}
                 className="space-x-1 [&>i]:text-xs"
               >
@@ -58,7 +58,7 @@ export default function CryptoMain() {
               <div className="title">내 거래 지갑</div>
               <CommonButton
                 onClick={() => {
-                  handleTransferModal(TransferTypes.TO_WALLET)
+                  handleTransferModal(TransferTypes.TO_WALLET);
                 }}
                 className="space-x-1 [&>i]:text-xs"
               >
@@ -87,5 +87,5 @@ export default function CryptoMain() {
         <CryptoTransferModal defaultTransferType={transferType} cash={cash} balance={balance} />
       </ModalContainer>
     </S.Layout>
-  )
+  );
 }

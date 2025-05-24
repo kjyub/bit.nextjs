@@ -1,20 +1,20 @@
-import { StyleProps } from '@/types/StyleTypes'
-import Link from 'next/link'
-import tw from 'tailwind-styled-components'
+import { StyleProps } from '@/types/StyleTypes';
+import Link from 'next/link';
+import tw from 'tailwind-styled-components';
 
 export const Layout = tw.div`
     flex justify-center w-full
-`
+`;
 
 export const MarketLayout = tw.div`
     flex flex-col flex-1 max-w-[1280px] py-4 space-y-4
     [&>div]:px-4
-`
+`;
 
 // 제목, 차트, 거래를 담는 레이아웃
 export const MainLayout = tw.div`
     flex flex-col w-full h-[608px] p-1 space-y-2
-`
+`;
 // 코인 이름 및 가격 정보
 export const TitleLayout = tw.div<StyleProps>`
     sticky top-[56px] z-30
@@ -25,34 +25,34 @@ export const TitleLayout = tw.div<StyleProps>`
       $is_active ? 'h-32 border-slate-500/20 backdrop-blur-lg' : 'h-32 border-transparent'}
 
     duration-300
-`
+`;
 
 export const ChartAndTradeLayout = tw.div`
     flex w-full h-full space-x-4
-`
+`;
 export const ChartLayout = tw.div`
     flex flex-col flex-1 h-full p-3
     rounded-lg bg-slate-800/60
-`
+`;
 export const TradeLayout = tw.div`
     flex flex-col w-64 h-full
-`
+`;
 
 export const BottomLayout = tw.div`
     flex w-full space-x-4
-`
+`;
 export const MyTradeLayout = tw.div`
     sticky top-56
     flex flex-col flex-1
-`
+`;
 export const CommunityLayout = tw.div`
     flex flex-col w-128 min-h-[10rem]
-`
+`;
 
 export const MarketListLayout = tw.div`
     sticky top-14 z-0
     flex flex-col w-96 h-[calc(100vh-8rem)] p-4 space-y-4
-`
+`;
 
 export const MarketListBox = tw.div`
     flex flex-col w-full h-full space-y-2
@@ -80,7 +80,7 @@ export const MarketListBox = tw.div`
     [&>.list]:flex [&>.list]:flex-col [&>.list]:w-full [&>.list]:h-full [&>.list]:space-y-1
     [&>.list]:p-2 [&>.list]:rounded-lg [&>.list]:bg-slate-500/10
     [&>.list]:overflow-y-auto
-`
+`;
 
 export const MarketListItem = tw(Link)`
     flex shrink-0 items-center w-full h-12 px-2
@@ -102,7 +102,7 @@ export const MarketListItem = tw(Link)`
     [&>.change]:flex [&>.change]:flex-col [&>.change]:w-12
     [&>.change>.rate]:text-sm 
     [&>.change>.price]:text-[10px] [&>.change>.price]:font-extralight
-`
+`;
 
 export const MainTitleBox = tw.div`
     flex items-center space-x-1
@@ -114,7 +114,7 @@ export const MainTitleBox = tw.div`
     [&>.info]:flex [&>.info]:flex-col
     [&>.info>.english]:text-sm [&>.info>.english]:text-slate-400
     [&>.info>.code]:text-[10px] [&>.info>.code]:text-slate-500
-`
+`;
 
 export const MainPriceBox = tw.div`
     flex items-baseline space-x-2
@@ -126,7 +126,7 @@ export const MainPriceBox = tw.div`
     [&>.change]:flex [&>.change]:items-baseline [&>.change]:pl-2 [&>.change]:space-x-1
     [&>.change>.rate]:text-lg
     [&>.change>.price]:text-lg [&>.change>.price>.currency]:text-xs [&>.change>.price]:font-light
-`
+`;
 
 export const MainPriceInfoGrid = tw.div`
     grid grid-cols-2 gap-3
@@ -135,4 +135,4 @@ export const MainPriceInfoGrid = tw.div`
     [&>div>.label]:w-20 [&>div>.label]:text-sm [&>div>.label]:text-slate-400 [&>div>.label]:font-light
     [&>div>.value]:text-slate-300 [&>div>.value]:text-right
     [&>div>.value.rise]:text-red-500 [&>div>.value.fall]:text-blue-500
-`
+`;

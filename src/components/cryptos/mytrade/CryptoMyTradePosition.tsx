@@ -1,10 +1,10 @@
-'use client'
+'use client';
 
-import CryptoApi from '@/apis/api/cryptos/CryptoApi'
-import * as I from '@/components/inputs/TradeInputs'
-import useMarketPriceStore from '@/store/useMarketPriceStore'
-import useUserInfoStore from '@/store/useUserInfo'
-import * as S from '@/styles/CryptoMyTradeStyles'
+import CryptoApi from '@/apis/api/cryptos/CryptoApi';
+import * as I from '@/components/inputs/TradeInputs';
+import useMarketPriceStore from '@/store/useMarketPriceStore';
+import useUserInfoStore from '@/store/useUserInfo';
+import * as S from '@/styles/CryptoMyTradeStyles';
 import {
   MarginModeType,
   MarginModeTypeNames,
@@ -13,16 +13,16 @@ import {
   TradeOrderType,
   TradeOrderTypeValues,
   TradeType,
-} from '@/types/cryptos/CryptoTypes'
-import TradePosition from '@/types/cryptos/TradePosition'
-import CommonUtils from '@/utils/CommonUtils'
-import CryptoUtils from '@/utils/CryptoUtils'
-import TypeUtils from '@/utils/TypeUtils'
-import { useCallback, useEffect, useState } from 'react'
+} from '@/types/cryptos/CryptoTypes';
+import TradePosition from '@/types/cryptos/TradePosition';
+import CommonUtils from '@/utils/CommonUtils';
+import CryptoUtils from '@/utils/CryptoUtils';
+import TypeUtils from '@/utils/TypeUtils';
+import { useCallback, useEffect, useState } from 'react';
 
 export default function CryptoMyTradePosition() {
-  const { balance, myTrades } = useUserInfoStore()
-  const positions = myTrades.positions
+  const { balance, myTrades } = useUserInfoStore();
+  const positions = myTrades.positions;
 
   return (
     <S.PageLayout className="p-2 space-y-2">
@@ -32,55 +32,55 @@ export default function CryptoMyTradePosition() {
         ))}
       </S.PageList>
     </S.PageLayout>
-  )
+  );
 }
 
 interface IPosition {
-  position: TradePosition
-  userBudget: number
+  position: TradePosition;
+  userBudget: number;
 }
 const Position = ({ position, userBudget }: IPosition) => {
-  const socketData = useMarketPriceStore((state) => state.marketDic[position.market.code])
-  const marketPrice = socketData ? socketData.trade_price : 0
+  const socketData = useMarketPriceStore((state) => state.marketDic[position.market.code]);
+  const marketPrice = socketData ? socketData.trade_price : 0;
 
-  const [bep, setBep] = useState<number>(0)
-  const [size, setSize] = useState<number>(0)
-  const [marginRatio, setMarginRatio] = useState<number>(0)
-  const [pnl, setPnl] = useState<number>(0)
-  const [pnlRatio, setPnlRatio] = useState<number>(0)
+  const [bep, setBep] = useState<number>(0);
+  const [size, setSize] = useState<number>(0);
+  const [marginRatio, setMarginRatio] = useState<number>(0);
+  const [pnl, setPnl] = useState<number>(0);
+  const [pnlRatio, setPnlRatio] = useState<number>(0);
 
-  const [closePrice, setClosePrice] = useState<number>(0)
-  const [closeQuantity, setCloseQuantity] = useState<number>(position.quantity)
-
-  useEffect(() => {
-    setCloseQuantity(position.quantity)
-  }, [position])
+  const [closePrice, setClosePrice] = useState<number>(0);
+  const [closeQuantity, setCloseQuantity] = useState<number>(position.quantity);
 
   useEffect(() => {
-    setClosePrice(marketPrice)
+    setCloseQuantity(position.quantity);
+  }, [position]);
 
-    const _size = position.quantity * marketPrice
-    setSize(_size)
+  useEffect(() => {
+    setClosePrice(marketPrice);
 
-    const breakEvenPrice = position.totalFee / position.quantity
+    const _size = position.quantity * marketPrice;
+    setSize(_size);
+
+    const breakEvenPrice = position.totalFee / position.quantity;
     setBep(
       position.averagePrice +
-      CryptoUtils.getPriceRound(breakEvenPrice) * (position.positionType === PositionType.LONG ? 1 : -1),
-    )
+        CryptoUtils.getPriceRound(breakEvenPrice) * (position.positionType === PositionType.LONG ? 1 : -1),
+    );
     const _pnl =
       CryptoUtils.getPnl(marketPrice, position.quantity, position.averagePrice, position.positionType) -
-      position.totalFee
-    setPnl(_pnl)
-    setPnlRatio(_pnl / position.marginPrice)
+      position.totalFee;
+    setPnl(_pnl);
+    setPnlRatio(_pnl / position.marginPrice);
     if (_pnl < 0) {
       if (position.marginMode === MarginModeType.CROSSED) {
-        const margin = position.marginPrice + userBudget
-        setMarginRatio(Math.abs(_pnl) / margin)
+        const margin = position.marginPrice + userBudget;
+        setMarginRatio(Math.abs(_pnl) / margin);
       } else if (position.marginMode === MarginModeType.ISOLATED) {
-        setMarginRatio(Math.abs(_pnl) / position.marginPrice)
+        setMarginRatio(Math.abs(_pnl) / position.marginPrice);
       }
     }
-  }, [position, marketPrice])
+  }, [position, marketPrice]);
 
   const orderClose = useCallback(
     async (_orderType: TradeOrderTypeValues) => {
@@ -95,32 +95,32 @@ const Position = ({ position, userBudget }: IPosition) => {
         size: Number(closeQuantity) * Number(closePrice),
         leverage: position.averageLeverage,
         size_unit_type: SizeUnitTypes.QUANTITY,
-      }
+      };
 
-      let result = false
+      let result = false;
       if (_orderType === TradeOrderType.LIMIT) {
-        data['price'] = Number(closePrice)
-        data['quantity'] = Number(closeQuantity)
-        data['size'] = Number(closeQuantity) * Number(closePrice)
+        data['price'] = Number(closePrice);
+        data['quantity'] = Number(closeQuantity);
+        data['size'] = Number(closeQuantity) * Number(closePrice);
 
-        result = await CryptoApi.orderLimit(data)
+        result = await CryptoApi.orderLimit(data);
       } else if (_orderType === TradeOrderType.MARKET) {
-        data['price'] = marketPrice
-        data['quantity'] = Number(closeQuantity)
-        data['size'] = Number(closeQuantity) * marketPrice
+        data['price'] = marketPrice;
+        data['quantity'] = Number(closeQuantity);
+        data['size'] = Number(closeQuantity) * marketPrice;
 
-        result = await CryptoApi.orderMarket(data)
+        result = await CryptoApi.orderMarket(data);
       }
 
       if (result) {
-        alert('거래가 성공적으로 완료되었습니다.')
+        alert('거래가 성공적으로 완료되었습니다.');
         // updateInfo()
       } else {
-        alert('거래에 실패하였습니다.')
+        alert('거래에 실패하였습니다.');
       }
     },
     [position, marketPrice, closePrice, closeQuantity],
-  )
+  );
 
   return (
     <S.PositionBox>
@@ -214,14 +214,14 @@ const Position = ({ position, userBudget }: IPosition) => {
         <div className="buttons">
           <button
             onClick={() => {
-              orderClose(TradeOrderType.LIMIT)
+              orderClose(TradeOrderType.LIMIT);
             }}
           >
             지정가
           </button>
           <button
             onClick={() => {
-              orderClose(TradeOrderType.MARKET)
+              orderClose(TradeOrderType.MARKET);
             }}
           >
             시장가
@@ -238,5 +238,5 @@ const Position = ({ position, userBudget }: IPosition) => {
         </div>
       </S.PositionClose>
     </S.PositionBox>
-  )
-}
+  );
+};

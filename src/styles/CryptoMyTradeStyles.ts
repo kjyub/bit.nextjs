@@ -1,9 +1,9 @@
-import { StyleProps } from '@/types/StyleTypes'
-import tw from 'tailwind-styled-components'
+import { StyleProps } from '@/types/StyleTypes';
+import tw from 'tailwind-styled-components';
 
 export const Layout = tw.div`
     flex flex-col w-full h-[calc(100vh-208px)] space-y-2
-`
+`;
 export const PageTabBar = tw.div`
     flex items-center w-full px-1 space-x-1
 
@@ -12,23 +12,23 @@ export const PageTabBar = tw.div`
     [&>button.active]:text-slate-200 [&>button.active]:bg-slate-500/40
     [&>button]:rounded-lg
     [&>button]:duration-200
-`
+`;
 
 export const PageLayout = tw.div<StyleProps>`
     flex flex-col w-full h-full min-h-[12rem]
     rounded-lg bg-slate-900/30
-`
+`;
 export const PageList = tw.div<StyleProps>`
     ${({ $is_active }) => ($is_active ? 'opacity-100' : 'opacity-50')}
     flex flex-col w-full h-full space-y-2
     overflow-y-auto
     duration-200
-`
+`;
 
 export const ItemBox = tw.div`
     flex flex-col w-full p-2
     rounded-lg bg-slate-600/20
-`
+`;
 
 export const PositionBox = tw(ItemBox)`
     p-3 space-y-3
@@ -37,7 +37,7 @@ export const PositionBox = tw(ItemBox)`
     [&>.header>.position]:w-16 [&>.header>.position]:px-2 [&>.header>.position]:py-1
     [&>.header>.position]:rounded-md [&>.header>.position]:text-sm [&>.header>.position]:text-white
     [&>.header>.position.long]:bg-position-long-1 [&>.header>.position.short]:bg-position-short-1
-`
+`;
 export const PositionHeader = tw.div`
     flex justify-between items-center space-x-2
 
@@ -61,10 +61,10 @@ export const PositionHeader = tw.div`
     [&>.right>.value]:text-xs [&>.right>.value]:text-slate-300 [&>.right>.value]:font-medium
     [&>.right>button.value]:hover:bg-slate-600/70 [&>.right>button.value]:hover:text-slate-400
     [&>.right>button.value]:transition-colors
-`
+`;
 export const PositionBody = tw.div`
     grid grid-cols-4 gap-2 w-full
-`
+`;
 export const PositionItem = tw.dl`
     flex flex-col w-full space-y-1
 
@@ -72,7 +72,7 @@ export const PositionItem = tw.dl`
     [&>dt>span]:text-slate-400/80 [&>dt>span]:font-light
     [&>dd]:text-sm [&>dd]:text-slate-300 [&>dd]:font-light
     [&.long>dd]:text-position-long-3  [&.short>dd]:text-position-short-3
-`
+`;
 export const PositionClose = tw.div`
     flex items-center w-full pt-2 space-x-3
     border-t border-violet-500/20
@@ -87,7 +87,7 @@ export const PositionClose = tw.div`
     [&>.buttons>button]:duration-200
 
     [&>.inputs]:grid [&>.inputs]:grid-cols-2 [&>.inputs]:gap-2 [&>.inputs]:flex-1
-`
+`;
 
 export const OrderBox = tw(ItemBox)`
     p-3 space-y-3
@@ -96,7 +96,7 @@ export const OrderBox = tw(ItemBox)`
     [&>.header>.position]:w-16 [&>.header>.position]:px-2 [&>.header>.position]:py-1
     [&>.header>.position]:rounded-md [&>.header>.position]:text-sm [&>.header>.position]:text-white
     [&>.header>.position.long]:bg-position-long-1 [&>.header>.position.short]:bg-position-short-1
-`
+`;
 export const OrderHeader = tw.div`
     flex justify-between items-center space-x-2
 
@@ -128,10 +128,10 @@ export const OrderHeader = tw.div`
 
     [&>.right>.position]:text-xs 
     [&>.right>.position.long]:text-position-long-2 [&>.right>.position.short]:text-position-short-2
-`
+`;
 export const OrderBody = tw.div`
     grid grid-cols-4 gap-2 w-full
-`
+`;
 export const OrderItem = tw.dl`
     flex flex-col w-full space-y-1
 
@@ -139,7 +139,7 @@ export const OrderItem = tw.dl`
     [&>dt>span]:text-slate-400/80 [&>dt>span]:font-light
     [&>dd]:text-sm [&>dd]:text-slate-300 [&>dd]:font-light
     [&.long>dd]:text-position-long-3  [&.short>dd]:text-position-short-3
-`
+`;
 export const OrderClose = tw.div`
     flex items-center w-full pt-2 space-x-3
     border-t border-violet-500/20
@@ -154,7 +154,7 @@ export const OrderClose = tw.div`
     [&>.buttons>button]:duration-200
 
     [&>.inputs]:grid [&>.inputs]:grid-cols-2 [&>.inputs]:gap-2 [&>.inputs]:flex-1
-`
+`;
 
 export const FilterBox = tw.div<StyleProps>`
     flex flex-center px-2 py-1
@@ -166,10 +166,10 @@ export const FilterBox = tw.div<StyleProps>`
         ? 'bg-slate-500/30 text-slate-300 hover:text-slate-200'
         : 'text-slate-400 hover:bg-slate-500/30 hover:text-slate-200'}
     transition-colors
-`
+`;
 export const FilterButton = tw(FilterBox)`
     cursor-pointer
-`
+`;
 export const FilterDateInputBox = tw(FilterBox)`
     px-1 space-x-1 
     [&>input]:bg-transparent [&>input]:text-center 
@@ -177,4 +177,4 @@ export const FilterDateInputBox = tw(FilterBox)`
     [&>input]:border-b [&>input]:border-transparent 
     [&>input]:focus:border-violet-500/70 [&>input]:hover:border-violet-500/70
     [&>input]:transition-colors
-`
+`;

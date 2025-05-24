@@ -1,24 +1,24 @@
-import { useDetectClose } from '@/hooks/useDetectClose'
-import * as S from '@/styles/UserInputStyles'
-import CommonUtils from '@/utils/CommonUtils'
-import React, { useState } from 'react'
+import { useDetectClose } from '@/hooks/useDetectClose';
+import * as S from '@/styles/UserInputStyles';
+import CommonUtils from '@/utils/CommonUtils';
+import React, { useState } from 'react';
 
 interface InputProps {
-  type: string
-  label: string
-  labelWidth?: string
-  placeholder?: string
-  helpText?: string
-  autoComplete: boolean
-  value: string
-  setValue: React.Dispatch<React.SetStateAction<unknown>>
-  errorMessage?: string
-  suffix?: string
-  setFocus?: React.Dispatch<React.SetStateAction<boolean>>
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onEnter: () => void
-  disabled: boolean
-  children?: React.ReactNode
+  type: string;
+  label: string;
+  labelWidth?: string;
+  placeholder?: string;
+  helpText?: string;
+  autoComplete: boolean;
+  value: string;
+  setValue: React.Dispatch<React.SetStateAction<unknown>>;
+  errorMessage?: string;
+  suffix?: string;
+  setFocus?: React.Dispatch<React.SetStateAction<boolean>>;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onEnter: () => void;
+  disabled: boolean;
+  children?: React.ReactNode;
 }
 
 const FrontInputContainer: React.FC<InputProps> = ({ label, labelWidth = 'w-[80px]', helpText, children }) => {
@@ -33,8 +33,8 @@ const FrontInputContainer: React.FC<InputProps> = ({ label, labelWidth = 'w-[80p
       </div>
       {children}
     </S.Layout>
-  )
-}
+  );
+};
 
 export const Input: React.FC<InputProps> = ({
   type,
@@ -52,23 +52,23 @@ export const Input: React.FC<InputProps> = ({
   disabled,
   children,
 }) => {
-  const [isInputFoucs, setInputFocus] = useState<boolean>(false)
+  const [isInputFoucs, setInputFocus] = useState<boolean>(false);
 
   // 보통 상황에선 값이 있을 때만 유효성 에러 메세지 표시한다.
-  const isError = !CommonUtils.isStringNullOrEmpty(value) && !CommonUtils.isStringNullOrEmpty(errorMessage)
+  const isError = !CommonUtils.isStringNullOrEmpty(value) && !CommonUtils.isStringNullOrEmpty(errorMessage);
 
   const handleEnter = (e) => {
     if (e.key == 'Enter' && !CommonUtils.isNullOrUndefined(onEnter)) {
-      onEnter()
+      onEnter();
     }
-  }
+  };
 
   const handleFocus = (_isFocus: boolean) => {
     if (setFocus) {
-      setFocus(_isFocus)
+      setFocus(_isFocus);
     }
-    setInputFocus(_isFocus)
-  }
+    setInputFocus(_isFocus);
+  };
 
   return (
     <FrontInputContainer label={label} labelWidth={labelWidth} helpText={helpText}>
@@ -81,10 +81,10 @@ export const Input: React.FC<InputProps> = ({
             onChange={onChange}
             autoComplete={autoComplete ? null : 'new-password'}
             onFocus={() => {
-              handleFocus(true)
+              handleFocus(true);
             }}
             onBlur={() => {
-              handleFocus(false)
+              handleFocus(false);
             }}
             onKeyDown={handleEnter}
             disabled={disabled}
@@ -96,13 +96,13 @@ export const Input: React.FC<InputProps> = ({
         {isError && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
       </S.InputContainer>
     </FrontInputContainer>
-  )
-}
+  );
+};
 
 interface IBooleanInputProps extends InputProps {
-  setValue: React.Dispatch<React.SetStateAction<boolean>>
-  yesText: string
-  noText: string
+  setValue: React.Dispatch<React.SetStateAction<boolean>>;
+  yesText: string;
+  noText: string;
 }
 export const BooleanInput: React.FC<IBooleanInputProps> = ({
   label,
@@ -119,7 +119,7 @@ export const BooleanInput: React.FC<IBooleanInputProps> = ({
           <S.BoolButton
             $is_active={value === true}
             onClick={() => {
-              setValue(true)
+              setValue(true);
             }}
           >
             {yesText}
@@ -127,7 +127,7 @@ export const BooleanInput: React.FC<IBooleanInputProps> = ({
           <S.BoolButton
             $is_active={value === false}
             onClick={() => {
-              setValue(false)
+              setValue(false);
             }}
           >
             {noText}
@@ -135,12 +135,12 @@ export const BooleanInput: React.FC<IBooleanInputProps> = ({
         </S.BoolInput>
       </S.InputContainer>
     </FrontInputContainer>
-  )
-}
+  );
+};
 
 interface IComboInputProps extends InputProps {
-  optionKeys: string[]
-  optionNames: string[]
+  optionKeys: string[];
+  optionNames: string[];
 }
 export const Combo: React.FC<IComboInputProps> = ({
   type,
@@ -155,12 +155,12 @@ export const Combo: React.FC<IComboInputProps> = ({
   errorMessage,
 }) => {
   // 보통 상황에선 값이 있을 때만 유효성 에러 메세지 표시한다.
-  const isError = !CommonUtils.isStringNullOrEmpty(value) && !CommonUtils.isStringNullOrEmpty(errorMessage)
+  const isError = !CommonUtils.isStringNullOrEmpty(value) && !CommonUtils.isStringNullOrEmpty(errorMessage);
 
-  const [optionRef, isOptionShow, setOptionShow] = useDetectClose()
+  const [optionRef, isOptionShow, setOptionShow] = useDetectClose();
 
   // 값이 선택되었는지 여부
-  const isSelected = !(CommonUtils.isStringNullOrEmpty(value) || value < 0)
+  const isSelected = !(CommonUtils.isStringNullOrEmpty(value) || value < 0);
 
   return (
     <FrontInputContainer label={label} labelWidth={labelWidth} helpText={helpText}>
@@ -168,7 +168,7 @@ export const Combo: React.FC<IComboInputProps> = ({
         <S.InputBox
           type={type}
           onClick={() => {
-            setOptionShow(!isOptionShow)
+            setOptionShow(!isOptionShow);
           }}
           $is_active={isOptionShow}
           $is_error={isError}
@@ -183,8 +183,8 @@ export const Combo: React.FC<IComboInputProps> = ({
               <option
                 key={key}
                 onClick={() => {
-                  setValue(key)
-                  setOptionShow(false)
+                  setValue(key);
+                  setOptionShow(false);
                 }}
               >
                 {optionNames[index]}
@@ -195,14 +195,14 @@ export const Combo: React.FC<IComboInputProps> = ({
         {isError && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
       </S.InputContainer>
     </FrontInputContainer>
-  )
-}
+  );
+};
 
 interface ICheckbox extends IUserInputText {
-  value: string
-  setValue: Dispatch<SetStateAction<boolean>>
-  label: string
-  disabled: boolean
+  value: string;
+  setValue: Dispatch<SetStateAction<boolean>>;
+  label: string;
+  disabled: boolean;
 }
 export const Checkbox = ({ value, setValue, label = '', disabled = false }: ICheckbox) => {
   return (
@@ -210,14 +210,14 @@ export const Checkbox = ({ value, setValue, label = '', disabled = false }: IChe
       className="flex items-center space-x-0.5 cursor-pointer"
       onClick={() => {
         if (disabled) {
-          return
+          return;
         }
-        setValue(!value)
+        setValue(!value);
       }}
     >
       {value ? <i className="fa-solid fa-square-check"></i> : <i className="fa-regular fa-square"></i>}
 
       <span className="text-sm text-brand_gray-7">{label}</span>
     </div>
-  )
-}
+  );
+};

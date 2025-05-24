@@ -1,19 +1,19 @@
 export default class BrowserUtils {
   static redirectToExternalBrowser() {
-    const targetUrl = window.location.href
+    const targetUrl = window.location.href;
     // copyToClipboard(targetUrl)
 
     if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-      window.location.href = 'x-web-search://?'
+      window.location.href = 'x-web-search://?';
     } else {
       window.location.href = `intent://${targetUrl.replace(
         /https?:\/\//i,
         '',
-      )}#Intentscheme=httppackage=com.android.chromeend`
+      )}#Intentscheme=httppackage=com.android.chromeend`;
     }
   }
   static goExternalBrowser(): boolean {
-    let isRedirect = false
+    let isRedirect = false;
 
     // const copyToClipboard = async (val: string) => {
     //   await navigator.clipboard.writeText(val)
@@ -39,9 +39,9 @@ export default class BrowserUtils {
     //   this.redirectToExternalBrowser()
     // }
 
-    return isRedirect
+    return isRedirect;
   }
   static isClient(): boolean {
-    return typeof window !== 'undefined' && typeof window.document !== 'undefined'
+    return typeof window !== 'undefined' && typeof window.document !== 'undefined';
   }
 }

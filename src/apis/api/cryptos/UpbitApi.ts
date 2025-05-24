@@ -1,27 +1,27 @@
-import { IUpbitCandle } from '@/types/cryptos/CryptoInterfaces'
-import { CandleMinuteUnits } from '@/types/cryptos/CryptoTypes'
-import { defaultInstance } from '../../utils/clientApis'
+import { IUpbitCandle } from '@/types/cryptos/CryptoInterfaces';
+import { CandleMinuteUnits } from '@/types/cryptos/CryptoTypes';
+import { defaultInstance } from '../../utils/clientApis';
 
 class UpbitApi {
   // region Market
   static async getMarketsAll(): Promise<Array<IUpbitMarket>> {
-    let result: Array<IUpbitMarket> = []
+    let result: Array<IUpbitMarket> = [];
 
     await defaultInstance
       .get('https://api.upbit.com/v1/market/all')
       .then(({ data }) => {
         if (Array.isArray(data)) {
-          result = data
+          result = data;
         }
       })
       .catch((error) => {
-        console.log(error)
-      })
+        console.log(error);
+      });
 
-    return result
+    return result;
   }
   static async getMarketsCurrent(marketCodes: Array<string>): Promise<Array<IUpbitMarketTicker>> {
-    let result: Array<IUpbitMarketTicker> = []
+    let result: Array<IUpbitMarketTicker> = [];
 
     await defaultInstance
       .get('https://api.upbit.com/v1/ticker', {
@@ -31,17 +31,17 @@ class UpbitApi {
       })
       .then(({ data }) => {
         if (Array.isArray(data)) {
-          result = data
+          result = data;
         }
       })
       .catch((error) => {
-        console.log(error)
-      })
+        console.log(error);
+      });
 
-    return result
+    return result;
   }
   static async getMarketCurrent(marketCode: string): Promise<IUpbitMarketTicker> {
-    let result: IUpbitMarketTicker = {}
+    let result: IUpbitMarketTicker = {};
 
     await defaultInstance
       .get('https://api.upbit.com/v1/ticker', {
@@ -51,14 +51,14 @@ class UpbitApi {
       })
       .then(({ data }) => {
         if (Array.isArray(data) && data.length > 0) {
-          result = data[0]
+          result = data[0];
         }
       })
       .catch((error) => {
-        console.log(error)
-      })
+        console.log(error);
+      });
 
-    return result
+    return result;
   }
   // endregion
 
@@ -74,12 +74,12 @@ class UpbitApi {
         },
       })
       .then(({ data }) => {
-        return data
+        return data;
       })
       .catch((error) => {
-        console.log(error)
-        return []
-      })
+        console.log(error);
+        return [];
+      });
   }
   static getCandleMinutes(
     marketCode: string,
@@ -96,12 +96,12 @@ class UpbitApi {
         },
       })
       .then(({ data }) => {
-        return data
+        return data;
       })
       .catch((error) => {
-        console.log(error)
-        return []
-      })
+        console.log(error);
+        return [];
+      });
   }
   static getCandleDays(marketCode: string, count: number = 200, to?: string): Promise<Array<IUpbitCandle>> {
     return defaultInstance
@@ -113,12 +113,12 @@ class UpbitApi {
         },
       })
       .then(({ data }) => {
-        return data
+        return data;
       })
       .catch((error) => {
-        console.log(error)
-        return []
-      })
+        console.log(error);
+        return [];
+      });
   }
   static getCandleWeeks(marketCode: string, count: number = 200, to?: string): Promise<Array<IUpbitCandle>> {
     return defaultInstance
@@ -130,12 +130,12 @@ class UpbitApi {
         },
       })
       .then(({ data }) => {
-        return data
+        return data;
       })
       .catch((error) => {
-        console.log(error)
-        return []
-      })
+        console.log(error);
+        return [];
+      });
   }
   static getCandleMonths(marketCode: string, count: number = 200, to?: string): Promise<Array<IUpbitCandle>> {
     return defaultInstance
@@ -147,14 +147,14 @@ class UpbitApi {
         },
       })
       .then(({ data }) => {
-        return data
+        return data;
       })
       .catch((error) => {
-        console.log(error)
-        return []
-      })
+        console.log(error);
+        return [];
+      });
   }
   // endregion
 }
 
-export default UpbitApi
+export default UpbitApi;

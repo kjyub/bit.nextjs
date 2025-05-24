@@ -44,5 +44,5 @@ export default function Home() {
       <span>test</span>
       <span>test23</span>
     </div>
-  )
+  );
 }
