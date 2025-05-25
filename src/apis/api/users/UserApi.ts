@@ -1,7 +1,7 @@
-import User from "@/types/users/User";
-import { UserTypeValues } from "@/types/users/UserTypeValues";
-import { authInstance, credentialInstance, defaultInstance } from "../../utils/api";
-import { LoginResponse } from "@/types/users/UserTypes";
+import User from '@/types/users/User';
+import { UserTypeValues } from '@/types/users/UserTypeValues';
+import { LoginResponse } from '@/types/users/UserTypes';
+import { authInstance, credentialInstance, defaultInstance } from '../../utils/api';
 
 class UserApi {
   // static async getAccessToken() {
@@ -19,13 +19,13 @@ class UserApi {
     const result: LoginResponse = {
       user: {},
       token: {
-        access: "",
-        refresh: "",
+        access: '',
+        refresh: '',
       },
     };
 
     await credentialInstance
-      .post("/api/users/jwt_auth/refresh/", { refresh: refreshToken })
+      .post('/api/users/jwt_auth/refresh/', { refresh: refreshToken })
       .then(({ data }) => {
         result.token.access = data.access;
         result.token.refresh = data.refresh;
@@ -40,13 +40,13 @@ class UserApi {
     const result: LoginResponse = {
       user: {},
       token: {
-        access: "",
-        refresh: "",
+        access: '',
+        refresh: '',
       },
     };
 
     await defaultInstance
-      .post("/api/users/login/", { email: email, password: password, user_type: userType })
+      .post('/api/users/login/', { email: email, password: password, user_type: userType })
       .then(({ data }) => {
         result.user = data.user;
         result.token.access = data.token.access;
@@ -62,13 +62,13 @@ class UserApi {
     const result: LoginResponse = {
       user: {},
       token: {
-        access: "",
-        refresh: "",
+        access: '',
+        refresh: '',
       },
     };
 
     await defaultInstance
-      .post("/api/users/kakao_auth/", { code: code })
+      .post('/api/users/kakao_auth/', { code: code })
       .then(({ data }) => {
         result.user = data.user;
         result.token.access = data.token.access;
@@ -84,7 +84,7 @@ class UserApi {
     let responseData = {};
 
     await authInstance
-      .put("/api/users/kakao_auth/", requestData)
+      .put('/api/users/kakao_auth/', requestData)
       .then(({ data }) => {
         responseData = data.user;
       })
@@ -98,7 +98,7 @@ class UserApi {
     let result = false;
 
     await defaultInstance
-      .post("/api/users/user_check_email/", { email: email, user_type: userType })
+      .post('/api/users/user_check_email/', { email: email, user_type: userType })
       .then(({ data }) => {
         result = data;
       })
@@ -112,7 +112,7 @@ class UserApi {
     let result = false;
 
     await defaultInstance
-      .post("/api/users/user_check_nickname/", { nickname: nickname })
+      .post('/api/users/user_check_nickname/', { nickname: nickname })
       .then(({ data }) => {
         result = data;
       })
@@ -126,7 +126,7 @@ class UserApi {
     let result: Array<string> = [];
 
     await defaultInstance
-      .post("/api/users/user_find_email/", { name: name, tel: tel, user_type: userType })
+      .post('/api/users/user_find_email/', { name: name, tel: tel, user_type: userType })
       .then(({ data }) => {
         result = data;
       })
@@ -140,7 +140,7 @@ class UserApi {
     let result = false;
 
     await defaultInstance
-      .post("/api/users/user_find_password/", { email: email, name: name, tel: tel, user_type: userType })
+      .post('/api/users/user_find_password/', { email: email, name: name, tel: tel, user_type: userType })
       .then(({ data }) => {
         result = data;
       })
@@ -155,12 +155,12 @@ class UserApi {
     name: string,
     tel: string,
     userType: UserTypeValues,
-    password: string
+    password: string,
   ): Promise<boolean> {
     let result = false;
 
     await defaultInstance
-      .put("/api/users/user_find_password/", {
+      .put('/api/users/user_find_password/', {
         email: email,
         name: name,
         tel: tel,
@@ -178,10 +178,10 @@ class UserApi {
   }
   static async signup(data: object): Promise<[User, string]> {
     const user: User = new User();
-    const error = "";
+    const error = '';
 
     await defaultInstance
-      .post("/api/users/signup/", data)
+      .post('/api/users/signup/', data)
       .then((response) => {
         const userData = response.data.user;
         user.parseResponse(userData as object);
@@ -196,7 +196,7 @@ class UserApi {
     const result = new User();
 
     await authInstance
-      .get("/api/users/detail_info_auth/")
+      .get('/api/users/detail_info_auth/')
       .then(({ data }) => {
         result.parseResponse(data as object);
       })
@@ -210,7 +210,7 @@ class UserApi {
     let userData = {};
 
     await authInstance
-      .get("/api/users/detail_info_auth/")
+      .get('/api/users/detail_info_auth/')
       .then(({ data }) => {
         userData = data;
       })

@@ -1,8 +1,8 @@
 // store.js
-import CryptoApi from "@/apis/api/cryptos/CryptoApi";
-import UserApi from "@/apis/api/users/UserApi";
-import { IMyTradeData } from "@/types/cryptos/CryptoInterfaces";
-import { create } from "zustand";
+import CryptoApi from '@/apis/api/cryptos/CryptoApi';
+import UserApi from '@/apis/api/users/UserApi';
+import { IMyTradeData } from '@/types/cryptos/CryptoInterfaces';
+import { create } from 'zustand';
 
 const getInitData = async () => {
   const wallet = await CryptoApi.getWallet();

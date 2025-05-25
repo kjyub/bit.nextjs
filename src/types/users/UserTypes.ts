@@ -1,5 +1,3 @@
-import User from "./User";
-
 export const UserTypes = {
   NONE: -1,
   STAFF: 0,
@@ -8,10 +6,10 @@ export const UserTypes = {
 } as const;
 export type UserTypeValues = (typeof UserTypes)[keyof typeof UserTypes];
 export const UserTypeNames = {
-  "-1": "-",
-  0: "스태프",
-  1: "기업회원",
-  2: "일반회원",
+  '-1': '-',
+  0: '스태프',
+  1: '기업회원',
+  2: '일반회원',
 };
 
 export const AccountStatusTypes = {
@@ -34,9 +32,9 @@ export const UserGenderTypes = {
 } as const;
 export type UserGenderTypeValues = (typeof UserGenderTypes)[keyof typeof UserGenderTypes];
 export const UserGenderNames = {
-  0: "남성",
-  1: "여성",
-  2: "-",
+  0: '남성',
+  1: '여성',
+  2: '-',
 };
 
 export interface Token {

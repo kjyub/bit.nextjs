@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
-import UserApi from "@/apis/api/users/UserApi";
-import Alerts from "@/components/Alerts";
-import * as I from "@/components/inputs/UserInputs";
-import { useUser } from "@/hooks/useUser";
-import * as SS from "@/styles/SignupStyles";
-import User from "@/types/users/User";
-import { debounce } from "lodash";
-import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
-import CountUp from "react-countup";
+import UserApi from '@/apis/api/users/UserApi';
+import Alerts from '@/components/Alerts';
+import * as I from '@/components/inputs/UserInputs';
+import { useUser } from '@/hooks/useUser';
+import * as SS from '@/styles/SignupStyles';
+import User from '@/types/users/User';
+import { debounce } from 'lodash';
+import { useRouter } from 'next/navigation';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import CountUp from 'react-countup';
 
 export default function SignupInfo() {
   const router = useRouter();
 
   const { setUser } = useUser();
-  const [nickname, setNickname] = useState<string>("");
+  const [nickname, setNickname] = useState<string>('');
 
   const isDuplicateNicknameRef = useRef<boolean>(false);
   const isValidNicknameRef = useRef<boolean>(false);
@@ -78,10 +78,10 @@ export default function SignupInfo() {
     if (user.uuid) {
       setUser(user);
 
-      router.push("/");
+      router.push('/');
       return;
     } else {
-      Alerts.alert("회원가입 실패", "회원가입에 실패했습니다. 다시 시도해주세요.", "error");
+      Alerts.alert('회원가입 실패', '회원가입에 실패했습니다. 다시 시도해주세요.', 'error');
     }
   };
 
@@ -107,7 +107,7 @@ export default function SignupInfo() {
               setNickname(e.target.value);
             }}
             helpText="2자 이상 10자 이하로 입력해주세요."
-            errorMessage={isDuplicateNicknameRef.current ? "이미 사용중인 닉네임입니다." : ""}
+            errorMessage={isDuplicateNicknameRef.current ? '이미 사용중인 닉네임입니다.' : ''}
           />
         </SS.SignupSection>
 

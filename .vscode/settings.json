@@ -2,8 +2,20 @@
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "editor.formatOnSave": true,
+  "editor.defaultFormatter": "biomejs.biome",
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "prettier.enable": false,
+  "eslint.format.enable": false,
   "editor.detectIndentation": false,
   "workbench.colorCustomizations": {
-    "titleBar.activeBackground": "#2f0d68",
+    "titleBar.activeBackground": "#2f0d68"
   }
 }

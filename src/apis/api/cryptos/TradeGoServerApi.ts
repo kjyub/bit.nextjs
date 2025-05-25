@@ -1,5 +1,5 @@
-import { tradeDefaultInstance } from "@/apis/utils/trade-api";
-import { IUpbitMarketTicker } from "@/types/cryptos/CryptoInterfaces";
+import { tradeDefaultInstance } from '@/apis/utils/trade-api';
+import { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
 
 class TradeGoServerApi {
   // region Market
@@ -7,7 +7,7 @@ class TradeGoServerApi {
     let result: IUpbitMarketTicker = {};
 
     await tradeDefaultInstance
-      .post("/markets", {
+      .post('/markets', {
         codes: [marketCode],
       })
       .then(({ data }) => {

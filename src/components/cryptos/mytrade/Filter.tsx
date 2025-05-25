@@ -1,16 +1,15 @@
-"use client";
+'use client';
 
-import * as S from "@/styles/CryptoMyTradeStyles";
-import CommonUtils from "@/utils/CommonUtils";
-import dayjs from "dayjs";
-import { useEffect, useMemo, useState } from "react";
+import * as S from '@/styles/CryptoMyTradeStyles';
+import dayjs from 'dayjs';
+import { useEffect, useMemo, useState } from 'react';
 
 enum DateType {
-  NONE = "none",
-  DAY = "1d",
-  WEEK = "1w",
-  MONTH1 = "1M",
-  MONTH3 = "3M",
+  NONE = 'none',
+  DAY = '1d',
+  WEEK = '1w',
+  MONTH1 = '1M',
+  MONTH3 = '3M',
 }
 
 interface ICryptoMyTradeFilter {
@@ -19,11 +18,11 @@ interface ICryptoMyTradeFilter {
 }
 export default function CryptoMyTradeFilter({ onSearch, isInitSearch = true }: ICryptoMyTradeFilter) {
   const today = useMemo(() => dayjs(), []);
-  const yesterday = useMemo(() => today.subtract(1, "day"), []);
+  const yesterday = useMemo(() => today.subtract(1, 'day'), []);
 
-  const [dateStart, setDateStart] = useState<string>(yesterday.format("YYYY-MM-DD"));
-  const [dateEnd, setDateEnd] = useState<string>(today.format("YYYY-MM-DD"));
-  const [marketSearch, _setMarketSearch] = useState<string>("");
+  const [dateStart, setDateStart] = useState<string>(yesterday.format('YYYY-MM-DD'));
+  const [dateEnd, setDateEnd] = useState<string>(today.format('YYYY-MM-DD'));
+  const [marketSearch, _setMarketSearch] = useState<string>('');
 
   const [dateType, setDateType] = useState<DateType>(DateType.DAY);
 
@@ -35,16 +34,16 @@ export default function CryptoMyTradeFilter({ onSearch, isInitSearch = true }: I
 
   useEffect(() => {
     const today = dayjs();
-    if (today.format("YYYY-MM-DD") !== dateEnd) {
+    if (today.format('YYYY-MM-DD') !== dateEnd) {
       setDateType(DateType.NONE);
     } else {
-      if (today.subtract(1, "day").format("YYYY-MM-DD") === dateStart) {
+      if (today.subtract(1, 'day').format('YYYY-MM-DD') === dateStart) {
         setDateType(DateType.DAY);
-      } else if (today.subtract(1, "week").format("YYYY-MM-DD") === dateStart) {
+      } else if (today.subtract(1, 'week').format('YYYY-MM-DD') === dateStart) {
         setDateType(DateType.WEEK);
-      } else if (today.subtract(1, "month").format("YYYY-MM-DD") === dateStart) {
+      } else if (today.subtract(1, 'month').format('YYYY-MM-DD') === dateStart) {
         setDateType(DateType.MONTH1);
-      } else if (today.subtract(3, "month").format("YYYY-MM-DD") === dateStart) {
+      } else if (today.subtract(3, 'month').format('YYYY-MM-DD') === dateStart) {
         setDateType(DateType.MONTH3);
       } else {
         setDateType(DateType.NONE);
@@ -55,21 +54,21 @@ export default function CryptoMyTradeFilter({ onSearch, isInitSearch = true }: I
   const handleDateType = (_dateType: DateType) => {
     const today = dayjs();
 
-    let _startDate = "";
-    const _endDate = today.format("YYYY-MM-DD");
+    let _startDate = '';
+    const _endDate = today.format('YYYY-MM-DD');
 
     if (_dateType === DateType.DAY) {
-      const yesterday = today.subtract(1, "day");
-      _startDate = yesterday.format("YYYY-MM-DD");
+      const yesterday = today.subtract(1, 'day');
+      _startDate = yesterday.format('YYYY-MM-DD');
     } else if (_dateType === DateType.WEEK) {
-      const lastWeek = today.subtract(1, "week");
-      _startDate = lastWeek.format("YYYY-MM-DD");
+      const lastWeek = today.subtract(1, 'week');
+      _startDate = lastWeek.format('YYYY-MM-DD');
     } else if (_dateType === DateType.MONTH1) {
-      const lastMonth = today.subtract(1, "month");
-      _startDate = lastMonth.format("YYYY-MM-DD");
+      const lastMonth = today.subtract(1, 'month');
+      _startDate = lastMonth.format('YYYY-MM-DD');
     } else if (_dateType === DateType.MONTH3) {
-      const last3Month = today.subtract(3, "month");
-      _startDate = last3Month.format("YYYY-MM-DD");
+      const last3Month = today.subtract(3, 'month');
+      _startDate = last3Month.format('YYYY-MM-DD');
     }
 
     setDateStart(_startDate);
@@ -115,18 +114,18 @@ interface IDate {
   setDate: (date: string) => void;
 }
 const Date = ({ date, setDate }: IDate) => {
-  const [year, setYear] = useState<string>("");
-  const [month, setMonth] = useState<string>("");
-  const [day, setDay] = useState<string>("");
+  const [year, setYear] = useState<string>('');
+  const [month, setMonth] = useState<string>('');
+  const [day, setDay] = useState<string>('');
 
   useEffect(() => {
     if (!dayjs(date).isValid()) {
       return;
     }
 
-    setYear(Number(date.split("-")[0]));
-    setMonth(Number(date.split("-")[1]));
-    setDay(Number(date.split("-")[2]));
+    setYear(Number(date.split('-')[0]));
+    setMonth(Number(date.split('-')[1]));
+    setDay(Number(date.split('-')[2]));
   }, [date]);
 
   const handleYear = (year: number) => {

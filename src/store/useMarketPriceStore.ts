@@ -1,7 +1,7 @@
 // store.js
-import TradeGoApi from "@/apis/api/cryptos/TradeGoApi";
-import { IUpbitMarketTicker } from "@/types/cryptos/CryptoInterfaces";
-import { create } from "zustand";
+import TradeGoApi from '@/apis/api/cryptos/TradeGoApi';
+import { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
+import { create } from 'zustand';
 
 const getInitData = async () => {
   return await TradeGoApi.getMarketsCurrentDic();
@@ -20,7 +20,6 @@ const useMarketPriceStore = create<IMarketPriceStore>((set, get) => ({
   marketDic: {},
   initMarketPriceData: async () => {
     const data = await getInitData();
-
     set({ marketDic: data });
   },
   connectMarketPriceSocket: () => {
@@ -43,7 +42,7 @@ const useMarketPriceStore = create<IMarketPriceStore>((set, get) => ({
             [marketTicker.code]: marketTicker,
           },
         }));
-      } catch (error) {
+      } catch {
         // console.log('Failed to parse WebSocket message', error)
       }
     };

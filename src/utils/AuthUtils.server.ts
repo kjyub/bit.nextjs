@@ -1,5 +1,5 @@
-import { CookieConsts } from "@/types/ApiTypes";
-import { cookies } from "next/headers";
+import { CookieConsts } from '@/types/ApiTypes';
+import { cookies } from 'next/headers';
 
 export default class AuthServerUtils {
   static async getAccessToken() {

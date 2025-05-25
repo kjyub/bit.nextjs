@@ -1,7 +1,6 @@
-import { useDetectClose } from "@/hooks/useDetectClose";
-import * as S from "@/styles/UserInputStyles";
-import CommonUtils from "@/utils/CommonUtils";
-import React, { useState } from "react";
+import { useDetectClose } from '@/hooks/useDetectClose';
+import * as S from '@/styles/UserInputStyles';
+import React, { useState } from 'react';
 
 interface InputProps {
   type: string;
@@ -21,11 +20,11 @@ interface InputProps {
   children?: React.ReactNode;
 }
 
-const FrontInputContainer: React.FC<InputProps> = ({ label, labelWidth = "w-[80px]", helpText, children }) => {
+const FrontInputContainer: React.FC<InputProps> = ({ label, labelWidth = 'w-[80px]', helpText, children }) => {
   return (
     <S.Layout>
       <div className="flex justify-between items-center w-full">
-        {label && <S.Label className={`${labelWidth ? labelWidth : ""}`}>{label}</S.Label>}
+        {label && <S.Label className={`${labelWidth ? labelWidth : ''}`}>{label}</S.Label>}
 
         {helpText && <S.HelpText>{helpText}</S.HelpText>}
       </div>
@@ -37,13 +36,13 @@ const FrontInputContainer: React.FC<InputProps> = ({ label, labelWidth = "w-[80p
 export const Input: React.FC<InputProps> = ({
   type,
   label,
-  labelWidth = "w-[80px]",
+  labelWidth = 'w-[80px]',
   placeholder,
   helpText,
   autoComplete = false,
   value,
   errorMessage,
-  suffix = "",
+  suffix = '',
   onChange,
   onEnter,
   setFocus,
@@ -56,7 +55,7 @@ export const Input: React.FC<InputProps> = ({
   const isError = value && errorMessage;
 
   const handleEnter = (e) => {
-    if (e.key == "Enter" && onEnter) {
+    if (e.key == 'Enter' && onEnter) {
       onEnter();
     }
   };
@@ -77,7 +76,7 @@ export const Input: React.FC<InputProps> = ({
             value={value}
             placeholder={placeholder}
             onChange={onChange}
-            autoComplete={autoComplete ? null : "new-password"}
+            autoComplete={autoComplete ? null : 'new-password'}
             onFocus={() => {
               handleFocus(true);
             }}
@@ -104,11 +103,11 @@ interface IBooleanInputProps extends InputProps {
 }
 export const BooleanInput: React.FC<IBooleanInputProps> = ({
   label,
-  labelWidth = "w-[80px]",
+  labelWidth = 'w-[80px]',
   value,
   setValue,
-  yesText = "예",
-  noText = "아니요",
+  yesText = '예',
+  noText = '아니요',
 }) => {
   return (
     <FrontInputContainer label={label} labelWidth={labelWidth}>
@@ -143,7 +142,7 @@ interface IComboInputProps extends InputProps {
 export const Combo: React.FC<IComboInputProps> = ({
   type,
   label,
-  labelWidth = "w-[80px]",
+  labelWidth = 'w-[80px]',
   placeholder,
   helpText,
   optionKeys,
@@ -171,7 +170,7 @@ export const Combo: React.FC<IComboInputProps> = ({
           $is_active={isOptionShow}
           $is_error={isError}
         >
-          <span className={`${isSelected ? "active" : ""}`}>{isSelected ? optionNames[value] : placeholder}</span>
+          <span className={`${isSelected ? 'active' : ''}`}>{isSelected ? optionNames[value] : placeholder}</span>
           <i className="fa-solid fa-chevron-down"></i>
         </S.InputBox>
 
@@ -202,7 +201,7 @@ interface ICheckbox extends IUserInputText {
   label: string;
   disabled: boolean;
 }
-export const Checkbox = ({ value, setValue, label = "", disabled = false }: ICheckbox) => {
+export const Checkbox = ({ value, setValue, label = '', disabled = false }: ICheckbox) => {
   return (
     <div
       className="flex items-center space-x-0.5 cursor-pointer"

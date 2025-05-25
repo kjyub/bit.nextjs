@@ -1,13 +1,13 @@
-"use client";
-import useUserInfoStore from "@/store/useUserInfo";
-import * as S from "@/styles/CryptoWalletStyles";
-import { TextFormats } from "@/types/CommonTypes";
-import { TransferTypeValues, TransferTypes } from "@/types/cryptos/CryptoTypes";
-import CommonUtils from "@/utils/CommonUtils";
-import { useEffect, useMemo, useState } from "react";
-import ModalContainer from "../ModalContainer";
-import CommonButton from "../atomics/buttons/CommonButton";
-import CryptoTransferModal from "./CryptoTransferModal";
+'use client';
+import useUserInfoStore from '@/store/useUserInfo';
+import * as S from '@/styles/CryptoWalletStyles';
+import { TextFormats } from '@/types/CommonTypes';
+import { TransferTypeValues, TransferTypes } from '@/types/cryptos/CryptoTypes';
+import CommonUtils from '@/utils/CommonUtils';
+import { useEffect, useMemo, useState } from 'react';
+import ModalContainer from '../ModalContainer';
+import CommonButton from '../atomics/buttons/CommonButton';
+import CryptoTransferModal from './CryptoTransferModal';
 
 export default function CryptoMain() {
   const [isTransferModalOpen, setTransferModalOpen] = useState<boolean>(false);

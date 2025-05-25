@@ -18,13 +18,13 @@ export default class FrontUtils {
     // router.push(link, { scroll: isScroll })
   }
   static handleArrayParam(params: object, key: string, value: T): T {
-    let stringValues: string = params[key] ?? "";
+    let stringValues: string = params[key] ?? '';
 
     // params에 값이 없는 경우 값 하나만 추가
     if (!stringValues) {
       stringValues = value.toString();
     } else {
-      const arrayValues: Array<string> = stringValues.split(",");
+      const arrayValues: Array<string> = stringValues.split(',');
 
       if (arrayValues.includes(value.toString())) {
         // 이미 값이 있는 경우 제거
@@ -33,7 +33,7 @@ export default class FrontUtils {
         // 값이 없으면 추가
         arrayValues.push(value.toString());
       }
-      stringValues = arrayValues.join(",");
+      stringValues = arrayValues.join(',');
     }
 
     return stringValues;

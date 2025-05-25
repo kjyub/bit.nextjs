@@ -1,5 +1,5 @@
-import FileUtils from "@/utils/FileUtils";
-import CommonFile from "./CommonFile";
+import FileUtils from '@/utils/FileUtils';
+import CommonFile from './CommonFile';
 
 export default class extends CommonFile {
   private _base64: string;
@@ -9,9 +9,9 @@ export default class extends CommonFile {
   constructor() {
     super();
 
-    this._base64 = "";
-    this._width = "";
-    this._height = "";
+    this._base64 = '';
+    this._width = '';
+    this._height = '';
   }
 
   convertByResponse() {
@@ -19,9 +19,9 @@ export default class extends CommonFile {
 
     super.convertByResponse(json);
 
-    this._base64 = json["base64"];
-    this._width = json["width"];
-    this._height = json["height"];
+    this._base64 = json['base64'];
+    this._width = json['width'];
+    this._height = json['height'];
   }
 
   public get base64(): string {
@@ -40,7 +40,7 @@ export default class extends CommonFile {
     } else if (this.fileUrl) {
       return FileUtils.getMediaFileUrl(this.fileUrl);
     } else {
-      return "";
+      return '';
     }
   }
 }

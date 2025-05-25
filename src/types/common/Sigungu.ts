@@ -1,4 +1,4 @@
-import { AbsApiObject } from "../ApiTypes";
+import { AbsApiObject } from '../ApiTypes';
 
 export default class Sigungu extends AbsApiObject {
   private _id: number;
@@ -13,23 +13,23 @@ export default class Sigungu extends AbsApiObject {
     super();
     this._id = -1;
     this._index = -1;
-    this._sido = "";
-    this._sidoEnglish = "";
-    this._sidoShort = "";
-    this._sigungu = "";
-    this._sigunguEnglish = "";
+    this._sido = '';
+    this._sidoEnglish = '';
+    this._sidoShort = '';
+    this._sigungu = '';
+    this._sigunguEnglish = '';
   }
 
   parseResponse(json) {
     if (!super.isValidParseResponse(json)) return;
 
-    this._id = json["id"];
-    this._index = json["index"];
-    this._sido = json["sido"];
-    this._sidoEnglish = json["sido_english"];
-    this._sidoShort = json["sido_short"];
-    this._sigungu = json["sigungu"];
-    this._sigunguEnglish = json["sigungu_english"];
+    this._id = json['id'];
+    this._index = json['index'];
+    this._sido = json['sido'];
+    this._sidoEnglish = json['sido_english'];
+    this._sidoShort = json['sido_short'];
+    this._sigungu = json['sigungu'];
+    this._sigunguEnglish = json['sigungu_english'];
   }
 
   title(): string {

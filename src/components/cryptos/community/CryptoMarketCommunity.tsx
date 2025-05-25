@@ -1,23 +1,23 @@
-"use client";
-import CryptoApi from "@/apis/api/cryptos/CryptoApi";
-import { IMarketPageSearchParams } from "@/app/(front)/crypto/[code]/page";
-import { MARKET_COMMUNITY_PAGE_SIZE } from "@/constants/CryptoConsts";
-import * as CS from "@/styles/CryptoMarketCommunityStyles";
-import { TextFormats } from "@/types/CommonTypes";
-import Pagination from "@/types/api/pagination";
-import MarketCommunity from "@/types/cryptos/MarketCommunity";
-import User from "@/types/users/User";
-import { UserTypes } from "@/types/users/UserTypes";
-import CommonUtils from "@/utils/CommonUtils";
-import FrontUtils from "@/utils/FrontUtils";
-import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
-import ModalContainer from "../../ModalContainer";
-import CommunityPagination from "../../atomics/community/CommunityPagination";
-import CommunitySearch from "../../atomics/community/CommunitySearch";
-import CryptoMarketCommunityEditor from "./CryptoMarketCommunityEditor";
-import CryptoMarketCommunityView from "./CryptoMarketCommunityView";
-import { useUser } from "@/hooks/useUser";
+'use client';
+import CryptoApi from '@/apis/api/cryptos/CryptoApi';
+import { IMarketPageSearchParams } from '@/app/(front)/crypto/[code]/page';
+import { MARKET_COMMUNITY_PAGE_SIZE } from '@/constants/CryptoConsts';
+import { useUser } from '@/hooks/useUser';
+import * as CS from '@/styles/CryptoMarketCommunityStyles';
+import { TextFormats } from '@/types/CommonTypes';
+import Pagination from '@/types/api/pagination';
+import MarketCommunity from '@/types/cryptos/MarketCommunity';
+import User from '@/types/users/User';
+import { UserTypes } from '@/types/users/UserTypes';
+import CommonUtils from '@/utils/CommonUtils';
+import FrontUtils from '@/utils/FrontUtils';
+import { usePathname, useRouter } from 'next/navigation';
+import { useState } from 'react';
+import ModalContainer from '../../ModalContainer';
+import CommunityPagination from '../../atomics/community/CommunityPagination';
+import CommunitySearch from '../../atomics/community/CommunitySearch';
+import CryptoMarketCommunityEditor from './CryptoMarketCommunityEditor';
+import CryptoMarketCommunityView from './CryptoMarketCommunityView';
 
 interface ICryptoMarketCommunity {
   marketCode: string;
@@ -38,12 +38,12 @@ export default function CryptoMarketCommunity({ marketCode, params, communityLis
   const [selectedCommunity, setSelectedCommunity] = useState<MarketCommunity>(new MarketCommunity());
 
   const handlePageIndex = (_pageIndex: number) => {
-    const url = FrontUtils.getSearchUrl(pathname, params, "page", _pageIndex.toString());
+    const url = FrontUtils.getSearchUrl(pathname, params, 'page', _pageIndex.toString());
     router.push(url, { scroll: true });
   };
 
   const handleSearch = (_search: string) => {
-    const url = FrontUtils.getSearchUrl(pathname, params, "search", _search);
+    const url = FrontUtils.getSearchUrl(pathname, params, 'search', _search);
     router.push(url, { scroll: true });
   };
 
@@ -156,15 +156,15 @@ const Community = ({ user, community, selectedCommunity, setSelectedCommunity, h
   const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
-    if (!confirm("정말 삭제하시겠습니까?")) return;
+    if (!confirm('정말 삭제하시겠습니까?')) return;
 
     const response = await CryptoApi.deleteCommunity(community.nanoId);
     if (!response) {
-      alert("삭제에 실패했습니다.");
+      alert('삭제에 실패했습니다.');
       return;
     }
 
-    alert("삭제되었습니다.");
+    alert('삭제되었습니다.');
     setIsDeleted(true);
   };
 

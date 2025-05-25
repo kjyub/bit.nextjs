@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import UserApi from "@/apis/api/users/UserApi";
-import { DEFAULT_MARKET_CODE } from "@/constants/CryptoConsts";
-import { useUser } from "@/hooks/useUser";
-import * as NS from "@/styles/NavigationStyles";
-import Link from "next/link";
+import UserApi from '@/apis/api/users/UserApi';
+import { DEFAULT_MARKET_CODE } from '@/constants/CryptoConsts';
+import { useUser } from '@/hooks/useUser';
+import * as NS from '@/styles/NavigationStyles';
+import Link from 'next/link';
 
 export default function Navigation() {
   // 회원 관련
@@ -27,7 +27,7 @@ export default function Navigation() {
           <Link href="/" className="btn">
             <span>Home</span>
           </Link>
-          <Link href={isAuth ? "/crypto" : `/crypto/${DEFAULT_MARKET_CODE}`} className="btn">
+          <Link href={isAuth ? '/crypto' : `/crypto/${DEFAULT_MARKET_CODE}`} className="btn">
             <span>암호화폐 거래</span>
           </Link>
         </NS.Section>

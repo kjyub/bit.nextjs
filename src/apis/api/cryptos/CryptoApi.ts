@@ -1,13 +1,13 @@
-import Pagination from "@/types/api/pagination";
-import { IMyTradeData } from "@/types/cryptos/CryptoInterfaces";
-import CryptoMarket from "@/types/cryptos/CryptoMarket";
-import CryptoWallet from "@/types/cryptos/CryptoWallet";
-import MarketCommunity from "@/types/cryptos/MarketCommunity";
-import MarketCommunityComment from "@/types/cryptos/MarketCommunityComment";
-import TradeHistory from "@/types/cryptos/TradeHistory";
-import TradeOrder from "@/types/cryptos/TradeOrder";
-import TradePosition from "@/types/cryptos/TradePosition";
-import { authInstance, defaultInstance } from "../../utils/api";
+import Pagination from '@/types/api/pagination';
+import { IMyTradeData } from '@/types/cryptos/CryptoInterfaces';
+import CryptoMarket from '@/types/cryptos/CryptoMarket';
+import CryptoWallet from '@/types/cryptos/CryptoWallet';
+import MarketCommunity from '@/types/cryptos/MarketCommunity';
+import MarketCommunityComment from '@/types/cryptos/MarketCommunityComment';
+import TradeHistory from '@/types/cryptos/TradeHistory';
+import TradeOrder from '@/types/cryptos/TradeOrder';
+import TradePosition from '@/types/cryptos/TradePosition';
+import { authInstance, defaultInstance } from '../../utils/api';
 
 class CryptoApi {
   // region MyTrades
@@ -19,7 +19,7 @@ class CryptoApi {
     };
 
     await authInstance
-      .post("/api/cryptos/my_trades/")
+      .post('/api/cryptos/my_trades/')
       .then(({ data }) => {
         try {
           result.wallet.parseResponse(data.wallet as object);
@@ -53,7 +53,7 @@ class CryptoApi {
     const result: CryptoWallet = new CryptoWallet();
 
     await authInstance
-      .get("/api/cryptos/wallet/")
+      .get('/api/cryptos/wallet/')
       .then(({ data }) => {
         result.parseResponse(data as object);
       })
@@ -67,7 +67,7 @@ class CryptoApi {
     let result = false;
 
     await authInstance
-      .post("/api/cryptos/wallet_transaction/", requestData)
+      .post('/api/cryptos/wallet_transaction/', requestData)
       .then(() => {
         result = true;
       })
@@ -83,7 +83,7 @@ class CryptoApi {
     const result: Array<CryptoMarket> = [];
 
     await defaultInstance
-      .get("/api/cryptos/market/", {
+      .get('/api/cryptos/market/', {
         params: {
           search: search,
           market_type: marketType,
@@ -109,7 +109,7 @@ class CryptoApi {
     const result: Array<CryptoMarket> = [];
 
     await defaultInstance
-      .get("/api/cryptos/market_all/")
+      .get('/api/cryptos/market_all/')
       .then(({ data }) => {
         if (Array.isArray(data as object)) {
           data.forEach((item) => {
@@ -132,7 +132,7 @@ class CryptoApi {
     let result = false;
 
     await authInstance
-      .post("/api/cryptos/order_market/", requestData)
+      .post('/api/cryptos/order_market/', requestData)
       .then(({ data }) => {
         result = data;
       })
@@ -146,7 +146,7 @@ class CryptoApi {
     let result = false;
 
     await authInstance
-      .post("/api/cryptos/order_limit/", requestData)
+      .post('/api/cryptos/order_limit/', requestData)
       .then(({ data }) => {
         result = data;
       })
@@ -160,7 +160,7 @@ class CryptoApi {
     let result = false;
 
     await authInstance
-      .post("/api/cryptos/order_limit_cancel/", { order_id: orderId })
+      .post('/api/cryptos/order_limit_cancel/', { order_id: orderId })
       .then(({ data }) => {
         result = data;
       })
@@ -174,7 +174,7 @@ class CryptoApi {
     let result = false;
 
     await authInstance
-      .post("/api/cryptos/order_limit_chase/", { order_id: orderId, price })
+      .post('/api/cryptos/order_limit_chase/', { order_id: orderId, price })
       .then(({ data }) => {
         result = data;
       })
@@ -191,7 +191,7 @@ class CryptoApi {
     const result: Array<TradePosition> = [];
 
     await authInstance
-      .get("/api/cryptos/my_position/")
+      .get('/api/cryptos/my_position/')
       .then(({ data }) => {
         if (Array.isArray(data as object)) {
           data.forEach((item) => {
@@ -211,7 +211,7 @@ class CryptoApi {
     const result: Array<TradeOrder> = [];
 
     await authInstance
-      .get("/api/cryptos/my_order/")
+      .get('/api/cryptos/my_order/')
       .then(({ data }) => {
         if (Array.isArray(data as object)) {
           data.forEach((item) => {
@@ -233,8 +233,8 @@ class CryptoApi {
   static async getTradeOrderHistories(
     pageIndex: number = 1,
     pageSize: number = 50,
-    dateStart: string = "",
-    dateEnd: string = ""
+    dateStart: string = '',
+    dateEnd: string = '',
   ): Promise<Pagination<TradeOrder>> {
     const result = new Pagination<TradeOrder>();
 
@@ -244,14 +244,14 @@ class CryptoApi {
     };
 
     if (dateStart) {
-      params["date_start"] = dateStart;
+      params['date_start'] = dateStart;
     }
     if (dateEnd) {
-      params["date_end"] = dateEnd;
+      params['date_end'] = dateEnd;
     }
 
     await authInstance
-      .get("/api/cryptos/my_order_history/", { params })
+      .get('/api/cryptos/my_order_history/', { params })
       .then(({ data }) => {
         result.parseResponse(data as object, TradeOrder);
       })
@@ -264,8 +264,8 @@ class CryptoApi {
   static async getTradeHistories(
     pageIndex: number = 1,
     pageSize: number = 50,
-    dateStart: string = "",
-    dateEnd: string = ""
+    dateStart: string = '',
+    dateEnd: string = '',
   ): Promise<Pagination<TradeHistory>> {
     const result = new Pagination<TradeHistory>();
 
@@ -275,14 +275,14 @@ class CryptoApi {
     };
 
     if (dateStart) {
-      params["date_start"] = dateStart;
+      params['date_start'] = dateStart;
     }
     if (dateEnd) {
-      params["date_end"] = dateEnd;
+      params['date_end'] = dateEnd;
     }
 
     await authInstance
-      .get("/api/cryptos/my_trade_history/", { params })
+      .get('/api/cryptos/my_trade_history/', { params })
       .then(({ data }) => {
         result.parseResponse(data as object, TradeHistory);
       })
@@ -295,8 +295,8 @@ class CryptoApi {
   static async getTradePositionHistories(
     pageIndex: number = 1,
     pageSize: number = 50,
-    dateStart: string = "",
-    dateEnd: string = ""
+    dateStart: string = '',
+    dateEnd: string = '',
   ): Promise<Pagination<TradePosition>> {
     const result = new Pagination<TradePosition>();
 
@@ -306,14 +306,14 @@ class CryptoApi {
     };
 
     if (dateStart) {
-      params["date_start"] = dateStart;
+      params['date_start'] = dateStart;
     }
     if (dateEnd) {
-      params["date_end"] = dateEnd;
+      params['date_end'] = dateEnd;
     }
 
     await authInstance
-      .get("/api/cryptos/my_position_history/", { params })
+      .get('/api/cryptos/my_position_history/', { params })
       .then(({ data }) => {
         result.parseResponse(data as object, TradePosition);
       })
@@ -330,12 +330,12 @@ class CryptoApi {
     search: string,
     marketCode: string,
     page: number,
-    pageSize: number
+    pageSize: number,
   ): Promise<Pagination<MarketCommunity>> {
     const result: Pagination<MarketCommunity> = new Pagination<MarketCommunity>();
 
     await defaultInstance
-      .get("/api/cryptos/community/", {
+      .get('/api/cryptos/community/', {
         params: {
           search: search,
           market_code: marketCode,
@@ -370,7 +370,7 @@ class CryptoApi {
     const result: MarketCommunity = new MarketCommunity();
 
     await authInstance
-      .post("/api/cryptos/community_create/", requestData)
+      .post('/api/cryptos/community_create/', requestData)
       .then(({ data }) => {
         result.parseResponse(data as object);
       })
@@ -427,7 +427,7 @@ class CryptoApi {
   static async getCommunityCommentList(
     communityNanoId: string,
     pageIndex: number,
-    pageSize: number
+    pageSize: number,
   ): Promise<Pagination<MarketCommunityComment>> {
     const result: Pagination<MarketCommunityComment> = new Pagination<MarketCommunityComment>();
 
@@ -452,7 +452,7 @@ class CryptoApi {
     const result: MarketCommunityComment = new MarketCommunityComment();
 
     await authInstance
-      .post("/api/cryptos/community_comment_create/", requestData)
+      .post('/api/cryptos/community_comment_create/', requestData)
       .then(({ data }) => {
         result.parseResponse(data as object);
       })

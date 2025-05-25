@@ -1,23 +1,23 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "@/styles/css/globals.css";
-import AppClientLayout from "@/layouts/AppClientLayout";
-import { AuthProvider } from "@/store/providers/AuthProvider";
-import Script from "next/script";
-import AuthServerUtils from "@/utils/AuthUtils.server";
-import { setAxiosAuthToken } from "@/apis/utils/api";
-import UserApi from "@/apis/api/users/UserApi";
+import type { Metadata } from 'next';
+import localFont from 'next/font/local';
+import '@/styles/css/globals.css';
+import UserApi from '@/apis/api/users/UserApi';
+import { setAxiosAuthToken } from '@/apis/utils/api';
+import AppClientLayout from '@/layouts/AppClientLayout';
+import { AuthProvider } from '@/store/providers/AuthProvider';
+import AuthServerUtils from '@/utils/AuthUtils.server';
+import Script from 'next/script';
 
 const pretendard = localFont({
-  src: "../static/fonts/PretendardVariable.woff2",
-  variable: "--font-pretendard",
-  weight: "45 920",
-  display: "swap",
+  src: '../static/fonts/PretendardVariable.woff2',
+  variable: '--font-pretendard',
+  weight: '45 920',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: "Bits",
-  description: "빗스",
+  title: 'Bits',
+  description: '빗스',
 };
 
 export default async function RootLayout({
@@ -62,8 +62,8 @@ const FrontHead = () => {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#010018",
-  width: "device-width",
+  themeColor: '#010018',
+  width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,

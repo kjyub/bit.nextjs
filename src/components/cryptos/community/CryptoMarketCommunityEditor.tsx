@@ -1,11 +1,10 @@
-import CryptoApi from "@/apis/api/cryptos/CryptoApi";
-import ModalLayout from "@/components/atomics/ModalLayout";
-import { ContentInput, TitleInput } from "@/components/inputs/CommunityInputs";
-import * as CS from "@/styles/CryptoMarketCommunityStyles";
-import MarketCommunity from "@/types/cryptos/MarketCommunity";
-import CommonUtils from "@/utils/CommonUtils";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import CryptoApi from '@/apis/api/cryptos/CryptoApi';
+import ModalLayout from '@/components/atomics/ModalLayout';
+import { ContentInput, TitleInput } from '@/components/inputs/CommunityInputs';
+import * as CS from '@/styles/CryptoMarketCommunityStyles';
+import MarketCommunity from '@/types/cryptos/MarketCommunity';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 interface ICryptoMarketCommunityEditor {
   marketCode: string;
@@ -28,7 +27,7 @@ export default function CryptoMarketCommunityEditor({ marketCode, community, onC
 
     if (isCreate) {
       // create
-      data["market_code"] = marketCode;
+      data['market_code'] = marketCode;
       create(data);
     } else {
       // update
@@ -40,11 +39,11 @@ export default function CryptoMarketCommunityEditor({ marketCode, community, onC
     const response = await CryptoApi.createCommunity(data);
 
     if (response.nanoId) {
-      alert("저장되었습니다.");
+      alert('저장되었습니다.');
       router.replace(`/crypto/${marketCode}`);
       onClose();
     } else {
-      alert("저장에 실패했습니다.");
+      alert('저장에 실패했습니다.');
     }
   };
 
@@ -52,17 +51,17 @@ export default function CryptoMarketCommunityEditor({ marketCode, community, onC
     const response = await CryptoApi.updateCommunity(community.nanoId, data);
 
     if (response.nanoId) {
-      alert("수정되었습니다.");
+      alert('수정되었습니다.');
       router.refresh();
       onClose();
     } else {
-      alert("수정에 실패했습니다.");
+      alert('수정에 실패했습니다.');
     }
   };
 
   return (
     <ModalLayout
-      title={`토론 ${isCreate ? "등록" : "수정"}`}
+      title={`토론 ${isCreate ? '등록' : '수정'}`}
       layoutClassName="max-sm:w-[90vw] sm:w-128"
       contentClassName="max-h-[80vh]"
     >

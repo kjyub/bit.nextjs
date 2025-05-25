@@ -1,6 +1,5 @@
-import * as S from "@/styles/CommunityInputStyles";
-import CommonUtils from "@/utils/CommonUtils";
-import React, { useState } from "react";
+import * as S from '@/styles/CommunityInputStyles';
+import React, { useState } from 'react';
 
 interface InputProps {
   type: string;
@@ -25,7 +24,7 @@ export const TitleInput = ({ label, value, setValue }: InputProps) => {
 
   return (
     <S.TitleBox>
-      <label className={`${isLabelActive ? "active" : ""} ${isFocus ? "focus" : ""}`}>{label}</label>
+      <label className={`${isLabelActive ? 'active' : ''} ${isFocus ? 'focus' : ''}`}>{label}</label>
       <input
         value={value}
         onChange={(e) => setValue(e.target.value)}
@@ -43,8 +42,8 @@ export const ContentInput = ({ placeholder, value, setValue }: InputProps) => {
       value={value}
       onChange={(e) => setValue(e.target.value)}
       onInput={(e) => {
-        e.target.style.height = "48px";
-        e.target.style.height = Number(e.target.scrollHeight) + "px";
+        e.target.style.height = '48px';
+        e.target.style.height = Number(e.target.scrollHeight) + 'px';
       }}
     />
   );

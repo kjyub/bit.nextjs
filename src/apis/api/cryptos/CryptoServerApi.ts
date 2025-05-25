@@ -1,4 +1,4 @@
-import { defaultInstance } from "@/apis/utils/api";
+import { defaultInstance } from '@/apis/utils/api';
 
 class CryptoServerApi {
   // region Market
@@ -6,7 +6,7 @@ class CryptoServerApi {
     let result: object = {};
 
     await defaultInstance
-      .get("/api/cryptos/market/", {
+      .get('/api/cryptos/market/', {
         params: {
           search: search,
           market_type: marketType,
@@ -26,7 +26,7 @@ class CryptoServerApi {
     let result: object = {};
 
     await defaultInstance
-      .get("/api/cryptos/market_all/")
+      .get('/api/cryptos/market_all/')
       .then(({ data }) => {
         result = data;
       })
@@ -57,7 +57,7 @@ class CryptoServerApi {
     let result: object = {};
 
     await defaultInstance
-      .get("/api/cryptos/community/", {
+      .get('/api/cryptos/community/', {
         params: {
           search: search,
           market_code: marketCode,
@@ -94,7 +94,7 @@ class CryptoServerApi {
     let result: object = {};
 
     await defaultInstance
-      .get("/api/cryptos/community_comment/", {
+      .get('/api/cryptos/community_comment/', {
         params: {
           community_id: communityId,
           page: pageIndex,

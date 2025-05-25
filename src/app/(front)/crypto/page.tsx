@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import CryptoMain from "@/components/cryptos/CryptoMain";
-import { DEFAULT_MARKET_CODE } from "@/constants/CryptoConsts";
-import { useUser } from "@/hooks/useUser";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import CryptoMain from '@/components/cryptos/CryptoMain';
+import { DEFAULT_MARKET_CODE } from '@/constants/CryptoConsts';
+import { useUser } from '@/hooks/useUser';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function CryptoMainPage() {
   const { isAuth } = useUser();

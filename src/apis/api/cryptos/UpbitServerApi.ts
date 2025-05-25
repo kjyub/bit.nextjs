@@ -1,5 +1,5 @@
-import { defaultInstance } from "@/apis/utils/api";
-import { IUpbitMarketTicker } from "@/types/cryptos/CryptoInterfaces";
+import { defaultInstance } from '@/apis/utils/api';
+import { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
 
 class UpbitServerApi {
   // region Market
@@ -7,7 +7,7 @@ class UpbitServerApi {
     let result: IUpbitMarketTicker = {};
 
     await defaultInstance
-      .get("https://api.upbit.com/v1/ticker", {
+      .get('https://api.upbit.com/v1/ticker', {
         params: {
           markets: marketCode,
         },

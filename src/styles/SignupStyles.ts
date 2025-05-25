@@ -1,5 +1,5 @@
-import { StyleProps } from "@/types/StyleTypes";
-import tw from "tailwind-styled-components";
+import { StyleProps } from '@/types/StyleTypes';
+import tw from 'tailwind-styled-components';
 
 export const Layout = tw.div`
   absolute top-0 left-0 z-0
@@ -36,7 +36,7 @@ export const SignupSection = tw.div`
   [&>.title]:text-lg [&>.title]:text-slate-800 dark:[&>.title]:text-slate-200 
   [&>.title]:font-semibold [&>.title]:text-left
 
-  ${({ $is_active }: StyleProps) => ($is_active ? "opacity-100" : "opacity-40")} 
+  ${({ $is_active }: StyleProps) => ($is_active ? 'opacity-100' : 'opacity-40')} 
   duration-300
 `;
 
@@ -53,6 +53,6 @@ export const SignupButton = tw.button`
   w-full h-12
   rounded-lg
   ${({ $is_active }: StyleProps) =>
-    $is_active ? "bg-blue-500/60 hover:bg-blue-500/80 text-white" : "bg-slate-500/60 text-slate-300"}
+    $is_active ? 'bg-blue-500/60 hover:bg-blue-500/80 text-white' : 'bg-slate-500/60 text-slate-300'}
   duration-200
 `;

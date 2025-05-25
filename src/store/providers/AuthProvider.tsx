@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import UserApi from "@/apis/api/users/UserApi";
-import { removeAxiosAuthToken, setAxiosAuthToken } from "@/apis/utils/api";
-import User from "@/types/users/User";
-import { AccountStatusTypes, LoginResponse } from "@/types/users/UserTypes";
-import { createContext, Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from "react";
-import useUserInfoStore from "../useUserInfo";
+import UserApi from '@/apis/api/users/UserApi';
+import { removeAxiosAuthToken, setAxiosAuthToken } from '@/apis/utils/api';
+import User from '@/types/users/User';
+import { AccountStatusTypes, LoginResponse } from '@/types/users/UserTypes';
+import { Dispatch, SetStateAction, createContext, useCallback, useEffect, useMemo, useState } from 'react';
+import useUserInfoStore from '../useUserInfo';
 
 interface AuthState {
   user: User;
@@ -81,16 +81,16 @@ export const AuthProvider = ({
 
       setIsLoading(false);
     },
-    [setIsLoading, setUser]
+    [setIsLoading, setUser],
   );
 
   const kakaoAuth = useCallback(
     async (code: string) => {
-      const response = await fetch("/api/auth?code=" + code);
+      const response = await fetch('/api/auth?code=' + code);
       const result = (await response.json()) as LoginResponse;
 
       if (!result.token.access) {
-        throw new Error("로그인에 실패했습니다.");
+        throw new Error('로그인에 실패했습니다.');
       }
 
       setAxiosAuthToken(result.token.access);
@@ -101,7 +101,7 @@ export const AuthProvider = ({
 
       return newUser;
     },
-    [setUser]
+    [setUser],
   );
 
   const signOut = useCallback(async () => {

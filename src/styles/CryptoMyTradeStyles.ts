@@ -1,5 +1,5 @@
-import { StyleProps } from "@/types/StyleTypes";
-import tw from "tailwind-styled-components";
+import { StyleProps } from '@/types/StyleTypes';
+import tw from 'tailwind-styled-components';
 
 export const Layout = tw.div`
   flex flex-col w-full h-[calc(100vh-208px)] space-y-2
@@ -19,7 +19,7 @@ export const PageLayout = tw.div<StyleProps>`
   rounded-lg bg-slate-900/30
 `;
 export const PageList = tw.div<StyleProps>`
-  ${({ $is_active }) => ($is_active ? "opacity-100" : "opacity-50")}
+  ${({ $is_active }) => ($is_active ? 'opacity-100' : 'opacity-50')}
   flex flex-col w-full h-full space-y-2
   overflow-y-auto
   duration-200
@@ -163,8 +163,8 @@ export const FilterBox = tw.div<StyleProps>`
 
   ${({ $is_active }) =>
     $is_active
-      ? "bg-slate-500/30 text-slate-300 hover:text-slate-200"
-      : "text-slate-400 hover:bg-slate-500/30 hover:text-slate-200"}
+      ? 'bg-slate-500/30 text-slate-300 hover:text-slate-200'
+      : 'text-slate-400 hover:bg-slate-500/30 hover:text-slate-200'}
   transition-colors
 `;
 export const FilterButton = tw(FilterBox)`

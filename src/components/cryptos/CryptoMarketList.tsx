@@ -47,25 +47,28 @@ export default function CryptoMarketList() {
     run();
   }, [marketDic, orderType, sortType]);
 
-  const getMarkets = async (_search: string, marketType: MarketTypes) => {
-    // 마켓타입에 따른 모든 코인 목록을 가져온다
-    const response = await CryptoApi.getMarkets('', marketType);
-    setMarketDic(
-      response.reduce((acc, market) => {
-        acc[market.code] = market;
-        return acc;
-      }, {}),
-    );
+  const getMarkets = useCallback(
+    async (_search: string, marketType: MarketTypes) => {
+      // 마켓타입에 따른 모든 코인 목록을 가져온다
+      const response = await CryptoApi.getMarkets('', marketType);
+      setMarketDic(
+        response.reduce((acc, market) => {
+          acc[market.code] = market;
+          return acc;
+        }, {}),
+      );
 
-    // 검색어에 따른 코인 목록을 가져온다
-    const filteredSet = getFilteredMarkets(_search, response);
-    setMarketFilteredCodeSet(filteredSet);
-  };
+      // 검색어에 따른 코인 목록을 가져온다
+      const filteredSet = getFilteredMarkets(_search, response);
+      setMarketFilteredCodeSet(filteredSet);
+    },
+    [setMarketDic, setMarketFilteredCodeSet],
+  );
 
   // 검색 결과 정리
-  const getFilteredMarkets = (_search: string, _markets: Array<CryptoMarket>): Set<string> => {
+  const getFilteredMarkets = useCallback((_search: string, _markets: Array<CryptoMarket>): Set<string> => {
     const keys = new Set<string>();
-    if (search === '') {
+    if (_search === '') {
       _markets.map((market) => {
         keys.add(market.code);
       });
@@ -73,9 +76,9 @@ export default function CryptoMarketList() {
       _markets
         .filter((market) => {
           return (
-            market.koreanName.includes(search) ||
-            market.englishName.includes(search) ||
-            market.code.includes(search.toUpperCase())
+            market.koreanName.includes(_search) ||
+            market.englishName.includes(_search) ||
+            market.code.includes(_search.toUpperCase())
           );
         })
         .map((market) => {
@@ -84,7 +87,7 @@ export default function CryptoMarketList() {
     }
 
     return keys;
-  };
+  }, []);
 
   // 코드 정렬하기
   const getSortedCodes = useCallback(
@@ -224,6 +227,7 @@ const MarketSortType = ({
       setSortType(sortType);
     }
   };
+
   return (
     <button className={`${sortType === currentSortType ? 'active' : ''} ${sortType}`} onClick={() => handleClick()}>
       <div className="icon">
@@ -267,7 +271,9 @@ const Market = ({ market }: IMarket) => {
     <S.MarketListItem
       href={`/crypto/${market.code}`}
       id={`market-list-${market.code}`}
-      className={`${changeType === PriceChangeTypes.RISE ? 'rise' : changeType === PriceChangeTypes.FALL ? 'fall' : ''}`}
+      className={`${
+        changeType === PriceChangeTypes.RISE ? 'rise' : changeType === PriceChangeTypes.FALL ? 'fall' : ''
+      }`}
     >
       <div className="name">
         <span className="korean">{market.koreanName}</span>

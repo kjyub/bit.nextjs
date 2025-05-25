@@ -1,22 +1,22 @@
-"use client";
+'use client';
 
-import { AccountStatusTypes } from "@/types/users/UserTypes";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { AccountStatusTypes } from '@/types/users/UserTypes';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 
-import * as SS from "@/styles/SignupStyles";
-import { useUser } from "@/hooks/useUser";
+import { useUser } from '@/hooks/useUser';
+import * as SS from '@/styles/SignupStyles';
 
 const SignupPage = () => {
   const { kakaoAuth, setUser } = useUser();
 
   const searchParams = useSearchParams();
-  const code = searchParams.get("code") ?? "";
+  const code = searchParams.get('code') ?? '';
   const router = useRouter();
 
   useEffect(() => {
     if (!code) {
-      router.push("/");
+      router.push('/');
     } else {
       handleLogin();
     }
@@ -27,19 +27,19 @@ const SignupPage = () => {
     setUser(user);
 
     if (!user.id) {
-      alert("이용할 수 없는 계정입니다.");
-      router.push("/");
+      alert('이용할 수 없는 계정입니다.');
+      router.push('/');
       return;
     }
 
     // 이미 가입된 회원인 경우
     if (user.accountStatus === AccountStatusTypes.NORMAL) {
-      router.push("/");
+      router.push('/');
     } else if (user.accountStatus === AccountStatusTypes.TEMP) {
       router.push(`/auth/signup`);
     } else {
-      alert("이용할 수 없는 계정입니다.");
-      router.push("/");
+      alert('이용할 수 없는 계정입니다.');
+      router.push('/');
     }
   };
 

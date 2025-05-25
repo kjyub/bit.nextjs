@@ -1,18 +1,18 @@
-import { TextFormats } from "@/types/CommonTypes";
-import dayjs from "dayjs";
-import Inko from "inko";
+import { TextFormats } from '@/types/CommonTypes';
+import dayjs from 'dayjs';
+import Inko from 'inko';
 
 export default class CommonUtils {
   static getBaseUrl(): string {
     const currentURL =
       window.location.protocol +
-      "//" +
+      '//' +
       window.location.hostname +
-      (window.location.port ? ":" + window.location.port : "");
+      (window.location.port ? ':' + window.location.port : '');
     return currentURL;
   }
   static toCamelCase(str: string) {
-    return str.replace(/([-_][a-z])/g, (group) => group.toUpperCase().replace("-", "").replace("_", ""));
+    return str.replace(/([-_][a-z])/g, (group) => group.toUpperCase().replace('-', '').replace('_', ''));
   }
   static round(value: number, round: number = 0): number {
     // return Math.round(value * Math.pow(10, round)) / Math.pow(10, round)
@@ -29,7 +29,7 @@ export default class CommonUtils {
     return list[randomIndex];
   }
   static getCurrentBaseUrl(): string {
-    return window.location.href.split("/").slice(0, 3).join("/");
+    return window.location.href.split('/').slice(0, 3).join('/');
   }
   static async copyClipboard(value: string): boolean {
     try {
@@ -40,22 +40,22 @@ export default class CommonUtils {
     return true;
   }
   static sha256(value: string): string {
-    const hash = crypto.createHash("sha256");
+    const hash = crypto.createHash('sha256');
     hash.update(value);
-    return hash.digest("hex");
+    return hash.digest('hex');
   }
   static telFormat(v: string): string {
-    const value = v.replace(/[^0-9]/g, "");
+    const value = v.replace(/[^0-9]/g, '');
 
     const result = [];
-    let restNumber = "";
+    let restNumber = '';
 
     // 지역번호와 나머지 번호로 나누기
-    if (value.startsWith("02")) {
+    if (value.startsWith('02')) {
       // 서울 02 지역번호
       result.push(value.substr(0, 2));
       restNumber = value.substring(2);
-    } else if (value.startsWith("1")) {
+    } else if (value.startsWith('1')) {
       // 지역 번호가 없는 경우
       // 1xxx-yyyy
       restNumber = value;
@@ -75,7 +75,7 @@ export default class CommonUtils {
       result.push(restNumber.substring(4));
     }
 
-    return result.filter((val) => val).join("-");
+    return result.filter((val) => val).join('-');
   }
   static telFormatter(e): string {
     const value = e.target.value;
@@ -86,15 +86,15 @@ export default class CommonUtils {
     e.target.value = CommonUtils.telFormat(value);
   }
   static textFormat(text: string, format: TextFormats): string {
-    let result = !text ? "" : String(text);
+    let result = !text ? '' : String(text);
 
     if (format === TextFormats.NUMBER) {
       const number = Number(text);
       if (
         !isNaN(number) &&
-        result[result.length - 1] !== "." &&
-        result !== "" &&
-        !(result.includes(".") && result[result.length - 1] === "0")
+        result[result.length - 1] !== '.' &&
+        result !== '' &&
+        !(result.includes('.') && result[result.length - 1] === '0')
       ) {
         result = number.toLocaleString();
       }
@@ -115,14 +115,14 @@ export default class CommonUtils {
       // console.log(decimalPart)
     } else if (format === TextFormats.PRICE) {
       const number = CommonUtils.textFormat(text, TextFormats.NUMBER);
-      result = number + "원";
+      result = number + '원';
     } else if (format === TextFormats.KOREAN_PRICE) {
       const inputNumber = text < 0 ? false : text;
-      const unitWords = ["", "만", "억", "조", "경"];
+      const unitWords = ['', '만', '억', '조', '경'];
       const splitUnit = 10000;
       const splitCount = unitWords.length;
       const resultArray = [];
-      let resultString = "";
+      let resultString = '';
 
       for (let i = 0; i < splitCount; i++) {
         let unitResult = (inputNumber % Math.pow(splitUnit, i + 1)) / Math.pow(splitUnit, i);
@@ -140,11 +140,11 @@ export default class CommonUtils {
       result = resultString;
     } else if (format === TextFormats.KOREAN_PRICE_SIMPLE) {
       const inputNumber = text < 0 ? false : text;
-      const unitWords = ["", "만", "억", "조", "경"];
+      const unitWords = ['', '만', '억', '조', '경'];
       const splitUnit = 10000;
       const splitCount = unitWords.length;
       const resultArray = [];
-      let resultString = "";
+      let resultString = '';
 
       for (let i = 0; i < splitCount; i++) {
         let unitResult = (inputNumber % Math.pow(splitUnit, i + 1)) / Math.pow(splitUnit, i);
@@ -161,7 +161,7 @@ export default class CommonUtils {
     }
 
     if (!result) {
-      result = "";
+      result = '';
     }
 
     return result;
@@ -170,13 +170,13 @@ export default class CommonUtils {
     let result = text;
 
     if (format === TextFormats.NUMBER) {
-      result = text.replaceAll(",", "");
+      result = text.replaceAll(',', '');
     } else if (format === TextFormats.NUMBER_ONLY) {
-      result = text.replace(/[^0-9]/g, "");
+      result = text.replace(/[^0-9]/g, '');
     } else if (format === TextFormats.PRICE) {
       // 미구현
       const number = CommonUtils.textFormatInput(text, TextFormats.NUMBER);
-      result = number.replaceAll("원", "");
+      result = number.replaceAll('원', '');
     } else if (format === TextFormats.TEL) {
       result = CommonUtils.telFormat(text);
     }
@@ -219,8 +219,8 @@ export default class CommonUtils {
       return;
     }
 
-    element.style.height = "auto";
-    element.style.height = Number(element.scrollHeight) + 4 + "px";
+    element.style.height = 'auto';
+    element.style.height = Number(element.scrollHeight) + 4 + 'px';
   }
   static koreanToEnglish = (value: string): string => {
     const inko = new Inko();
@@ -230,27 +230,27 @@ export default class CommonUtils {
   static async getAddressCode(callback: (adderssCode: string, address1: string) => void) {
     new window.daum.Postcode({
       oncomplete: function (data) {
-        let addr = "";
-        let extraAddr = "";
+        let addr = '';
+        let extraAddr = '';
 
-        if (data.userSelectedType === "R") {
+        if (data.userSelectedType === 'R') {
           addr = data.roadAddress;
         } else {
           addr = data.jibunAddress;
         }
 
-        if (data.userSelectedType === "R") {
-          if (data.bname !== "" && /[동|로|가]$/g.test(data.bname)) {
+        if (data.userSelectedType === 'R') {
+          if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
             extraAddr += data.bname;
           }
-          if (data.buildingName !== "" && data.apartment === "Y") {
-            extraAddr += extraAddr !== "" ? ", " + data.buildingName : data.buildingName;
+          if (data.buildingName !== '' && data.apartment === 'Y') {
+            extraAddr += extraAddr !== '' ? ', ' + data.buildingName : data.buildingName;
           }
-          if (extraAddr !== "") {
-            extraAddr = " (" + extraAddr + ")";
+          if (extraAddr !== '') {
+            extraAddr = ' (' + extraAddr + ')';
           }
         } else {
-          extraAddr = "";
+          extraAddr = '';
         }
 
         const addressCode = data.zonecode;
@@ -267,10 +267,10 @@ export default class CommonUtils {
     try {
       const now = dayjs();
       const inputDate = dayjs(date);
-      const diffSeconds = now.diff(inputDate, "seconds");
-      const diffMinutes = now.diff(inputDate, "minutes");
-      const diffHours = now.diff(inputDate, "hours");
-      const diffDays = now.diff(inputDate, "days");
+      const diffSeconds = now.diff(inputDate, 'seconds');
+      const diffMinutes = now.diff(inputDate, 'minutes');
+      const diffHours = now.diff(inputDate, 'hours');
+      const diffDays = now.diff(inputDate, 'days');
 
       if (diffSeconds < 60) {
         return `${diffSeconds}초 전`;
@@ -281,10 +281,10 @@ export default class CommonUtils {
       } else if (diffDays < 7) {
         return `${diffDays}일 전`;
       } else {
-        return inputDate.format("YYYY-MM-DD");
+        return inputDate.format('YYYY-MM-DD');
       }
     } catch {
-      return "";
+      return '';
     }
   }
 }

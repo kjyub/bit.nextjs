@@ -1,12 +1,12 @@
-import UserApi from "@/apis/api/users/UserApi";
-import { CookieConsts } from "@/types/ApiTypes";
-import { LoginResponse } from "@/types/users/UserTypes";
-import { cookies } from "next/headers";
-import { type NextRequest, NextResponse } from "next/server";
+import UserApi from '@/apis/api/users/UserApi';
+import { CookieConsts } from '@/types/ApiTypes';
+import { LoginResponse } from '@/types/users/UserTypes';
+import { cookies } from 'next/headers';
+import { type NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
   try {
-    const code = request.nextUrl.searchParams.get("code") as string;
+    const code = request.nextUrl.searchParams.get('code') as string;
 
     const result = await UserApi.kakaoAuth(code);
 
@@ -15,25 +15,25 @@ export async function GET(request: NextRequest) {
     if (result.token.access) {
       const { access, refresh } = result.token;
 
-      cookie.set(CookieConsts.USER_ACCESS_TOKEN, access || "", {
+      cookie.set(CookieConsts.USER_ACCESS_TOKEN, access || '', {
         httpOnly: true,
-        sameSite: "lax",
+        sameSite: 'lax',
       });
-      cookie.set(CookieConsts.USER_REFRESH_TOKEN, refresh || "", {
+      cookie.set(CookieConsts.USER_REFRESH_TOKEN, refresh || '', {
         httpOnly: true,
-        sameSite: "lax",
+        sameSite: 'lax',
       });
 
       return NextResponse.json(result);
     }
 
-    throw Error("");
-  } catch (error) {
+    throw Error('');
+  } catch {
     const blank: LoginResponse = {
       user: {},
       token: {
-        access: "",
-        refresh: "",
+        access: '',
+        refresh: '',
       },
     };
 
