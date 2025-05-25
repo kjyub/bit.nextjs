@@ -1,8 +1,3 @@
-import UserApi from "@/apis/api/users/UserApi";
-import { SessionStorageConsts } from "@/types/ApiTypes";
-import User from "@/types/users/User";
-import { Session } from "next-auth";
-import { UpdateSession } from "next-auth/react";
 import CommonUtils from "./CommonUtils";
 
 export default class AuthUtils {
@@ -55,13 +50,6 @@ export default class AuthUtils {
 
     return expireDate.getTime() <= now.getTime();
   }
-  static isSessionAuth(session: Session) {
-    if (!session || !session.user) {
-      return false;
-    }
-
-    return true;
-  }
   static authKakao(): string {
     const baseUrl = CommonUtils.getBaseUrl();
     const kakaoRedirectUrl = `${baseUrl}/oauth/kakao/callback`;
@@ -69,27 +57,5 @@ export default class AuthUtils {
       redirectUri: kakaoRedirectUrl,
       prompt: "select_account",
     });
-  }
-  static async getCurrentUser(session?: Session, update?: UpdateSession): User {
-    const newUser = new User();
-
-    const userData = await UserApi.getUserDataSelf();
-
-    if (!userData || !userData.uuid) {
-      return newUser;
-    }
-
-    if (session && update) {
-      await update({
-        ...session,
-        user: userData,
-      });
-
-      sessionStorage.setItem(SessionStorageConsts.USER_DATA, userData);
-    }
-
-    newUser.parseResponse(userData);
-
-    return newUser;
   }
 }

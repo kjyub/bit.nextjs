@@ -3,10 +3,10 @@
 import UserApi from "@/apis/api/users/UserApi";
 import Alerts from "@/components/Alerts";
 import * as I from "@/components/inputs/UserInputs";
+import { useUser } from "@/hooks/useUser";
 import * as SS from "@/styles/SignupStyles";
 import User from "@/types/users/User";
 import { debounce } from "lodash";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import CountUp from "react-countup";
@@ -14,8 +14,7 @@ import CountUp from "react-countup";
 export default function SignupInfo() {
   const router = useRouter();
 
-  const { data: session, update } = useSession();
-
+  const { setUser } = useUser();
   const [nickname, setNickname] = useState<string>("");
 
   const isDuplicateNicknameRef = useRef<boolean>(false);
@@ -77,10 +76,7 @@ export default function SignupInfo() {
     user.parseResponse(userData);
 
     if (user.uuid) {
-      await update({
-        ...session,
-        user: userData,
-      });
+      setUser(user);
 
       router.push("/");
       return;

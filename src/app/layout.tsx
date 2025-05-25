@@ -1,22 +1,23 @@
-import type { Metadata } from 'next';
-import localFont from 'next/font/local';
-import '@/styles/css/globals.css';
-import { auth } from '@/auth';
-import AppClientLayout from '@/layouts/AppClientLayout';
-import { AuthProvider } from '@/store/providers/AuthProvider';
-import { SessionProvider } from 'next-auth/react';
-import Script from 'next/script';
+import type { Metadata } from "next";
+import localFont from "next/font/local";
+import "@/styles/css/globals.css";
+import AppClientLayout from "@/layouts/AppClientLayout";
+import { AuthProvider } from "@/store/providers/AuthProvider";
+import Script from "next/script";
+import AuthServerUtils from "@/utils/AuthUtils.server";
+import { setAxiosAuthToken } from "@/apis/utils/api";
+import UserApi from "@/apis/api/users/UserApi";
 
 const pretendard = localFont({
-  src: '../static/fonts/PretendardVariable.woff2',
-  variable: '--font-pretendard',
-  weight: '45 920',
-  display: 'swap',
+  src: "../static/fonts/PretendardVariable.woff2",
+  variable: "--font-pretendard",
+  weight: "45 920",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: 'Bits',
-  description: '빗스',
+  title: "Bits",
+  description: "빗스",
 };
 
 export default async function RootLayout({
@@ -24,7 +25,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await auth();
+  const accessToken = await AuthServerUtils.getAccessToken();
+  setAxiosAuthToken(accessToken);
+
+  const userData = await UserApi.getUserDataSelf();
 
   return (
     <html lang="en">
@@ -32,12 +36,10 @@ export default async function RootLayout({
         <FrontHead />
       </head>
       <body className={`${pretendard.variable}`}>
-        <SessionProvider session={session}>
-          <AuthProvider>
-            <AppClientLayout />
-            {children}
-          </AuthProvider>
-        </SessionProvider>
+        <AuthProvider accessToken={accessToken} userData={userData}>
+          <AppClientLayout />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
@@ -60,8 +62,8 @@ const FrontHead = () => {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#010018',
-  width: 'device-width',
+  themeColor: "#010018",
+  width: "device-width",
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,

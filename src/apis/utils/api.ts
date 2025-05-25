@@ -1,5 +1,5 @@
-"use client";
-
+import { LoginResponse } from "@/types/users/UserTypes";
+import BrowserUtils from "@/utils/BrowserUtils";
 import axios from "axios";
 
 // const URL = "http://172.30.1.46:8000"
@@ -29,28 +29,6 @@ const axiosAuthApi = (options: object) => {
     ...options,
   });
 
-  // 요청 시
-  // api.interceptors.request.use(
-  //   async (config) => {
-  //     const session = await getSession()
-
-  //     if (session === null) {
-  //       return config
-  //     }
-
-  //     const djangoToken = session.accessToken
-
-  //     // 쿠키가 없는 경우 http only 쿠키에서 보낸다.
-  //     if (!CommonUtils.isStringNullOrEmpty(djangoToken)) {
-  //       config.headers.Authorization = `Bearer ${djangoToken}`
-  //     }
-
-  //     return config
-  //   },
-  //   async (error) => {
-  //     return Promise.reject(error)
-  //   },
-  // )
   // 응답 시
   api.interceptors.response.use(
     (config) => {
@@ -58,7 +36,6 @@ const axiosAuthApi = (options: object) => {
     },
     async (error) => {
       const originalRequest = error.config as object;
-      console.log(error);
 
       // 재요청 실패
       if (error.response.status === 401 && error._retry) {
@@ -66,10 +43,30 @@ const axiosAuthApi = (options: object) => {
       }
 
       // 재요청 시도
-      if (error.response.status === 401) {
-        console.log("RE SignIn");
-        // signIn("google")
-        return await axios(originalRequest);
+      if (error.response.status === 401 && !error._retry) {
+        try {
+          const response = await fetch(process.env.NEXT_PUBLIC_API_SERVER + "/api/auth/refresh/");
+          const result = (await response.json()) as LoginResponse;
+
+          if (!result.token.access) {
+            throw Error("토큰 만료");
+          }
+
+          setAxiosAuthToken(result.token.access); // authInstance 에 저장
+          originalRequest.headers["Authorization"] = `Bearer ${result.token.access}`; // 현재 재요청 헤더에 저장
+
+          return axios(originalRequest);
+        } catch {
+          removeAxiosAuthToken();
+
+          // 새로고침
+          if (BrowserUtils.isClient()) {
+            await new Promise((resolve) => setTimeout(resolve, 3000));
+            window.location.reload();
+          }
+
+          return Promise.reject(error);
+        }
       }
 
       return Promise.reject(error);

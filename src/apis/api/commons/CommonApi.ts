@@ -1,6 +1,6 @@
-import { defaultInstance, fileInstance } from '../../utils/clientApis';
+import { defaultInstance, fileInstance } from "../../utils/api";
 
-import ImageFile from '@/types/common/ImageFile';
+import ImageFile from "@/types/common/ImageFile";
 
 class CommonApi {
   // region File
@@ -8,10 +8,10 @@ class CommonApi {
     const result: ImageFile = new ImageFile();
 
     await fileInstance
-      .post('/api/commons/image_write/', {
+      .post("/api/commons/image_write/", {
         images: image,
         is_base64: isBase64,
-        is_temp: isTemp ? '1' : '0',
+        is_temp: isTemp ? "1" : "0",
       })
       .then(({ data }) => {
         result.parseResponse(data);

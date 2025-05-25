@@ -1,4 +1,4 @@
-import { tradeDefaultInstance } from "@/apis/utils/clientTradeApis";
+import { tradeDefaultInstance } from "@/apis/utils/trade-api";
 import { IUpbitMarketTicker } from "@/types/cryptos/CryptoInterfaces";
 
 class TradeGoApi {

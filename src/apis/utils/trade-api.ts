@@ -1,5 +1,4 @@
-'use client';
-import axios from 'axios';
+import axios from "axios";
 
 const URL = process.env.NEXT_PUBLIC_TRADE_SERVER;
 

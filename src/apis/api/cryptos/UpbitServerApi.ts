@@ -1,13 +1,13 @@
-import { defaultServerInstance } from '@/apis/utils/serverApis';
-import { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
+import { defaultInstance } from "@/apis/utils/api";
+import { IUpbitMarketTicker } from "@/types/cryptos/CryptoInterfaces";
 
 class UpbitServerApi {
   // region Market
   static async getMarketCurrent(marketCode: string): Promise<IUpbitMarketTicker> {
     let result: IUpbitMarketTicker = {};
 
-    await defaultServerInstance
-      .get('https://api.upbit.com/v1/ticker', {
+    await defaultInstance
+      .get("https://api.upbit.com/v1/ticker", {
         params: {
           markets: marketCode,
         },

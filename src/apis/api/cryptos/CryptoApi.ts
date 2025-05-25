@@ -7,8 +7,7 @@ import MarketCommunityComment from "@/types/cryptos/MarketCommunityComment";
 import TradeHistory from "@/types/cryptos/TradeHistory";
 import TradeOrder from "@/types/cryptos/TradeOrder";
 import TradePosition from "@/types/cryptos/TradePosition";
-import CommonUtils from "@/utils/CommonUtils";
-import { authInstance, defaultInstance } from "../../utils/clientApis";
+import { authInstance, defaultInstance } from "../../utils/api";
 
 class CryptoApi {
   // region MyTrades

@@ -1,13 +1,13 @@
-import { tradeDefaultServerInstance } from '@/apis/utils/serverTradeApis';
-import { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
+import { tradeDefaultInstance } from "@/apis/utils/trade-api";
+import { IUpbitMarketTicker } from "@/types/cryptos/CryptoInterfaces";
 
 class TradeGoServerApi {
   // region Market
   static async getMarketCurrent(marketCode: string): Promise<IUpbitMarketTicker> {
     let result: IUpbitMarketTicker = {};
 
-    await tradeDefaultServerInstance
-      .post('/markets', {
+    await tradeDefaultInstance
+      .post("/markets", {
         codes: [marketCode],
       })
       .then(({ data }) => {

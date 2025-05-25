@@ -1,15 +1,15 @@
 "use client";
 
-import User from "@/types/users/User";
 import { AccountStatusTypes } from "@/types/users/UserTypes";
-import CommonUtils from "@/utils/CommonUtils";
-import { getSession, signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
 import * as SS from "@/styles/SignupStyles";
+import { useUser } from "@/hooks/useUser";
 
 const SignupPage = () => {
+  const { kakaoAuth, setUser } = useUser();
+
   const searchParams = useSearchParams();
   const code = searchParams.get("code") ?? "";
   const router = useRouter();
@@ -23,29 +23,14 @@ const SignupPage = () => {
   }, []);
 
   const handleLogin = async () => {
-    let response = null;
-    try {
-      response = await signIn("kakao", {
-        code: code,
-        redirect: false,
-      });
-    } catch {
-      alert("로그인에 실패하였습니다.\n관리자에게 문의해주세요.");
+    const user = await kakaoAuth(code);
+    setUser(user);
+
+    if (!user.id) {
+      alert("이용할 수 없는 계정입니다.");
       router.push("/");
       return;
     }
-
-    if (response?.error) {
-      console.log(response?.error);
-      alert("로그인에 실패하였습니다.");
-      router.push("/");
-      return;
-    }
-
-    const session = await getSession();
-    const userData = session?.user;
-    const user = new User();
-    user.parseResponse(userData);
 
     // 이미 가입된 회원인 경우
     if (user.accountStatus === AccountStatusTypes.NORMAL) {

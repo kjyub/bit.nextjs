@@ -1,12 +1,12 @@
-import { defaultServerInstance } from '@/apis/utils/serverApis';
+import { defaultInstance } from "@/apis/utils/api";
 
 class CryptoServerApi {
   // region Market
   static async getMarkets(search: string, marketType: string): Promise<object> {
     let result: object = {};
 
-    await defaultServerInstance
-      .get('/api/cryptos/market/', {
+    await defaultInstance
+      .get("/api/cryptos/market/", {
         params: {
           search: search,
           market_type: marketType,
@@ -25,8 +25,8 @@ class CryptoServerApi {
   static async getMarketAll(): Promise<object> {
     let result: object = {};
 
-    await defaultServerInstance
-      .get('/api/cryptos/market_all/')
+    await defaultInstance
+      .get("/api/cryptos/market_all/")
       .then(({ data }) => {
         result = data;
       })
@@ -39,7 +39,7 @@ class CryptoServerApi {
   static async getMarket(code: string): Promise<object> {
     let result: object = {};
 
-    await defaultServerInstance
+    await defaultInstance
       .get(`/api/cryptos/market/${code}/`)
       .then(({ data }) => {
         result = data;
@@ -56,8 +56,8 @@ class CryptoServerApi {
   static async getCommunityList(search: string, marketCode: string, page: number, pageSize: number): Promise<object> {
     let result: object = {};
 
-    await defaultServerInstance
-      .get('/api/cryptos/community/', {
+    await defaultInstance
+      .get("/api/cryptos/community/", {
         params: {
           search: search,
           market_code: marketCode,
@@ -77,7 +77,7 @@ class CryptoServerApi {
   static async getCommunityDetail(nanoId: string): Promise<object> {
     let result: object = {};
 
-    await defaultServerInstance
+    await defaultInstance
       .get(`/api/cryptos/community/${nanoId}/`)
       .then(({ data }) => {
         result = data;
@@ -93,8 +93,8 @@ class CryptoServerApi {
   static async getCommunityCommentList(communityId: number, pageIndex: number, pageSize: number): Promise<object> {
     let result: object = {};
 
-    await defaultServerInstance
-      .get('/api/cryptos/community_comment/', {
+    await defaultInstance
+      .get("/api/cryptos/community_comment/", {
         params: {
           community_id: communityId,
           page: pageIndex,
