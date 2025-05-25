@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useUser } from '@/hooks/useUser';
-import * as NS from '@/styles/NavigationStyles';
-import { AccountStatusTypes } from '@/types/users/UserTypes';
-import { signOut } from 'next-auth/react';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useUser } from "@/hooks/useUser";
+import * as NS from "@/styles/NavigationStyles";
+import { AccountStatusTypes } from "@/types/users/UserTypes";
+import { signOut } from "next-auth/react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Navigation() {
   // 회원 관련
@@ -54,11 +54,8 @@ export default function Navigation() {
           ) : (
             // 비회원
             <>
-              <button className="btn">
-                <span>로그인</span>
-              </button>
               <Link href="/signup" className="btn border border-slate-300">
-                <span>회원가입</span>
+                <span>로그인 / 회원가입</span>
               </Link>
             </>
           )}
