@@ -1,7 +1,7 @@
-import CommonUtils from '@/utils/CommonUtils';
-import React, { Dispatch, SetStateAction } from 'react';
-import Modal from 'react-modal';
-import tw from 'tailwind-styled-components';
+import CommonUtils from "@/utils/CommonUtils";
+import React, { Dispatch, SetStateAction } from "react";
+import Modal from "react-modal";
+import tw from "tailwind-styled-components";
 
 const Background = tw.div`
     flex flex-center w-full h-full
@@ -41,13 +41,13 @@ const ModalContainer = ({
       onRequestClose={() => {
         setIsOpen(false);
       }}
-      style={{ overlay: { backgroundColor: 'transparent', zIndex: 500 } }}
+      style={{ overlay: { backgroundColor: "transparent", zIndex: 500 } }}
       className={`flex flex-center w-screen h-screen bg-black/20 dark:bg-black/30 outline-hidden ${
-        isBlur && 'backdrop-blur-xs'
+        isBlur && "backdrop-blur-xs"
       }`}
     >
       <Background onClick={handleClick}>
-        {/* {!CommonUtils.isNullOrUndefined(children) && children} */}
+        {/* {children && children} */}
         <div className="relative flex flex-center" onClick={handleStopPropagation}>
           {(!isCloseByBackground || isCloseButtonShow) && (
             <i
@@ -55,7 +55,7 @@ const ModalContainer = ({
               onClick={() => setIsOpen(false)}
             />
           )}
-          {!CommonUtils.isNullOrUndefined(children) && children}
+          {children && children}
         </div>
       </Background>
     </Modal>

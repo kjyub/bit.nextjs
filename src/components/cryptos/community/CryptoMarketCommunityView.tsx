@@ -1,16 +1,16 @@
-import CryptoApi from '@/apis/api/cryptos/CryptoApi';
-import CommunityPagination from '@/components/atomics/community/CommunityPagination';
-import { MARKET_COMMUNITY_COMMENT_PAGE_SIZE } from '@/constants/CryptoConsts';
-import * as CS from '@/styles/CryptoMarketCommunityStyles';
-import { TextFormats } from '@/types/CommonTypes';
-import Pagination from '@/types/api/pagination';
-import { LikeTypeValues, LikeTypes } from '@/types/common/CommonTypes';
-import MarketCommunity from '@/types/cryptos/MarketCommunity';
-import MarketCommunityComment from '@/types/cryptos/MarketCommunityComment';
-import User from '@/types/users/User';
-import { UserTypes } from '@/types/users/UserTypes';
-import CommonUtils from '@/utils/CommonUtils';
-import { useEffect, useRef, useState } from 'react';
+import CryptoApi from "@/apis/api/cryptos/CryptoApi";
+import CommunityPagination from "@/components/atomics/community/CommunityPagination";
+import { MARKET_COMMUNITY_COMMENT_PAGE_SIZE } from "@/constants/CryptoConsts";
+import * as CS from "@/styles/CryptoMarketCommunityStyles";
+import { TextFormats } from "@/types/CommonTypes";
+import Pagination from "@/types/api/pagination";
+import { LikeTypeValues, LikeTypes } from "@/types/common/CommonTypes";
+import MarketCommunity from "@/types/cryptos/MarketCommunity";
+import MarketCommunityComment from "@/types/cryptos/MarketCommunityComment";
+import User from "@/types/users/User";
+import { UserTypes } from "@/types/users/UserTypes";
+import CommonUtils from "@/utils/CommonUtils";
+import { useEffect, useRef, useState } from "react";
 
 interface ICryptoMarketCommunityView {
   user: User;
@@ -24,7 +24,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
   const [dislikes, setDislikes] = useState<number>(0);
 
   // 댓글
-  const [commentValue, setCommentValue] = useState<string>('');
+  const [commentValue, setCommentValue] = useState<string>("");
   const [comments, setComments] = useState<Array<MarketCommunityComment>>([]);
   const [pageIndex, setPageIndex] = useState<number>(1);
   const [itemCount, setItemCount] = useState<number>(0);
@@ -38,7 +38,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
     setPageIndex(1);
     setCommentLoading(false);
 
-    if (!CommonUtils.isStringNullOrEmpty(communityNanoId)) {
+    if (communityNanoId) {
       getCommunity(communityNanoId);
       getComments(-1);
     } else {
@@ -73,7 +73,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
         response = await CryptoApi.getCommunityCommentList(
           community.nanoId,
           _pageIndex + additionalIndex,
-          MARKET_COMMUNITY_COMMENT_PAGE_SIZE,
+          MARKET_COMMUNITY_COMMENT_PAGE_SIZE
         );
 
         if (hasRequireComment()) {
@@ -98,8 +98,8 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
     if (isCommentLoading) {
       return;
     }
-    if (CommonUtils.isStringNullOrEmpty(user.uuid)) {
-      alert('회원 정보를 찾을 수 없습니다.');
+    if (!user.uuid) {
+      alert("회원 정보를 찾을 수 없습니다.");
       return;
     }
 
@@ -111,20 +111,20 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
     };
 
     if (parentId >= 0) {
-      data['parent_id'] = parentId;
+      data["parent_id"] = parentId;
     }
 
     const result = await CryptoApi.createCommunityComment(data);
 
     if (result.id < 0) {
       setCommentLoading(false);
-      alert('작성 실패했습니다.');
+      alert("작성 실패했습니다.");
       return;
     }
 
-    setCommentValue('');
+    setCommentValue("");
     if (parentId < 0 && commentInputRef.current) {
-      commentInputRef.current.style.height = '48px';
+      commentInputRef.current.style.height = "48px";
     }
 
     if (parentId >= 0) {
@@ -137,14 +137,14 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
   };
 
   const handleCommentEnter = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       handleComment(commentValue);
     }
   };
 
   const handleLike = async (_type: LikeTypeValues) => {
-    if (CommonUtils.isStringNullOrEmpty(user.uuid)) {
-      alert('로그인 후 이용 가능합니다.');
+    if (user.uuid) {
+      alert("로그인 후 이용 가능합니다.");
       return;
     }
 
@@ -156,7 +156,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
     const result = await CryptoApi.likeCommunity(community.nanoId, type);
 
     if (!result) {
-      alert('추천 실패했습니다.');
+      alert("추천 실패했습니다.");
       return;
     }
 
@@ -174,7 +174,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
     }
   };
 
-  if (CommonUtils.isStringNullOrEmpty(community.nanoId)) {
+  if (!community.nanoId) {
     return;
   }
 
@@ -186,7 +186,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
       {/* 추천 */}
       <CS.ItemViewLikeBox>
         <button
-          className={`like ${myLikeType === LikeTypes.LIKE ? 'active' : ''}`}
+          className={`like ${myLikeType === LikeTypes.LIKE ? "active" : ""}`}
           onClick={() => {
             handleLike(LikeTypes.LIKE);
           }}
@@ -195,7 +195,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
           <span>추천 {likes}</span>
         </button>
         <button
-          className={`dislike ${myLikeType === LikeTypes.DISLIKE ? 'active' : ''}`}
+          className={`dislike ${myLikeType === LikeTypes.DISLIKE ? "active" : ""}`}
           onClick={() => {
             handleLike(LikeTypes.DISLIKE);
           }}
@@ -236,8 +236,8 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
             }}
             onKeyDown={handleCommentEnter}
             onInput={(e) => {
-              e.target.style.height = '48px';
-              e.target.style.height = Number(e.target.scrollHeight) + 'px';
+              e.target.style.height = "48px";
+              e.target.style.height = Number(e.target.scrollHeight) + "px";
             }}
           />
           <button
@@ -270,7 +270,7 @@ const Comment = ({ user, comment, handleComment }: IComment) => {
 
   // 대댓글
   const [isShowReply, setShowReply] = useState<boolean>(false);
-  const [commentValue, setCommentValue] = useState<string>('');
+  const [commentValue, setCommentValue] = useState<string>("");
   const commentInputRef = useRef<HTMLTextAreaElement>(null);
 
   const hasParent = comment.parentId && comment.parentId >= 0;
@@ -285,8 +285,8 @@ const Comment = ({ user, comment, handleComment }: IComment) => {
     if (isEditLoading) {
       return;
     }
-    if (CommonUtils.isStringNullOrEmpty(user.uuid)) {
-      alert('회원 정보를 찾을 수 없습니다.');
+    if (!user.uuid) {
+      alert("회원 정보를 찾을 수 없습니다.");
       return;
     }
 
@@ -300,7 +300,7 @@ const Comment = ({ user, comment, handleComment }: IComment) => {
 
     if (result.id < 0) {
       setEditLoading(false);
-      alert('수정 실패했습니다.');
+      alert("수정 실패했습니다.");
       return;
     }
     setContent(result.content);
@@ -311,22 +311,22 @@ const Comment = ({ user, comment, handleComment }: IComment) => {
   // 대댓글 작성
   const handleCommentReply = () => {
     handleComment(commentValue, comment.id);
-    setCommentValue('');
+    setCommentValue("");
     if (commentInputRef.current) {
-      commentInputRef.current.style.height = '48px';
+      commentInputRef.current.style.height = "48px";
     }
     setShowReply(false);
   };
 
   const handleCommentEnter = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       handleCommentReply();
     }
   };
 
   // 댓글 삭제
   const handleCommentDelete = async () => {
-    if (!confirm('정말 삭제하시겠습니까?')) {
+    if (!confirm("정말 삭제하시겠습니까?")) {
       return;
     }
 
@@ -334,14 +334,14 @@ const Comment = ({ user, comment, handleComment }: IComment) => {
 
     if (response) {
       setDeleted(true);
-      alert('삭제되었습니다');
+      alert("삭제되었습니다");
     } else {
-      alert('삭제에 실패했습니다.');
+      alert("삭제에 실패했습니다.");
     }
   };
 
   return (
-    <CS.ItemCommentBox className={`${hasParent ? 'pl-6' : ''}`} $is_deleted={isDeleted}>
+    <CS.ItemCommentBox className={`${hasParent ? "pl-6" : ""}`} $is_deleted={isDeleted}>
       <div className="header">
         <div className="user">
           <i className="fa-solid fa-user" />
@@ -392,7 +392,7 @@ const Comment = ({ user, comment, handleComment }: IComment) => {
         <CS.ItemCommentWriteBox className="mt-4! pl-6 [&>button]:w-24">
           <textarea
             ref={commentInputRef}
-            type={'text'}
+            type={"text"}
             value={commentValue}
             placeholder="답글을 입력해주세요"
             onChange={(e) => {
@@ -400,8 +400,8 @@ const Comment = ({ user, comment, handleComment }: IComment) => {
             }}
             onKeyDown={handleCommentEnter}
             onInput={(e) => {
-              e.target.style.height = '48px';
-              e.target.style.height = Number(e.target.scrollHeight) + 'px';
+              e.target.style.height = "48px";
+              e.target.style.height = Number(e.target.scrollHeight) + "px";
             }}
           />
           <button
@@ -438,15 +438,15 @@ const CommentContent = ({ content, hasParent, parentName, isEdit, handleComment 
   // 댓글 수정
   const handleCommentEdit = () => {
     handleComment(commentValue);
-    setCommentValue('');
+    setCommentValue("");
     if (commentInputRef.current) {
-      commentInputRef.current.style.height = '48px';
+      commentInputRef.current.style.height = "48px";
     }
     setShowReply(false);
   };
 
   const handleCommentEnter = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       handleCommentEdit();
     }
   };
@@ -457,15 +457,15 @@ const CommentContent = ({ content, hasParent, parentName, isEdit, handleComment 
         <CS.ItemCommentWriteBox className="mt-4! [&>button]:w-24">
           <textarea
             ref={commentInputRef}
-            type={'text'}
+            type={"text"}
             value={commentValue}
             onChange={(e) => {
               setCommentValue(e.target.value);
             }}
             onKeyDown={handleCommentEnter}
             onInput={(e) => {
-              e.target.style.height = '48px';
-              e.target.style.height = Number(e.target.scrollHeight) + 'px';
+              e.target.style.height = "48px";
+              e.target.style.height = Number(e.target.scrollHeight) + "px";
             }}
           />
           <button

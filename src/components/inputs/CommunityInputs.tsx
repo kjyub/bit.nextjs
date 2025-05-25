@@ -1,6 +1,6 @@
-import * as S from '@/styles/CommunityInputStyles';
-import CommonUtils from '@/utils/CommonUtils';
-import React, { useState } from 'react';
+import * as S from "@/styles/CommunityInputStyles";
+import CommonUtils from "@/utils/CommonUtils";
+import React, { useState } from "react";
 
 interface InputProps {
   type: string;
@@ -21,11 +21,11 @@ interface InputProps {
 
 export const TitleInput = ({ label, value, setValue }: InputProps) => {
   const [isFocus, setIsFocus] = useState<boolean>(false);
-  const isLabelActive = isFocus || !CommonUtils.isStringNullOrEmpty(value);
+  const isLabelActive = isFocus || value;
 
   return (
     <S.TitleBox>
-      <label className={`${isLabelActive ? 'active' : ''} ${isFocus ? 'focus' : ''}`}>{label}</label>
+      <label className={`${isLabelActive ? "active" : ""} ${isFocus ? "focus" : ""}`}>{label}</label>
       <input
         value={value}
         onChange={(e) => setValue(e.target.value)}
@@ -43,8 +43,8 @@ export const ContentInput = ({ placeholder, value, setValue }: InputProps) => {
       value={value}
       onChange={(e) => setValue(e.target.value)}
       onInput={(e) => {
-        e.target.style.height = '48px';
-        e.target.style.height = Number(e.target.scrollHeight) + 'px';
+        e.target.style.height = "48px";
+        e.target.style.height = Number(e.target.scrollHeight) + "px";
       }}
     />
   );

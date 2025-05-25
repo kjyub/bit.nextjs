@@ -1,7 +1,6 @@
-import * as cheerio from 'cheerio';
+import * as cheerio from "cheerio";
 // import Cheerio from "cheerio"
-import { isEqual } from 'lodash';
-import CommonUtils from './CommonUtils';
+import { isEqual } from "lodash";
 
 // const SANITIZE_CONFIG = {
 //   allowedTags: ['img'],
@@ -13,17 +12,17 @@ import CommonUtils from './CommonUtils';
 // }
 export default class FileUtils {
   static getMediaURL() {
-    if (CommonUtils.isStringNullOrEmpty(process.env.NEXT_PUBLIC_STORAGE_SERVER)) {
-      return process.env.NEXT_PUBLIC_DJANGO_SERVER + '/media/';
+    if (!process.env.NEXT_PUBLIC_STORAGE_SERVER) {
+      return process.env.NEXT_PUBLIC_DJANGO_SERVER + "/media/";
     } else {
-      return process.env.NEXT_PUBLIC_STORAGE_SERVER + '/'; // 릴리즈서버에선 스토리지 서버로 사용한다.
+      return process.env.NEXT_PUBLIC_STORAGE_SERVER + "/"; // 릴리즈서버에선 스토리지 서버로 사용한다.
     }
   }
 
   // 서버에 파일 URL은 서버주소를 포함하지 않기 때문에 붙여준다. (리액트에서만 붙여서 쓴다. 백엔드로 다시 보낼때는 제거해야한다.)
   static getMediaFileUrl(fileURL) {
-    if (CommonUtils.isStringNullOrEmpty(fileURL)) {
-      return '';
+    if (!fileURL) {
+      return "";
     }
 
     return this.getMediaURL() + fileURL;
@@ -34,16 +33,16 @@ export default class FileUtils {
   }
   // 텍스트 에디터 내용에 있는 파일 소스 URL은 서버주소를 포함하지 않기 때문에 붙여준다.
   static replaceMedieFileURL(content: string) {
-    if (CommonUtils.isStringNullOrEmpty(content)) {
-      return '';
+    if (!content) {
+      return "";
     }
     // const cheerio = require("cheerio")
     const bs = cheerio.load(content);
 
-    bs('img').each((_i, el) => {
-      const oldSrc = bs(el).attr('src');
+    bs("img").each((_i, el) => {
+      const oldSrc = bs(el).attr("src");
       const newSrc = this.getMediaURL() + oldSrc;
-      bs(el).attr('src', newSrc);
+      bs(el).attr("src", newSrc);
     });
 
     return bs.html();
@@ -57,11 +56,11 @@ export default class FileUtils {
   }
   // 텍스트 에디터 내용을 다시 업로드할 때 서버 주소를 다시 제거한다.
   static removeMediaFileURL(content) {
-    if (CommonUtils.isStringNullOrEmpty(content)) {
+    if (!content) {
       return content;
     }
 
-    return content.replace(this.getMediaURL(), '');
+    return content.replace(this.getMediaURL(), "");
   }
   // 텍스트 에디터 내용을 다시 업로드할 때 서버에 저장용으로 처리한다.
   static getRequestContent(content) {
@@ -71,10 +70,10 @@ export default class FileUtils {
 
     return converted;
   }
-  static BLANK_CONTENT = '<p><br></p>';
+  static BLANK_CONTENT = "<p><br></p>";
   // 텍스트 에디터의 내용을 비교한다.
   static equalsContent(html1, html2) {
-    if (CommonUtils.isStringNullOrEmpty(html1) || Utils.isStringNullOrEmpty(html2)) {
+    if (!html1 || !html2) {
       return false;
     }
     // const cheerio = require("cheerio")
@@ -86,18 +85,18 @@ export default class FileUtils {
 
       // 내용을 다시 모두 지운 경우 "<p><br></p>"가 되기 때문에 이런 경우 빈 텍스트로 바꾼다.
       if (sanitized1 === this.BLANK_CONTENT) {
-        sanitized1 = '';
+        sanitized1 = "";
       }
       if (sanitized2 === this.BLANK_CONTENT) {
-        sanitized2 = '';
+        sanitized2 = "";
       }
 
       const $1 = cheerio.load(sanitized1);
       const $2 = cheerio.load(sanitized2);
 
       // 2. 두 DOM 트리에서 순서대로 모든 요소를 가져옵니다.
-      const elements1 = $1('*').toArray();
-      const elements2 = $2('*').toArray();
+      const elements1 = $1("*").toArray();
+      const elements2 = $2("*").toArray();
 
       // 4. 두 요소가 다른 경우, 두 요소가 다른 것으로 판별하고 비교를 중단합니다.
       for (let i = 0; i < elements1.length; i++) {
@@ -113,7 +112,7 @@ export default class FileUtils {
     }
   }
   static isBlankContent(content) {
-    return CommonUtils.isStringNullOrEmpty(content) || content === this.BLANK_CONTENT;
+    return !content || content === this.BLANK_CONTENT;
   }
   static isFileOverVolume(fileSize, fileSizeMB = 10) {
     // 파일 사이즈가 더 크면 true
@@ -127,13 +126,13 @@ export default class FileUtils {
   }
   static getFileSize(file) {
     const sizeInBytes = file.size;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-    if (sizeInBytes == 0) return '0 Byte';
+    const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+    if (sizeInBytes == 0) return "0 Byte";
     const i = parseInt(Math.floor(Math.log(sizeInBytes) / Math.log(1024)));
-    return Math.round(sizeInBytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+    return Math.round(sizeInBytes / Math.pow(1024, i), 2) + " " + sizes[i];
   }
   // html 태그들을 제거하고 텍스트만 가져온다.
   static getTextContent(content: string) {
-    return content.replace(/<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/gi, '');
+    return content.replace(/<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/gi, "");
   }
 }

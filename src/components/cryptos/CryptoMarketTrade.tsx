@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import CryptoApi from '@/apis/api/cryptos/CryptoApi';
-import * as I from '@/components/inputs/TradeInputs';
-import useMarketPriceStore from '@/store/useMarketPriceStore';
-import useUserInfoStore from '@/store/useUserInfo';
-import * as S from '@/styles/CryptoTradeStyles';
-import { TextFormats } from '@/types/CommonTypes';
-import { CryptoFee, MAX_COST_RATIO } from '@/types/cryptos/CryptoConsts';
+import CryptoApi from "@/apis/api/cryptos/CryptoApi";
+import * as I from "@/components/inputs/TradeInputs";
+import useMarketPriceStore from "@/store/useMarketPriceStore";
+import useUserInfoStore from "@/store/useUserInfo";
+import * as S from "@/styles/CryptoTradeStyles";
+import { TextFormats } from "@/types/CommonTypes";
+import { CryptoFee, MAX_COST_RATIO } from "@/types/cryptos/CryptoConsts";
 import {
   MarginModeType,
   MarginModeTypeValues,
@@ -16,11 +16,11 @@ import {
   TradeOrderType,
   TradeOrderTypeValues,
   TradeType,
-} from '@/types/cryptos/CryptoTypes';
-import User from '@/types/users/User';
-import CommonUtils from '@/utils/CommonUtils';
-import TypeUtils from '@/utils/TypeUtils';
-import { useCallback, useEffect, useState } from 'react';
+} from "@/types/cryptos/CryptoTypes";
+import User from "@/types/users/User";
+import CommonUtils from "@/utils/CommonUtils";
+import TypeUtils from "@/utils/TypeUtils";
+import { useCallback, useEffect, useState } from "react";
 
 const R = 0.005; // 유지 증거금률
 
@@ -99,26 +99,26 @@ export default function CryptoMarketTrade({
 
   const handleTrade = useCallback(
     async (_positionType: PositionTypeValues) => {
-      if (CommonUtils.isStringNullOrEmpty(user.uuid)) {
-        alert('로그인이 필요합니다.');
+      if (!user.uuid) {
+        alert("로그인이 필요합니다.");
         return;
       }
 
       const errorMessages: Array<string> = [];
       if (cost <= 0) {
-        errorMessages.push('거래수량을 입력해주세요.');
+        errorMessages.push("거래수량을 입력해주세요.");
       }
       if (price <= 0) {
-        errorMessages.push('거래 가격을 입력해주세요.');
+        errorMessages.push("거래 가격을 입력해주세요.");
       }
       if (leverageRatio <= 0) {
-        errorMessages.push('레버리지를 입력해주세요.');
+        errorMessages.push("레버리지를 입력해주세요.");
       }
       if (cost > maxCost) {
-        errorMessages.push('잔액이 부족합니다.');
+        errorMessages.push("잔액이 부족합니다.");
       }
       if (errorMessages.length > 0) {
-        alert(errorMessages.join('\n'));
+        alert(errorMessages.join("\n"));
         return;
       }
 
@@ -143,13 +143,13 @@ export default function CryptoMarketTrade({
       }
 
       if (result) {
-        alert('거래가 성공적으로 완료되었습니다.');
+        alert("거래가 성공적으로 완료되었습니다.");
         updateInfo();
       } else {
-        alert('거래에 실패하였습니다.');
+        alert("거래에 실패하였습니다.");
       }
     },
-    [user, marginMode, orderType, marketCode, cost, price, quantity, size, leverageRatio, sizeUnitType, maxCost],
+    [user, marginMode, orderType, marketCode, cost, price, quantity, size, leverageRatio, sizeUnitType, maxCost]
   );
 
   return (
@@ -200,8 +200,8 @@ export default function CryptoMarketTrade({
       )}
 
       <I.TpSlLayout>
-        <I.NumberInput label={'TP'} value={takeProfit} setValue={setTakeProfit} />
-        <I.NumberInput label={'SL'} value={stopLoss} setValue={setStopLoss} />
+        <I.NumberInput label={"TP"} value={takeProfit} setValue={setTakeProfit} />
+        <I.NumberInput label={"SL"} value={stopLoss} setValue={setStopLoss} />
       </I.TpSlLayout>
 
       <div className="flex flex-col w-full space-y-1 mt-auto!">

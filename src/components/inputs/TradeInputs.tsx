@@ -1,7 +1,7 @@
-import { useDetectClose } from '@/hooks/useDetectClose';
-import { useMouseHover } from '@/hooks/useMouseHover';
-import * as S from '@/styles/CryptoTradeStyles';
-import { TextFormats } from '@/types/CommonTypes';
+import { useDetectClose } from "@/hooks/useDetectClose";
+import { useMouseHover } from "@/hooks/useMouseHover";
+import * as S from "@/styles/CryptoTradeStyles";
+import { TextFormats } from "@/types/CommonTypes";
 import {
   MarginModeType,
   MarginModeTypeValues,
@@ -9,10 +9,10 @@ import {
   SizeUnitTypes,
   TradeOrderType,
   TradeOrderTypeValues,
-} from '@/types/cryptos/CryptoTypes';
-import CommonUtils from '@/utils/CommonUtils';
-import TypeUtils from '@/utils/TypeUtils';
-import React, { useEffect, useRef, useState } from 'react';
+} from "@/types/cryptos/CryptoTypes";
+import CommonUtils from "@/utils/CommonUtils";
+import TypeUtils from "@/utils/TypeUtils";
+import React, { useEffect, useRef, useState } from "react";
 
 const HelpBox = ({ children }: { children: React.ReactNode }) => {
   const [ref, isHover] = useMouseHover();
@@ -20,7 +20,7 @@ const HelpBox = ({ children }: { children: React.ReactNode }) => {
     <S.HelpBox ref={ref}>
       <i className="fa-solid fa-circle-question"></i>
 
-      {children && <div className={`w-fit ${isHover ? 'show' : ''}`}>{children}</div>}
+      {children && <div className={`w-fit ${isHover ? "show" : ""}`}>{children}</div>}
     </S.HelpBox>
   );
 };
@@ -31,9 +31,9 @@ interface SlideInputProps {
   min: number;
   max: number;
   step?: number;
-  mark?: number | undefined;
+  mark?: number;
 }
-export const SlideInput = ({ value, setValue, min, max, step = 1, mark = undefined }: SlideInputProps) => {
+export const SlideInput = ({ value, setValue, min, max, step = 1, mark }: SlideInputProps) => {
   const [marks, setMarks] = useState<number[]>([0, 100]);
 
   useEffect(() => {
@@ -88,7 +88,7 @@ export const MarginModeInput = ({ marginMode, setMarginMode, disabled = false }:
     <div className="flex items-center w-full h-7 space-x-4">
       <S.MarginModeBox>
         <button
-          className={marginMode === MarginModeType.CROSSED ? 'active' : ''}
+          className={marginMode === MarginModeType.CROSSED ? "active" : ""}
           onClick={() => {
             setMarginMode(MarginModeType.CROSSED);
           }}
@@ -104,7 +104,7 @@ export const MarginModeInput = ({ marginMode, setMarginMode, disabled = false }:
           <span>교차</span>
         </button>
         <button
-          className={marginMode === MarginModeType.ISOLATED ? 'active' : ''}
+          className={marginMode === MarginModeType.ISOLATED ? "active" : ""}
           onClick={() => {
             setMarginMode(MarginModeType.ISOLATED);
           }}
@@ -119,8 +119,8 @@ export const MarginModeInput = ({ marginMode, setMarginMode, disabled = false }:
           <i className="fa-solid fa-right-left"></i>
           <span>격리</span>
         </button>
-        <div className={`thumb ${marginMode === MarginModeType.ISOLATED ? 'right' : ''}`} />
-        <div className={`absolute-center bg ${isBgActive ? 'active' : ''}`} />
+        <div className={`thumb ${marginMode === MarginModeType.ISOLATED ? "right" : ""}`} />
+        <div className={`absolute-center bg ${isBgActive ? "active" : ""}`} />
       </S.MarginModeBox>
 
       <HelpBox>
@@ -150,7 +150,7 @@ export const LeverageInput = ({ leverageRatio, setLeverageRatio, maxRatio = 75 }
   const inputRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (CommonUtils.isNullOrUndefined(leverageRatio) || leverageRatio == 0) {
+    if (!leverageRatio) {
       setLeverageRatio(1);
     } else if (leverageRatio > maxRatio) {
       setLeverageRatio(maxRatio);
@@ -251,7 +251,7 @@ export const OrderTypeInput = ({ orderType, setOrderType }: OrderTypeInputProps)
     <div className="flex items-center w-full h-6 space-x-4">
       <S.OrderTypeBox>
         <button
-          className={orderType === TradeOrderType.LIMIT ? 'active' : ''}
+          className={orderType === TradeOrderType.LIMIT ? "active" : ""}
           onClick={() => {
             setOrderType(TradeOrderType.LIMIT);
           }}
@@ -259,7 +259,7 @@ export const OrderTypeInput = ({ orderType, setOrderType }: OrderTypeInputProps)
           <span>지정가</span>
         </button>
         <button
-          className={orderType === TradeOrderType.MARKET ? 'active' : ''}
+          className={orderType === TradeOrderType.MARKET ? "active" : ""}
           onClick={() => {
             setOrderType(TradeOrderType.MARKET);
           }}
@@ -287,7 +287,7 @@ interface NumberInputProps {
   value: number;
   setValue: (value: number) => void;
   min?: number;
-  max?: number | undefined;
+  max?: number;
   className?: string;
   suffix?: string;
 }
@@ -296,14 +296,14 @@ export const NumberInput = ({
   value,
   setValue,
   min = 0,
-  max = undefined,
-  className = '',
-  suffix = '',
+  max,
+  className = "",
+  suffix = "",
 }: NumberInputProps) => {
   const handleValue = (e: ChangeEvent<HTMLInputElement>) => {
-    const replaceComma = String(e.target.value.replace(/,/g, ''));
+    const replaceComma = String(e.target.value.replace(/,/g, ""));
 
-    if (replaceComma === '') {
+    if (replaceComma === "") {
       setValue();
       return;
     }
@@ -312,12 +312,12 @@ export const NumberInput = ({
     if (isNaN(_value)) return;
 
     // 소수점 입력하는 경우 1
-    if (replaceComma[replaceComma.length - 1] === '.') {
+    if (replaceComma[replaceComma.length - 1] === ".") {
       setValue(replaceComma);
       return;
     }
     // 소수점 입력하는 경우 2
-    if (replaceComma.includes('.') && replaceComma[replaceComma.length - 1] == '0') {
+    if (replaceComma.includes(".") && replaceComma[replaceComma.length - 1] == "0") {
       setValue(replaceComma);
       return;
     }
@@ -342,7 +342,7 @@ export const NumberInput = ({
         min={min}
         max={max}
       />
-      {!CommonUtils.isStringNullOrEmpty(suffix) && <span className="ml-0.5! input text-slate-400!">{suffix}</span>}
+      {suffix && <span className="ml-0.5! input text-slate-400!">{suffix}</span>}
     </S.InputBox>
   );
 };
@@ -361,7 +361,7 @@ export const LimitSizeInput = ({ amount, setAmount, maxAmount }: LimitSizeInputP
 
   return (
     <div className="flex flex-col w-full space-y-2">
-      <NumberInput label={'크기'} value={amount} setValue={setAmount} />
+      <NumberInput label={"크기"} value={amount} setValue={setAmount} />
       <div className="flex items-center px-2 space-x-2">
         <span className="font-light text-xs text-slate-400/80 w-12">{`크기`}</span>
         <div className="flex-1">
@@ -382,7 +382,7 @@ export const LimitPriceInput = ({ price, setPrice, initPrice }: LimitPriceInputP
   return (
     <div className={`flex w-full justify-between`}>
       <div className="w-[calc(100%-24px)]">
-        <NumberInput label={'가격'} value={price} setValue={setPrice} />
+        <NumberInput label={"가격"} value={price} setValue={setPrice} />
       </div>
       <button
         className="w-4 text-sm text-slate-500 hover:text-slate-400"
@@ -407,7 +407,7 @@ export const MarketPriceInput = ({ targetPrice, setTargetPrice, maxSize }: Marke
 
   return (
     <div className="flex flex-col w-full space-y-2">
-      <NumberInput label={'총액'} value={targetPrice} setValue={setTargetPrice} />
+      <NumberInput label={"총액"} value={targetPrice} setValue={setTargetPrice} />
       <div className="flex items-center px-2 space-x-2">
         <span className="font-light text-xs text-slate-400/80 w-12">{`총액(잔고)`}</span>
         <div className="flex-1">
@@ -523,10 +523,10 @@ export const TradeSizeInput = ({
       >
         {!isPercent ? (
           sizeUnitType === SizeUnitTypes.PRICE ? (
-            <NumberInput label={'크기'} value={sizeValue} setValue={handleSize} max={maxSize} suffix={'TW'} />
+            <NumberInput label={"크기"} value={sizeValue} setValue={handleSize} max={maxSize} suffix={"TW"} />
           ) : (
             <NumberInput
-              label={'크기'}
+              label={"크기"}
               value={quantityValue}
               setValue={handleQuantity}
               max={(maxSize / price) * leverage}
@@ -534,7 +534,7 @@ export const TradeSizeInput = ({
             />
           )
         ) : (
-          <NumberInput label={'크기'} value={percentValue} setValue={handlePercent} max={100} suffix={'%'} />
+          <NumberInput label={"크기"} value={percentValue} setValue={handlePercent} max={100} suffix={"%"} />
         )}
 
         <button
@@ -597,7 +597,7 @@ export const TpSlLayout = ({ children }: { children: React.ReactNode }) => {
 
         <div className="flex space-x-2">
           <button
-            className={`${isShow ? 'text-violet-500' : 'text-slate-500'} transition-colors`}
+            className={`${isShow ? "text-violet-500" : "text-slate-500"} transition-colors`}
             onClick={() => {
               setShow(!isShow);
             }}
@@ -633,16 +633,16 @@ export const PositionCloseSizeInput = ({ label, value, setValue, max }: Position
   const [ref, isSliderShow, setSliderShow] = useDetectClose();
 
   useEffect(() => {
-    if (ref.current && ref.current.querySelector('input.input')) {
-      const closeSizeInput = ref.current.getElementsByClassName('close-size-input')[0];
+    if (ref.current && ref.current.querySelector("input.input")) {
+      const closeSizeInput = ref.current.getElementsByClassName("close-size-input")[0];
 
       const handler = () => {
         setSliderShow(true);
       };
-      closeSizeInput.addEventListener('click', handler);
+      closeSizeInput.addEventListener("click", handler);
 
       return () => {
-        closeSizeInput.removeEventListener('click', handler);
+        closeSizeInput.removeEventListener("click", handler);
       };
     }
   }, []);

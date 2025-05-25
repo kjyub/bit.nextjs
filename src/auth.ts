@@ -1,9 +1,9 @@
-import { defaultServerInstance } from '@/apis/utils/serverApis';
-import NextAuth from 'next-auth';
-import Credentials from 'next-auth/providers/credentials';
-import { authConfig } from './auth.config';
-import User from './types/users/User';
-import CommonUtils from './utils/CommonUtils';
+import { defaultServerInstance } from "@/apis/utils/serverApis";
+import NextAuth from "next-auth";
+import Credentials from "next-auth/providers/credentials";
+import { authConfig } from "./auth.config";
+import User from "./types/users/User";
+import CommonUtils from "./utils/CommonUtils";
 
 const BACKEND_ACCESS_TOKEN_LIFETIME = 45 * 60; // 45 minutes
 // const BACKEND_REFRESH_TOKEN_LIFETIME = 6 * 24 * 60 * 60 // 6 days
@@ -18,9 +18,9 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   providers: [
     Credentials({
       credentials: {
-        email: { label: 'Email', type: 'text' },
-        password: { label: 'Password', type: 'password' },
-        userType: { label: 'UserType', type: 'text' },
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
+        userType: { label: "UserType", type: "text" },
       },
       async authorize(credentials: unknown) {
         try {
@@ -34,7 +34,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           const user: User = new User();
           user.parseResponse(data.user);
 
-          if (!CommonUtils.isStringNullOrEmpty(user.uuid)) {
+          if (user.uuid) {
             const result = {
               ...data.user,
               accessToken: data.token.access,
@@ -50,10 +50,10 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       },
     }),
     Credentials({
-      id: 'kakao',
-      name: 'kakao',
+      id: "kakao",
+      name: "kakao",
       credentials: {
-        code: { label: 'code', type: 'text' },
+        code: { label: "code", type: "text" },
       },
       async authorize(credentials: unknown) {
         try {
@@ -63,7 +63,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           const user: User = new User();
           user.parseResponse(data.user);
 
-          if (!CommonUtils.isStringNullOrEmpty(user.uuid)) {
+          if (user.uuid) {
             const result = {
               ...data.user,
               accessToken: data.token.access,
@@ -94,26 +94,26 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       }
 
       // AccessToken을 refresh 할 경우
-      if (getCurrentEpochTime() > token['ref']) {
+      if (getCurrentEpochTime() > token["ref"]) {
         // if (true) {
         let isRefreshed = false;
         await defaultServerInstance
           .post(`/api/users/jwt_auth/refresh/`, { refresh: token.refreshToken })
           .then((response) => {
-            token['accessToken'] = response.data.access;
-            token['ref'] = getCurrentEpochTime() + BACKEND_ACCESS_TOKEN_LIFETIME;
+            token["accessToken"] = response.data.access;
+            token["ref"] = getCurrentEpochTime() + BACKEND_ACCESS_TOKEN_LIFETIME;
             isRefreshed = true;
           });
 
         if (!isRefreshed) {
-          token['error'] = 'expired-token';
-          console.log('EXPIRED!! EXPIRED!! EXPIRED!!');
+          token["error"] = "expired-token";
+          console.log("EXPIRED!! EXPIRED!! EXPIRED!!");
         } else {
-          console.log('REFRESHED!! REFRESHED!! REFRESHED!!');
+          console.log("REFRESHED!! REFRESHED!! REFRESHED!!");
         }
       }
 
-      if (trigger === 'update') {
+      if (trigger === "update") {
         token.user = session.user;
       }
 

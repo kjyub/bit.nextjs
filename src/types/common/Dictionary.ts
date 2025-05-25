@@ -1,4 +1,4 @@
-import CommonUtils from '@/utils/CommonUtils';
+import CommonUtils from "@/utils/CommonUtils";
 
 type KeyTypes = number | string;
 
@@ -9,7 +9,7 @@ export class Dictionary<T extends KeyTypes, K> {
   constructor(_dic: Dictionary<T, K> = null) {
     // this.id = v4()
 
-    if (!CommonUtils.isNullOrUndefined(_dic)) {
+    if (_dic) {
       this.data = _dic.data;
     }
   }

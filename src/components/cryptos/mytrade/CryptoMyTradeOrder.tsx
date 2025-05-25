@@ -1,15 +1,14 @@
-'use client';
+"use client";
 
-import CryptoApi from '@/apis/api/cryptos/CryptoApi';
-import TradeGoApi from '@/apis/api/cryptos/TradeGoApi';
-import useUserInfoStore from '@/store/useUserInfo';
-import * as S from '@/styles/CryptoMyTradeStyles';
-import { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
-import { PositionType, TradeOrderTypeNames } from '@/types/cryptos/CryptoTypes';
-import TradeOrder from '@/types/cryptos/TradeOrder';
-import CommonUtils from '@/utils/CommonUtils';
-import CryptoUtils from '@/utils/CryptoUtils';
-import dayjs from 'dayjs';
+import CryptoApi from "@/apis/api/cryptos/CryptoApi";
+import TradeGoApi from "@/apis/api/cryptos/TradeGoApi";
+import useUserInfoStore from "@/store/useUserInfo";
+import * as S from "@/styles/CryptoMyTradeStyles";
+import { IUpbitMarketTicker } from "@/types/cryptos/CryptoInterfaces";
+import { PositionType, TradeOrderTypeNames } from "@/types/cryptos/CryptoTypes";
+import TradeOrder from "@/types/cryptos/TradeOrder";
+import CryptoUtils from "@/utils/CryptoUtils";
+import dayjs from "dayjs";
 
 export default function CryptoMyTradeOrder() {
   const { myTrades, updateInfo } = useUserInfoStore();
@@ -32,7 +31,7 @@ interface IOrder {
 }
 const Order = ({ order, updateInfo }: IOrder) => {
   const handleCancel = async () => {
-    if (!confirm('주문을 취소하시겠습니까?')) {
+    if (!confirm("주문을 취소하시겠습니까?")) {
       return;
     }
 
@@ -40,27 +39,27 @@ const Order = ({ order, updateInfo }: IOrder) => {
 
     if (response) {
       updateInfo();
-      alert('주문이 취소되었습니다.');
+      alert("주문이 취소되었습니다.");
     } else {
-      alert('주문 취소에 실패했습니다.');
+      alert("주문 취소에 실패했습니다.");
     }
   };
 
   const handleChase = async () => {
-    if (!confirm('주문을 추격하시겠습니까?')) {
+    if (!confirm("주문을 추격하시겠습니까?")) {
       return;
     }
 
     const market: IUpbitMarketTicker = await TradeGoApi.getMarketCurrent(order.market.code);
-    if (CommonUtils.isNullOrUndefined(market) || CommonUtils.isNullOrUndefined(String(market.trade_price))) {
-      alert('마켓 정보를 가져오는데 실패했습니다.');
+    if (!market || !String(market.trade_price)) {
+      alert("마켓 정보를 가져오는데 실패했습니다.");
       return;
     }
 
     const response = await CryptoApi.orderLimitChase(order.id, market.trade_price);
 
     if (!response) {
-      alert('주문 추격에 실패했습니다.');
+      alert("주문 추격에 실패했습니다.");
     }
     updateInfo();
   };
@@ -71,7 +70,7 @@ const Order = ({ order, updateInfo }: IOrder) => {
         <div className="left">
           <div className="datetime">
             <i className="fa-solid fa-clock"></i>
-            <span>{dayjs(order.createdDate).format('YYYY-MM-DD HH:mm:ss')}</span>
+            <span>{dayjs(order.createdDate).format("YYYY-MM-DD HH:mm:ss")}</span>
           </div>
 
           <p className="title">
@@ -114,11 +113,11 @@ const Order = ({ order, updateInfo }: IOrder) => {
           </dt>
           <dd>{CryptoUtils.getPriceText(order.size)}TW</dd>
         </S.OrderItem>
-        <S.OrderItem className={`${order.positionType === PositionType.LONG ? 'long' : 'short'}`}>
+        <S.OrderItem className={`${order.positionType === PositionType.LONG ? "long" : "short"}`}>
           <dt>
             방향 <span>Side</span>
           </dt>
-          <dd>{order.positionType === PositionType.LONG ? '롱' : '숏'}</dd>
+          <dd>{order.positionType === PositionType.LONG ? "롱" : "숏"}</dd>
         </S.OrderItem>
       </S.OrderBody>
 

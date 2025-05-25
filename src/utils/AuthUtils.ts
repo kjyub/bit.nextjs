@@ -1,35 +1,35 @@
-import UserApi from '@/apis/api/users/UserApi';
-import { SessionStorageConsts } from '@/types/ApiTypes';
-import User from '@/types/users/User';
-import { Session } from 'next-auth';
-import { UpdateSession } from 'next-auth/react';
-import CommonUtils from './CommonUtils';
+import UserApi from "@/apis/api/users/UserApi";
+import { SessionStorageConsts } from "@/types/ApiTypes";
+import User from "@/types/users/User";
+import { Session } from "next-auth";
+import { UpdateSession } from "next-auth/react";
+import CommonUtils from "./CommonUtils";
 
 export default class AuthUtils {
   static parseJwt(token: string): object {
-    if (CommonUtils.isStringNullOrEmpty(token)) {
+    if (!token) {
       return {};
     }
 
-    const base64Url = token.split('.')[1];
-    if (CommonUtils.isStringNullOrEmpty(base64Url)) {
+    const base64Url = token.split(".")[1];
+    if (!base64Url) {
       return {};
     }
 
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
     const jsonPayload = decodeURIComponent(
       atob(base64)
-        .split('')
+        .split("")
         .map((c) => {
-          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
         })
-        .join(''),
+        .join("")
     );
 
     return JSON.parse(jsonPayload);
   }
   static getTokenExpires(token: string): Date | null {
-    if (CommonUtils.isStringNullOrEmpty(token)) {
+    if (!token) {
       return null;
     }
 
@@ -42,12 +42,12 @@ export default class AuthUtils {
     }
   }
   static isExpiredToken(token: string): boolean {
-    if (CommonUtils.isStringNullOrEmpty(token)) {
+    if (!token) {
       return true;
     }
 
     const expireDate = this.getTokenExpires(token);
-    if (expireDate === null) {
+    if (!expireDate) {
       return false;
     }
 
@@ -56,7 +56,7 @@ export default class AuthUtils {
     return expireDate.getTime() <= now.getTime();
   }
   static isSessionAuth(session: Session) {
-    if (CommonUtils.isNullOrUndefined(session) || CommonUtils.isNullOrUndefined(session.user)) {
+    if (!session || !session.user) {
       return false;
     }
 
@@ -67,15 +67,15 @@ export default class AuthUtils {
     const kakaoRedirectUrl = `${baseUrl}/oauth/kakao/callback`;
     window.Kakao.Auth.authorize({
       redirectUri: kakaoRedirectUrl,
-      prompt: 'select_account',
+      prompt: "select_account",
     });
   }
-  static async getCurrentUser(session: Session | null = null, update: UpdateSession | null = null): User {
+  static async getCurrentUser(session?: Session, update?: UpdateSession): User {
     const newUser = new User();
 
     const userData = await UserApi.getUserDataSelf();
 
-    if (userData === {} || CommonUtils.isStringNullOrEmpty(userData.uuid)) {
+    if (!userData || !userData.uuid) {
       return newUser;
     }
 

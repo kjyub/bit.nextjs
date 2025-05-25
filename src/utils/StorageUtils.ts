@@ -1,15 +1,13 @@
-import CommonUtils from './CommonUtils';
-
 // 로컬, 세션 스토리지 관련 유틸
 
 export default class StorageUtils {
   static getSessionStorageList(storageKey: string): Array<any> {
-    if (CommonUtils.isStringNullOrEmpty(storageKey)) {
+    if (!storageKey) {
       return [];
     }
 
     const storageItem = sessionStorage.getItem(storageKey);
-    if (CommonUtils.isStringNullOrEmpty(storageItem)) {
+    if (!storageItem) {
       return [];
     }
 

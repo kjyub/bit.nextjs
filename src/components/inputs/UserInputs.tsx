@@ -1,7 +1,7 @@
-import { useDetectClose } from '@/hooks/useDetectClose';
-import * as S from '@/styles/UserInputStyles';
-import CommonUtils from '@/utils/CommonUtils';
-import React, { useState } from 'react';
+import { useDetectClose } from "@/hooks/useDetectClose";
+import * as S from "@/styles/UserInputStyles";
+import CommonUtils from "@/utils/CommonUtils";
+import React, { useState } from "react";
 
 interface InputProps {
   type: string;
@@ -21,15 +21,13 @@ interface InputProps {
   children?: React.ReactNode;
 }
 
-const FrontInputContainer: React.FC<InputProps> = ({ label, labelWidth = 'w-[80px]', helpText, children }) => {
+const FrontInputContainer: React.FC<InputProps> = ({ label, labelWidth = "w-[80px]", helpText, children }) => {
   return (
     <S.Layout>
       <div className="flex justify-between items-center w-full">
-        {!CommonUtils.isStringNullOrEmpty(label) && (
-          <S.Label className={`${!CommonUtils.isStringNullOrEmpty(labelWidth) ? labelWidth : ''}`}>{label}</S.Label>
-        )}
+        {label && <S.Label className={`${labelWidth ? labelWidth : ""}`}>{label}</S.Label>}
 
-        {!CommonUtils.isStringNullOrEmpty(helpText) && <S.HelpText>{helpText}</S.HelpText>}
+        {helpText && <S.HelpText>{helpText}</S.HelpText>}
       </div>
       {children}
     </S.Layout>
@@ -39,13 +37,13 @@ const FrontInputContainer: React.FC<InputProps> = ({ label, labelWidth = 'w-[80p
 export const Input: React.FC<InputProps> = ({
   type,
   label,
-  labelWidth = 'w-[80px]',
+  labelWidth = "w-[80px]",
   placeholder,
   helpText,
   autoComplete = false,
   value,
   errorMessage,
-  suffix = '',
+  suffix = "",
   onChange,
   onEnter,
   setFocus,
@@ -55,10 +53,10 @@ export const Input: React.FC<InputProps> = ({
   const [isInputFoucs, setInputFocus] = useState<boolean>(false);
 
   // 보통 상황에선 값이 있을 때만 유효성 에러 메세지 표시한다.
-  const isError = !CommonUtils.isStringNullOrEmpty(value) && !CommonUtils.isStringNullOrEmpty(errorMessage);
+  const isError = value && errorMessage;
 
   const handleEnter = (e) => {
-    if (e.key == 'Enter' && !CommonUtils.isNullOrUndefined(onEnter)) {
+    if (e.key == "Enter" && onEnter) {
       onEnter();
     }
   };
@@ -79,7 +77,7 @@ export const Input: React.FC<InputProps> = ({
             value={value}
             placeholder={placeholder}
             onChange={onChange}
-            autoComplete={autoComplete ? null : 'new-password'}
+            autoComplete={autoComplete ? null : "new-password"}
             onFocus={() => {
               handleFocus(true);
             }}
@@ -92,7 +90,7 @@ export const Input: React.FC<InputProps> = ({
           />
         </S.InputBox>
         {children}
-        {!CommonUtils.isStringNullOrEmpty(suffix) && <S.Suffix>{suffix}</S.Suffix>}
+        {suffix && <S.Suffix>{suffix}</S.Suffix>}
         {isError && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
       </S.InputContainer>
     </FrontInputContainer>
@@ -106,11 +104,11 @@ interface IBooleanInputProps extends InputProps {
 }
 export const BooleanInput: React.FC<IBooleanInputProps> = ({
   label,
-  labelWidth = 'w-[80px]',
+  labelWidth = "w-[80px]",
   value,
   setValue,
-  yesText = '예',
-  noText = '아니요',
+  yesText = "예",
+  noText = "아니요",
 }) => {
   return (
     <FrontInputContainer label={label} labelWidth={labelWidth}>
@@ -145,7 +143,7 @@ interface IComboInputProps extends InputProps {
 export const Combo: React.FC<IComboInputProps> = ({
   type,
   label,
-  labelWidth = 'w-[80px]',
+  labelWidth = "w-[80px]",
   placeholder,
   helpText,
   optionKeys,
@@ -155,12 +153,12 @@ export const Combo: React.FC<IComboInputProps> = ({
   errorMessage,
 }) => {
   // 보통 상황에선 값이 있을 때만 유효성 에러 메세지 표시한다.
-  const isError = !CommonUtils.isStringNullOrEmpty(value) && !CommonUtils.isStringNullOrEmpty(errorMessage);
+  const isError = value && errorMessage;
 
   const [optionRef, isOptionShow, setOptionShow] = useDetectClose();
 
   // 값이 선택되었는지 여부
-  const isSelected = !(CommonUtils.isStringNullOrEmpty(value) || value < 0);
+  const isSelected = value;
 
   return (
     <FrontInputContainer label={label} labelWidth={labelWidth} helpText={helpText}>
@@ -173,7 +171,7 @@ export const Combo: React.FC<IComboInputProps> = ({
           $is_active={isOptionShow}
           $is_error={isError}
         >
-          <span className={`${isSelected ? 'active' : ''}`}>{isSelected ? optionNames[value] : placeholder}</span>
+          <span className={`${isSelected ? "active" : ""}`}>{isSelected ? optionNames[value] : placeholder}</span>
           <i className="fa-solid fa-chevron-down"></i>
         </S.InputBox>
 
@@ -204,7 +202,7 @@ interface ICheckbox extends IUserInputText {
   label: string;
   disabled: boolean;
 }
-export const Checkbox = ({ value, setValue, label = '', disabled = false }: ICheckbox) => {
+export const Checkbox = ({ value, setValue, label = "", disabled = false }: ICheckbox) => {
   return (
     <div
       className="flex items-center space-x-0.5 cursor-pointer"
