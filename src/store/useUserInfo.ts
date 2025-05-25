@@ -1,8 +1,8 @@
 // store.js
-import CryptoApi from '@/apis/api/cryptos/CryptoApi';
-import UserApi from '@/apis/api/users/UserApi';
-import { IMyTradeData } from '@/types/cryptos/CryptoInterfaces';
-import { create } from 'zustand';
+import CryptoApi from "@/apis/api/cryptos/CryptoApi";
+import UserApi from "@/apis/api/users/UserApi";
+import { IMyTradeData } from "@/types/cryptos/CryptoInterfaces";
+import { create } from "zustand";
 
 const getInitData = async () => {
   const wallet = await CryptoApi.getWallet();
@@ -20,18 +20,23 @@ const getInitData = async () => {
 
 interface IUserInfoStore {
   init: () => void;
+  isAuth: boolean;
   cash: number;
   balance: number;
   locked: number;
   myTrades: IMyTradeData;
+  updateAuth: (isAuth: boolean) => void;
   updateInfo: () => Promise<void>;
 }
-const useUserInfoStore = create<IUserInfoStore>((set) => ({
+const useUserInfoStore = create<IUserInfoStore>((set, get) => ({
   init: () => {
-    getInitData().then((data) => {
-      set(data);
-    });
+    if (get().isAuth) {
+      getInitData().then((data) => {
+        set(data);
+      });
+    }
   },
+  isAuth: false,
   cash: 0,
   balance: 0,
   locked: 0,
@@ -39,8 +44,13 @@ const useUserInfoStore = create<IUserInfoStore>((set) => ({
     positions: [],
     orders: [],
   },
+  updateAuth: (isAuth: boolean) => {
+    set({ isAuth });
+  },
   updateInfo: async () => {
-    set(await getInitData());
+    if (get().isAuth) {
+      set(await getInitData());
+    }
   },
 }));
 

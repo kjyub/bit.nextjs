@@ -5,6 +5,7 @@ import { removeAxiosAuthToken, setAxiosAuthToken } from "@/apis/utils/api";
 import User from "@/types/users/User";
 import { AccountStatusTypes, LoginResponse } from "@/types/users/UserTypes";
 import { createContext, Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from "react";
+import useUserInfoStore from "../useUserInfo";
 
 interface AuthState {
   user: User;
@@ -47,6 +48,8 @@ export const AuthProvider = ({
   const [isAuth, setIsAuth] = useState<boolean>(userData);
   const [isLoading, setIsLoading] = useState<boolean>(!userData);
 
+  const updateAuth = useUserInfoStore((state) => state.updateAuth);
+
   useEffect(() => {
     if (accessToken) {
       setAxiosAuthToken(accessToken);
@@ -62,6 +65,10 @@ export const AuthProvider = ({
   useEffect(() => {
     setIsAuth(user.accountStatus === AccountStatusTypes.NORMAL);
   }, [user.accountStatus]);
+
+  useEffect(() => {
+    updateAuth(isAuth);
+  }, [isAuth]);
 
   const getUser = useCallback(
     async (isLoadingDisable: boolean = false) => {
