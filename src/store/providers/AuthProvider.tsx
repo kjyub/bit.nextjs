@@ -1,18 +1,23 @@
-'use client';
+"use client";
 
-import { removeAxiosAuthToken, setAxiosAuthToken } from '@/apis/utils/clientApis';
-import User from '@/types/users/User';
-import { useSession } from 'next-auth/react';
-import { createContext, useEffect, useState } from 'react';
+import { removeAxiosAuthToken, setAxiosAuthToken } from "@/apis/utils/clientApis";
+import User from "@/types/users/User";
+import { AccountStatusTypes } from "@/types/users/UserTypes";
+import { useSession, signOut } from "next-auth/react";
+import { createContext, useEffect, useState } from "react";
 
 interface AuthState {
   user: User;
   isLoading: boolean;
+  isAuth: boolean;
+  signOut: () => Promise<void>;
 }
 
 const initAuthState: AuthState = {
   user: new User(),
   isLoading: true,
+  isAuth: false,
+  signOut: async () => {},
 };
 
 export const AuthContext = createContext<AuthState>(initAuthState);
@@ -21,6 +26,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const { data: session, status } = useSession();
 
   const [user, setUser] = useState<User>(new User());
+  const [isAuth, setIsAuth] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -37,5 +43,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [status]);
 
-  return <AuthContext.Provider value={{ user, isLoading }}>{children}</AuthContext.Provider>;
+  useEffect(() => {
+    setIsAuth(user.accountStatus === AccountStatusTypes.NORMAL);
+  }, [user]);
+
+  const signOut = async () => {
+    await signOut();
+    setUser(new User());
+    setIsLoading(false);
+    removeAxiosAuthToken();
+  };
+
+  return <AuthContext.Provider value={{ user, isLoading, isAuth, signOut }}>{children}</AuthContext.Provider>;
 };

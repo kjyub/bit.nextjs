@@ -8,7 +8,7 @@ export const Layout = tw.div`
 
 export const BoxContainer = tw.div`
   flex flex-col items-center p-6
-  rounded-xl drop-shadow
+  rounded-sm drop-shadow
   bg-white dark:bg-slate-600/30
   border border-slate-500/20
 `;
@@ -31,10 +31,10 @@ export const AuthTypeSection = tw.div`
 `;
 
 export const SignupSection = tw.div`
-  flex flex-col w-full space-y-4
+  flex flex-col w-full gap-2
 
-  [&>.title]:text-lg [&>.title]:text-slate-800 dark:[&>.title]:text-slate-300 
-  [&>.title]:font-medium [&>.title]:text-left
+  [&>.title]:text-lg [&>.title]:text-slate-800 dark:[&>.title]:text-slate-200 
+  [&>.title]:font-semibold [&>.title]:text-left
 
   ${({ $is_active }: StyleProps) => ($is_active ? "opacity-100" : "opacity-40")} 
   duration-300

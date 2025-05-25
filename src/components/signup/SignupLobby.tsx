@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import KakaoContainer from '@/layouts/KakaoContainer';
-import KakaoImage from '@/static/svgs/btn_kakao.svg';
-import * as SS from '@/styles/SignupStyles';
-import AuthUtils from '@/utils/AuthUtils';
-import React from 'react';
-import ModalContainer from '../ModalContainer';
-import InfoModal from '../commons/InfoModal';
+import KakaoContainer from "@/layouts/KakaoContainer";
+import KakaoImage from "@/static/svgs/btn_kakao.svg";
+import * as SS from "@/styles/SignupStyles";
+import AuthUtils from "@/utils/AuthUtils";
+import ModalContainer from "../ModalContainer";
+import InfoModal from "../commons/InfoModal";
+import { useState } from "react";
 
 export default function SignupLobby() {
-  const [isShowAgreement, setShowAgreement] = React.useState<boolean>(false);
+  const [isShowAgreement, setShowAgreement] = useState<boolean>(false);
 
   const handleKakao = () => {
     AuthUtils.authKakao();
@@ -19,11 +19,11 @@ export default function SignupLobby() {
     <SS.Layout>
       <SS.BoxContainer className="space-y-2">
         <div className="flex flex-col items-center md:w-128">
-          <SS.Title>회원가입</SS.Title>
+          <SS.Title>로그인</SS.Title>
         </div>
 
         <SS.AuthTypeSection>
-          <span className="title animate-fade-in">로그인 유형을 선택해주세요</span>
+          {/* <span className="title animate-fade-in">로그인 유형을 선택해주세요</span> */}
 
           <div className="types animate-fade-in">
             <KakaoContainer>
@@ -57,7 +57,7 @@ export default function SignupLobby() {
         <InfoModal
           title="개인정보 수집 및 이용 동의"
           content={
-            '개인정보 수집 및 이용에 대한 동의 내용입니다.\n로그인 및 회원 기능 목적으로 탈퇴 후 1년까지 사용됩니다.'
+            "개인정보 수집 및 이용에 대한 동의 내용입니다.\n로그인 및 회원 기능 목적으로 탈퇴 후 1년까지 사용됩니다."
           }
         />
       </ModalContainer>

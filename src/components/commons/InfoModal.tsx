@@ -1,4 +1,3 @@
-import CommonUtils from "@/utils/CommonUtils";
 import React from "react";
 
 interface IInfoModal {

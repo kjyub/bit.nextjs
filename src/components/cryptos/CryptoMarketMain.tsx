@@ -1,17 +1,17 @@
-'use client';
-import { useUser } from '@/hooks/useUser';
-import useMarketPriceStore from '@/store/useMarketPriceStore';
-import useUserInfoStore from '@/store/useUserInfo';
-import * as S from '@/styles/CryptoMarketStyles';
-import { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
-import CryptoMarket from '@/types/cryptos/CryptoMarket';
-import { PriceChangeTypes, SizeUnitTypes } from '@/types/cryptos/CryptoTypes';
-import CryptoUtils from '@/utils/CryptoUtils';
-import Image from 'next/image';
-import { useEffect, useMemo, useState } from 'react';
-import CryptoMarketTrade from './CryptoMarketTrade';
-import CryptoMarketChart from './chart/CryptoMarketChart';
-import CryptoMyTrade from './mytrade/CryptoMyTradeMain';
+"use client";
+import { useUser } from "@/hooks/useUser";
+import useMarketPriceStore from "@/store/useMarketPriceStore";
+import useUserInfoStore from "@/store/useUserInfo";
+import * as S from "@/styles/CryptoMarketStyles";
+import { IUpbitMarketTicker } from "@/types/cryptos/CryptoInterfaces";
+import CryptoMarket from "@/types/cryptos/CryptoMarket";
+import { PriceChangeTypes, SizeUnitTypes } from "@/types/cryptos/CryptoTypes";
+import CryptoUtils from "@/utils/CryptoUtils";
+import Image from "next/image";
+import { useEffect, useMemo, useState } from "react";
+import CryptoMarketTrade from "./CryptoMarketTrade";
+import CryptoMarketChart from "./chart/CryptoMarketChart";
+import CryptoMyTrade from "./mytrade/CryptoMyTradeMain";
 
 interface ICryptoMarket {
   marketCode: string;
@@ -20,7 +20,7 @@ interface ICryptoMarket {
   communityNode: React.ReactNode;
 }
 export default function CryptoMarketMain({ marketCode, marketData, marketCurrent, communityNode }: ICryptoMarket) {
-  const { user } = useUser();
+  const { user, isAuth } = useUser();
   const { updateInfo } = useUserInfoStore();
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function CryptoMarketMain({ marketCode, marketData, marketCurrent
 
   // 설정 정보
   const [sizeUnitType, setSizeUnitType] = useState<SizeUnitTypes>(SizeUnitTypes.PRICE); // 단위 타입
-  const imageCode = marketCode.split('-')[1];
+  const imageCode = marketCode.split("-")[1];
 
   if (Object.keys(marketCurrent).length === 0) {
     return;
@@ -45,6 +45,7 @@ export default function CryptoMarketMain({ marketCode, marketData, marketCurrent
           <S.ChartLayout>
             <CryptoMarketChart marketCode={marketCode} />
           </S.ChartLayout>
+
           <S.TradeLayout>
             <CryptoMarketTrade
               user={user}
@@ -75,8 +76,8 @@ interface MarketInfoProps {
 }
 const MarketInfo = ({ marketCode, marketData, marketCurrent }: MarketInfoProps) => {
   // 현재 시장 정보
-  const imageCode = marketCode.split('-')[1];
-  const currency = marketCode.split('-')[0];
+  const imageCode = marketCode.split("-")[1];
+  const currency = marketCode.split("-")[0];
 
   const socketData = useMarketPriceStore((state) => state.marketDic[marketCode]);
   const [market, setMarket] = useState<CryptoMarket>(new CryptoMarket());
@@ -108,10 +109,10 @@ const MarketInfo = ({ marketCode, marketData, marketCurrent }: MarketInfoProps) 
       setTitleSticky(window.scrollY > 56);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -127,7 +128,7 @@ const MarketInfo = ({ marketCode, marketData, marketCurrent }: MarketInfoProps) 
   }, [price]);
 
   const handleScrollTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -153,7 +154,7 @@ const MarketInfo = ({ marketCode, marketData, marketCurrent }: MarketInfoProps) 
         {/* 코인 가격 */}
         <S.MainPriceBox
           className={`${
-            changeType === PriceChangeTypes.RISE ? 'rise' : changeType === PriceChangeTypes.FALL ? 'fall' : ''
+            changeType === PriceChangeTypes.RISE ? "rise" : changeType === PriceChangeTypes.FALL ? "fall" : ""
           } change`}
         >
           {/* tailwind 변수 테스트 */}

@@ -2,7 +2,9 @@
 
 import CryptoApi from "@/apis/api/cryptos/CryptoApi";
 import * as I from "@/components/inputs/TradeInputs";
+import { useUser } from "@/hooks/useUser";
 import useMarketPriceStore from "@/store/useMarketPriceStore";
+import useToastMessageStore from "@/store/useToastMessageStore";
 import useUserInfoStore from "@/store/useUserInfo";
 import * as S from "@/styles/CryptoTradeStyles";
 import { TextFormats } from "@/types/CommonTypes";
@@ -20,7 +22,7 @@ import {
 import User from "@/types/users/User";
 import CommonUtils from "@/utils/CommonUtils";
 import TypeUtils from "@/utils/TypeUtils";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const R = 0.005; // 유지 증거금률
 
@@ -38,6 +40,9 @@ export default function CryptoMarketTrade({
   sizeUnitType,
   setSizeUnitType,
 }: ICryptoMarketTrade) {
+  const createToastMessage = useToastMessageStore((state) => state.createMessage);
+
+  const { isAuth } = useUser();
   const { balance, locked, updateInfo, myTrades } = useUserInfoStore();
   const userBudget = balance - locked;
   const maxCost = userBudget * MAX_COST_RATIO;
@@ -97,60 +102,57 @@ export default function CryptoMarketTrade({
     setPrice(marketPrice);
   };
 
-  const handleTrade = useCallback(
-    async (_positionType: PositionTypeValues) => {
-      if (!user.uuid) {
-        alert("로그인이 필요합니다.");
-        return;
-      }
+  const handleTrade = async (_positionType: PositionTypeValues) => {
+    if (!isAuth) {
+      createToastMessage("로그인이 필요합니다.");
+      return;
+    }
 
-      const errorMessages: Array<string> = [];
-      if (cost <= 0) {
-        errorMessages.push("거래수량을 입력해주세요.");
-      }
-      if (price <= 0) {
-        errorMessages.push("거래 가격을 입력해주세요.");
-      }
-      if (leverageRatio <= 0) {
-        errorMessages.push("레버리지를 입력해주세요.");
-      }
-      if (cost > maxCost) {
-        errorMessages.push("잔액이 부족합니다.");
-      }
-      if (errorMessages.length > 0) {
-        alert(errorMessages.join("\n"));
-        return;
-      }
+    const errorMessages: Array<string> = [];
+    if (cost <= 0) {
+      errorMessages.push("거래수량을 입력해주세요.");
+    }
+    if (price <= 0) {
+      errorMessages.push("거래 가격을 입력해주세요.");
+    }
+    if (leverageRatio <= 0) {
+      errorMessages.push("레버리지를 입력해주세요.");
+    }
+    if (cost > maxCost) {
+      errorMessages.push("잔액이 부족합니다.");
+    }
+    if (errorMessages.length > 0) {
+      alert(errorMessages.join("\n"));
+      return;
+    }
 
-      const data = {
-        market_code: marketCode,
-        trade_type: TradeType.OPEN,
-        margin_mode: marginMode,
-        position_type: _positionType,
-        cost: cost,
-        price: price,
-        quantity: quantity,
-        size: size,
-        leverage: leverageRatio,
-        size_unit_type: sizeUnitType,
-      };
+    const data = {
+      market_code: marketCode,
+      trade_type: TradeType.OPEN,
+      margin_mode: marginMode,
+      position_type: _positionType,
+      cost: cost,
+      price: price,
+      quantity: quantity,
+      size: size,
+      leverage: leverageRatio,
+      size_unit_type: sizeUnitType,
+    };
 
-      let result = false;
-      if (orderType === TradeOrderType.LIMIT) {
-        result = await CryptoApi.orderLimit(data);
-      } else if (orderType === TradeOrderType.MARKET) {
-        result = await CryptoApi.orderMarket(data);
-      }
+    let result = false;
+    if (orderType === TradeOrderType.LIMIT) {
+      result = await CryptoApi.orderLimit(data);
+    } else if (orderType === TradeOrderType.MARKET) {
+      result = await CryptoApi.orderMarket(data);
+    }
 
-      if (result) {
-        alert("거래가 성공적으로 완료되었습니다.");
-        updateInfo();
-      } else {
-        alert("거래에 실패하였습니다.");
-      }
-    },
-    [user, marginMode, orderType, marketCode, cost, price, quantity, size, leverageRatio, sizeUnitType, maxCost]
-  );
+    if (result) {
+      createToastMessage("거래가 성공적으로 완료되었습니다.");
+      updateInfo();
+    } else {
+      createToastMessage("거래에 실패하였습니다.");
+    }
+  };
 
   return (
     <S.TradeBox>

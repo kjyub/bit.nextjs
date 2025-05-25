@@ -1,6 +1,6 @@
-import { TOAST_MESSAGE_ANIMATION_DURATION, TOAST_MESSAGE_DURATION } from '@/constants/ToastConsts';
-import React from 'react';
-import { create } from 'zustand';
+import { TOAST_MESSAGE_ANIMATION_DURATION, TOAST_MESSAGE_DURATION } from "@/constants/ToastConsts";
+import React from "react";
+import { create } from "zustand";
 
 export interface ToastMessage {
   key: number;
@@ -9,11 +9,11 @@ export interface ToastMessage {
 
 interface IToastMessageStore {
   messages: ToastMessage[];
-  addMessage: (content: string | React.ReactNode) => void;
+  createMessage: (content: string | React.ReactNode) => void;
 }
 const useToastMessageStore = create<IToastMessageStore>((set) => ({
   messages: [],
-  addMessage: (content: string | React.ReactNode) => {
+  createMessage: (content: string | React.ReactNode) => {
     const timestamp = new Date().getTime();
 
     const message: ToastMessage = {
