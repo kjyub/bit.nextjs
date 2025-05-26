@@ -2,8 +2,6 @@
 
 import useTradeMarketSocket from '@/hooks/sockets/useTradeMarketSocket';
 
-export default function CryptoClientLayout({ children }: { children: React.ReactNode }) {
+export default function CryptoClientLayout() {
   useTradeMarketSocket();
-
-  return children;
 }

@@ -8,9 +8,7 @@ const getInitData = async () => {
 };
 
 interface IMarketPriceStore {
-  marketDic: {
-    [key: string]: IUpbitMarketTicker;
-  };
+  marketDic: Record<string, IUpbitMarketTicker>;
   initMarketPriceData: () => Promise<void>;
   marketPriceSocket: WebSocket | null;
   connectMarketPriceSocket: () => void;

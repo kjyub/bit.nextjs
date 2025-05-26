@@ -1,4 +1,5 @@
 import CryptoMarketList from '@/components/cryptos/CryptoMarketList';
+import CryptoMarketListWrapper from '@/components/cryptos/CryptoMarketListWrapper';
 import CryptoNavigation from '@/components/cryptos/CryptoNavigation';
 import CryptoFallback from '@/components/fallbacks/CryptoFallback';
 import CryptoClientLayout from '@/layouts/CryptoClientLayout';
@@ -8,21 +9,24 @@ import { Suspense } from 'react';
 
 export default function CryptoLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <CryptoClientLayout>
-      <MS.PageLayout>
-        <div className="flex w-full h-10 bg-red-500"></div>
-        <S.Layout>
+    <MS.PageLayout>
+      <div className="flex flex-col justify-center">
+        <div className="flex w-full pb-2 mt-4 border-b border-slate-600/50">
+          <CryptoNavigation />
+        </div>
+
+        <div className="flex justify-center">
           <Suspense fallback={<CryptoFallback />}>{children}</Suspense>
 
-          <S.MarketListLayout>
-            <div className="py-2 border-b border-slate-600/50">
-              <CryptoNavigation />
-            </div>
-
-            <CryptoMarketList />
-          </S.MarketListLayout>
-        </S.Layout>
-      </MS.PageLayout>
-    </CryptoClientLayout>
+          <CryptoMarketListWrapper>
+            <S.MarketListLayout>
+              <CryptoMarketList />
+            </S.MarketListLayout>
+          </CryptoMarketListWrapper>
+        </div>
+      </div>
+      
+      <CryptoClientLayout />
+    </MS.PageLayout>
   );
 }

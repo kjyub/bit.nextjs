@@ -36,26 +36,6 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   reactStrictMode: false, // RootLayout 2번 실행되므로 false
-  swcMinify: true,
-  webpack: (config) => {
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: ['@svgr/webpack'],
-    });
-
-    return config;
-  },
-  // turbopack 관련 추가 사항 (webpack 설정)
-  experimental: {
-    turbo: {
-      rules: {
-        '*.svg': {
-          loaders: ['@svgr/webpack'],
-          as: '*.ts',
-        },
-      },
-    },
-  },
   async headers() {
     return [
       {
