@@ -1,5 +1,5 @@
-import CryptoMarketList from '@/components/cryptos/CryptoMarketList';
-import CryptoMarketListWrapper from '@/components/cryptos/CryptoMarketListWrapper';
+import CryptoMarketList from '@/components/cryptos/market-list/CryptoMarketList';
+import CryptoMarketListWrapper from '@/components/cryptos/market-list/CryptoMarketListWrapper';
 import CryptoNavigation from '@/components/cryptos/CryptoNavigation';
 import CryptoFallback from '@/components/fallbacks/CryptoFallback';
 import CryptoClientLayout from '@/layouts/CryptoClientLayout';
@@ -12,7 +12,9 @@ export default function CryptoLayout({ children }: Readonly<{ children: React.Re
     <MS.PageLayout>
       <div className="flex flex-col justify-center">
         <div className="flex w-full pb-2 mt-4 border-b border-slate-600/50">
-          <CryptoNavigation />
+          <Suspense>
+            <CryptoNavigation />
+          </Suspense>
         </div>
 
         <div className="flex justify-center">
@@ -25,7 +27,7 @@ export default function CryptoLayout({ children }: Readonly<{ children: React.Re
           </CryptoMarketListWrapper>
         </div>
       </div>
-      
+
       <CryptoClientLayout />
     </MS.PageLayout>
   );

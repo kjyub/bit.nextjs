@@ -1,5 +1,3 @@
-'use client';
-
 import useMarketPriceStore from '@/store/useMarketPriceStore';
 import useToastMessageStore from '@/store/useToastMessageStore';
 import { useEffect, useState } from 'react';
