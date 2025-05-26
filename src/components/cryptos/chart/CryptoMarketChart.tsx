@@ -204,14 +204,14 @@ export default function CryptoMarketChart({ marketCode }: ICryptoMarketChart) {
   const connectChart = useTradeMarketChartSocket(marketCode, addCandle);
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex flex-col h-full">
       <CryptoMarketChartControlBar
         timeType={timeType}
         chartType={chartType}
         setChartType={setChartType}
         initChart={initChart}
       />
-      <div className="relative w-full h-full">
+      <div className="relative h-full select-none touch-none">
         <CryptoMarketFinancialChart
           timeType={timeType}
           chartType={chartType}

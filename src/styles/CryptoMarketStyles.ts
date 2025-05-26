@@ -2,56 +2,51 @@ import { StyleProps } from '@/types/StyleTypes';
 import Link from 'next/link';
 import tw from 'tailwind-styled-components';
 
-export const Layout = tw.div`
-  flex justify-center w-full
-`;
-
 export const MarketLayout = tw.div`
-  flex flex-col flex-1 max-w-[1280px] py-4 space-y-4
+  flex flex-col flex-1 max-xl:w-full max-w-xl:max-w-full xl:w-[1280px] pb-16 md:space-y-4
   [&>div]:px-4
 `;
 
 // 제목, 차트, 거래를 담는 레이아웃
 export const MainLayout = tw.div`
-  flex flex-col w-full h-[608px] p-1 space-y-2
+  flex flex-col w-full p-1 space-y-2
 `;
 // 코인 이름 및 가격 정보
 export const TitleLayout = tw.div<StyleProps>`
   sticky top-[56px] z-30
-  flex justify-between items-center w-full
+  flex max-md:flex-col max-md:justify-center md:justify-between md:items-center w-full max-md:h-22 md:h-32
   border-b
 
-  ${({ $is_active }: StyleProps) =>
-    $is_active ? 'h-32 border-slate-500/20 backdrop-blur-lg' : 'h-32 border-transparent'}
+  ${({ $is_active }: StyleProps) => ($is_active ? 'border-slate-500/20 backdrop-blur-lg' : 'border-transparent')}
 
   duration-300
 `;
 
 export const ChartAndTradeLayout = tw.div`
-  flex w-full h-full space-x-4
+  flex max-md:flex-col w-full h-full gap-4
 `;
 export const ChartLayout = tw.div`
-  flex flex-col flex-1 h-full p-3
+  flex flex-col max-md:h-[400px] md:h-full p-3
   rounded-lg bg-slate-800/60
 `;
 export const TradeLayout = tw.div`
-  flex flex-col w-64 h-full
+  flex flex-col max-md:w-full md:flex-1 md:max-w-[264px] max-md:h-[600px] md:h-full max-md:px-2
 `;
 
 export const BottomLayout = tw.div`
-  flex w-full space-x-4
+  flex w-full gap-4 max-md:mt-4
 `;
 export const MyTradeLayout = tw.div`
-  sticky top-56
+  md:sticky md:top-56
   flex flex-col flex-1
 `;
 export const CommunityLayout = tw.div`
-  flex flex-col w-128 min-h-[10rem]
+  max-lg:hidden lg:flex flex-col w-128 min-h-[10rem]
 `;
 
 export const MarketListLayout = tw.div`
   sticky top-14 z-0
-  flex flex-col w-96 h-[calc(100vh-8rem)] p-4 space-y-4
+  flex flex-col w-96 h-[calc(100vh-8rem)] p-4 pt-8 space-y-4
 `;
 
 export const MarketListBox = tw.div`
@@ -117,22 +112,23 @@ export const MainTitleBox = tw.div`
 `;
 
 export const MainPriceBox = tw.div`
-  flex items-baseline space-x-2
-  divide-x divide-slate-700
+  flex items-baseline gap-1
   text-slate-200
   [&.rise]:text-red-500 [&.fall]:text-blue-500
 
-  [&>.price]:text-2xl [&>.price>.currency]:text-sm
+  max-md:[&>.price]:text-xl md:[&>.price]:text-2xl [&>.price>.currency]:text-sm
+  [&>.price]:font-semibold
   [&>.change]:flex [&>.change]:items-baseline [&>.change]:pl-2 [&>.change]:space-x-1
-  [&>.change>.rate]:text-lg
-  [&>.change>.price]:text-lg [&>.change>.price>.currency]:text-xs [&>.change>.price]:font-light
+  max-md:[&>.change]:text-base md:[&>.change]:text-xl
+  [&>.change>.price>.currency]:text-xs [&>.change>.price]:font-light
 `;
 
 export const MainPriceInfoGrid = tw.div`
-  grid grid-cols-2 gap-3
+  flex gap-3
 
-  [&>div]:flex [&>div]:justify-between [&>div]:items-center [&>div]:w-full
-  [&>div>.label]:w-20 [&>div>.label]:text-sm [&>div>.label]:text-slate-400 [&>div>.label]:font-light
-  [&>div>.value]:text-slate-300 [&>div>.value]:text-right
-  [&>div>.value.rise]:text-red-500 [&>div>.value.fall]:text-blue-500
+  [&>div]:flex [&>div]:flex-col [&>div]:gap-3
+  [&_dl]:flex [&_dl]:justify-between [&_dl]:items-center [&_dl]:w-full
+  [&_dt]:text-sm [&_dt]:text-slate-400 [&_dt]:font-light
+  [&_dd]:text-slate-300 [&_dd]:text-right
+  [&_dd.rise]:text-red-500 [&_dd.fall]:text-blue-500
 `;

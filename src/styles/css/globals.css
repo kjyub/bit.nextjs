@@ -25,6 +25,9 @@
   --color-kakao-container: #fee500;
   --color-kakao-symbol: #000000;
   --color-kakao-text: rgba(0, 0, 0, 0.85);
+
+  --breakpoint-xl: 1280px;
+  --breakpoint-full: 1700px;
 }
 
 @layer base {
@@ -108,7 +111,7 @@
     outline-offset: none !important;
   }
 
-  ::-webkit-scrollbar {
+  /* ::-webkit-scrollbar {
     width: 9px;
     height: 9px;
     background-color: transparent;
@@ -135,7 +138,7 @@
   }
   ::-webkit-scrollbar-thumb:hover {
     background-color: rgb(50, 62, 79);
-  }
+  } */
 }
 
 @layer utilities {

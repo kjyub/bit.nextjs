@@ -1,9 +1,9 @@
-import useMarketPriceStore from "@/store/useMarketPriceStore";
-import CryptoMarket from "@/types/cryptos/CryptoMarket";
-import CryptoUtils from "@/utils/CryptoUtils";
-import { memo, useEffect, useState } from "react";
+import useMarketPriceStore from '@/store/useMarketPriceStore';
 import * as S from '@/styles/CryptoMarketStyles';
-import { PriceChangeTypes } from "@/types/cryptos/CryptoTypes";
+import CryptoMarket from '@/types/cryptos/CryptoMarket';
+import { PriceChangeTypes } from '@/types/cryptos/CryptoTypes';
+import CryptoUtils from '@/utils/CryptoUtils';
+import { memo, useEffect, useState } from 'react';
 
 interface Props {
   market: CryptoMarket;
@@ -60,4 +60,4 @@ export default memo(function Market({ market }: Props) {
       </div>
     </S.MarketListItem>
   );
-})
+});

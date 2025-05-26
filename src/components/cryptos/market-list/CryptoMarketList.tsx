@@ -5,16 +5,16 @@ import TradeGoApi from '@/apis/api/cryptos/TradeGoApi';
 import * as S from '@/styles/CryptoMarketStyles';
 import { OrderTypeValues, OrderTypes } from '@/types/common/CommonTypes';
 import CryptoMarket from '@/types/cryptos/CryptoMarket';
-import {
-  MarketSortTypeValues,
-  MarketSortTypes,
-  MarketTypes,
-} from '@/types/cryptos/CryptoTypes';
+import { MarketSortTypeValues, MarketSortTypes, MarketTypes } from '@/types/cryptos/CryptoTypes';
 import { Suspense, useCallback, useEffect, useState } from 'react';
-import MarketSortType from './MarketSortType';
 import Market from './Market';
+import MarketSortType from './MarketSortType';
 
-const getSortedCodes = async (marketDic: Record<string, CryptoMarket>, sortType: MarketSortTypeValues, orderType: OrderTypeValues): Promise<string[]> => {
+const getSortedCodes = async (
+  marketDic: Record<string, CryptoMarket>,
+  sortType: MarketSortTypeValues,
+  orderType: OrderTypeValues,
+): Promise<string[]> => {
   const currentMarketData = await TradeGoApi.getMarketsCurrentDic();
 
   return Object.keys(marketDic).sort((a, b) => {
@@ -51,16 +51,17 @@ const getFilteredMarkets = (_search: string, _markets: Array<CryptoMarket>): Set
   }
 
   const keys = new Set<string>();
-  _markets.filter((market) => {
-    return (
-      market.koreanName.includes(_search) ||
-      market.englishName.includes(_search) ||
-      market.code.includes(_search.toUpperCase())
-    );
-  })
-  .map((market) => {
-    keys.add(market.code);
-  });
+  _markets
+    .filter((market) => {
+      return (
+        market.koreanName.includes(_search) ||
+        market.englishName.includes(_search) ||
+        market.code.includes(_search.toUpperCase())
+      );
+    })
+    .map((market) => {
+      keys.add(market.code);
+    });
 
   return keys;
 };
@@ -113,7 +114,11 @@ export default function CryptoMarketList() {
   );
 }
 
-const List = ({ search, sortType, orderType }: { search: string, sortType: MarketSortTypeValues, orderType: OrderTypeValues }) => {
+const List = ({
+  search,
+  sortType,
+  orderType,
+}: { search: string; sortType: MarketSortTypeValues; orderType: OrderTypeValues }) => {
   const [marketDic, setMarketDic] = useState<Record<string, CryptoMarket>>({}); // 코인 목록
   const [marketFilteredCodeSet, setMarketFilteredCodeSet] = useState<Set<string>>(new Set<string>()); // 검색한 코인 목록
   const [marketType, _setMarketType] = useState<MarketTypes>(MarketTypes.KRW); // 마켓 종류 (KRW, BTC, USDT, HOLD)
@@ -124,13 +129,13 @@ const List = ({ search, sortType, orderType }: { search: string, sortType: Marke
   }, [marketType]);
 
   useEffect(() => {
-    const filteredSet = getFilteredMarkets(search, Object.values({...marketDic}));
+    const filteredSet = getFilteredMarkets(search, Object.values({ ...marketDic }));
     setMarketFilteredCodeSet(filteredSet);
   }, [search]);
 
   useEffect(() => {
     (async () => {
-      const _sortedCodes = await getSortedCodes({...marketDic}, sortType, orderType);
+      const _sortedCodes = await getSortedCodes({ ...marketDic }, sortType, orderType);
       setSortedCodes(_sortedCodes);
     })();
   }, [marketDic, orderType, sortType]);
@@ -161,8 +166,8 @@ const List = ({ search, sortType, orderType }: { search: string, sortType: Marke
           <Market key={marketCode} market={marketDic[marketCode]} />
         ))}
     </div>
-  )
-}
+  );
+};
 
 // interface IMarketType {
 //   marketType: MarketTypeValues
@@ -176,4 +181,3 @@ const List = ({ search, sortType, orderType }: { search: string, sortType: Marke
 //     </button>
 //   )
 // }
-

@@ -24,6 +24,7 @@ import {
   mouseBasedZoomAnchor,
 } from 'react-financial-charts'
 import { CandleTimeType, CandleTimes, ChartType, ChartTypes } from './Types'
+import useBreakpoint from '@/hooks/useBreakpoint'
 
 interface IElderRay {
   bearPower: number
@@ -44,8 +45,13 @@ interface IChartData {
 }
 
 const WIDTH = 944
-const HEIGHT = 540
-const CHART_HEIGHT = 420
+const PADDING_WIDTH = 48
+const TRADE_WIDTH = 280
+const HEIGHT_DESKTOP = 540
+const HEIGHT_MOBILE = 360
+const CHART_HEIGHT_DESKTOP = 420
+const CHART_HEIGHT_MOBILE = 240
+const VOLUME_CHART_HEIGHT = 62
 const MARGIN = { left: 0, right: 100, top: 12, bottom: 12 }
 
 const AXIS_COLOR = 'oklch(0.554 0.046 257.417 / 0.3)'
@@ -56,7 +62,7 @@ const EMA26_COLOR = '#15bd39'
 
 const AREA_STROKE_COLOR = '#7f22fe'
 const areaGradient = (ctx: CanvasRenderingContext2D, _moreProps: any) => {
-  const areaGradient = ctx.createLinearGradient(0, 0, 0, CHART_HEIGHT)
+  const areaGradient = ctx.createLinearGradient(0, 0, 0, CHART_HEIGHT_DESKTOP)
   areaGradient.addColorStop(0, 'rgba(127, 34, 2547, 0.95)')
   areaGradient.addColorStop(1, 'rgba(127, 34, 2547, 0.1)')
 
@@ -185,7 +191,6 @@ const volumeSeries = (data: IChartData): IChartData => {
   return data.volume
 }
 
-const VOLUME_CHART_HEIGHT = 62
 const volumeChartOrigin = (_: number, h: number) => [0, h - VOLUME_CHART_HEIGHT - 8]
 
 interface ICryptoMarketFinancialChart {
@@ -202,8 +207,37 @@ export default function CryptoMarketFinancialChart({
 }: ICryptoMarketFinancialChart) {
   const chartCanvasRef = useRef<ChartCanvas | null>(null)
 
+  const { breakpointState, width: windowWidth } = useBreakpoint();
+  const [width, setWidth] = useState(WIDTH);
+  const [height, setHeight] = useState(HEIGHT_DESKTOP);
+  const [chartHeight, setChartHeight] = useState(CHART_HEIGHT_DESKTOP);
+
   const [{ data, xScale, xAccessor, displayXAccessor }, setScaleData] = useState<TimeScaleProvider>({})
   const [xExtents, setXExtents] = useState<number[]>([0, 0])
+
+  useEffect(() => {
+    if (!breakpointState.sm) {
+      setWidth(windowWidth - PADDING_WIDTH)
+      setHeight(HEIGHT_MOBILE)
+      setChartHeight(CHART_HEIGHT_MOBILE)
+    } else if (breakpointState.sm && !breakpointState.md) {
+      setWidth(windowWidth - PADDING_WIDTH)
+      setHeight(HEIGHT_MOBILE)
+      setChartHeight(CHART_HEIGHT_MOBILE)
+    } else if (breakpointState.md && !breakpointState.lg) {
+      setWidth(768 - PADDING_WIDTH - TRADE_WIDTH)
+      setHeight(HEIGHT_DESKTOP)
+      setChartHeight(CHART_HEIGHT_DESKTOP)
+    } else if (breakpointState.lg && !breakpointState.xl) {
+      setWidth(1024 - PADDING_WIDTH - TRADE_WIDTH)
+      setHeight(HEIGHT_DESKTOP)
+      setChartHeight(CHART_HEIGHT_DESKTOP)
+    } else {
+      setWidth(WIDTH)
+      setHeight(HEIGHT_DESKTOP)
+      setChartHeight(CHART_HEIGHT_DESKTOP)
+    }
+  }, [breakpointState, windowWidth])
 
   useEffect(() => {
     if (!chartCanvasRef.current) {
@@ -260,8 +294,8 @@ export default function CryptoMarketFinancialChart({
     <ChartCanvas
       key={timeType}
       ref={chartCanvasRef}
-      width={WIDTH}
-      height={HEIGHT}
+      width={width}
+      height={height}
       margin={MARGIN}
       ratio={2}
       padding={{ left: 0, right: 48, top: 24, bottom: 24 }}
@@ -276,7 +310,7 @@ export default function CryptoMarketFinancialChart({
       zoomAnchor={mouseBasedZoomAnchor}
       onLoadBefore={onLoadBefore}
     >
-      <Chart id="crypto-chart-candle" className="text-violet-600" height={CHART_HEIGHT} yExtents={candleChartExtents}>
+      <Chart id="crypto-chart-candle" className="text-violet-600" height={chartHeight} yExtents={candleChartExtents}>
         <XAxis
           showGridLines
           showTickLabel={true}
