@@ -79,24 +79,31 @@ const History = ({ history }: IHistory) => {
   return (
     <S.OrderBox>
       <S.OrderHeader>
-        <div className="left">
-          <div className="datetime">
-            <i className="fa-solid fa-clock"></i>
-            <span>{dayjs(history.createdDate).format('YYYY-MM-DD HH:mm:ss')}</span>
-          </div>
-
-          <div className={`position ${history.positionType === PositionType.LONG ? 'long' : 'short'}`}>
-            {history.positionType === PositionType.LONG ? 'LONG' : 'SHORT'}
-          </div>
-
-          <p className="title">
-            <span className="korean">{history.order.market.koreanName}</span>
-            <span className="code">{history.order.market.code}</span>
-          </p>
+        <div className="sm:!hidden datetime">
+          <i className="fa-solid fa-clock"></i>
+          <span>{dayjs(history.createdDate).format('YYYY-MM-DD HH:mm:ss')}</span>
         </div>
 
-        <div className="right">
-          <div className="value">{TradeOrderTypeNames[history.orderType]}</div>
+        <div className="row">
+          <div className="section">
+            <div className="max-sm:!hidden datetime">
+              <i className="fa-solid fa-clock"></i>
+              <span>{dayjs(history.createdDate).format('YYYY-MM-DD HH:mm:ss')}</span>
+            </div>
+
+            <div className={`position ${history.positionType === PositionType.LONG ? 'long' : 'short'}`}>
+              {history.positionType === PositionType.LONG ? 'LONG' : 'SHORT'}
+            </div>
+
+            <p className="title">
+              <span className="korean">{history.order.market.koreanName}</span>
+              <span className="code">{history.order.market.code}</span>
+            </p>
+          </div>
+
+          <div className="section">
+            <div className="info">{TradeOrderTypeNames[history.orderType]}</div>
+          </div>
         </div>
       </S.OrderHeader>
 

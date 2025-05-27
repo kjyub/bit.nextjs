@@ -5,7 +5,7 @@ import { useIsScrollUp } from '@/hooks/useIsScrollUp';
 import * as NS from '@/styles/NavigationStyles';
 import { StyleProps } from '@/types/StyleTypes';
 import Link from 'next/link';
-import { usePathname, useParams } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import tw from 'tailwind-styled-components';
 
 const Layout = tw.div<StyleProps>`
@@ -20,7 +20,7 @@ const Navigation = () => {
   const pathname = usePathname();
   const params = useParams();
   const { isShowMarketList, setIsShowMarketList } = useCryptoUi();
-  
+
   // 현재 URL에서 code 파라미터를 가져오거나 기본값 사용
   const currentCode = params?.code || 'KRW-BTC';
 
@@ -34,11 +34,17 @@ const Navigation = () => {
         <i className="fa-solid fa-arrow-trend-up"></i>
         <span>거래소</span>
       </Link>
-      <Link href={`/crypto/${currentCode}/community`} className={`btn ${pathname === `/crypto/${currentCode}/community` ? 'active' : ''}`}>
+      <Link
+        href={`/crypto/${currentCode}/community`}
+        className={`btn ${pathname === `/crypto/${currentCode}/community` ? 'active' : ''}`}
+      >
         <i className="fa-solid fa-comments"></i>
         <span>토론방</span>
       </Link>
-      <button className={`btn full:!hidden ml-auto ${isShowMarketList ? 'active' : ''}`} onClick={() => setIsShowMarketList(!isShowMarketList)}>
+      <button
+        className={`btn full:!hidden ml-auto ${isShowMarketList ? 'active' : ''}`}
+        onClick={() => setIsShowMarketList(!isShowMarketList)}
+      >
         <i className="fa-solid fa-magnifying-glass"></i>
         <span>종목 검색</span>
       </button>
@@ -58,7 +64,7 @@ export const CryptoNavigation = () => {
 
 const MobileLayout = tw.div<StyleProps>`
   fixed inset-x-0 bottom-15 z-40 
-  flex justify-center w-full
+  max-md:flex md:hidden justify-center w-full
   duration-300
 
   ${({ $is_active }: StyleProps) => ($is_active ? '' : 'translate-y-28')}

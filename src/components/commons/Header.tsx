@@ -25,7 +25,10 @@ export default function Header() {
           <Link href="/" className={CommonUtils.isPathActive(pathname, '/') ? 'active' : ''}>
             <span>홈</span>
           </Link>
-          <Link href={isAuth ? '/crypto' : `/crypto/${DEFAULT_MARKET_CODE}`} className={CommonUtils.isPathActive(pathname, '/crypto') ? 'active' : ''}>
+          <Link
+            href={isAuth ? '/crypto' : `/crypto/${DEFAULT_MARKET_CODE}`}
+            className={CommonUtils.isPathActive(pathname, '/crypto') ? 'active' : ''}
+          >
             <span>암호화폐 거래</span>
           </Link>
         </NS.Section>
@@ -44,7 +47,10 @@ export default function Header() {
           ) : (
             // 비회원
             <>
-              <Link href="/auth" className={`btn ${CommonUtils.isPathActive(pathname, '/auth') ? 'active' : ''} bg-slate-100/10 hover:!bg-slate-100/20 !text-slate-300/80`}>
+              <Link
+                href="/auth"
+                className={`btn ${CommonUtils.isPathActive(pathname, '/auth') ? 'active' : ''} bg-slate-100/10 hover:!bg-slate-100/20 !text-slate-300/80`}
+              >
                 <span>로그인 / 가입</span>
               </Link>
             </>

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import tw from 'tailwind-styled-components';
 
 export const MarketLayout = tw.div`
-  flex flex-col flex-1 max-xl:w-full max-w-xl:max-w-full xl:w-[1280px] pb-16 md:space-y-4
+  flex flex-col flex-1 max-xl:w-full max-w-xl:max-w-full xl:w-[1280px] pb-32 md:space-y-4
   [&>div]:px-4
 `;
 
@@ -34,7 +34,7 @@ export const TradeLayout = tw.div`
 `;
 
 export const BottomLayout = tw.div`
-  flex w-full gap-4 max-md:mt-4
+  flex w-full gap-4 max-md:mt-4 max-md:!px-2
 `;
 export const MyTradeLayout = tw.div`
   md:sticky md:top-56

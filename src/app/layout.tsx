@@ -26,9 +26,11 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const accessToken = await AuthServerUtils.getAccessToken();
+  console.log(accessToken);
   setAxiosAuthToken(accessToken);
 
   const userData = await UserApi.getUserDataSelf();
+  console.log(userData);
 
   return (
     <html lang="en">

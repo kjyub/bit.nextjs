@@ -125,22 +125,32 @@ const Position = ({ position, userBudget }: IPosition) => {
   return (
     <S.PositionBox>
       <S.PositionHeader>
-        <div className="left">
-          <div className={`position ${position.positionType === PositionType.LONG ? 'long' : 'short'}`}>
-            {position.positionType === PositionType.LONG ? 'LONG' : 'SHORT'}
+        <div className="row">
+          <div className="section">
+            <div className={`position ${position.positionType === PositionType.LONG ? 'long' : 'short'}`}>
+              {position.positionType === PositionType.LONG ? 'LONG' : 'SHORT'}
+            </div>
+
+            <p className="title max-sm:!hidden">
+              <span className="korean">{position.market.koreanName}</span>
+              <span className="english">{position.market.englishName}</span>
+              <span className="code">{position.market.code}</span>
+            </p>
           </div>
 
+          <div className="section">
+            <div className="info">{CommonUtils.round(position.averageLeverage, 2)}x</div>
+            <div className="info">{MarginModeTypeNames[position.marginMode]}</div>
+            <button className="info">TP/SL</button>
+          </div>
+        </div>
+
+        <div className="row sm:!hidden">
           <p className="title">
             <span className="korean">{position.market.koreanName}</span>
             <span className="english">{position.market.englishName}</span>
             <span className="code">{position.market.code}</span>
           </p>
-        </div>
-
-        <div className="right">
-          <button className="value">TP/SL</button>
-          <div className="value">{CommonUtils.round(position.averageLeverage, 2)}x</div>
-          <div className="value">{MarginModeTypeNames[position.marginMode]}</div>
         </div>
       </S.PositionHeader>
 
@@ -175,7 +185,7 @@ const Position = ({ position, userBudget }: IPosition) => {
             포지션 크기 <span>Size</span>
           </dt>
           <dd className="flex flex-col w-full">
-            <span>
+            <span className="font-medium">
               {position.positionType === PositionType.SHORT && '-'}
               {CryptoUtils.getPriceText(size)}
               {'TW'}
@@ -210,31 +220,42 @@ const Position = ({ position, userBudget }: IPosition) => {
       </S.PositionBody>
 
       <S.PositionClose>
-        <div className="title">포지션 종료</div>
-        <div className="buttons">
-          <button
-            onClick={() => {
-              orderClose(TradeOrderType.LIMIT);
-            }}
-          >
-            지정가
-          </button>
-          <button
-            onClick={() => {
-              orderClose(TradeOrderType.MARKET);
-            }}
-          >
-            시장가
-          </button>
+        <div className="flex items-center w-full max-sm:gap-1 sm:gap-3">
+          <div className="title">포지션 종료</div>
+          <div className="buttons">
+            <button
+              onClick={() => {
+                orderClose(TradeOrderType.LIMIT);
+              }}
+            >
+              지정가
+            </button>
+            <button
+              onClick={() => {
+                orderClose(TradeOrderType.MARKET);
+              }}
+            >
+              시장가
+            </button>
+          </div>
+          <div className="inputs max-sm:!hidden">
+            <I.NumberInput label={'가격'} value={closePrice} setValue={setClosePrice} />
+            <I.PositionCloseSizeInput
+              label={'크기'}
+              value={closeQuantity}
+              setValue={setCloseQuantity}
+              max={position.quantity}
+            />
+          </div>
         </div>
-        <div className="inputs">
-          <I.NumberInput label={'가격'} value={closePrice} setValue={setClosePrice} />
-          <I.PositionCloseSizeInput
-            label={'크기'}
-            value={closeQuantity}
-            setValue={setCloseQuantity}
-            max={position.quantity}
-          />
+        <div className="grid grid-cols-2 w-full gap-2">
+        <I.NumberInput label={'가격'} value={closePrice} setValue={setClosePrice} />
+            <I.PositionCloseSizeInput
+              label={'크기'}
+              value={closeQuantity}
+              setValue={setCloseQuantity}
+              max={position.quantity}
+            />
         </div>
       </S.PositionClose>
     </S.PositionBox>

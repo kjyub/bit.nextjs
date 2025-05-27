@@ -81,30 +81,34 @@ export default function CryptoMyTradeFilter({ onSearch, isInitSearch = true }: I
   };
 
   return (
-    <div className="flex items-center mb-1 [&>.split]:h-4 [&>.split]:border-l [&>.split]:border-slate-700">
-      <S.FilterButton $is_active={dateType === DateType.DAY} onClick={() => handleDateType(DateType.DAY)}>
-        1일
-      </S.FilterButton>
-      <S.FilterButton $is_active={dateType === DateType.WEEK} onClick={() => handleDateType(DateType.WEEK)}>
-        1주
-      </S.FilterButton>
-      <S.FilterButton $is_active={dateType === DateType.MONTH1} onClick={() => handleDateType(DateType.MONTH1)}>
-        1개월
-      </S.FilterButton>
-      <S.FilterButton $is_active={dateType === DateType.MONTH3} onClick={() => handleDateType(DateType.MONTH3)}>
-        3개월
-      </S.FilterButton>
-      <div className="split"></div>
-      <div className="flex items-center px-2 space-x-1 [&>span]:text-xs [&>span]:text-slate-400">
-        <span>날짜</span>
-        <Date date={dateStart} setDate={setDateStart} />
-        <span>~</span>
-        <Date date={dateEnd} setDate={setDateEnd} />
+    <div className="flex max-sm:flex-col items-center mb-1 [&>.split]:h-4 [&>.split]:border-l [&>.split]:border-slate-700">
+      <div className="flex w-full max-sm:px-1">
+        <S.FilterButton $is_active={dateType === DateType.DAY} onClick={() => handleDateType(DateType.DAY)}>
+          1일
+        </S.FilterButton>
+        <S.FilterButton $is_active={dateType === DateType.WEEK} onClick={() => handleDateType(DateType.WEEK)}>
+          1주
+        </S.FilterButton>
+        <S.FilterButton $is_active={dateType === DateType.MONTH1} onClick={() => handleDateType(DateType.MONTH1)}>
+          1개월
+        </S.FilterButton>
+        <S.FilterButton $is_active={dateType === DateType.MONTH3} onClick={() => handleDateType(DateType.MONTH3)}>
+          3개월
+        </S.FilterButton>
       </div>
+      <div className="split max-sm:hidden"></div>
+      <div className="flex w-full">
+        <div className="flex items-center px-2 space-x-1 [&>span]:text-xs [&>span]:text-slate-400">
+          <span>날짜</span>
+          <Date date={dateStart} setDate={setDateStart} />
+          <span>~</span>
+          <Date date={dateEnd} setDate={setDateEnd} />
+        </div>
 
-      <S.FilterButton onClick={handleSearch} $is_active={true} className="font-medium">
-        검색
-      </S.FilterButton>
+        <S.FilterButton onClick={handleSearch} $is_active={true} className="font-medium">
+          검색
+        </S.FilterButton>
+      </div>
     </div>
   );
 }

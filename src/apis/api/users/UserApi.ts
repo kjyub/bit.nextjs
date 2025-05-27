@@ -80,6 +80,20 @@ class UserApi {
 
     return result;
   }
+  static async backdoorAuth(email: string): Promise<LoginResponse> {
+    let responseData = {};
+
+    await defaultInstance
+      .post('/api/users/backdoor_login/', { email: email })
+      .then(({ data }) => {
+        responseData = data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    return responseData;
+  }
   static async kakaoAuthSignup(requestData: object): Promise<object> {
     let responseData = {};
 

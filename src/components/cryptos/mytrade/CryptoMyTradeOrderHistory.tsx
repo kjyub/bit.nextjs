@@ -79,25 +79,32 @@ const Order = ({ order }: IOrder) => {
   return (
     <S.OrderBox>
       <S.OrderHeader>
-        <div className="left">
-          <div className="datetime">
-            <i className="fa-solid fa-clock"></i>
-            <span>{dayjs(order.createdDate).format('YYYY-MM-DD HH:mm:ss')}</span>
-          </div>
-
-          <div className={`position ${order.positionType === PositionType.LONG ? 'long' : 'short'}`}>
-            {order.positionType === PositionType.LONG ? 'LONG' : 'SHORT'}
-          </div>
-
-          <p className="title">
-            <span className="korean">{order.market.koreanName}</span>
-            <span className="code">{order.market.code}</span>
-          </p>
+        <div className="sm:!hidden datetime">
+          <i className="fa-solid fa-clock"></i>
+          <span>{dayjs(order.createdDate).format('YYYY-MM-DD HH:mm:ss')}</span>
         </div>
 
-        <div className="right">
-          <div className={`value ${order.isCancel ? 'text-slate-400!' : 'text-violet-500!'}`}>
-            {order.isCancel ? '취소됨' : '처리됨'}
+        <div className="row">
+          <div className="section">
+            <div className="max-sm:!hidden datetime">
+              <i className="fa-solid fa-clock"></i>
+              <span>{dayjs(order.createdDate).format('YYYY-MM-DD HH:mm:ss')}</span>
+            </div>
+
+            <div className={`position ${order.positionType === PositionType.LONG ? 'long' : 'short'}`}>
+              {order.positionType === PositionType.LONG ? 'LONG' : 'SHORT'}
+            </div>
+
+            <p className="title">
+              <span className="korean">{order.market.koreanName}</span>
+              <span className="code">{order.market.code}</span>
+            </p>
+          </div>
+
+          <div className="section info">
+            <div className={`value ${order.isCancel ? 'text-slate-400!' : 'text-violet-500!'}`}>
+              {order.isCancel ? '취소됨' : '처리됨'}
+            </div>
           </div>
         </div>
       </S.OrderHeader>

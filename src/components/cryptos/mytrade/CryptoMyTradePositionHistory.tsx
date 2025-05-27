@@ -79,22 +79,34 @@ const Position = ({ position }: IPosition) => {
   return (
     <S.OrderBox>
       <S.OrderHeader>
-        <div className="left">
-          <div className={`position ${position.positionType !== PositionType.LONG ? 'long' : 'short'}`}>
-            {position.positionType === PositionType.LONG ? 'LONG' : 'SHORT'}
-          </div>
+        <div className="sm:!hidden datetime">
+          <i className="fa-solid fa-clock"></i>
+          <span>{dayjs(position.createdDate).format('YYYY-MM-DD HH:mm:ss')}</span>
+        </div>
 
-          <p className="title">
+        <div className="row">
+          <div className="section">
+            <div className="max-sm:!hidden datetime">
+              <i className="fa-solid fa-clock"></i>
+              <span>{dayjs(position.createdDate).format('YYYY-MM-DD HH:mm:ss')}</span>
+            </div>
+
+            <div className={`position ${position.positionType === PositionType.LONG ? 'long' : 'short'}`}>
+              {position.positionType === PositionType.LONG ? 'LONG' : 'SHORT'}
+            </div>
+
+            <p className="title">
             <span className="korean">{position.market.koreanName}</span>
             <span className="code">{position.market.code}</span>
-          </p>
-        </div>
+            </p>
+          </div>
 
-        <div className="right">
-          <div className="value">{MarginModeTypeNames[position.marginMode]}</div>
+          <div className="section">
+            <div className="info">{MarginModeTypeNames[position.marginMode]}</div>
+          </div>
         </div>
       </S.OrderHeader>
-
+      
       <S.OrderBody>
         <S.OrderItem className={``}>
           <dt>
@@ -108,11 +120,11 @@ const Position = ({ position }: IPosition) => {
           </dt>
           <dd>{CryptoUtils.getPriceText(position.averageClosePrice)}</dd>
         </S.OrderItem>
-        <S.OrderItem className={`col-span-2 ${position.pnl > 0 ? 'long' : 'short'}`}>
+        <S.OrderItem className={`max-sm:hidden col-span-2 ${position.pnl > 0 ? 'long' : 'short'}`}>
           <dt>
             손익 <span>Closing PNL</span>
           </dt>
-          <dd>{CryptoUtils.getPriceText(position.pnl)}TW</dd>
+          <dd className='!font-medium'>{CryptoUtils.getPriceText(position.pnl)}TW</dd>
         </S.OrderItem>
         <S.OrderItem className={``}>
           <dt>
@@ -125,6 +137,12 @@ const Position = ({ position }: IPosition) => {
             종료 일시 <span>Closed</span>
           </dt>
           <dd>{dayjs(position.closeTime).format('YYYY-MM-DD HH:mm:ss')}</dd>
+        </S.OrderItem>
+        <S.OrderItem className={`sm:hidden col-span-2 ${position.pnl > 0 ? 'long' : 'short'}`}>
+          <dt>
+            손익 <span>Closing PNL</span>
+          </dt>
+          <dd className='!font-medium'>{CryptoUtils.getPriceText(position.pnl)}TW</dd>
         </S.OrderItem>
       </S.OrderBody>
     </S.OrderBox>

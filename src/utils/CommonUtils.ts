@@ -90,7 +90,10 @@ export default class CommonUtils {
 
     if (format === TextFormats.NUMBER) {
       const number = Number(text);
-      if (
+
+      if (number === 0) {
+        result = '0';
+      } else if (
         !isNaN(number) &&
         result[result.length - 1] !== '.' &&
         result !== '' &&

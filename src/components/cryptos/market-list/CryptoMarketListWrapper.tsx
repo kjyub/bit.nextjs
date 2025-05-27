@@ -12,7 +12,7 @@ const Wrapper = tw.div`
   border border-slate-600/50
 
   transition-transform duration-300 ease-in-out will-change-transform
-  ${({ $is_open }) => ($is_open ? '' : 'translate-x-[410px]')}
+  ${({ $is_open }) => ($is_open ? '' : 'max-sm:translate-x-[100vw] sm:translate-x-[410px]')}
 
   max-md:[&>div]:py-2 md:[&>div]:py-4
 `;
