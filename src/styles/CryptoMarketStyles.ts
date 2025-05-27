@@ -13,7 +13,7 @@ export const MainLayout = tw.div`
 `;
 // 코인 이름 및 가격 정보
 export const TitleLayout = tw.div<StyleProps>`
-  sticky top-[56px] z-30
+  sticky max-md:top-0 md:top-[56px] z-30
   flex max-md:flex-col max-md:justify-center md:justify-between md:items-center w-full max-md:h-22 md:h-32
   border-b
 

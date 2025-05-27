@@ -1,22 +1,16 @@
 'use client';
 
-import UserApi from '@/apis/api/users/UserApi';
 import { DEFAULT_MARKET_CODE } from '@/constants/CryptoConsts';
 import { useUser } from '@/hooks/useUser';
 import * as NS from '@/styles/NavigationStyles';
 import Link from 'next/link';
 
-export default function Navigation() {
+export default function Header() {
   // 회원 관련
   const { user, isLoading: isUserLoading, signOut, isAuth } = useUser();
 
   const handleLogout = async () => {
     await signOut();
-  };
-
-  const handleTest = async () => {
-    const result = await UserApi.getUserCurrent();
-    console.log(result);
   };
 
   return (
@@ -33,10 +27,6 @@ export default function Navigation() {
         </NS.Section>
         {/* 오른쪽 */}
         <NS.Section>
-          <button className="btn" onClick={handleTest}>
-            테스트
-          </button>
-
           {isUserLoading ? (
             <div className="skeleton w-24 h-full rounded-lg"></div>
           ) : isAuth ? (
