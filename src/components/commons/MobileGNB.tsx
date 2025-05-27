@@ -1,12 +1,13 @@
 'use client';
+import { useIsScrollUp } from '@/hooks/useIsScrollUp';
 import { useUser } from '@/hooks/useUser';
 import * as NS from '@/styles/MobileGNBStyles';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 export default function MobileGNB() {
   // 회원 관련
-  const { user, isLoading: isUserLoading, signOut, isAuth } = useUser();
+  const { isLoading: isUserLoading, signOut, isAuth } = useUser();
+  const isShow = useIsScrollUp();
 
   const pathname = usePathname();
 
@@ -15,7 +16,7 @@ export default function MobileGNB() {
   };
 
   return (
-    <NS.Layout>
+    <NS.Layout $is_show={isShow}>
       <div className="grid grid-cols-4 w-full h-full">
         <NS.LinkButton href="/" className={pathname === '/' ? 'active' : ''}>
           <i className="fa-solid fa-house"></i>
