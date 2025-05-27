@@ -9,7 +9,7 @@ import { usePathname } from 'next/navigation';
 
 export default function Header() {
   const pathname = usePathname();
-  
+
   // 회원 관련
   const { user, isLoading: isUserLoading, signOut, isAuth } = useUser();
 
@@ -23,7 +23,7 @@ export default function Header() {
         {/* 왼쪽 */}
         <NS.Section>
           <Link href="/" className={CommonUtils.isPathActive(pathname, '/') ? 'active' : ''}>
-            <span>Home</span>
+            <span>홈</span>
           </Link>
           <Link href={isAuth ? '/crypto' : `/crypto/${DEFAULT_MARKET_CODE}`} className={CommonUtils.isPathActive(pathname, '/crypto') ? 'active' : ''}>
             <span>암호화폐 거래</span>

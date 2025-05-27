@@ -57,7 +57,7 @@ export const CryptoNavigation = () => {
 };
 
 const MobileLayout = tw.div<StyleProps>`
-  fixed inset-x-0 bottom-16 z-40 
+  fixed inset-x-0 bottom-15 z-40 
   flex justify-center w-full
   duration-300
 

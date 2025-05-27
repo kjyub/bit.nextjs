@@ -21,14 +21,14 @@ export default function MobileGNB() {
       <div className="grid grid-cols-4 w-full h-full">
         <NS.LinkButton href="/" className={CommonUtils.isPathActive(pathname, '/') ? 'active' : ''}>
           <i className="fa-solid fa-house"></i>
-          <span>Home</span>
+          <span>홈</span>
         </NS.LinkButton>
         <NS.LinkButton href="/crypto" className={CommonUtils.isPathActive(pathname, '/crypto') ? 'active' : ''}>
           <i className="fa-solid fa-coins"></i>
           <span>거래소</span>
         </NS.LinkButton>
         <NS.LinkButton href="#">
-          <i className="fa-solid fa-diamond"></i>
+          <i className="fa-solid fa-diamond !text-[8px]"></i>
         </NS.LinkButton>
         <div className="flex gap-2">
           {isUserLoading ? (
