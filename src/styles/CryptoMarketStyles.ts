@@ -46,7 +46,7 @@ export const CommunityLayout = tw.div`
 
 export const MarketListLayout = tw.div`
   sticky top-14 z-0
-  flex flex-col max-sm:w-full sm:w-96 h-[calc(100dvh-8.5rem)] max-md:p-2 md:p-4 md:pt-8 space-y-4
+  flex flex-col max-sm:w-full sm:w-96 h-[calc(100dvh-8rem)] max-md:p-2 max-full:p-3 full:p-4 full:pt-8 space-y-4
 `;
 
 export const MarketListBox = tw.div`
@@ -73,7 +73,7 @@ export const MarketListBox = tw.div`
   [&>.market-sort>button>.icon]:opacity-0 [&>.market-sort>button.active>.icon]:opacity-100
 
   [&>.list]:flex [&>.list]:flex-col [&>.list]:w-full [&>.list]:h-full [&>.list]:space-y-1
-  [&>.list]:p-2 [&>.list]:rounded-lg [&>.list]:bg-slate-500/10
+  full:[&>.list]:p-2 [&>.list]:rounded-lg full:[&>.list]:bg-slate-500/10
   [&>.list]:overflow-y-auto
 `;
 
@@ -88,10 +88,11 @@ export const MarketListItem = tw(Link)`
 
   [&>.name]:flex [&>.name]:flex-col [&>.name]:flex-1 [&>.name]:min-w-0 [&>.name]:pr-1
   [&>.name>span]:truncate
-  [&>.name>.korean]:text-sm [&>.name>.korean]:text-slate-200
+  [&>.name>.korean]:text-sm [&>.name>.korean]:text-slate-200 [&>.name>.korean]:font-medium
   [&>.name>.english]:text-[10px] [&>.name>.english]:text-slate-400 [&>.name>.english]:font-extralight
 
   [&>.price]:flex [&>.price]:flex-col [&>.price]:w-24
+  [&>.price]:font-medium
   [&>.price>.volume]:text-[11px] [&>.price>.volume]:text-slate-400 [&>.price>.volume]:font-extralight
 
   [&>.change]:flex [&>.change]:flex-col [&>.change]:w-12

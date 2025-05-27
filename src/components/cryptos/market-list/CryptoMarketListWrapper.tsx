@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import tw from 'tailwind-styled-components';
 
 const Wrapper = tw.div`
-  fixed top-4 max-sm:inset-x-4 sm:right-4 z-50
+  fixed max-md:top-4 md:top-30 max-sm:inset-x-4 sm:right-4 z-50
   flex
   rounded-md bg-slate-900/70 backdrop-blur-lg
   border border-slate-600/50
