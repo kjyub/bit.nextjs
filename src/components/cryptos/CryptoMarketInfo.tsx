@@ -1,3 +1,4 @@
+import useIsScrollTop from '@/hooks/useIsScrollTop';
 import useMarketPriceStore from '@/store/useMarketPriceStore';
 import * as S from '@/styles/CryptoMarketStyles';
 import CryptoMarket from '@/types/cryptos/CryptoMarket';
@@ -39,19 +40,7 @@ export default function CryptoMarketInfo({ marketCode, marketData, marketCurrent
   const [priceWidth, setPriceWidth] = useState<number>(0);
 
   // 디자인 관련
-  const [isTitleSticky, setTitleSticky] = useState<boolean>(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setTitleSticky(window.scrollY > 56);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  const isScrollTop = useIsScrollTop();
 
   useEffect(() => {
     const _market = new CryptoMarket();
@@ -70,7 +59,7 @@ export default function CryptoMarketInfo({ marketCode, marketData, marketCurrent
 
   return (
     <S.TitleLayout
-      $is_active={isTitleSticky}
+      $is_active={!isScrollTop}
       onClick={() => {
         handleScrollTop();
       }}
@@ -82,9 +71,9 @@ export default function CryptoMarketInfo({ marketCode, marketData, marketCurrent
             <Image fill={true} src={`https://static.upbit.com/logos/${imageCode}.png`} alt="coin" />
           </div>
           <h1 className="max-md:text-xl md:text-3xl text-slate-50 font-semibold">{market.koreanName}</h1>
-          <div className="flex flex-col">
-            <h2 className="max-md:text-xs md:text-sm text-slate-400">{market.englishName}</h2>
-            <h2 className="max-md:text-[8px] md:text-[10px] text-slate-500">{market.code}</h2>
+          <div className="flex flex-col justify-center">
+            <span className="max-md:text-xs md:text-sm text-slate-400 max-md:leading-4">{market.englishName}</span>
+            <span className="max-md:text-[8px] md:text-[10px] text-slate-500 max-md:leading-2">{market.code}</span>
           </div>
         </S.MainTitleBox>
 

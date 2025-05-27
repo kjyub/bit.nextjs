@@ -1,3 +1,4 @@
+import { useCryptoUi } from '@/hooks/useCryptoUi';
 import useMarketPriceStore from '@/store/useMarketPriceStore';
 import * as S from '@/styles/CryptoMarketStyles';
 import CryptoMarket from '@/types/cryptos/CryptoMarket';
@@ -11,6 +12,8 @@ interface Props {
 export default memo(function Market({ market }: Props) {
   const socketData = useMarketPriceStore((state) => state.marketDic[market.code]);
   const [isPriceChangeShow, setIsPriceChangeShow] = useState<boolean>(false);
+
+  const { setIsShowMarketList } = useCryptoUi();
 
   useEffect(() => {
     setIsPriceChangeShow(market.code.includes('KRW-'));
@@ -34,6 +37,7 @@ export default memo(function Market({ market }: Props) {
       className={`${
         changeType === PriceChangeTypes.RISE ? 'rise' : changeType === PriceChangeTypes.FALL ? 'fall' : ''
       }`}
+      onClick={() => setIsShowMarketList(false)}
     >
       <div className="name">
         <span className="korean">{market.koreanName}</span>

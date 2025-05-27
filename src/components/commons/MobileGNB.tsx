@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 export default function MobileGNB() {
   // 회원 관련
   const { isLoading: isUserLoading, signOut, isAuth } = useUser();
-  const isShow = useIsScrollUp();
+  const isHide = useIsScrollUp();
 
   const pathname = usePathname();
 
@@ -16,7 +16,7 @@ export default function MobileGNB() {
   };
 
   return (
-    <NS.Layout $is_show={isShow}>
+    <NS.Layout $is_show={!isHide}>
       <div className="grid grid-cols-4 w-full h-full">
         <NS.LinkButton href="/" className={pathname === '/' ? 'active' : ''}>
           <i className="fa-solid fa-house"></i>

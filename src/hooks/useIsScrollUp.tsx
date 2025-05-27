@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
 export const useIsScrollUp = () => {
   const [isScrollUp, setIsScrollUp] = useState(false);
   const lastScrollRef = useRef(0);
-  
+
   useEffect(() => {
     const handleScroll = () => {
       const currentScroll = window.scrollY;

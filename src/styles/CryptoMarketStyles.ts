@@ -13,13 +13,13 @@ export const MainLayout = tw.div`
 `;
 // 코인 이름 및 가격 정보
 export const TitleLayout = tw.div<StyleProps>`
-  sticky max-md:top-0 md:top-[56px] z-30
-  flex max-md:flex-col max-md:justify-center md:justify-between md:items-center w-full max-md:h-22 md:h-32
+  sticky max-md:top-0 max-full:top-14 full:top-14 z-30
+  flex max-md:flex-col max-md:justify-center md:justify-between md:items-center w-full max-md:h-22 max-full:h-32 full:h-32
   border-b
 
   ${({ $is_active }: StyleProps) => ($is_active ? 'border-slate-500/20 backdrop-blur-lg' : 'border-transparent')}
 
-  duration-300
+  transition-colors
 `;
 
 export const ChartAndTradeLayout = tw.div`
@@ -46,7 +46,7 @@ export const CommunityLayout = tw.div`
 
 export const MarketListLayout = tw.div`
   sticky top-14 z-0
-  flex flex-col w-96 h-[calc(100vh-8rem)] p-4 pt-8 space-y-4
+  flex flex-col max-sm:w-full sm:w-96 h-[calc(100dvh-8.5rem)] max-md:p-2 md:p-4 md:pt-8 space-y-4
 `;
 
 export const MarketListBox = tw.div`
@@ -78,7 +78,7 @@ export const MarketListBox = tw.div`
 `;
 
 export const MarketListItem = tw(Link)`
-  flex shrink-0 items-center w-full h-12 px-2
+  flex shrink-0 items-center w-full h-12 max-md:px-1 md:px-2
   rounded-md hover:bg-slate-700/30 
   text-sm text-slate-200
   transition-colors
@@ -86,7 +86,7 @@ export const MarketListItem = tw(Link)`
   [&>.change-color]:text-slate-200
   [&.rise>.change-color]:text-red-500 [&.fall>.change-color]:text-blue-500
 
-  [&>.name]:flex [&>.name]:flex-col [&>.name]:flex-1
+  [&>.name]:flex [&>.name]:flex-col [&>.name]:flex-1 [&>.name]:min-w-0 [&>.name]:pr-1
   [&>.name>span]:truncate
   [&>.name>.korean]:text-sm [&>.name>.korean]:text-slate-200
   [&>.name>.english]:text-[10px] [&>.name>.english]:text-slate-400 [&>.name>.english]:font-extralight
