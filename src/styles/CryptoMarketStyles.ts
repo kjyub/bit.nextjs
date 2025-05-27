@@ -30,7 +30,7 @@ export const ChartLayout = tw.div`
   rounded-lg bg-slate-800/60
 `;
 export const TradeLayout = tw.div`
-  flex flex-col max-md:w-full md:flex-1 md:max-w-[264px] max-md:h-[600px] md:h-full max-md:px-2
+  flex flex-col max-md:w-full md:flex-1 md:max-w-[264px] max-md:h-[528px] md:h-full max-md:px-2
 `;
 
 export const BottomLayout = tw.div`

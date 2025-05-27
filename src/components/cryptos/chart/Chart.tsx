@@ -315,21 +315,8 @@ export default function CryptoMarketFinancialChart({
       mouseMoveEvent={true}
       panEvent={true}
       zoomEvent={true}
-      onContextMenu={(e: any) => e.preventDefault()}
-      onTouchStart={(e: any) => {
-        // 세로 스크롤을 위해 터치 시작을 허용하지만 차트 이벤트는 제한
-        e.preventDefault()
-      }}
-      onTouchMove={(e: any) => {
-        // 터치 이동 시 기본 동작(스크롤) 허용
-        const touch = e.touches[0]
-        const startY = touch.clientY
-        
-        // 가로 방향 움직임이 세로보다 클 때만 차트 이벤트 허용
-        if (Math.abs(e.movementX || 0) > Math.abs(e.movementY || 0)) {
-          e.preventDefault()
-        }
-      }}
+      useCrossHairStyleCursor={true}
+      pointsPerPxThreshold={2}
     >
       <Chart id="crypto-chart-candle" className="text-violet-600 [&_.react-financial-charts-avoid-interaction]:!pointer-events-auto" height={chartHeight} yExtents={candleChartExtents}>
         <XAxis
