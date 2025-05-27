@@ -3,9 +3,13 @@
 import { DEFAULT_MARKET_CODE } from '@/constants/CryptoConsts';
 import { useUser } from '@/hooks/useUser';
 import * as NS from '@/styles/NavigationStyles';
+import CommonUtils from '@/utils/CommonUtils';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function Header() {
+  const pathname = usePathname();
+  
   // 회원 관련
   const { user, isLoading: isUserLoading, signOut, isAuth } = useUser();
 
@@ -18,10 +22,10 @@ export default function Header() {
       <div className="content">
         {/* 왼쪽 */}
         <NS.Section>
-          <Link href="/" className="btn">
+          <Link href="/" className={CommonUtils.isPathActive(pathname, '/') ? 'active' : ''}>
             <span>Home</span>
           </Link>
-          <Link href={isAuth ? '/crypto' : `/crypto/${DEFAULT_MARKET_CODE}`} className="btn">
+          <Link href={isAuth ? '/crypto' : `/crypto/${DEFAULT_MARKET_CODE}`} className={CommonUtils.isPathActive(pathname, '/crypto') ? 'active' : ''}>
             <span>암호화폐 거래</span>
           </Link>
         </NS.Section>
@@ -40,7 +44,7 @@ export default function Header() {
           ) : (
             // 비회원
             <>
-              <Link href="/auth" className="btn bg-slate-100/10 hover:!bg-slate-100/20 !text-slate-300/80">
+              <Link href="/auth" className={`btn ${CommonUtils.isPathActive(pathname, '/auth') ? 'active' : ''} bg-slate-100/10 hover:!bg-slate-100/20 !text-slate-300/80`}>
                 <span>로그인 / 가입</span>
               </Link>
             </>

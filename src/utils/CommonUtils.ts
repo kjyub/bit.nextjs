@@ -287,4 +287,11 @@ export default class CommonUtils {
       return '';
     }
   }
+  static isPathActive(pathname: string, path: string): boolean {
+    try {
+      return pathname.split('/')[1] === path.split('/')[1];
+    } catch {
+      return false;
+    }
+  }
 }

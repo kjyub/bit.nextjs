@@ -2,6 +2,7 @@
 import { useIsScrollUp } from '@/hooks/useIsScrollUp';
 import { useUser } from '@/hooks/useUser';
 import * as NS from '@/styles/MobileGNBStyles';
+import CommonUtils from '@/utils/CommonUtils';
 import { usePathname } from 'next/navigation';
 
 export default function MobileGNB() {
@@ -18,11 +19,11 @@ export default function MobileGNB() {
   return (
     <NS.Layout $is_show={!isHide}>
       <div className="grid grid-cols-4 w-full h-full">
-        <NS.LinkButton href="/" className={pathname === '/' ? 'active' : ''}>
+        <NS.LinkButton href="/" className={CommonUtils.isPathActive(pathname, '/') ? 'active' : ''}>
           <i className="fa-solid fa-house"></i>
           <span>Home</span>
         </NS.LinkButton>
-        <NS.LinkButton href="/crypto" className={pathname === '/crypto' ? 'active' : ''}>
+        <NS.LinkButton href="/crypto" className={CommonUtils.isPathActive(pathname, '/crypto') ? 'active' : ''}>
           <i className="fa-solid fa-coins"></i>
           <span>거래소</span>
         </NS.LinkButton>
@@ -40,7 +41,7 @@ export default function MobileGNB() {
             </NS.LinkButton>
           ) : (
             // 비회원
-            <NS.LinkButton href="/auth">
+            <NS.LinkButton href="/auth" className={CommonUtils.isPathActive(pathname, '/auth') ? 'active' : ''}>
               <i className="fa-solid fa-right-to-bracket"></i>
               <span>로그인</span>
             </NS.LinkButton>
