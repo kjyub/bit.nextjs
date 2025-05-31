@@ -96,8 +96,8 @@ const Position = ({ position }: IPosition) => {
             </div>
 
             <p className="title">
-            <span className="korean">{position.market.koreanName}</span>
-            <span className="code">{position.market.code}</span>
+              <span className="korean">{position.market.koreanName}</span>
+              <span className="code">{position.market.code}</span>
             </p>
           </div>
 
@@ -106,7 +106,7 @@ const Position = ({ position }: IPosition) => {
           </div>
         </div>
       </S.OrderHeader>
-      
+
       <S.OrderBody>
         <S.OrderItem className={``}>
           <dt>
@@ -124,7 +124,7 @@ const Position = ({ position }: IPosition) => {
           <dt>
             손익 <span>Closing PNL</span>
           </dt>
-          <dd className='!font-medium'>{CryptoUtils.getPriceText(position.pnl)}TW</dd>
+          <dd className="!font-medium">{CryptoUtils.getPriceText(position.pnl)}TW</dd>
         </S.OrderItem>
         <S.OrderItem className={``}>
           <dt>
@@ -142,7 +142,7 @@ const Position = ({ position }: IPosition) => {
           <dt>
             손익 <span>Closing PNL</span>
           </dt>
-          <dd className='!font-medium'>{CryptoUtils.getPriceText(position.pnl)}TW</dd>
+          <dd className="!font-medium">{CryptoUtils.getPriceText(position.pnl)}TW</dd>
         </S.OrderItem>
       </S.OrderBody>
     </S.OrderBox>

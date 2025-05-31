@@ -8,12 +8,7 @@ interface ICommunitySearch {
   width?: string;
   placeholder?: string;
 }
-export default function CommunitySearch({
-  onSearch,
-  defaultValue = '',
-  width = '80px',
-  placeholder = '',
-}: ICommunitySearch) {
+export default function CommunitySearch({ onSearch, defaultValue = '', placeholder = '' }: ICommunitySearch) {
   const [value, setValue] = useState<string>('');
 
   useEffect(() => {
@@ -21,10 +16,9 @@ export default function CommunitySearch({
   }, [defaultValue]);
 
   return (
-    <div className={`flex items-center h-10 px-3 space-x-2 rounded-lg bg-slate-500/30 backdrop-blur-sm`}>
+    <div className={`flex items-center flex-1 h-10 px-3 space-x-2 rounded-lg bg-slate-500/30 backdrop-blur-sm`}>
       <input
-        style={{ width: width }} // tailwind 변수 테스트
-        className={`bg-transparent text-sm text-slate-300 placeholder:text-slate-500`}
+        className={`w-full bg-transparent text-sm text-slate-300 placeholder:text-slate-500`}
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onKeyPress={(e) => e.key === 'Enter' && onSearch(value)}

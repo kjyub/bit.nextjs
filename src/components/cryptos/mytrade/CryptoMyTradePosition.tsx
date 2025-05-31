@@ -249,13 +249,13 @@ const Position = ({ position, userBudget }: IPosition) => {
           </div>
         </div>
         <div className="grid grid-cols-2 w-full gap-2">
-        <I.NumberInput label={'가격'} value={closePrice} setValue={setClosePrice} />
-            <I.PositionCloseSizeInput
-              label={'크기'}
-              value={closeQuantity}
-              setValue={setCloseQuantity}
-              max={position.quantity}
-            />
+          <I.NumberInput label={'가격'} value={closePrice} setValue={setClosePrice} />
+          <I.PositionCloseSizeInput
+            label={'크기'}
+            value={closeQuantity}
+            setValue={setCloseQuantity}
+            max={position.quantity}
+          />
         </div>
       </S.PositionClose>
     </S.PositionBox>

@@ -73,7 +73,7 @@ export default function CryptoMarketCommunity({ marketCode, params, communityLis
             placeholder="검색어를 입력하세요."
           />
 
-          <span className="text-sm text-slate-500">
+          <span className="text-nowrap text-sm text-slate-500">
             {CommonUtils.textFormat(pagination.count, TextFormats.NUMBER)}개의 토론
           </span>
         </div>

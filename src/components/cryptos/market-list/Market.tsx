@@ -4,7 +4,8 @@ import * as S from '@/styles/CryptoMarketStyles';
 import CryptoMarket from '@/types/cryptos/CryptoMarket';
 import { PriceChangeTypes } from '@/types/cryptos/CryptoTypes';
 import CryptoUtils from '@/utils/CryptoUtils';
-import { memo, useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { memo, useEffect, useMemo, useState } from 'react';
 
 interface Props {
   market: CryptoMarket;
@@ -15,9 +16,16 @@ export default memo(function Market({ market }: Props) {
 
   const { setIsShowMarketList } = useCryptoUi();
 
+  const pathname = usePathname();
+
   useEffect(() => {
     setIsPriceChangeShow(market.code.includes('KRW-'));
   }, [market]);
+
+  const path = useMemo(() => {
+    const isCommunity = pathname.includes('community');
+    return isCommunity ? `/crypto/${market.code}/community` : `/crypto/${market.code}`;
+  }, [pathname, market.code]);
 
   if (!socketData || socketData.trade_price < 0) return null;
 
@@ -32,7 +40,7 @@ export default memo(function Market({ market }: Props) {
 
   return (
     <S.MarketListItem
-      href={`/crypto/${market.code}`}
+      href={path}
       id={`market-list-${market.code}`}
       className={`${
         changeType === PriceChangeTypes.RISE ? 'rise' : changeType === PriceChangeTypes.FALL ? 'fall' : ''

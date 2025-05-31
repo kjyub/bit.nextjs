@@ -14,7 +14,7 @@ export const ListLayout = tw.div`
   flex flex-col w-full space-y-5
 
   [&>.header]:flex [&>.header]:justify-between [&>.header]:items-center [&>.header]:w-full
-  [&>.header]:px-1
+  [&>.header]:px-1 [&>.header]:gap-2
 
   [&>.list]:flex [&>.list]:flex-col [&>.list]:w-full
   [&>.list]:divide-y [&>.list]:divide-slate-500
