@@ -28,7 +28,7 @@ const initAuthState: AuthState = {
 export const AuthContext = createContext<AuthState>(initAuthState);
 
 export const AuthProvider = ({
-  accessToken,
+  authToken,
   userData,
   children,
 }: {
@@ -51,8 +51,8 @@ export const AuthProvider = ({
   const updateAuth = useUserInfoStore((state) => state.updateAuth);
 
   useEffect(() => {
-    if (accessToken) {
-      setAuthToken(accessToken);
+    if (authToken) {
+      setAuthToken(authToken);
       if (userData) {
         const newUser = new User();
         newUser.parseResponse(userData as object);
@@ -60,7 +60,7 @@ export const AuthProvider = ({
       }
       getUser(true);
     }
-  }, [accessToken, userData]);
+  }, [authToken, userData]);
 
   useEffect(() => {
     setIsAuth(user.accountStatus === AccountStatusTypes.NORMAL);
@@ -72,7 +72,6 @@ export const AuthProvider = ({
 
   const getUser = useCallback(
     async (isLoadingDisable: boolean = false) => {
-      console.log('getUser', setIsLoading, setUser);
       if (!isLoadingDisable) {
         setIsLoading(true);
       }
@@ -94,7 +93,7 @@ export const AuthProvider = ({
         throw new Error('로그인에 실패했습니다.');
       }
 
-      setAuthToken(result.token.access);
+      setAuthToken(result.token);
 
       const newUser = new User();
       newUser.parseResponse(result.user);

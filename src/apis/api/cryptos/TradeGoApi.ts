@@ -7,7 +7,7 @@ class TradeGoApi {
     let result: Array<IUpbitMarketTicker> = [];
 
     try {
-      const response = await tradeInstance.post('/markets', {
+      const response = await tradeInstance.post('markets', {
         json: {
           markets: marketCodes,
         },
@@ -36,7 +36,7 @@ class TradeGoApi {
     let result: IUpbitMarketTicker = {};
 
     try {
-      const response = await tradeInstance.post('/markets', {
+      const response = await tradeInstance.post('markets', {
         json: {
           codes: [marketCode],
         },

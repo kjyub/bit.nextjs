@@ -25,8 +25,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const accessToken = await AuthServerUtils.getAccessToken();
-  setAuthToken(accessToken);
+  const authToken = await AuthServerUtils.getAuthToken();
+  setAuthToken(authToken);
 
   // const userData = await UserApi.getUserDataSelf();
   const userData = {};
@@ -37,7 +37,7 @@ export default async function RootLayout({
         <FrontHead />
       </head>
       <body className={`${pretendard.variable}`}>
-        <AuthProvider accessToken={accessToken} userData={userData}>
+        <AuthProvider authToken={authToken} userData={userData}>
           <AppClientLayout />
           {children}
         </AuthProvider>

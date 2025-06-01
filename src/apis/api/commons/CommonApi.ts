@@ -23,7 +23,7 @@ class CommonApi {
   }
   static async getImageFile(imageID: number): Promise<ImageFile | null> {
     try {
-      const data = await defaultInstance.post(`/api/commons/image/`, { json: { file_id: imageID } }).json<any>();
+      const data = await defaultInstance.post(`api/commons/image/`, { json: { file_id: imageID } }).json<any>();
       const result = new ImageFile();
       result.parseResponse(data);
       return result;

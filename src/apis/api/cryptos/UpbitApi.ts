@@ -8,7 +8,7 @@ class UpbitApi {
     let result: Array<IUpbitMarket> = [];
 
     try {
-      const response = await upbitInstance.get('https://api.upbit.com/v1/market/all');
+      const response = await upbitInstance.get('market/all');
       const data = await response.json();
       if (Array.isArray(data)) {
         result = data;
@@ -23,7 +23,7 @@ class UpbitApi {
     let result: Array<IUpbitMarketTicker> = [];
 
     try {
-      const response = await upbitInstance.get('https://api.upbit.com/v1/ticker', {
+      const response = await upbitInstance.get('ticker', {
         searchParams: {
           markets: marketCodes.join(','),
         },
@@ -42,7 +42,7 @@ class UpbitApi {
     let result: IUpbitMarketTicker = {};
 
     try {
-      const response = await upbitInstance.get('https://api.upbit.com/v1/ticker', {
+      const response = await upbitInstance.get('ticker', {
         searchParams: {
           markets: marketCode,
         },
@@ -65,13 +65,15 @@ class UpbitApi {
     let result: Array<IUpbitCandle> = [];
 
     try {
-      const response = await upbitInstance.get('https://api.upbit.com/v1/candles/seconds', {
-        searchParams: {
-          market: marketCode,
-          to: to,
-          count: count,
-        },
-      });
+      const searchParams: Record<string, string> = {
+        market: marketCode,
+        count: count.toString(),
+      };
+      if (to) {
+        searchParams.to = to;
+      }
+
+      const response = await upbitInstance.get('candles/seconds', { searchParams });
       result = await response.json();
     } catch (error) {
       console.log(error);
@@ -88,13 +90,16 @@ class UpbitApi {
     let result: Array<IUpbitCandle> = [];
 
     try {
-      const response = await upbitInstance.get(`https://api.upbit.com/v1/candles/minutes/${unit}`, {
-        searchParams: {
-          market: marketCode,
-          to: to,
-          count: count,
-        },
-      });
+      const searchParams: Record<string, string> = {
+        market: marketCode,
+        count: count.toString(),
+      };
+
+      if (to) {
+        searchParams.to = to;
+      }
+
+      const response = await upbitInstance.get(`candles/minutes/${unit}`, { searchParams });
       result = await response.json();
     } catch (error) {
       console.log(error);
@@ -106,13 +111,15 @@ class UpbitApi {
     let result: Array<IUpbitCandle> = [];
 
     try {
-      const response = await upbitInstance.get('https://api.upbit.com/v1/candles/days', {
-        searchParams: {
-          market: marketCode,
-          to: to,
-          count: count,
-        },
-      });
+      const searchParams: Record<string, string> = {
+        market: marketCode,
+        count: count.toString(),
+      };
+      if (to) {
+        searchParams.to = to;
+      }
+
+      const response = await upbitInstance.get('candles/days', { searchParams });
       result = await response.json();
     } catch (error) {
       console.log(error);
@@ -124,13 +131,14 @@ class UpbitApi {
     let result: Array<IUpbitCandle> = [];
 
     try {
-      const response = await upbitInstance.get('https://api.upbit.com/v1/candles/weeks', {
-        searchParams: {
-          market: marketCode,
-          to: to,
-          count: count,
-        },
-      });
+      const searchParams: Record<string, string> = {
+        market: marketCode,
+        count: count.toString(),
+      };
+      if (to) {
+        searchParams.to = to;
+      }
+      const response = await upbitInstance.get('candles/weeks', { searchParams });
       result = await response.json();
     } catch (error) {
       console.log(error);
@@ -142,13 +150,15 @@ class UpbitApi {
     let result: Array<IUpbitCandle> = [];
 
     try {
-      const response = await upbitInstance.get('https://api.upbit.com/v1/candles/months', {
-        searchParams: {
-          market: marketCode,
-          to: to,
-          count: count,
-        },
-      });
+      const searchParams: Record<string, string> = {
+        market: marketCode,
+        count: count.toString(),
+      };
+      if (to) {
+        searchParams.to = to;
+      }
+
+      const response = await upbitInstance.get('candles/months', { searchParams });
       result = await response.json();
     } catch (error) {
       console.log(error);

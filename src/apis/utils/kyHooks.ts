@@ -11,7 +11,7 @@ export const setAuthorization = (request: KyRequest) => {
   }
 };
 
-export const validateAuthToken = async (request: KyRequest, options: NormalizedOptions, response: KyResponse) => {
+export const validateAuthToken = async (request: KyRequest, _options: NormalizedOptions, response: KyResponse) => {
   // 재요청 실패 체크
   if (response?.status === 401 && request.headers.get('x-retry') === 'true') {
     throw error;
@@ -44,15 +44,14 @@ export const validateAuthToken = async (request: KyRequest, options: NormalizedO
       request.headers.set('x-retry', 'true');
 
       return ky(request);
-    } catch (refreshError) {
+    } catch {
       request.headers.delete('Authorization');
       removeAuthToken();
 
       // 새로고침
       if (typeof window !== 'undefined' && typeof window.document !== 'undefined') {
         await fetch(process.env.NEXT_PUBLIC_API_SERVER + '/api/auth/signout/');
-        console.log('signout');
-        // window.location.reload();
+        window.location.reload();
       }
 
       throw error;

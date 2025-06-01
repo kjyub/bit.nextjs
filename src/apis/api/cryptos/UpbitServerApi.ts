@@ -8,7 +8,7 @@ class UpbitServerApi {
     let result: IUpbitMarketTicker = {};
 
     try {
-      const response = await upbitInstance.get('https://api.upbit.com/v1/ticker', {
+      const response = await upbitInstance.get('ticker', {
         searchParams: {
           markets: marketCode,
         },

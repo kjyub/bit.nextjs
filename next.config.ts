@@ -36,6 +36,14 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   reactStrictMode: false, // RootLayout 2번 실행되므로 false
+  turbopack: {
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
+      },
+    },
+  },
   async headers() {
     return [
       {

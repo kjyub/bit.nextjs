@@ -7,7 +7,7 @@ class TradeGoServerApi {
     let result: IUpbitMarketTicker = {};
 
     try {
-      const response = await tradeInstance.post('/markets', {
+      const response = await tradeInstance.post('markets', {
         json: {
           codes: [marketCode],
         },

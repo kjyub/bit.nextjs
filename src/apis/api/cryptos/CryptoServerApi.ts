@@ -31,7 +31,7 @@ class CryptoServerApi {
   static async getMarket(code: string): Promise<object> {
     let result: object = {};
     try {
-      const response = await defaultInstance.get(`/api/cryptos/market/${code}/`);
+      const response = await defaultInstance.get(`api/cryptos/market/${code}/`);
       result = await response.json();
     } catch (error) {
       console.log(error);
@@ -61,7 +61,7 @@ class CryptoServerApi {
   static async getCommunityDetail(nanoId: string): Promise<object> {
     let result: object = {};
     try {
-      const response = await defaultInstance.get(`/api/cryptos/community/${nanoId}/`);
+      const response = await defaultInstance.get(`api/cryptos/community/${nanoId}/`);
       result = await response.json();
     } catch (error) {
       console.log(error);

@@ -338,7 +338,7 @@ class CryptoApi {
     const result: MarketCommunity = new MarketCommunity();
 
     try {
-      const response = await authInstance.get(`/api/cryptos/community/${nanoId}/`);
+      const response = await authInstance.get(`api/cryptos/community/${nanoId}/`);
       const data = await response.json();
       result.parseResponse(data as object);
     } catch (error) {
@@ -364,7 +364,7 @@ class CryptoApi {
     const result: MarketCommunity = new MarketCommunity();
 
     try {
-      const response = await authInstance.put(`/api/cryptos/community_update/${nanoId}/`, { json: requestData });
+      const response = await authInstance.put(`api/cryptos/community_update/${nanoId}/`, { json: requestData });
       const data = await response.json();
       result.parseResponse(data as object);
     } catch (error) {
@@ -389,7 +389,7 @@ class CryptoApi {
     let result = false;
 
     try {
-      await authInstance.post(`/api/cryptos/community_like/${nanoId}/`, { json: { like_type: likeType } });
+      await authInstance.post(`api/cryptos/community_like/${nanoId}/`, { json: { like_type: likeType } });
       result = true;
     } catch (error) {
       console.log(error);
@@ -407,7 +407,7 @@ class CryptoApi {
     const result: Pagination<MarketCommunityComment> = new Pagination<MarketCommunityComment>();
 
     try {
-      const response = await defaultInstance.get(`/api/cryptos/community_comment/`, {
+      const response = await defaultInstance.get(`api/cryptos/community_comment/`, {
         searchParams: {
           community_id: communityNanoId,
           page: pageIndex.toString(),
@@ -439,7 +439,7 @@ class CryptoApi {
     const result: MarketCommunityComment = new MarketCommunityComment();
 
     try {
-      const response = await authInstance.put(`/api/cryptos/community_comment_update/${id}/`, { json: requestData });
+      const response = await authInstance.put(`api/cryptos/community_comment_update/${id}/`, { json: requestData });
       const data = await response.json();
       result.parseResponse(data as object);
     } catch (error) {
