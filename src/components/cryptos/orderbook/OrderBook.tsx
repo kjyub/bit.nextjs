@@ -8,6 +8,7 @@ import CommonUtils from "@/utils/CommonUtils";
 import { TextFormats } from "@/types/CommonTypes";
 import useMarketPriceStore from "@/store/useMarketPriceStore";
 import { PriceChangeTypes } from "@/types/cryptos/CryptoTypes";
+import { useCryptoMarketTrade } from "@/hooks/useCryptoMarketTrade";
 
 interface Unit {
   price: number;
@@ -105,13 +106,18 @@ const Price = ({ price }: { price: number }) => {
   const [changeType, setChangeType] = useState<PriceChangeTypeValues>(PriceChangeTypes.EVEN);
   const [oldPrice, setOldPrice] = useState<number>(price);
 
+  const { setTradePrice } = useCryptoMarketTrade();
+
   useEffect(() => {
     setChangeType(CryptoUtils.getPriceChangeType(price, oldPrice));
     setOldPrice(price);
   }, [price]);
 
   return (
-    <div className="flex items-center w-full py-2 gap-2">
+    <div 
+      className="flex items-center w-full py-2 gap-2 cursor-pointer"
+      onClick={() => setTradePrice(price)}
+    >
       <span 
         className={cn(['trade-price', changeType === PriceChangeTypes.EVEN ? 'text-slate-400' : changeType === PriceChangeTypes.RISE ? 'text-red-500' : 'text-blue-500'])}
       >
@@ -127,8 +133,13 @@ const Price = ({ price }: { price: number }) => {
 }
 
 const Row = ({ unit, max, className }: { unit: Unit, max: number, className: string }) => {
+  const { setTradePrice } = useCryptoMarketTrade();
+
   return (
-    <S.Row className={cn(['relative py-1 text-xs hover:bg-slate-100/10 cursor-pointer', className])}>
+    <S.Row 
+      className={cn(['relative py-1 text-xs hover:bg-slate-100/10 cursor-pointer', className])}
+      onClick={() => setTradePrice(unit.price)}
+    >
       {/* <span className="trade-price">{(unit.bid_price + unit.ask_price) / 2}</span> */}
       <span className="trade-price">{CryptoUtils.getPriceText(unit.price)}</span>
       <div className="flex max-sm:flex-col max-sm:w-[50px] sm:w-[100px] [&>span]:text-right">

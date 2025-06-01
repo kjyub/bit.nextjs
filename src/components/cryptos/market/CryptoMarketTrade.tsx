@@ -2,6 +2,7 @@
 
 import CryptoApi from '@/apis/api/cryptos/CryptoApi';
 import * as I from '@/components/inputs/TradeInputs';
+import { useCryptoMarketTrade } from '@/hooks/useCryptoMarketTrade';
 import { useUser } from '@/hooks/useUser';
 import useMarketPriceStore from '@/store/useMarketPriceStore';
 import useToastMessageStore from '@/store/useToastMessageStore';
@@ -50,11 +51,11 @@ export default function CryptoMarketTrade({
   const socketData = useMarketPriceStore((state) => state.marketDic[marketCode]);
   const marketPrice = socketData ? socketData.trade_price : 0;
 
+  const { tradePrice: price, setTradePrice: setPrice } = useCryptoMarketTrade();
   const [isMarginModeDisabled, setMarginModeDisabled] = useState<boolean>(false);
   const [marginMode, setMarginMode] = useState<MarginModeTypeValues>(MarginModeType.CROSSED); // 마진모드 (CROSSED, ISOLATED)
   const [leverageRatio, setLeverageRatio] = useState<number>(1); // 레버리지 비율
   const [orderType, setOrderType] = useState<TradeOrderTypeValues>(TradeOrderType.LIMIT); // 지정가/시장가
-  const [price, setPrice] = useState<number>(0); // 구매가
   const [quantity, setQuantity] = useState<number>(0); // 구매 수량
   const [cost, setCost] = useState<number>(0); // 구매 비용
   const [size, setSize] = useState<number>(0); // 레버리지 포함 크기
