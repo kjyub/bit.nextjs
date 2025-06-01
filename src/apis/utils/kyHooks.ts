@@ -45,6 +45,7 @@ export const validateAuthToken = async (request: KyRequest, _options: Normalized
 
       return ky(request);
     } catch {
+      request.headers.set('x-retry', 'true');
       request.headers.delete('Authorization');
       removeAuthToken();
 
