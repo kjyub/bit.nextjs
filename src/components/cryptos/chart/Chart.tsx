@@ -45,7 +45,7 @@ interface IChartData {
   elderRay: IElderRay
 }
 
-const WIDTH = 944
+const WIDTH = 744
 const PADDING_WIDTH = 48
 const TRADE_WIDTH = 280
 const HEIGHT_DESKTOP = 540

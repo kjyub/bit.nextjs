@@ -7,8 +7,9 @@ import { SizeUnitTypes } from '@/types/cryptos/CryptoTypes';
 import { useEffect, useState } from 'react';
 import CryptoMarketInfo from './CryptoMarketInfo';
 import CryptoMarketTrade from './CryptoMarketTrade';
-import CryptoMarketChart from './chart/CryptoMarketChart';
-import CryptoMyTrade from './mytrade/CryptoMyTradeMain';
+import CryptoMarketChart from './CryptoMarketChart';
+import CryptoMyTrade from '../mytrade/CryptoMyTradeMain';
+import CryptoMarketOrderBook from './CryptoMarketOrderBook';
 
 interface ICryptoMarket {
   marketCode: string;
@@ -42,6 +43,10 @@ export default function CryptoMarketMain({ marketCode, marketData, marketCurrent
           <S.ChartLayout>
             <CryptoMarketChart marketCode={marketCode} />
           </S.ChartLayout>
+
+          <S.OrderBookLayout>
+            <CryptoMarketOrderBook marketCode={marketCode} />
+          </S.OrderBookLayout>
 
           <S.TradeLayout>
             <CryptoMarketTrade

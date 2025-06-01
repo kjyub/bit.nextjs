@@ -23,10 +23,14 @@ export const TitleLayout = tw.div<StyleProps>`
 `;
 
 export const ChartAndTradeLayout = tw.div`
-  flex max-md:flex-col w-full h-full gap-4
+  flex w-full h-full gap-4
 `;
 export const ChartLayout = tw.div`
-  flex flex-col max-md:h-[400px] md:h-full p-3
+  max-md:hidden md:flex flex-col max-md:h-[400px] flex-1 md:h-full p-3
+  rounded-lg bg-slate-800/60
+`;
+export const OrderBookLayout = tw.div`
+  flex w-[200px] h-full
   rounded-lg bg-slate-800/60
 `;
 export const TradeLayout = tw.div`

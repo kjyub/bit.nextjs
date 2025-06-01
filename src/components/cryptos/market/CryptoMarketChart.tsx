@@ -5,10 +5,10 @@ import useTradeMarketChartSocket from '@/hooks/sockets/useTradeMarketChartSocket
 import { IUpbitCandle } from '@/types/cryptos/CryptoInterfaces';
 import dynamic from 'next/dynamic';
 import { useCallback, useEffect, useState } from 'react';
-import CryptoMarketChartControlBar from './ControlBar';
-import { CANDLE_SIZE, CandleTimeType, CandleTimes, ChartType, ChartTypes } from './Types';
+import CryptoMarketChartControlBar from '../chart/ControlBar';
+import { CANDLE_SIZE, CandleTimeType, CandleTimes, ChartType, ChartTypes } from '../chart/Types';
 
-const CryptoMarketFinancialChart = dynamic(() => import('./Chart'), { ssr: false });
+const CryptoMarketFinancialChart = dynamic(() => import('../chart/Chart'), { ssr: false });
 
 const isSameTimeCandle = (lastCandle?: IUpbitCandle, candle: IUpbitCandle, timeType: CandleTimeType) => {
   if (!lastCandle) {
