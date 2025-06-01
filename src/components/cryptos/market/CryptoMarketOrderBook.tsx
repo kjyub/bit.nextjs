@@ -5,6 +5,7 @@ import useTradeMarketOrderBookSocket from '@/hooks/sockets/useTradeMarketOrderBo
 import { IUpbitOrderBook } from '@/types/cryptos/CryptoInterfaces';
 import { useCallback, useEffect, useState } from 'react';
 import OrderBook from '../orderbook/OrderBook';
+import { useCryptoUi } from '@/hooks/useCryptoUi';
 
 interface ICryptoMarketOrderBook {
   marketCode: string;
@@ -13,6 +14,8 @@ interface ICryptoMarketOrderBook {
 export default function CryptoMarketOrderBook({ marketCode, marketCurrent }: ICryptoMarketOrderBook) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [orderBook, setOrderBook] = useState<IUpbitOrderBook>({});
+
+  const { isShowMobileChart, setIsShowMobileChart } = useCryptoUi();
 
   useEffect(() => {
     initChart();
@@ -42,8 +45,14 @@ export default function CryptoMarketOrderBook({ marketCode, marketCurrent }: ICr
 
   return (
     <div className="flex flex-col size-full">
-      <div className="flex w-full shrink-0 max-md:pb-1 md:pb-2 border-b border-slate-500/50">
+      <div className="flex justify-between w-full shrink-0 max-md:pb-1 md:pb-2 border-b border-slate-500/50">
         <span className="px-0 py-1 font-medium max-md:leading-3">호가</span>
+        <button 
+          className="md:hidden px-1 py-1 text-slate-300/70 active:text-slate-100/90 transition-colors"
+          onClick={() => setIsShowMobileChart(!isShowMobileChart)}
+        >
+          <i className="fa-solid fa-chart-line"></i>
+        </button>
       </div>
       {orderBook && Object.keys(orderBook).length > 0 && <OrderBook orderBook={orderBook} marketCode={marketCode} marketCurrent={marketCurrent} />}
     </div>

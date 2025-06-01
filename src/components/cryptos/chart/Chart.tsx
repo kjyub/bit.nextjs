@@ -26,6 +26,7 @@ import {
 import { CandleTimeType, CandleTimes, ChartType, ChartTypes } from './Types'
 import useBreakpoint from '@/hooks/useBreakpoint'
 import CryptoUtils from '@/utils/CryptoUtils'
+import { useCryptoMarketChart } from '../market/CryptoMarketChartProvider'
 
 interface IElderRay {
   bearPower: number
@@ -46,6 +47,7 @@ interface IChartData {
 }
 
 const WIDTH = 744
+const MOBILE_PADDING_WIDTH = 12
 const PADDING_WIDTH = 48
 const TRADE_WIDTH = 280
 const HEIGHT_DESKTOP = 540
@@ -196,20 +198,9 @@ const volumeSeries = (data: IChartData): IChartData => {
 
 const volumeChartOrigin = (_: number, h: number) => [0, h - VOLUME_CHART_HEIGHT - 8]
 
-interface ICryptoMarketFinancialChart {
-  timeType: CandleTimeType
-  chartType: ChartType
-  candles: IUpbitCandle[]
-  getBeforeData: () => Promise<void>
-  loading: boolean
-}
-export default function CryptoMarketFinancialChart({
-  timeType,
-  chartType,
-  candles,
-  getBeforeData,
-  loading,
-}: ICryptoMarketFinancialChart) {
+export default function CryptoMarketFinancialChart() {
+  const { timeType, chartType, candles, getBeforeData, loading } = useCryptoMarketChart();
+
   const chartCanvasRef = useRef<ChartCanvas | null>(null)
 
   const { breakpointState, width: windowWidth } = useBreakpoint();
@@ -222,11 +213,11 @@ export default function CryptoMarketFinancialChart({
 
   useEffect(() => {
     if (!breakpointState.sm) {
-      setWidth(windowWidth - PADDING_WIDTH)
+      setWidth((windowWidth * 0.95) - MOBILE_PADDING_WIDTH)
       setHeight(HEIGHT_MOBILE)
       setChartHeight(CHART_HEIGHT_MOBILE)
     } else if (breakpointState.sm && !breakpointState.md) {
-      setWidth(windowWidth - PADDING_WIDTH)
+      setWidth((windowWidth * 0.95) - MOBILE_PADDING_WIDTH)
       setHeight(HEIGHT_MOBILE)
       setChartHeight(CHART_HEIGHT_MOBILE)
     } else if (breakpointState.md && !breakpointState.lg) {

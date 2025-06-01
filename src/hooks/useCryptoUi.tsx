@@ -8,8 +8,5 @@ export const useCryptoUi = () => {
     throw new Error('useCryptoUi must be used within a CryptoProvider');
   }
 
-  return {
-    isShowMarketList: value.isShowMarketList,
-    setIsShowMarketList: value.setIsShowMarketList,
-  };
+  return value;
 };

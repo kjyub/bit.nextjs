@@ -25,13 +25,18 @@ export const TitleLayout = tw.div<StyleProps>`
 export const ChartAndTradeLayout = tw.div`
   flex w-full max-md:h-full md:h-[600px] max-sm:gap-1 sm:gap-3
 `;
-export const ChartLayout = tw.div`
-  max-md:hidden md:flex flex-col max-md:h-[400px] flex-1 md:h-full p-3
+const BoxLayout = tw.div`
+  p-3
   rounded-lg bg-slate-800/60
 `;
-export const OrderBookLayout = tw.div`
-  flex max-md:flex-1 sm:w-[220px] max-md:max-h-[440px] md:h-full p-3
-  rounded-lg bg-slate-800/60
+export const ChartLayout = tw(BoxLayout)`
+  max-md:hidden md:flex flex-col max-md:h-[400px] flex-1 md:h-full
+`;
+export const OrderBookLayout = tw(BoxLayout)`
+  flex max-md:flex-1 sm:w-[220px] max-md:max-h-[440px] md:h-full
+`;
+export const MobileChartLayout = tw(BoxLayout)`
+  max-md:flex md:hidden flex-col max-md:h-[400px] flex-1 md:h-full
 `;
 export const TradeLayout = tw.div`
   flex flex-col 

@@ -11,6 +11,7 @@ import CryptoMarketChart from './CryptoMarketChart';
 import CryptoMyTrade from '../mytrade/CryptoMyTradeMain';
 import CryptoMarketOrderBook from './CryptoMarketOrderBook';
 import { CryptoMarketTradeProvider } from '@/store/providers/CryptoMarketTradeProvider';
+import CryptoMarketMobileChart from './CryptoMarketMobileChart';
 
 interface ICryptoMarket {
   marketCode: string;
@@ -43,6 +44,7 @@ export default function CryptoMarketMain({ marketCode, marketData, marketCurrent
         <S.ChartAndTradeLayout>
           <S.ChartLayout>
             <CryptoMarketChart marketCode={marketCode} />
+            <CryptoMarketMobileChart marketCode={marketCode} />
           </S.ChartLayout>
 
           <CryptoMarketTradeProvider>
