@@ -53,7 +53,7 @@ export const MarginModeBox = tw.div`
 
   [&>.bg]:w-full [&>.bg]:h-full
   [&>.bg]:rounded-full [&>.bg]:bg-transparent
-  mouse:hover:[&>.bg.active]:bg-slate-700/50
+  mouse:hover:[&>.bg.active]:bg-slate-700/50 touch:active:[&>.bg.active]:bg-slate-700/50
   [&>.bg.active]:w-[calc(100%+0.5rem)] [&>.bg.active]:h-[calc(100%+0.5rem)]
 `;
 
@@ -161,9 +161,9 @@ export const OrderTypeBox = tw.div`
 `;
 
 const TradeButton = tw.button`
-  w-full h-10
+  w-full max-md:h-9 md:h-10
   rounded-lg
-  text-white font-medium
+  max-md:text-sm md:text-base text-white font-medium
   transition-colors
 `;
 export const TradeLongButton = tw(TradeButton)`

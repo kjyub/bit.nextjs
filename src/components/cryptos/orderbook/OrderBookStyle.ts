@@ -6,4 +6,6 @@ export const Row = tw.div`
   max-sm:[&_.trade-price]:w-[calc(100%-50px)] sm:[&_.trade-price]:w-[calc(100%-100px)]
   [&_.price]:w-[50px]
   [&_.size]:w-[50px]
+
+  touch:select-none
 `;
