@@ -30,6 +30,8 @@
   --breakpoint-full: 1700px;
 }
 
+@custom-variant mouse (@media screen and (pointer: fine));
+
 @layer base {
   *,
   ::after,

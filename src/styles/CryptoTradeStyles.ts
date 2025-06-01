@@ -53,7 +53,7 @@ export const MarginModeBox = tw.div`
 
   [&>.bg]:w-full [&>.bg]:h-full
   [&>.bg]:rounded-full [&>.bg]:bg-transparent
-  [&>.bg.active]:bg-slate-700/50
+  mouse:hover:[&>.bg.active]:bg-slate-700/50
   [&>.bg.active]:w-[calc(100%+0.5rem)] [&>.bg.active]:h-[calc(100%+0.5rem)]
 `;
 
