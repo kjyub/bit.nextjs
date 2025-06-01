@@ -1,6 +1,6 @@
+import { upbitInstance } from '@/apis/utils/upbitInstances';
 import { IUpbitCandle } from '@/types/cryptos/CryptoInterfaces';
 import { CandleMinuteUnits } from '@/types/cryptos/CryptoTypes';
-import ky from 'ky';
 
 class UpbitApi {
   // region Market
@@ -8,7 +8,7 @@ class UpbitApi {
     let result: Array<IUpbitMarket> = [];
 
     try {
-      const response = await ky.get('https://api.upbit.com/v1/market/all');
+      const response = await upbitInstance.get('https://api.upbit.com/v1/market/all');
       const data = await response.json();
       if (Array.isArray(data)) {
         result = data;
@@ -23,7 +23,7 @@ class UpbitApi {
     let result: Array<IUpbitMarketTicker> = [];
 
     try {
-      const response = await ky.get('https://api.upbit.com/v1/ticker', {
+      const response = await upbitInstance.get('https://api.upbit.com/v1/ticker', {
         searchParams: {
           markets: marketCodes.join(','),
         },
@@ -42,7 +42,7 @@ class UpbitApi {
     let result: IUpbitMarketTicker = {};
 
     try {
-      const response = await ky.get('https://api.upbit.com/v1/ticker', {
+      const response = await upbitInstance.get('https://api.upbit.com/v1/ticker', {
         searchParams: {
           markets: marketCode,
         },
@@ -65,7 +65,7 @@ class UpbitApi {
     let result: Array<IUpbitCandle> = [];
 
     try {
-      const response = await ky.get('https://api.upbit.com/v1/candles/seconds', {
+      const response = await upbitInstance.get('https://api.upbit.com/v1/candles/seconds', {
         searchParams: {
           market: marketCode,
           to: to,
@@ -88,7 +88,7 @@ class UpbitApi {
     let result: Array<IUpbitCandle> = [];
 
     try {
-      const response = await ky.get(`https://api.upbit.com/v1/candles/minutes/${unit}`, {
+      const response = await upbitInstance.get(`https://api.upbit.com/v1/candles/minutes/${unit}`, {
         searchParams: {
           market: marketCode,
           to: to,
@@ -106,7 +106,7 @@ class UpbitApi {
     let result: Array<IUpbitCandle> = [];
 
     try {
-      const response = await ky.get('https://api.upbit.com/v1/candles/days', {
+      const response = await upbitInstance.get('https://api.upbit.com/v1/candles/days', {
         searchParams: {
           market: marketCode,
           to: to,
@@ -124,7 +124,7 @@ class UpbitApi {
     let result: Array<IUpbitCandle> = [];
 
     try {
-      const response = await ky.get('https://api.upbit.com/v1/candles/weeks', {
+      const response = await upbitInstance.get('https://api.upbit.com/v1/candles/weeks', {
         searchParams: {
           market: marketCode,
           to: to,
@@ -142,7 +142,7 @@ class UpbitApi {
     let result: Array<IUpbitCandle> = [];
 
     try {
-      const response = await ky.get('https://api.upbit.com/v1/candles/months', {
+      const response = await upbitInstance.get('https://api.upbit.com/v1/candles/months', {
         searchParams: {
           market: marketCode,
           to: to,

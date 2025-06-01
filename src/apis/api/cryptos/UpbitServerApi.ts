@@ -1,3 +1,4 @@
+import { upbitInstance } from '@/apis/utils/upbitInstances';
 import { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
 import ky from 'ky';
 
@@ -7,7 +8,7 @@ class UpbitServerApi {
     let result: IUpbitMarketTicker = {};
 
     try {
-      const response = await ky.get('https://api.upbit.com/v1/ticker', {
+      const response = await upbitInstance.get('https://api.upbit.com/v1/ticker', {
         searchParams: {
           markets: marketCode,
         },

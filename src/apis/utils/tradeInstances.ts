@@ -1,9 +1,9 @@
 import ky, { Options } from 'ky';
 
-const URL = 'https://api.upbit.com/v1/ticker';
+const URL = process.env.NEXT_PUBLIC_TRADE_SERVER;
 
 const createKyInstance = (options?: Options): typeof ky => {
   return ky.create({ prefixUrl: URL, ...options });
 };
 
-export const upbitInstance = createKyInstance();
+export const tradeInstance = createKyInstance();

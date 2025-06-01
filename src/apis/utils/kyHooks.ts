@@ -2,7 +2,7 @@ import { LoginResponse } from '@/types/users/UserTypes';
 import { getAuthToken, removeAuthToken, setAuthToken } from './instances';
 import ky, { KyRequest, KyResponse, NormalizedOptions } from 'ky';
 
-export const setAuthToken = (request: KyRequest) => {
+export const setAuthorization = (request: KyRequest) => {
   const token = getAuthToken();
 
   // 전역 토큰이 있으면 헤더에 추가
