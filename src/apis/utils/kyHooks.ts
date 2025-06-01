@@ -8,6 +8,9 @@ export const setAuthorization = (request: KyRequest) => {
   // 전역 토큰이 있으면 헤더에 추가
   if (token) {
     request.headers.set('Authorization', `Bearer ${token.access}`);
+  } else {
+    // 토큰이 없는 경우 진행하지 않고 에러 처리
+    throw new Error('토큰이 없습니다.');
   }
 };
 
