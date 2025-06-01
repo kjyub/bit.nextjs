@@ -42,8 +42,8 @@ export default function CryptoMarketOrderBook({ marketCode, marketCurrent }: ICr
 
   return (
     <div className="flex flex-col size-full">
-      <div className="flex w-full h-8 shrink-0 pb-2 border-b border-slate-500/50">
-        <span className="px-0 py-1">호가</span>
+      <div className="flex w-full shrink-0 max-md:pb-1 md:pb-2 border-b border-slate-500/50">
+        <span className="px-0 py-1 font-medium max-md:leading-3">호가</span>
       </div>
       {orderBook && Object.keys(orderBook).length > 0 && <OrderBook orderBook={orderBook} marketCode={marketCode} marketCurrent={marketCurrent} />}
     </div>

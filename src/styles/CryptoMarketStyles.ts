@@ -30,13 +30,13 @@ export const ChartLayout = tw.div`
   rounded-lg bg-slate-800/60
 `;
 export const OrderBookLayout = tw.div`
-  flex max-md:flex-1 sm:w-[220px] max-md:h-[528px] md:h-full max-sm:p-2 sm:p-3
+  flex max-md:flex-1 sm:w-[220px] max-md:max-h-[440px] md:h-full p-3
   rounded-lg bg-slate-800/60
 `;
 export const TradeLayout = tw.div`
   flex flex-col 
   max-md:min-w-[160px] max-md:max-w-[50%] max-md:w-full md:flex-1 md:max-w-[264px] 
-  max-md:h-[528px] md:h-full
+  max-md:min-h-[440px] md:h-full
   max-md:px-2
 `;
 

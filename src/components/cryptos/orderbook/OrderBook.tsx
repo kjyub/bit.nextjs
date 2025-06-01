@@ -96,7 +96,7 @@ const List = ({ children }: { children: React.ReactNode }) => {
   }, [params]);
 
   return (
-    <div ref={scrollRef} className="flex flex-col w-full flex-1 overflow-y-auto scroll-transparent">
+    <div ref={scrollRef} className="flex flex-col w-full flex-1 max-md:py-16 overflow-y-auto scroll-transparent">
       {children}
     </div>
   )

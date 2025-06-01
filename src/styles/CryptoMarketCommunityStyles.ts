@@ -2,7 +2,7 @@ import { StyleProps } from '@/types/StyleTypes';
 import tw from 'tailwind-styled-components';
 
 export const Layout = tw.div`
-  flex flex-col w-full max-w-[960px] space-y-5
+  flex flex-col w-full space-y-5
   pb-[360px]
 
   [&>.title]:flex [&>.title]:items-center
@@ -38,7 +38,7 @@ export const SaveButton = tw.button`
 
 export const ItemLayout = tw.div`
   ${({ $is_deleted }: StyleProps) => ($is_deleted ? 'hidden' : 'flex')}
-  flex-col items-center w-full p-3 space-y-2
+  flex-col items-center w-full p-1 space-y-2
 
 `;
 export const ItemRow = tw.div<StyleProps>`

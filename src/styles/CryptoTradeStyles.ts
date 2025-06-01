@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import tw from 'tailwind-styled-components';
 
 export const TradeBox = tw.div`
-  flex flex-col w-full h-full space-y-3
+  flex flex-col w-full h-full max-md:gap-2 md:gap-3
 `;
 
 export const HelpBox = tw.div`

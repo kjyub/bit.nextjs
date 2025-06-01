@@ -1,3 +1,5 @@
+'use client';
+
 import useIsScrollTop from '@/hooks/useIsScrollTop';
 import useMarketPriceStore from '@/store/useMarketPriceStore';
 import * as S from '@/styles/CryptoMarketStyles';
@@ -67,13 +69,15 @@ export default function CryptoMarketInfo({ marketCode, marketData, marketCurrent
       <div className="flex flex-col gap-1">
         {/* 코인 이름 */}
         <S.MainTitleBox>
-          <div className="relative flex flex-cetner max-md:w-6 md:w-7 aspect-square">
-            <Image fill={true} src={`https://static.upbit.com/logos/${imageCode}.png`} alt="coin" />
+          <div className="p-1 bg-slate-200 rounded-lg">
+            <div className="relative flex flex-cetner max-md:w-6 md:w-7 aspect-square">
+              <Image fill={true} src={`https://static.upbit.com/logos/${imageCode}.png`} alt="coin" />
+            </div>
           </div>
           <h1 className="max-md:text-xl md:text-3xl text-slate-50 font-semibold">{market.koreanName}</h1>
           <div className="flex flex-col justify-center">
-            <span className="max-md:text-xs md:text-sm text-slate-400 max-md:leading-4">{market.englishName}</span>
-            <span className="max-md:text-[8px] md:text-[10px] text-slate-500 max-md:leading-2">{market.code}</span>
+            <span className="max-md:text-xs md:text-sm text-slate-400 max-md:leading-4 md:leading-3">{market.englishName}</span>
+            <span className="max-md:text-[8px] md:text-[10px] text-slate-500 max-md:leading-2 md:leading-4">{market.code}</span>
           </div>
         </S.MainTitleBox>
 
