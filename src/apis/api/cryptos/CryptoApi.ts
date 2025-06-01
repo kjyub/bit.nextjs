@@ -338,7 +338,7 @@ class CryptoApi {
     const result: MarketCommunity = new MarketCommunity();
 
     try {
-      const response = await authInstance.get(`api/cryptos/community/${nanoId}/`);
+      const response = await defaultInstance.get(`api/cryptos/community/${nanoId}/`);
       const data = await response.json();
       result.parseResponse(data as object);
     } catch (error) {

@@ -38,6 +38,8 @@ export default class CryptoUtils {
       return TypeUtils.round(price, 2);
     } else if (price >= 1) {
       return TypeUtils.round(price, 3);
+    } else if (price > 0) {
+      return TypeUtils.round(price, 4);
     } else if (price === 0) {
       return 0;
     }

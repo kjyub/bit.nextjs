@@ -9,7 +9,7 @@ export const MarketLayout = tw.div`
 
 // 제목, 차트, 거래를 담는 레이아웃
 export const MainLayout = tw.div`
-  flex flex-col w-full p-1 space-y-2
+  flex flex-col w-full p-1 !px-2 space-y-2
 `;
 // 코인 이름 및 가격 정보
 export const TitleLayout = tw.div<StyleProps>`
@@ -23,18 +23,21 @@ export const TitleLayout = tw.div<StyleProps>`
 `;
 
 export const ChartAndTradeLayout = tw.div`
-  flex w-full h-full gap-4
+  flex w-full max-md:h-full md:h-[600px] max-sm:gap-1 sm:gap-3
 `;
 export const ChartLayout = tw.div`
   max-md:hidden md:flex flex-col max-md:h-[400px] flex-1 md:h-full p-3
   rounded-lg bg-slate-800/60
 `;
 export const OrderBookLayout = tw.div`
-  flex w-[200px] h-full
+  flex max-md:flex-1 sm:w-[220px] max-md:h-[528px] md:h-full max-sm:p-2 sm:p-3
   rounded-lg bg-slate-800/60
 `;
 export const TradeLayout = tw.div`
-  flex flex-col max-md:w-full md:flex-1 md:max-w-[264px] max-md:h-[528px] md:h-full max-md:px-2
+  flex flex-col 
+  max-md:min-w-[160px] max-md:max-w-[50%] max-md:w-full md:flex-1 md:max-w-[264px] 
+  max-md:h-[528px] md:h-full
+  max-md:px-2
 `;
 
 export const BottomLayout = tw.div`

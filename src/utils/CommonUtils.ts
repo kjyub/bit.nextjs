@@ -142,7 +142,11 @@ export default class CommonUtils {
 
       result = resultString;
     } else if (format === TextFormats.KOREAN_PRICE_SIMPLE) {
-      const inputNumber = text < 0 ? false : text;
+      if (!text || Number(text) <= 1) {
+        return text;
+      }
+
+      const inputNumber = text;
       const unitWords = ['', '만', '억', '조', '경'];
       const splitUnit = 10000;
       const splitCount = unitWords.length;

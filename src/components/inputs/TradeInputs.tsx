@@ -85,7 +85,7 @@ export const MarginModeInput = ({ marginMode, setMarginMode, disabled = false }:
   const [isBgActive, setBgActive] = useState<boolean>(false);
 
   return (
-    <div className="flex items-center w-full h-7 space-x-4">
+    <div className="flex items-center w-full h-7 max-sm:gap-1 sm:gap-4">
       <S.MarginModeBox>
         <button
           className={marginMode === MarginModeType.CROSSED ? 'active' : ''}
@@ -194,7 +194,7 @@ export const LeverageInput = ({ leverageRatio, setLeverageRatio, maxRatio = 75 }
       <div className="flex justify-between items-center w-full h-9">
         <div className="flex items-center space-x-2">
           <S.Title>레버리지</S.Title>
-          <span className="font-light text-sm text-slate-500">{`1x ~ ${maxRatio}x`}</span>
+          <span className="max-sm:hidden font-light text-sm text-slate-500">{`1x ~ ${maxRatio}x`}</span>
         </div>
 
         <div className="flex items-center space-x-4">

@@ -73,6 +73,7 @@ interface ICryptoMarketChart {
   marketCode: string;
 }
 export default function CryptoMarketChart({ marketCode }: ICryptoMarketChart) {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isCandleLoading, setCandleLoading] = useState<boolean>(false);
   const [candles, setCandles] = useState<IUpbitCandle[]>([]);
   const [timeType, setTimeType] = useState<CandleTimeType>(CandleTimes.SECOND);
@@ -150,6 +151,7 @@ export default function CryptoMarketChart({ marketCode }: ICryptoMarketChart) {
         return;
       }
       setCandleLoading(true);
+      setIsLoading(true);
 
       let data: IUpbitCandle[] = [];
       let chartType: ChartType = ChartTypes.CANDLE;
@@ -191,6 +193,7 @@ export default function CryptoMarketChart({ marketCode }: ICryptoMarketChart) {
       setTimeType(timeType);
       setChartType(chartType);
       setCandleLoading(false);
+      setIsLoading(false);
     },
     [isCandleLoading, marketCode],
   );
@@ -204,19 +207,21 @@ export default function CryptoMarketChart({ marketCode }: ICryptoMarketChart) {
   const connectChart = useTradeMarketChartSocket(marketCode, addCandle);
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full gap-2">
       <CryptoMarketChartControlBar
         timeType={timeType}
         chartType={chartType}
         setChartType={setChartType}
         initChart={initChart}
       />
+      
       <div className="relative h-full select-none touch-none">
         <CryptoMarketFinancialChart
           timeType={timeType}
           chartType={chartType}
           candles={candles}
           getBeforeData={getBeforeCandleData}
+          loading={isLoading}
         />
       </div>
     </div>

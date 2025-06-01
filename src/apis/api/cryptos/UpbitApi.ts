@@ -1,5 +1,5 @@
 import { upbitInstance } from '@/apis/utils/upbitInstances';
-import { IUpbitCandle } from '@/types/cryptos/CryptoInterfaces';
+import { IUpbitCandle, IUpbitOrderBook } from '@/types/cryptos/CryptoInterfaces';
 import { CandleMinuteUnits } from '@/types/cryptos/CryptoTypes';
 
 class UpbitApi {
@@ -160,6 +160,26 @@ class UpbitApi {
 
       const response = await upbitInstance.get('candles/months', { searchParams });
       result = await response.json();
+    } catch (error) {
+      console.log(error);
+    }
+
+    return result;
+  }
+  // endregion
+
+  // region OrderBook
+  static async getOrderBook(marketCode: string, level: number = 0): Promise<IUpbitOrderBook> {
+    let result: IUpbitOrderBook = {};
+
+    try {
+      const response = await upbitInstance.get(`orderbook`, {
+        searchParams: { market: marketCode, level: level.toString() },
+      });
+      const data = await response.json();
+      if (Array.isArray(data) && data.length > 0) {
+        result = data[0];
+      }
     } catch (error) {
       console.log(error);
     }

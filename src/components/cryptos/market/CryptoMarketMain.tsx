@@ -45,7 +45,7 @@ export default function CryptoMarketMain({ marketCode, marketData, marketCurrent
           </S.ChartLayout>
 
           <S.OrderBookLayout>
-            <CryptoMarketOrderBook marketCode={marketCode} />
+            <CryptoMarketOrderBook marketCode={marketCode} marketCurrent={marketCurrent} />
           </S.OrderBookLayout>
 
           <S.TradeLayout>

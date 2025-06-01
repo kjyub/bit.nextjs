@@ -201,12 +201,14 @@ interface ICryptoMarketFinancialChart {
   chartType: ChartType
   candles: IUpbitCandle[]
   getBeforeData: () => Promise<void>
+  loading: boolean
 }
 export default function CryptoMarketFinancialChart({
   timeType,
   chartType,
   candles,
   getBeforeData,
+  loading,
 }: ICryptoMarketFinancialChart) {
   const chartCanvasRef = useRef<ChartCanvas | null>(null)
 
@@ -288,6 +290,14 @@ export default function CryptoMarketFinancialChart({
     },
     [getBeforeData],
   )
+
+  if (loading) {
+    return (
+      <div className="pt-2" style={{ width: `${width}px`, height: `${height}px` }}>
+        <div className="size-full rounded-xl bg-slate-600 animate-pulse" />
+      </div>
+    )
+  }
 
   if (!data) {
     return <></>

@@ -159,7 +159,7 @@ const List = ({
   );
 
   return (
-    <div className="list">
+    <div className="list scroll-transparent">
       {sortedCodes
         .filter((code) => marketFilteredCodeSet.has(code))
         .map((marketCode) => (

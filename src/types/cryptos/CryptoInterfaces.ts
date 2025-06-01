@@ -61,17 +61,19 @@ export interface IUpbitCandle {
   unit: number;
 }
 
+export interface IUpbitOrderBookUnit {
+  ask_price: number;
+  ask_size: number;
+  bid_price: number;
+  bid_size: number;
+}
+
 export interface IUpbitOrderBook {
   type: string;
   code: string;
   total_ask_size: number;
   total_bid_size: number;
-  orderbook_units: Array<{
-    ask_price: number;
-    ask_size: number;
-    bid_price: number;
-    bid_size: number;
-  }>;
+  orderbook_units: Array<IUpbitOrderBookUnit>;
   timestamp: number;
   level: number;
 }
