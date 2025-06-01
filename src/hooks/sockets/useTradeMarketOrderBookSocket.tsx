@@ -1,28 +1,27 @@
 'use client';
 
-import { CandleTimeType, CandleTimes } from '@/components/cryptos/chart/Types';
-import { IUpbitCandle } from '@/types/cryptos/CryptoInterfaces';
+import { IUpbitOrderBook } from '@/types/cryptos/CryptoInterfaces';
 import { useRef } from 'react';
 import { v4 as uuid } from 'uuid';
 import useSocketManager from './useSocketManager';
 
-export default function useTradeMarketChartSocket(
+export default function useTradeMarketOrderBookSocket(
   marketCode: string,
-  receive: (data: IUpbitCandle, timeType: CandleTimeType) => void,
+  receive: (data: IUpbitOrderBook) => void,
 ) {
   const socketRef = useRef<WebSocket | null>(null);
 
   useSocketManager(() => {
-    connectChart(marketCode, CandleTimes.SECOND);
+    connectChart(marketCode)
   }, () => {
     if (socketRef.current) {
       socketRef.current.close();
     }
   }, marketCode);
 
-  const connectChart = async (marketCode: string, timeType: CandleTimeType) => {
+  const connectChart = async (marketCode: string) => {
     if (socketRef.current) {
-      console.log('기존 연결 종료');
+      console.log('[호가] 기존 연결 종료');
       socketRef.current.close();
     }
 
@@ -33,20 +32,20 @@ export default function useTradeMarketChartSocket(
         const dataString = new TextDecoder('utf-8').decode(event.data as object);
         const data = JSON.parse(dataString as string);
         if (data.error) {
-          console.error('WebSocket error:', data);
+          console.error('[호가] WebSocket error:', data);
           return;
         }
-        const candleData = data as IUpbitCandle;
-        receive(candleData, timeType);
+        const orderBookData = data as IUpbitOrderBook;
+        receive(orderBookData);
       } catch (error) {
-        console.error('Failed to parse WebSocket message', error);
+        console.error('[호가] Failed to parse WebSocket message', error);
       }
     };
     socketRef.current = newSocket;
 
     newSocket.onopen = () => {
       const ticket = String(uuid());
-      const requestData = [{ ticket: ticket }, { type: `candle.1s`, codes: [marketCode] }];
+      const requestData = [{ ticket: ticket }, { type: `orderbook`, codes: [marketCode] }];
       newSocket.send(JSON.stringify(requestData));
     };
   };
