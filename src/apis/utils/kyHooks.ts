@@ -51,7 +51,8 @@ export const validateAuthToken = async (request: KyRequest, options: NormalizedO
       // 새로고침
       if (typeof window !== 'undefined' && typeof window.document !== 'undefined') {
         await fetch(process.env.NEXT_PUBLIC_API_SERVER + '/api/auth/signout/');
-        window.location.reload();
+        console.log('signout');
+        // window.location.reload();
       }
 
       throw error;

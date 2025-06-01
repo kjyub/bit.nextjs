@@ -5,7 +5,7 @@ class CryptoServerApi {
   static async getMarkets(search: string, marketType: string): Promise<object> {
     let result: object = {};
     try {
-      const response = await defaultInstance.get('/api/cryptos/market/', {
+      const response = await defaultInstance.get('api/cryptos/market/', {
         searchParams: {
           search: search,
           market_type: marketType,
@@ -21,7 +21,7 @@ class CryptoServerApi {
   static async getMarketAll(): Promise<object> {
     let result: object = {};
     try {
-      const response = await defaultInstance.get('/api/cryptos/market_all/');
+      const response = await defaultInstance.get('api/cryptos/market_all/');
       result = await response.json();
     } catch (error) {
       console.log(error);
@@ -44,7 +44,7 @@ class CryptoServerApi {
   static async getCommunityList(search: string, marketCode: string, page: number, pageSize: number): Promise<object> {
     let result: object = {};
     try {
-      const response = await defaultInstance.get('/api/cryptos/community/', {
+      const response = await defaultInstance.get('api/cryptos/community/', {
         searchParams: {
           search: search,
           market_code: marketCode,
@@ -73,7 +73,7 @@ class CryptoServerApi {
   static async getCommunityCommentList(communityId: number, pageIndex: number, pageSize: number): Promise<object> {
     let result: object = {};
     try {
-      const response = await defaultInstance.get('/api/cryptos/community_comment/', {
+      const response = await defaultInstance.get('api/cryptos/community_comment/', {
         searchParams: {
           community_id: communityId.toString(),
           page: pageIndex.toString(),

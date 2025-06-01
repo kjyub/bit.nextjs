@@ -1,7 +1,7 @@
 'use client';
 
 import KakaoContainer from '@/layouts/KakaoContainer';
-import KakaoImage from '@/static/svgs/btn_kakao.svg';
+import KakaoLogo from '@/static/svgs/btn_kakao.svg';
 import * as SS from '@/styles/SignupStyles';
 import AuthUtils from '@/utils/AuthUtils';
 import { useState } from 'react';
@@ -33,7 +33,7 @@ export default function SignupLobby() {
                   handleKakao();
                 }}
               >
-                <KakaoImage width={30} height={30} viewBox="0 0 20 20" />
+                <KakaoLogo width={30} height={30} viewBox="0 0 20 20" />
                 <span className="pr-1 text-kakao-text">카카오 로그인</span>
               </button>
             </KakaoContainer>

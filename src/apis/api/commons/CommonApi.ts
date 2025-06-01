@@ -12,7 +12,7 @@ class CommonApi {
       formData.append('is_temp', isTemp ? '1' : '0');
 
       // @ts-ignore Ky의 타입 정의가 FormData를 직접 지원하지 않을 수 있으므로, 무시합니다.
-      const data = await fileInstance.post('/api/commons/image_write/', { body: formData }).json<any>();
+      const data = await fileInstance.post('api/commons/image_write/', { body: formData }).json<any>();
       const result = new ImageFile();
       result.parseResponse(data);
       return result;

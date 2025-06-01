@@ -72,6 +72,7 @@ export const AuthProvider = ({
 
   const getUser = useCallback(
     async (isLoadingDisable: boolean = false) => {
+      console.log('getUser', setIsLoading, setUser);
       if (!isLoadingDisable) {
         setIsLoading(true);
       }
@@ -86,7 +87,7 @@ export const AuthProvider = ({
 
   const kakaoAuth = useCallback(
     async (code: string) => {
-      const response = await fetch('/api/auth?code=' + code);
+      const response = await fetch('/api/auth/kakao?code=' + code);
       const result = (await response.json()) as LoginResponse;
 
       if (!result.token.access) {

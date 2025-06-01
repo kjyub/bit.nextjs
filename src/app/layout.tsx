@@ -28,7 +28,8 @@ export default async function RootLayout({
   const accessToken = await AuthServerUtils.getAccessToken();
   setAuthToken(accessToken);
 
-  const userData = await UserApi.getUserDataSelf();
+  // const userData = await UserApi.getUserDataSelf();
+  const userData = {};
 
   return (
     <html lang="en">

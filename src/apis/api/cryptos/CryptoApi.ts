@@ -19,7 +19,7 @@ class CryptoApi {
     };
 
     try {
-      const response = await authInstance.post('/api/cryptos/my_trades/');
+      const response = await authInstance.post('api/cryptos/my_trades/');
       const data = await response.json();
       result.wallet.parseResponse(data.wallet as object);
       if (data.positions && Array.isArray(data.positions)) {
@@ -48,7 +48,7 @@ class CryptoApi {
     const result: CryptoWallet = new CryptoWallet();
 
     try {
-      const response = await authInstance.get('/api/cryptos/wallet/');
+      const response = await authInstance.get('api/cryptos/wallet/');
       const data = await response.json();
       result.parseResponse(data as object);
     } catch (error) {
@@ -61,7 +61,7 @@ class CryptoApi {
     let result = false;
 
     try {
-      const response = await authInstance.post('/api/cryptos/wallet_transaction/', { json: requestData });
+      const response = await authInstance.post('api/cryptos/wallet_transaction/', { json: requestData });
       result = response.ok;
     } catch (error) {
       console.log(error);
@@ -75,7 +75,7 @@ class CryptoApi {
     const result: Array<CryptoMarket> = [];
 
     try {
-      const response = await defaultInstance.get('/api/cryptos/market/', {
+      const response = await defaultInstance.get('api/cryptos/market/', {
         searchParams: {
           search: search,
           market_type: marketType,
@@ -100,7 +100,7 @@ class CryptoApi {
     const result: Array<CryptoMarket> = [];
 
     try {
-      const response = await defaultInstance.get('/api/cryptos/market_all/');
+      const response = await defaultInstance.get('api/cryptos/market_all/');
       const data = await response.json();
       if (Array.isArray(data as object)) {
         (data as any[]).forEach((item) => {
@@ -122,7 +122,7 @@ class CryptoApi {
     let result = false;
 
     try {
-      const response = await authInstance.post('/api/cryptos/order_market/', { json: requestData });
+      const response = await authInstance.post('api/cryptos/order_market/', { json: requestData });
       const data = await response.json();
       result = data as boolean;
     } catch (error) {
@@ -135,7 +135,7 @@ class CryptoApi {
     let result = false;
 
     try {
-      const response = await authInstance.post('/api/cryptos/order_limit/', { json: requestData });
+      const response = await authInstance.post('api/cryptos/order_limit/', { json: requestData });
       const data = await response.json();
       result = data as boolean;
     } catch (error) {
@@ -148,7 +148,7 @@ class CryptoApi {
     let result = false;
 
     try {
-      const response = await authInstance.post('/api/cryptos/order_limit_cancel/', { json: { order_id: orderId } });
+      const response = await authInstance.post('api/cryptos/order_limit_cancel/', { json: { order_id: orderId } });
       const data = await response.json();
       result = data as boolean;
     } catch (error) {
@@ -161,7 +161,7 @@ class CryptoApi {
     let result = false;
 
     try {
-      const response = await authInstance.post('/api/cryptos/order_limit_chase/', {
+      const response = await authInstance.post('api/cryptos/order_limit_chase/', {
         json: { order_id: orderId, price },
       });
       const data = await response.json();
@@ -179,7 +179,7 @@ class CryptoApi {
     const result: Array<TradePosition> = [];
 
     try {
-      const response = await authInstance.get('/api/cryptos/my_position/');
+      const response = await authInstance.get('api/cryptos/my_position/');
       const data = await response.json();
       if (Array.isArray(data as object)) {
         (data as any[]).forEach((item) => {
@@ -198,7 +198,7 @@ class CryptoApi {
     const result: Array<TradeOrder> = [];
 
     try {
-      const response = await authInstance.get('/api/cryptos/my_order/');
+      const response = await authInstance.get('api/cryptos/my_order/');
       const data = await response.json();
       if (Array.isArray(data as object)) {
         (data as any[]).forEach((item) => {
@@ -237,7 +237,7 @@ class CryptoApi {
     }
 
     try {
-      const response = await authInstance.get('/api/cryptos/my_order_history/', { searchParams });
+      const response = await authInstance.get('api/cryptos/my_order_history/', { searchParams });
       const data = await response.json();
       result.parseResponse(data as object, TradeOrder);
     } catch (error) {
@@ -267,7 +267,7 @@ class CryptoApi {
     }
 
     try {
-      const response = await authInstance.get('/api/cryptos/my_trade_history/', { searchParams });
+      const response = await authInstance.get('api/cryptos/my_trade_history/', { searchParams });
       const data = await response.json();
       result.parseResponse(data as object, TradeHistory);
     } catch (error) {
@@ -297,7 +297,7 @@ class CryptoApi {
     }
 
     try {
-      const response = await authInstance.get('/api/cryptos/my_position_history/', { searchParams });
+      const response = await authInstance.get('api/cryptos/my_position_history/', { searchParams });
       const data = await response.json();
       result.parseResponse(data as object, TradePosition);
     } catch (error) {
@@ -318,7 +318,7 @@ class CryptoApi {
     const result: Pagination<MarketCommunity> = new Pagination<MarketCommunity>();
 
     try {
-      const response = await defaultInstance.get('/api/cryptos/community/', {
+      const response = await defaultInstance.get('api/cryptos/community/', {
         searchParams: {
           search: search,
           market_code: marketCode,
@@ -351,7 +351,7 @@ class CryptoApi {
     const result: MarketCommunity = new MarketCommunity();
 
     try {
-      const response = await authInstance.post('/api/cryptos/community_create/', { json: requestData });
+      const response = await authInstance.post('api/cryptos/community_create/', { json: requestData });
       const data = await response.json();
       result.parseResponse(data as object);
     } catch (error) {
@@ -426,7 +426,7 @@ class CryptoApi {
     const result: MarketCommunityComment = new MarketCommunityComment();
 
     try {
-      const response = await authInstance.post('/api/cryptos/community_comment_create/', { json: requestData });
+      const response = await authInstance.post('api/cryptos/community_comment_create/', { json: requestData });
       const data = await response.json();
       result.parseResponse(data as object);
     } catch (error) {
