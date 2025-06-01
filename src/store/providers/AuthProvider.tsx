@@ -51,13 +51,14 @@ export const AuthProvider = ({
   const updateAuth = useUserInfoStore((state) => state.updateAuth);
 
   useEffect(() => {
-    if (authToken) {
+    if (authToken && Object.keys(authToken).length > 0) {
       setAuthToken(authToken);
       if (userData) {
         const newUser = new User();
         newUser.parseResponse(userData as object);
         setUser(newUser);
       }
+
       getUser(true);
     }
   }, [authToken, userData]);
