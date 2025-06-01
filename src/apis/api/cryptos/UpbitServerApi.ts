@@ -1,25 +1,24 @@
-import { defaultInstance } from '@/apis/utils/api';
 import { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
+import ky from 'ky';
 
 class UpbitServerApi {
   // region Market
   static async getMarketCurrent(marketCode: string): Promise<IUpbitMarketTicker> {
     let result: IUpbitMarketTicker = {};
 
-    await defaultInstance
-      .get('https://api.upbit.com/v1/ticker', {
-        params: {
+    try {
+      const response = await ky.get('https://api.upbit.com/v1/ticker', {
+        searchParams: {
           markets: marketCode,
         },
-      })
-      .then(({ data }) => {
-        if (Array.isArray(data) && data.length > 0) {
-          result = data[0];
-        }
-      })
-      .catch((error) => {
-        console.log(error);
       });
+      const data = await response.json();
+      if (Array.isArray(data) && data.length > 0) {
+        result = data[0];
+      }
+    } catch (error) {
+      console.log(error);
+    }
 
     return result;
   }

@@ -1,11 +1,11 @@
 'use client';
 
 import UserApi from '@/apis/api/users/UserApi';
-import { removeAxiosAuthToken, setAxiosAuthToken } from '@/apis/utils/api';
 import User from '@/types/users/User';
 import { AccountStatusTypes, LoginResponse } from '@/types/users/UserTypes';
 import { Dispatch, SetStateAction, createContext, useCallback, useEffect, useMemo, useState } from 'react';
 import useUserInfoStore from '../useUserInfo';
+import { removeAuthToken, setAuthToken } from '@/apis/utils/instances';
 
 interface AuthState {
   user: User;
@@ -52,7 +52,7 @@ export const AuthProvider = ({
 
   useEffect(() => {
     if (accessToken) {
-      setAxiosAuthToken(accessToken);
+      setAuthToken(accessToken);
       if (userData) {
         const newUser = new User();
         newUser.parseResponse(userData as object);
@@ -93,7 +93,7 @@ export const AuthProvider = ({
         throw new Error('로그인에 실패했습니다.');
       }
 
-      setAxiosAuthToken(result.token.access);
+      setAuthToken(result.token.access);
 
       const newUser = new User();
       newUser.parseResponse(result.user);
@@ -107,7 +107,7 @@ export const AuthProvider = ({
   const signOut = useCallback(async () => {
     setUser(new User());
     setIsLoading(false);
-    removeAxiosAuthToken();
+    removeAuthToken();
   }, [setUser, setIsLoading]);
 
   return (

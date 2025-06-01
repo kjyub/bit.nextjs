@@ -1,7 +1,7 @@
 import User from '@/types/users/User';
 import { UserTypeValues } from '@/types/users/UserTypeValues';
 import { LoginResponse } from '@/types/users/UserTypes';
-import { authInstance, credentialInstance, defaultInstance } from '../../utils/api';
+import { authInstance, credentialInstance, defaultInstance } from '@/apis/utils/instances';
 
 class UserApi {
   // static async getAccessToken() {
@@ -24,15 +24,16 @@ class UserApi {
       },
     };
 
-    await credentialInstance
-      .post('/api/users/jwt_auth/refresh/', { refresh: refreshToken })
-      .then(({ data }) => {
-        result.token.access = data.access;
-        result.token.refresh = data.refresh;
-      })
-      .catch((error) => {
-        console.log(error);
+    try {
+      const response = await credentialInstance.post('/api/users/jwt_auth/refresh/', {
+        json: { refresh: refreshToken },
       });
+      const data = await response.json();
+      result.token.access = data.access;
+      result.token.refresh = data.refresh;
+    } catch (error) {
+      console.log(error);
+    }
 
     return result;
   }
@@ -45,16 +46,17 @@ class UserApi {
       },
     };
 
-    await defaultInstance
-      .post('/api/users/login/', { email: email, password: password, user_type: userType })
-      .then(({ data }) => {
-        result.user = data.user;
-        result.token.access = data.token.access;
-        result.token.refresh = data.token.refresh;
-      })
-      .catch((error) => {
-        console.log(error);
+    try {
+      const response = await defaultInstance.post('/api/users/login/', {
+        json: { email: email, password: password, user_type: userType },
       });
+      const data = await response.json();
+      result.user = data.user;
+      result.token.access = data.token.access;
+      result.token.refresh = data.token.refresh;
+    } catch (error) {
+      console.log(error);
+    }
 
     return result;
   }
@@ -67,100 +69,99 @@ class UserApi {
       },
     };
 
-    await defaultInstance
-      .post('/api/users/kakao_auth/', { code: code })
-      .then(({ data }) => {
-        result.user = data.user;
-        result.token.access = data.token.access;
-        result.token.refresh = data.token.refresh;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const response = await defaultInstance.post('/api/users/kakao_auth/', { json: { code: code } });
+      const data = await response.json();
+      result.user = data.user;
+      result.token.access = data.token.access;
+      result.token.refresh = data.token.refresh;
+    } catch (error) {
+      console.log(error);
+    }
 
     return result;
   }
   static async backdoorAuth(email: string): Promise<LoginResponse> {
     let responseData = {};
 
-    await defaultInstance
-      .post('/api/users/backdoor_login/', { email: email })
-      .then(({ data }) => {
-        responseData = data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const response = await defaultInstance.post('/api/users/backdoor_login/', { json: { email: email } });
+      const data = await response.json();
+      responseData = data;
+    } catch (error) {
+      console.log(error);
+    }
 
     return responseData;
   }
   static async kakaoAuthSignup(requestData: object): Promise<object> {
     let responseData = {};
 
-    await authInstance
-      .put('/api/users/kakao_auth/', requestData)
-      .then(({ data }) => {
-        responseData = data.user;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const response = await authInstance.put('/api/users/kakao_auth/', { json: requestData });
+      const data = await response.json();
+      responseData = data.user;
+    } catch (error) {
+      console.log(error);
+    }
 
     return responseData;
   }
   static async checkEmail(email: string, userType: UserTypeValues): Promise<boolean> {
     let result = false;
 
-    await defaultInstance
-      .post('/api/users/user_check_email/', { email: email, user_type: userType })
-      .then(({ data }) => {
-        result = data;
-      })
-      .catch((error) => {
-        console.log(error);
+    try {
+      const response = await defaultInstance.post('/api/users/user_check_email/', {
+        json: { email: email, user_type: userType },
       });
+      const data = await response.json();
+      result = data;
+    } catch (error) {
+      console.log(error);
+    }
 
     return result;
   }
   static async checkNickname(nickname: string): Promise<boolean> {
     let result = false;
 
-    await defaultInstance
-      .post('/api/users/user_check_nickname/', { nickname: nickname })
-      .then(({ data }) => {
-        result = data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const response = await defaultInstance.post('/api/users/user_check_nickname/', { json: { nickname: nickname } });
+      const data = await response.json();
+      result = data;
+    } catch (error) {
+      console.log(error);
+    }
 
     return result;
   }
   static async findEmail(name: string, tel: string, userType: UserTypeValues): Promise<Array<string>> {
     let result: Array<string> = [];
 
-    await defaultInstance
-      .post('/api/users/user_find_email/', { name: name, tel: tel, user_type: userType })
-      .then(({ data }) => {
-        result = data;
-      })
-      .catch((error) => {
-        console.log(error);
+    try {
+      const response = await defaultInstance.post('/api/users/user_find_email/', {
+        json: { name: name, tel: tel, user_type: userType },
       });
+      const data = await response.json();
+      result = data;
+    } catch (error) {
+      console.log(error);
+    }
 
     return result;
   }
   static async findPasswordCheck(email: string, name: string, tel: string, userType: UserTypeValues): Promise<boolean> {
     let result = false;
 
-    await defaultInstance
-      .post('/api/users/user_find_password/', { email: email, name: name, tel: tel, user_type: userType })
-      .then(({ data }) => {
-        result = data;
-      })
-      .catch((error) => {
-        console.log(error);
+    try {
+      const response = await defaultInstance.post('/api/users/user_find_password/', {
+        json: { email: email, name: name, tel: tel, user_type: userType },
       });
+      const data = await response.json();
+      result = data;
+    } catch (error) {
+      console.log(error);
+    }
 
     return result;
   }
@@ -173,20 +174,21 @@ class UserApi {
   ): Promise<boolean> {
     let result = false;
 
-    await defaultInstance
-      .put('/api/users/user_find_password/', {
-        email: email,
-        name: name,
-        tel: tel,
-        user_type: userType,
-        password: password,
-      })
-      .then(({ data }) => {
-        result = data;
-      })
-      .catch((error) => {
-        console.log(error);
+    try {
+      const response = await defaultInstance.put('/api/users/user_find_password/', {
+        json: {
+          email: email,
+          name: name,
+          tel: tel,
+          user_type: userType,
+          password: password,
+        },
       });
+      const data = await response.json();
+      result = data;
+    } catch (error) {
+      console.log(error);
+    }
 
     return result;
   }
@@ -194,43 +196,39 @@ class UserApi {
     const user: User = new User();
     const error = '';
 
-    await defaultInstance
-      .post('/api/users/signup/', data)
-      .then((response) => {
-        const userData = response.data.user;
-        user.parseResponse(userData as object);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const response = await defaultInstance.post('/api/users/signup/', { json: data });
+      const data = await response.json();
+      user.parseResponse(data.user as object);
+    } catch (error) {
+      console.log(error);
+    }
 
     return [user, error];
   }
   static async getUserCurrent(): Promise<User> {
     const result = new User();
 
-    await authInstance
-      .get('/api/users/detail_info_auth/')
-      .then(({ data }) => {
-        result.parseResponse(data as object);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const response = await authInstance.get('/api/users/detail_info_auth/');
+      const data = await response.json();
+      result.parseResponse(data as object);
+    } catch (error) {
+      console.log(error);
+    }
 
     return result;
   }
   static async getUserDataSelf(): Promise<object> {
     let userData = {};
 
-    await authInstance
-      .get('/api/users/detail_info_auth/')
-      .then(({ data }) => {
-        userData = data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const response = await authInstance.get('/api/users/detail_info_auth/');
+      const data = await response.json();
+      userData = data;
+    } catch (error) {
+      console.log(error);
+    }
 
     return userData;
   }

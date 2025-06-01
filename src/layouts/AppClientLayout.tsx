@@ -1,7 +1,7 @@
 'use client';
 
 import UserApi from '@/apis/api/users/UserApi';
-import { setAxiosAuthToken } from '@/apis/utils/api';
+import { setAuthToken } from '@/apis/utils/instances';
 import ToastPopup from '@/components/commons/ToastPopup';
 import useAlarmSocket from '@/hooks/sockets/useAlarmSocket';
 import { useUser } from '@/hooks/useUser';
@@ -36,7 +36,7 @@ export default function AppClientLayout({
       alert(userEmail);
       (async () => {
         const response = await UserApi.backdoorAuth(userEmail);
-        setAxiosAuthToken(response.token.access);
+        setAuthToken(response.token.access);
         const user = new User();
         user.parseResponse(response.user);
         setUser(user);

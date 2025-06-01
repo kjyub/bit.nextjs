@@ -2,11 +2,11 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import '@/styles/css/globals.css';
 import UserApi from '@/apis/api/users/UserApi';
-import { setAxiosAuthToken } from '@/apis/utils/api';
 import AppClientLayout from '@/layouts/AppClientLayout';
 import { AuthProvider } from '@/store/providers/AuthProvider';
 import AuthServerUtils from '@/utils/AuthUtils.server';
 import Script from 'next/script';
+import { setAuthToken } from '@/apis/utils/instances';
 
 const pretendard = localFont({
   src: '../static/fonts/PretendardVariable.woff2',
@@ -26,11 +26,9 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const accessToken = await AuthServerUtils.getAccessToken();
-  console.log(accessToken);
-  setAxiosAuthToken(accessToken);
+  setAuthToken(accessToken);
 
   const userData = await UserApi.getUserDataSelf();
-  console.log(userData);
 
   return (
     <html lang="en">

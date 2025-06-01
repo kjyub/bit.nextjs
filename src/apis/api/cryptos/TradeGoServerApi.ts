@@ -1,4 +1,4 @@
-import { tradeDefaultInstance } from '@/apis/utils/trade-api';
+import { tradeInstance } from '@/apis/utils/tradeInstances';
 import { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
 
 class TradeGoServerApi {
@@ -6,18 +6,19 @@ class TradeGoServerApi {
   static async getMarketCurrent(marketCode: string): Promise<IUpbitMarketTicker> {
     let result: IUpbitMarketTicker = {};
 
-    await tradeDefaultInstance
-      .post('/markets', {
-        codes: [marketCode],
-      })
-      .then(({ data }) => {
-        if (Array.isArray(data) && data.length > 0) {
-          result = data[0];
-        }
-      })
-      .catch((error) => {
-        console.log(error);
+    try {
+      const response = await tradeInstance.post('/markets', {
+        json: {
+          codes: [marketCode],
+        },
       });
+      const data = await response.json();
+      if (Array.isArray(data) && data.length > 0) {
+        result = data[0];
+      }
+    } catch (error) {
+      console.log(error);
+    }
 
     return result;
   }

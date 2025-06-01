@@ -1,3 +1,4 @@
+import CryptoWallet from './CryptoWallet';
 import TradeOrder from './TradeOrder';
 import TradePosition from './TradePosition';
 
@@ -41,6 +42,7 @@ export interface IUpbitMarketTicker {
 }
 
 export interface IMyTradeData {
+  wallet: CryptoWallet;
   positions: Array<TradePosition>;
   orders: Array<TradeOrder>;
 }

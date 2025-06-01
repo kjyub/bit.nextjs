@@ -1,62 +1,59 @@
 import { IUpbitCandle } from '@/types/cryptos/CryptoInterfaces';
 import { CandleMinuteUnits } from '@/types/cryptos/CryptoTypes';
-import { defaultInstance } from '../../utils/api';
+import ky from 'ky';
 
 class UpbitApi {
   // region Market
   static async getMarketsAll(): Promise<Array<IUpbitMarket>> {
     let result: Array<IUpbitMarket> = [];
 
-    await defaultInstance
-      .get('https://api.upbit.com/v1/market/all')
-      .then(({ data }) => {
-        if (Array.isArray(data)) {
-          result = data;
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const response = await ky.get('https://api.upbit.com/v1/market/all');
+      const data = await response.json();
+      if (Array.isArray(data)) {
+        result = data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
 
     return result;
   }
   static async getMarketsCurrent(marketCodes: Array<string>): Promise<Array<IUpbitMarketTicker>> {
     let result: Array<IUpbitMarketTicker> = [];
 
-    await defaultInstance
-      .get('https://api.upbit.com/v1/ticker', {
-        params: {
+    try {
+      const response = await ky.get('https://api.upbit.com/v1/ticker', {
+        searchParams: {
           markets: marketCodes.join(','),
         },
-      })
-      .then(({ data }) => {
-        if (Array.isArray(data)) {
-          result = data;
-        }
-      })
-      .catch((error) => {
-        console.log(error);
       });
+      const data = await response.json();
+      if (Array.isArray(data)) {
+        result = data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
 
     return result;
   }
   static async getMarketCurrent(marketCode: string): Promise<IUpbitMarketTicker> {
     let result: IUpbitMarketTicker = {};
 
-    await defaultInstance
-      .get('https://api.upbit.com/v1/ticker', {
-        params: {
+    try {
+      const response = await ky.get('https://api.upbit.com/v1/ticker', {
+        searchParams: {
           markets: marketCode,
         },
-      })
-      .then(({ data }) => {
-        if (Array.isArray(data) && data.length > 0) {
-          result = data[0];
-        }
-      })
-      .catch((error) => {
-        console.log(error);
       });
+      const data = await response.json();
+      if (Array.isArray(data) && data.length > 0) {
+        result = data[0];
+      }
+    } catch (error) {
+      console.log(error);
+    }
 
     return result;
   }
@@ -64,95 +61,100 @@ class UpbitApi {
 
   // region Candle
   // to: ISO8061 포맷 (yyyy-MM-dd'T'HH:mm:ss'Z' or yyyy-MM-dd HH:mm:ss).
-  static getCandleSeconds(marketCode: string, count: number = 200, to?: string): Promise<Array<IUpbitCandle>> {
-    return defaultInstance
-      .get('https://api.upbit.com/v1/candles/seconds', {
-        params: {
+  static async getCandleSeconds(marketCode: string, count: number = 200, to?: string): Promise<Array<IUpbitCandle>> {
+    let result: Array<IUpbitCandle> = [];
+
+    try {
+      const response = await ky.get('https://api.upbit.com/v1/candles/seconds', {
+        searchParams: {
           market: marketCode,
           to: to,
           count: count,
         },
-      })
-      .then(({ data }) => {
-        return data;
-      })
-      .catch((error) => {
-        console.log(error);
-        return [];
       });
+      result = await response.json();
+    } catch (error) {
+      console.log(error);
+    }
+
+    return result;
   }
-  static getCandleMinutes(
+  static async getCandleMinutes(
     marketCode: string,
     count: number = 200,
     unit: CandleMinuteUnits,
     to?: string,
   ): Promise<Array<IUpbitCandle>> {
-    return defaultInstance
-      .get(`https://api.upbit.com/v1/candles/minutes/${unit}`, {
-        params: {
+    let result: Array<IUpbitCandle> = [];
+
+    try {
+      const response = await ky.get(`https://api.upbit.com/v1/candles/minutes/${unit}`, {
+        searchParams: {
           market: marketCode,
           to: to,
           count: count,
         },
-      })
-      .then(({ data }) => {
-        return data;
-      })
-      .catch((error) => {
-        console.log(error);
-        return [];
       });
+      result = await response.json();
+    } catch (error) {
+      console.log(error);
+    }
+
+    return result;
   }
-  static getCandleDays(marketCode: string, count: number = 200, to?: string): Promise<Array<IUpbitCandle>> {
-    return defaultInstance
-      .get('https://api.upbit.com/v1/candles/days', {
-        params: {
+  static async getCandleDays(marketCode: string, count: number = 200, to?: string): Promise<Array<IUpbitCandle>> {
+    let result: Array<IUpbitCandle> = [];
+
+    try {
+      const response = await ky.get('https://api.upbit.com/v1/candles/days', {
+        searchParams: {
           market: marketCode,
           to: to,
           count: count,
         },
-      })
-      .then(({ data }) => {
-        return data;
-      })
-      .catch((error) => {
-        console.log(error);
-        return [];
       });
+      result = await response.json();
+    } catch (error) {
+      console.log(error);
+    }
+
+    return result;
   }
-  static getCandleWeeks(marketCode: string, count: number = 200, to?: string): Promise<Array<IUpbitCandle>> {
-    return defaultInstance
-      .get('https://api.upbit.com/v1/candles/weeks', {
-        params: {
+  static async getCandleWeeks(marketCode: string, count: number = 200, to?: string): Promise<Array<IUpbitCandle>> {
+    let result: Array<IUpbitCandle> = [];
+
+    try {
+      const response = await ky.get('https://api.upbit.com/v1/candles/weeks', {
+        searchParams: {
           market: marketCode,
           to: to,
           count: count,
         },
-      })
-      .then(({ data }) => {
-        return data;
-      })
-      .catch((error) => {
-        console.log(error);
-        return [];
       });
+      result = await response.json();
+    } catch (error) {
+      console.log(error);
+    }
+
+    return result;
   }
-  static getCandleMonths(marketCode: string, count: number = 200, to?: string): Promise<Array<IUpbitCandle>> {
-    return defaultInstance
-      .get('https://api.upbit.com/v1/candles/months', {
-        params: {
+  static async getCandleMonths(marketCode: string, count: number = 200, to?: string): Promise<Array<IUpbitCandle>> {
+    let result: Array<IUpbitCandle> = [];
+
+    try {
+      const response = await ky.get('https://api.upbit.com/v1/candles/months', {
+        searchParams: {
           market: marketCode,
           to: to,
           count: count,
         },
-      })
-      .then(({ data }) => {
-        return data;
-      })
-      .catch((error) => {
-        console.log(error);
-        return [];
       });
+      result = await response.json();
+    } catch (error) {
+      console.log(error);
+    }
+
+    return result;
   }
   // endregion
 }
