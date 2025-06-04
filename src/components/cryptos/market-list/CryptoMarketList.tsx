@@ -3,17 +3,17 @@
 import CryptoApi from '@/apis/api/cryptos/CryptoApi';
 import TradeGoApi from '@/apis/api/cryptos/TradeGoApi';
 import * as S from '@/styles/CryptoMarketStyles';
-import { type OrderTypeValues, OrderTypes } from '@/types/common/CommonTypes';
+import { type OrderType, OrderTypes } from '@/types/common/CommonTypes';
 import type CryptoMarket from '@/types/cryptos/CryptoMarket';
-import { type MarketSortTypeValues, MarketSortTypes, MarketTypes } from '@/types/cryptos/CryptoTypes';
+import { type MarketSortType, MarketSortTypes, MarketTypes } from '@/types/cryptos/CryptoTypes';
 import { Suspense, useCallback, useEffect, useState } from 'react';
 import Market from './Market';
 import MarketSortType from './MarketSortType';
 
 const getSortedCodes = async (
   marketDic: Record<string, CryptoMarket>,
-  sortType: MarketSortTypeValues,
-  orderType: OrderTypeValues,
+  sortType: MarketSortType,
+  orderType: OrderType,
 ): Promise<string[]> => {
   const currentMarketData = await TradeGoApi.getMarketsCurrentDic();
 
@@ -70,7 +70,7 @@ export default function CryptoMarketList() {
   const [search, setSearch] = useState<string>(''); // 검색어
 
   const [sortType, setSortType] = useState<MarketSortTypes>(MarketSortTypes.TRADE_PRICE); // 정렬 기준
-  const [orderType, setOrderType] = useState<OrderTypeValues>(OrderTypes.DESC); // 정렬 방식
+  const [orderType, setOrderType] = useState<OrderType>(OrderTypes.DESC); // 정렬 방식
 
   return (
     <S.MarketListBox>
@@ -118,7 +118,7 @@ const List = ({
   search,
   sortType,
   orderType,
-}: { search: string; sortType: MarketSortTypeValues; orderType: OrderTypeValues }) => {
+}: { search: string; sortType: MarketSortType; orderType: OrderType }) => {
   const [marketDic, setMarketDic] = useState<Record<string, CryptoMarket>>({}); // 코인 목록
   const [marketFilteredCodeSet, setMarketFilteredCodeSet] = useState<Set<string>>(new Set<string>()); // 검색한 코인 목록
   const [marketType, _setMarketType] = useState<MarketTypes>(MarketTypes.KRW); // 마켓 종류 (KRW, BTC, USDT, HOLD)
@@ -170,9 +170,9 @@ const List = ({
 };
 
 // interface IMarketType {
-//   marketType: MarketTypeValues
-//   currentMarketType: MarketTypeValues
-//   setMarketType: (marketType: MarketTypeValues) => void
+//   marketType: MarketType
+//   currentMarketType: MarketType
+//   setMarketType: (marketType: MarketType) => void
 // }
 // const MarketType = ({ marketType, currentMarketType, setMarketType }: IMarketType) => {
 //   return (

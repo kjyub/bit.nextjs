@@ -2,7 +2,7 @@
 import useUserInfoStore from '@/store/useUserInfo';
 import * as S from '@/styles/CryptoWalletStyles';
 import { TextFormats } from '@/types/CommonTypes';
-import { type TransferTypeValues, TransferTypes } from '@/types/cryptos/CryptoTypes';
+import { type TransferType, TransferTypes } from '@/types/cryptos/CryptoTypes';
 import CommonUtils from '@/utils/CommonUtils';
 import { useEffect, useMemo, useState } from 'react';
 import ModalContainer from '../ModalContainer';
@@ -11,7 +11,7 @@ import CryptoTransferModal from './CryptoTransferModal';
 
 export default function CryptoMain() {
   const [isTransferModalOpen, setTransferModalOpen] = useState<boolean>(false);
-  const [transferType, setTransferType] = useState<TransferTypeValues>(TransferTypes.TO_WALLET);
+  const [transferType, setTransferType] = useState<TransferType>(TransferTypes.TO_WALLET);
 
   const { cash, balance, locked, updateInfo } = useUserInfoStore();
 
@@ -19,7 +19,7 @@ export default function CryptoMain() {
     updateInfo();
   }, []);
 
-  const handleTransferModal = (type: TransferTypeValues) => {
+  const handleTransferModal = (type: TransferType) => {
     setTransferType(type);
     setTransferModalOpen(true);
   };

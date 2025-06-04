@@ -2,7 +2,7 @@ import User from '@/types/users/User';
 import { AbsApiObject } from '../ApiTypes';
 
 export default class MarketCommunityComment extends AbsApiObject {
-  private _id: number;
+  protected _id: number;
   private _communityNanoId: string;
   private _parentId: number;
 
@@ -64,9 +64,9 @@ export default class MarketCommunityComment extends AbsApiObject {
     return this._dislikes;
   }
   public get createdDate(): string {
-    return this._created_date;
+    return this._createdDate;
   }
   public get updatedDate(): string {
-    return this._updated_date;
+    return this._updatedDate;
   }
 }

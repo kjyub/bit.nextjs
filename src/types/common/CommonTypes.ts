@@ -8,7 +8,7 @@ export const OrderTypes = {
   ASC: 0,
   DESC: 1,
 } as const;
-export type OrderTypeValues = keyof typeof OrderTypes;
+export type OrderType = keyof typeof OrderTypes;
 
 export const OrderTypeNames = {
   0: '오름차순',
@@ -20,4 +20,4 @@ export const LikeTypes = {
   DISLIKE: -1,
   NONE: 0,
 } as const;
-export type LikeTypeValues = keyof typeof LikeTypes;
+export type LikeType = keyof typeof LikeTypes;

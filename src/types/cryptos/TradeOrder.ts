@@ -1,14 +1,14 @@
 import { AbsApiObject } from '../ApiTypes';
 import CryptoMarket from './CryptoMarket';
 import {
-  MarginModeType,
-  type MarginModeTypeValues,
-  PositionType,
-  type PositionTypeValues,
-  TradeOrderType,
-  type TradeOrderTypeValues,
-  TradeType,
-  type TradeTypeValues,
+  MarginModeTypes,
+  type MarginModeType,
+  PositionTypes,
+  type PositionType,
+  TradeOrderTypes,
+  type TradeOrderType,
+  TradeTypes,
+  type TradeType,
 } from './CryptoTypes';
 
 export default class TradeOrder extends AbsApiObject {
@@ -17,10 +17,10 @@ export default class TradeOrder extends AbsApiObject {
   private _marketCode: string;
   private _market: CryptoMarket;
   private _isOpen: boolean;
-  private _marginMode: MarginModeTypeValues;
-  private _orderType: TradeOrderTypeValues;
-  private _positionType: PositionTypeValues;
-  private _tradeType: TradeTypeValues;
+  private _marginMode: MarginModeType;
+  private _orderType: TradeOrderType;
+  private _positionType: PositionType;
+  private _tradeType: TradeType;
   private _tradeTime: string;
   private _entryPrice: number;
   private _quantity: number;
@@ -40,10 +40,10 @@ export default class TradeOrder extends AbsApiObject {
     this._marketCode = '';
     this._market = new CryptoMarket();
     this._isOpen = false;
-    this._marginMode = MarginModeType.CROSSED;
-    this._orderType = TradeOrderType.LIMIT;
-    this._positionType = PositionType.LONG;
-    this._tradeType = TradeType.OPEN;
+    this._marginMode = MarginModeTypes.CROSSED;
+    this._orderType = TradeOrderTypes.LIMIT;
+    this._positionType = PositionTypes.LONG;
+    this._tradeType = TradeTypes.OPEN;
     this._tradeTime = '';
     this._entryPrice = 0;
     this._quantity = 0;
@@ -96,16 +96,16 @@ export default class TradeOrder extends AbsApiObject {
   public get isOpen(): boolean {
     return this._isOpen;
   }
-  public get marginMode(): MarginModeTypeValues {
+  public get marginMode(): MarginModeType {
     return this._marginMode;
   }
-  public get orderType(): TradeOrderTypeValues {
+  public get orderType(): TradeOrderType {
     return this._orderType;
   }
-  public get positionType(): PositionTypeValues {
+  public get positionType(): PositionType {
     return this._positionType;
   }
-  public get tradeType(): TradeTypeValues {
+  public get tradeType(): TradeType {
     return this._tradeType;
   }
   public get tradeTime(): string {

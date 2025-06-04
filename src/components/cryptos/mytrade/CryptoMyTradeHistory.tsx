@@ -3,7 +3,7 @@
 import CryptoApi from '@/apis/api/cryptos/CryptoApi';
 import usePageScroll from '@/hooks/usePageScroll';
 import * as S from '@/styles/CryptoMyTradeStyles';
-import { PositionType, TradeOrderTypeNames } from '@/types/cryptos/CryptoTypes';
+import { PositionTypes, TradeOrderTypeNames } from '@/types/cryptos/CryptoTypes';
 import type TradeHistory from '@/types/cryptos/TradeHistory';
 import CryptoUtils from '@/utils/CryptoUtils';
 import dayjs from 'dayjs';
@@ -91,8 +91,8 @@ const History = ({ history }: IHistory) => {
               <span>{dayjs(history.createdDate).format('YYYY-MM-DD HH:mm:ss')}</span>
             </div>
 
-            <div className={`position ${history.positionType === PositionType.LONG ? 'long' : 'short'}`}>
-              {history.positionType === PositionType.LONG ? 'LONG' : 'SHORT'}
+            <div className={`position ${history.positionType === PositionTypes.LONG ? 'long' : 'short'}`}>
+              {history.positionType === PositionTypes.LONG ? 'LONG' : 'SHORT'}
             </div>
 
             <p className="title">

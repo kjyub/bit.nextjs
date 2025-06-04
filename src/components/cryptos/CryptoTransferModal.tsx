@@ -4,7 +4,7 @@ import * as I from '@/components/inputs/UserInputs';
 import useUserInfoStore from '@/store/useUserInfo';
 import * as S from '@/styles/CryptoWalletStyles';
 import { TextFormats } from '@/types/CommonTypes';
-import { type TransferTypeValues, TransferTypes, WalletTransactionType } from '@/types/cryptos/CryptoTypes';
+import { type TransferType, TransferTypes, WalletTransactionTypes } from '@/types/cryptos/CryptoTypes';
 import CommonUtils from '@/utils/CommonUtils';
 import { useEffect, useState } from 'react';
 import ModalLayout from '../atomics/ModalLayout';
@@ -15,13 +15,13 @@ const TransferSuffix = {
 };
 
 interface CryptoTransferModalProps {
-  defaultTransferType: TransferTypeValues;
+  defaultTransferType: TransferType;
   cash: number;
   balance: number;
 }
 export default function CryptoTransferModal({ defaultTransferType }: CryptoTransferModalProps) {
   // 타입 및 스타일
-  const [transferType, setTransferType] = useState<TransferTypeValues>(defaultTransferType);
+  const [transferType, setTransferType] = useState<TransferType>(defaultTransferType);
   const [isBgActive, setBgActive] = useState<boolean>(false);
 
   // 잔액
@@ -72,7 +72,7 @@ export default function CryptoTransferModal({ defaultTransferType }: CryptoTrans
 
     const data = {
       transaction_type:
-        transferType === TransferTypes.TO_ACCOUNT ? WalletTransactionType.WITHDRAW : WalletTransactionType.DEPOSIT,
+        transferType === TransferTypes.TO_ACCOUNT ? WalletTransactionTypes.WITHDRAW : WalletTransactionTypes.DEPOSIT,
       amount: value,
     };
 

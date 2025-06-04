@@ -1,14 +1,14 @@
 import { AbsApiObject } from '../ApiTypes';
 import CryptoMarket from './CryptoMarket';
-import { MarginModeType, type MarginModeTypeValues, PositionType } from './CryptoTypes';
+import { MarginModeTypes, type MarginModeType, PositionTypes } from './CryptoTypes';
 
 export default class TradePosition extends AbsApiObject {
-  private _id: number;
+  protected _id: number;
 
   private _marketCode: string;
   private _market: CryptoMarket;
   private _isOpen: boolean;
-  private _marginMode: MarginModeTypeValues;
+  private _marginMode: MarginModeType;
   private _positionType: PositionType;
   private _entryTime: string;
   private _averagePrice: number;
@@ -28,8 +28,8 @@ export default class TradePosition extends AbsApiObject {
     this._marketCode = '';
     this._market = new CryptoMarket();
     this._isOpen = false;
-    this._marginMode = MarginModeType.CROSSED;
-    this._positionType = PositionType.LONG;
+    this._marginMode = MarginModeTypes.CROSSED;
+    this._positionType = PositionTypes.LONG;
     this._entryTime = '';
     this._averagePrice = 0;
     this._quantity = 0;
@@ -78,7 +78,7 @@ export default class TradePosition extends AbsApiObject {
   public get isOpen(): boolean {
     return this._isOpen;
   }
-  public get marginMode(): MarginModeTypeValues {
+  public get marginMode(): MarginModeType {
     return this._marginMode;
   }
   public get positionType(): PositionType {

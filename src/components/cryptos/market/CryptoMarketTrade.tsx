@@ -11,14 +11,14 @@ import * as S from '@/styles/CryptoTradeStyles';
 import { TextFormats } from '@/types/CommonTypes';
 import { CryptoFee, MAX_COST_RATIO } from '@/types/cryptos/CryptoConsts';
 import {
-  MarginModeType,
-  type MarginModeTypeValues,
-  PositionType,
-  type PositionTypeValues,
-  type SizeUnitTypeValues,
-  TradeOrderType,
-  type TradeOrderTypeValues,
-  TradeType,
+  MarginModeTypes,
+  type MarginModeType,
+  PositionTypes,
+  type PositionType,
+  type SizeUnitType,
+  TradeOrderTypes,
+  type TradeOrderType,
+  TradeTypes,
 } from '@/types/cryptos/CryptoTypes';
 import type User from '@/types/users/User';
 import CommonUtils from '@/utils/CommonUtils';
@@ -31,8 +31,8 @@ interface ICryptoMarketTrade {
   user: User;
   marketCode: string;
   unit: string;
-  sizeUnitType: SizeUnitTypeValues;
-  setSizeUnitType: (type: SizeUnitTypeValues) => void;
+  sizeUnitType: SizeUnitType;
+  setSizeUnitType: (type: SizeUnitType) => void;
 }
 export default function CryptoMarketTrade({
   user,
@@ -53,9 +53,9 @@ export default function CryptoMarketTrade({
 
   const { tradePrice: price, setTradePrice: setPrice } = useCryptoMarketTrade();
   const [isMarginModeDisabled, setMarginModeDisabled] = useState<boolean>(false);
-  const [marginMode, setMarginMode] = useState<MarginModeTypeValues>(MarginModeType.CROSSED); // 마진모드 (CROSSED, ISOLATED)
+  const [marginMode, setMarginMode] = useState<MarginModeType>(MarginModeTypes.CROSSED); // 마진모드 (CROSSED, ISOLATED)
   const [leverageRatio, setLeverageRatio] = useState<number>(1); // 레버리지 비율
-  const [orderType, setOrderType] = useState<TradeOrderTypeValues>(TradeOrderType.LIMIT); // 지정가/시장가
+  const [orderType, setOrderType] = useState<TradeOrderType>(TradeOrderTypes.LIMIT); // 지정가/시장가
   const [quantity, setQuantity] = useState<number>(0); // 구매 수량
   const [cost, setCost] = useState<number>(0); // 구매 비용
   const [size, setSize] = useState<number>(0); // 레버리지 포함 크기
@@ -91,10 +91,10 @@ export default function CryptoMarketTrade({
   }, [leverageRatio]);
 
   useEffect(() => {
-    if (orderType === TradeOrderType.MARKET) {
+    if (orderType === TradeOrderTypes.MARKET) {
       setPrice(marketPrice);
       setFee(CryptoFee.TAKER);
-    } else if (orderType === TradeOrderType.LIMIT) {
+    } else if (orderType === TradeOrderTypes.LIMIT) {
       setFee(CryptoFee.MAKER);
     }
   }, [orderType, marketPrice]);
@@ -103,7 +103,7 @@ export default function CryptoMarketTrade({
     setPrice(marketPrice);
   };
 
-  const handleTrade = async (_positionType: PositionTypeValues) => {
+  const handleTrade = async (_positionType: PositionType) => {
     if (!isAuth) {
       createToastMessage('로그인이 필요합니다.');
       return;
@@ -129,7 +129,7 @@ export default function CryptoMarketTrade({
 
     const data = {
       market_code: marketCode,
-      trade_type: TradeType.OPEN,
+      trade_type: TradeTypes.OPEN,
       margin_mode: marginMode,
       position_type: _positionType,
       cost: cost,
@@ -141,9 +141,9 @@ export default function CryptoMarketTrade({
     };
 
     let result = false;
-    if (orderType === TradeOrderType.LIMIT) {
+    if (orderType === TradeOrderTypes.LIMIT) {
       result = await CryptoApi.orderLimit(data);
-    } else if (orderType === TradeOrderType.MARKET) {
+    } else if (orderType === TradeOrderTypes.MARKET) {
       result = await CryptoApi.orderMarket(data);
     }
 
@@ -163,7 +163,7 @@ export default function CryptoMarketTrade({
       <div className="mt-2! mb-2! border-b border-slate-600/30" />
       <I.OrderTypeInput orderType={orderType} setOrderType={setOrderType} />
 
-      {orderType === TradeOrderType.LIMIT && (
+      {orderType === TradeOrderTypes.LIMIT && (
         <>
           <I.LimitPriceInput price={price} setPrice={setPrice} initPrice={initPrice} />
           <I.TradeSizeInput
@@ -183,7 +183,7 @@ export default function CryptoMarketTrade({
         </>
       )}
 
-      {orderType === TradeOrderType.MARKET && (
+      {orderType === TradeOrderTypes.MARKET && (
         <I.TradeSizeInput
           orderType={orderType}
           size={size}
@@ -214,7 +214,7 @@ export default function CryptoMarketTrade({
           <span className="label">구매 비용</span>
           <span className="value">{CommonUtils.textFormat(cost, TextFormats.NUMBER)}</span>
         </S.SummaryItem>
-        {marginMode === MarginModeType.ISOLATED && (
+        {marginMode === MarginModeTypes.ISOLATED && (
           <>
             <S.SummaryItem>
               <span className="label">청산가 (롱)</span>
@@ -235,14 +235,14 @@ export default function CryptoMarketTrade({
       <div className="grid grid-cols-2 gap-2 w-full">
         <S.TradeLongButton
           onClick={() => {
-            handleTrade(PositionType.LONG);
+            handleTrade(PositionTypes.LONG);
           }}
         >
           매수/롱
         </S.TradeLongButton>
         <S.TradeShortButton
           onClick={() => {
-            handleTrade(PositionType.SHORT);
+            handleTrade(PositionTypes.SHORT);
           }}
         >
           매도/숏

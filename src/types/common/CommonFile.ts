@@ -2,7 +2,7 @@ import { AbsApiObject } from '../ApiTypes';
 import User from '../users/User';
 
 export default class extends AbsApiObject {
-  private _id: number;
+  protected _id: number;
   private _nanoId: string;
   private _user: User;
   private _name: string;

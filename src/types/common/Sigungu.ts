@@ -1,7 +1,7 @@
 import { AbsApiObject } from '../ApiTypes';
 
 export default class Sigungu extends AbsApiObject {
-  private _id: number;
+  protected _id: number;
   private _index: number;
   private _sido: string;
   private _sidoEnglish: string;

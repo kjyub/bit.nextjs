@@ -1,9 +1,9 @@
 import User from '@/types/users/User';
 import { AbsApiObject } from '../ApiTypes';
-import { type LikeTypeValues, LikeTypes } from '../common/CommonTypes';
+import { type LikeType, LikeTypes } from '../common/CommonTypes';
 
 export default class MarketCommunity extends AbsApiObject {
-  private _id: number;
+  protected _id: number;
   private _nanoId: string;
 
   private _marketCode: string;
@@ -12,7 +12,7 @@ export default class MarketCommunity extends AbsApiObject {
   private _content: string;
   private _views: number;
   private _likes: number;
-  private _likeType: LikeTypeValues;
+  private _likeType: LikeType;
   private _dislikes: number;
   private _comments: number;
   private _createdDate: string;
@@ -82,7 +82,7 @@ export default class MarketCommunity extends AbsApiObject {
   public get dislikes(): number {
     return this._dislikes;
   }
-  public get likeType(): LikeTypeValues {
+  public get likeType(): LikeType {
     return this._likeType;
   }
   public get comments(): number {

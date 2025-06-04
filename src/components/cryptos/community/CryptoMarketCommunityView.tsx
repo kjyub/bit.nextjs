@@ -4,7 +4,7 @@ import { MARKET_COMMUNITY_COMMENT_PAGE_SIZE } from '@/constants/CryptoConsts';
 import * as CS from '@/styles/CryptoMarketCommunityStyles';
 import { TextFormats } from '@/types/CommonTypes';
 import Pagination from '@/types/api/pagination';
-import { type LikeTypeValues, LikeTypes } from '@/types/common/CommonTypes';
+import { type LikeType, LikeTypes } from '@/types/common/CommonTypes';
 import MarketCommunity from '@/types/cryptos/MarketCommunity';
 import type MarketCommunityComment from '@/types/cryptos/MarketCommunityComment';
 import type User from '@/types/users/User';
@@ -19,7 +19,7 @@ interface ICryptoMarketCommunityView {
 export default function CryptoMarketCommunityView({ user, communityNanoId }: ICryptoMarketCommunityView) {
   const [community, setCommunity] = useState<MarketCommunity>(new MarketCommunity());
 
-  const [myLikeType, setMyLikeType] = useState<LikeTypeValues>(LikeTypes.NONE);
+  const [myLikeType, setMyLikeType] = useState<LikeType>(LikeTypes.NONE);
   const [likes, setLikes] = useState<number>(0);
   const [dislikes, setDislikes] = useState<number>(0);
 
@@ -142,7 +142,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
     }
   };
 
-  const handleLike = async (_type: LikeTypeValues) => {
+  const handleLike = async (_type: LikeType) => {
     if (user.uuid) {
       alert('로그인 후 이용 가능합니다.');
       return;

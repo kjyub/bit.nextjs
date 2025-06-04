@@ -3,7 +3,7 @@
 import CryptoApi from '@/apis/api/cryptos/CryptoApi';
 import usePageScroll from '@/hooks/usePageScroll';
 import * as S from '@/styles/CryptoMyTradeStyles';
-import { PositionType, TradeOrderTypeNames } from '@/types/cryptos/CryptoTypes';
+import { PositionTypes, TradeOrderTypeNames } from '@/types/cryptos/CryptoTypes';
 import type TradeOrder from '@/types/cryptos/TradeOrder';
 import CryptoUtils from '@/utils/CryptoUtils';
 import dayjs from 'dayjs';
@@ -91,8 +91,8 @@ const Order = ({ order }: IOrder) => {
               <span>{dayjs(order.createdDate).format('YYYY-MM-DD HH:mm:ss')}</span>
             </div>
 
-            <div className={`position ${order.positionType === PositionType.LONG ? 'long' : 'short'}`}>
-              {order.positionType === PositionType.LONG ? 'LONG' : 'SHORT'}
+            <div className={`position ${order.positionType === PositionTypes.LONG ? 'long' : 'short'}`}>
+              {order.positionType === PositionTypes.LONG ? 'LONG' : 'SHORT'}
             </div>
 
             <p className="title">

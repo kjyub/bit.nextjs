@@ -3,12 +3,12 @@ import { useMouseHover } from '@/hooks/useMouseHover';
 import * as S from '@/styles/CryptoTradeStyles';
 import { TextFormats } from '@/types/CommonTypes';
 import {
-  MarginModeType,
-  type MarginModeTypeValues,
-  type SizeUnitTypeValues,
+  MarginModeTypes,
+  type MarginModeType,
+  type SizeUnitType,
   SizeUnitTypes,
-  TradeOrderType,
-  type TradeOrderTypeValues,
+  TradeOrderTypes,
+  type TradeOrderType,
 } from '@/types/cryptos/CryptoTypes';
 import CommonUtils from '@/utils/CommonUtils';
 import TypeUtils from '@/utils/TypeUtils';
@@ -78,8 +78,8 @@ export const SlideInput = ({ value, setValue, min, max, step = 1, mark }: SlideI
 };
 
 interface MarginModeInputProps {
-  marginMode: MarginModeTypeValues;
-  setMarginMode: (mode: MarginModeTypeValues) => void;
+  marginMode: MarginModeType;
+  setMarginMode: (mode: MarginModeType) => void;
   disabled?: boolean;
 }
 export const MarginModeInput = ({ marginMode, setMarginMode, disabled = false }: MarginModeInputProps) => {
@@ -89,13 +89,13 @@ export const MarginModeInput = ({ marginMode, setMarginMode, disabled = false }:
     <div className="flex items-center w-full h-7 max-sm:gap-1 sm:gap-4">
       <S.MarginModeBox>
         <button
-          className={marginMode === MarginModeType.CROSSED ? 'active' : ''}
+          className={marginMode === MarginModeTypes.CROSSED ? 'active' : ''}
           type="button"
           onClick={() => {
-            setMarginMode(MarginModeType.CROSSED);
+            setMarginMode(MarginModeTypes.CROSSED);
           }}
           onMouseEnter={() => {
-            if (marginMode === MarginModeType.ISOLATED) setBgActive(true);
+            if (marginMode === MarginModeTypes.ISOLATED) setBgActive(true);
           }}
           onMouseLeave={() => {
             setBgActive(false);
@@ -106,13 +106,13 @@ export const MarginModeInput = ({ marginMode, setMarginMode, disabled = false }:
           <span>교차</span>
         </button>
         <button
-          className={marginMode === MarginModeType.ISOLATED ? 'active' : ''}
+          className={marginMode === MarginModeTypes.ISOLATED ? 'active' : ''}
           type="button"
           onClick={() => {
-            setMarginMode(MarginModeType.ISOLATED);
+            setMarginMode(MarginModeTypes.ISOLATED);
           }}
           onMouseEnter={() => {
-            if (marginMode === MarginModeType.CROSSED) setBgActive(true);
+            if (marginMode === MarginModeTypes.CROSSED) setBgActive(true);
           }}
           onMouseLeave={() => {
             setBgActive(false);
@@ -122,7 +122,7 @@ export const MarginModeInput = ({ marginMode, setMarginMode, disabled = false }:
           <i className="fa-solid fa-right-left"></i>
           <span>격리</span>
         </button>
-        <div className={`thumb ${marginMode === MarginModeType.ISOLATED ? 'right' : ''}`} />
+        <div className={`thumb ${marginMode === MarginModeTypes.ISOLATED ? 'right' : ''}`} />
         <div className={`absolute-center bg ${isBgActive ? 'active' : ''}`} />
       </S.MarginModeBox>
 
@@ -246,27 +246,27 @@ export const LeverageInput = ({ leverageRatio, setLeverageRatio, maxRatio = 75 }
 };
 
 interface OrderTypeInputProps {
-  orderType: TradeOrderTypeValues;
-  setOrderType: (mode: TradeOrderTypeValues) => void;
+  orderType: TradeOrderType;
+  setOrderType: (mode: TradeOrderType) => void;
 }
 export const OrderTypeInput = ({ orderType, setOrderType }: OrderTypeInputProps) => {
   return (
     <div className="flex items-center w-full h-6 space-x-4">
       <S.OrderTypeBox>
         <button
-          className={orderType === TradeOrderType.LIMIT ? 'active' : ''}
+          className={orderType === TradeOrderTypes.LIMIT ? 'active' : ''}
           type="button"
           onClick={() => {
-            setOrderType(TradeOrderType.LIMIT);
+            setOrderType(TradeOrderTypes.LIMIT);
           }}
         >
           <span>지정가</span>
         </button>
         <button
-          className={orderType === TradeOrderType.MARKET ? 'active' : ''}
+          className={orderType === TradeOrderTypes.MARKET ? 'active' : ''}
           type="button"
           onClick={() => {
-            setOrderType(TradeOrderType.MARKET);
+            setOrderType(TradeOrderTypes.MARKET);
           }}
         >
           <span>시장가</span>
@@ -426,7 +426,7 @@ export const MarketPriceInput = ({ targetPrice, setTargetPrice, maxSize }: Marke
 };
 
 interface TradeSizeInputProps {
-  orderType: TradeOrderTypeValues;
+  orderType: TradeOrderType;
   size: number;
   setQuantity: (quantity: number) => void;
   setSize: (size: number) => void;
@@ -436,8 +436,8 @@ interface TradeSizeInputProps {
   leverage: number;
   price: number;
   fee: number;
-  sizeUnitType: SizeUnitTypeValues;
-  setSizeUnitType: (unit: SizeUnitTypeValues) => void;
+  sizeUnitType: SizeUnitType;
+  setSizeUnitType: (unit: SizeUnitType) => void;
 }
 export const TradeSizeInput = ({
   orderType,
@@ -465,7 +465,7 @@ export const TradeSizeInput = ({
   }, [isPercent, sizeUnitType]);
 
   useEffect(() => {
-    if (orderType === TradeOrderType.LIMIT) {
+    if (orderType === TradeOrderTypes.LIMIT) {
       initValue();
     }
   }, [price]);

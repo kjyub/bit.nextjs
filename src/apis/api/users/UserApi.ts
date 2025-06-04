@@ -1,6 +1,6 @@
 import { authInstance, credentialInstance, defaultInstance } from '@/apis/utils/instances';
 import User from '@/types/users/User';
-import type { UserTypeValues } from '@/types/users/UserTypeValues';
+import type { UserType } from '@/types/users/UserType';
 import type { LoginResponse } from '@/types/users/UserTypes';
 
 class UserApi {
@@ -44,7 +44,7 @@ class UserApi {
 
     return result;
   }
-  static async getLogin(email: string, password: string, userType: UserTypeValues): Promise<LoginResponse> {
+  static async getLogin(email: string, password: string, userType: UserType): Promise<LoginResponse> {
     const result: LoginResponse = {
       user: {},
       token: {
@@ -140,7 +140,7 @@ class UserApi {
 
     return responseData;
   }
-  static async checkEmail(email: string, userType: UserTypeValues): Promise<boolean> {
+  static async checkEmail(email: string, userType: UserType): Promise<boolean> {
     let result = false;
 
     try {
@@ -168,7 +168,7 @@ class UserApi {
 
     return result;
   }
-  static async findEmail(name: string, tel: string, userType: UserTypeValues): Promise<Array<string>> {
+  static async findEmail(name: string, tel: string, userType: UserType): Promise<Array<string>> {
     let result: Array<string> = [];
 
     try {
@@ -183,7 +183,7 @@ class UserApi {
 
     return result;
   }
-  static async findPasswordCheck(email: string, name: string, tel: string, userType: UserTypeValues): Promise<boolean> {
+  static async findPasswordCheck(email: string, name: string, tel: string, userType: UserType): Promise<boolean> {
     let result = false;
 
     try {
@@ -202,7 +202,7 @@ class UserApi {
     email: string,
     name: string,
     tel: string,
-    userType: UserTypeValues,
+    userType: UserType,
     password: string,
   ): Promise<boolean> {
     let result = false;

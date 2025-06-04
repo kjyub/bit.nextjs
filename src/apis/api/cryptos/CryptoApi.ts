@@ -1,5 +1,6 @@
 import { authInstance, defaultInstance } from '@/apis/utils/instances';
 import Pagination from '@/types/api/pagination';
+import type { LikeType } from '@/types/common/CommonTypes';
 import type { IMyTradeData } from '@/types/cryptos/CryptoInterfaces';
 import CryptoMarket from '@/types/cryptos/CryptoMarket';
 import CryptoWallet from '@/types/cryptos/CryptoWallet';
@@ -259,7 +260,12 @@ class CryptoApi {
   ): Promise<Pagination<TradeHistory>> {
     const result = new Pagination<TradeHistory>();
 
-    const searchParams = {
+    const searchParams: {
+      page: string;
+      page_size: string;
+      date_start?: string;
+      date_end?: string;
+    } = {
       page: pageIndex.toString(),
       page_size: pageSize.toString(),
     };
@@ -289,7 +295,12 @@ class CryptoApi {
   ): Promise<Pagination<TradePosition>> {
     const result = new Pagination<TradePosition>();
 
-    const searchParams = {
+    const searchParams: {
+      page: string;
+      page_size: string;
+      date_start?: string;
+      date_end?: string;
+    } = {
       page: pageIndex.toString(),
       page_size: pageSize.toString(),
     };
@@ -390,7 +401,7 @@ class CryptoApi {
 
     return result;
   }
-  static async likeCommunity(nanoId: string, likeType: LikeTypeValues): Promise<boolean> {
+  static async likeCommunity(nanoId: string, likeType: LikeType): Promise<boolean> {
     let result = false;
 
     try {

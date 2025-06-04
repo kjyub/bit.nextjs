@@ -6,13 +6,13 @@ import useMarketPriceStore from '@/store/useMarketPriceStore';
 import useUserInfoStore from '@/store/useUserInfo';
 import * as S from '@/styles/CryptoMyTradeStyles';
 import {
-  MarginModeType,
+  MarginModeTypes,
   MarginModeTypeNames,
-  PositionType,
+  PositionTypes,
   SizeUnitTypes,
-  TradeOrderType,
-  type TradeOrderTypeValues,
-  TradeType,
+  TradeOrderTypes,
+  type TradeOrderType,
+  TradeTypes,
 } from '@/types/cryptos/CryptoTypes';
 import type TradePosition from '@/types/cryptos/TradePosition';
 import CommonUtils from '@/utils/CommonUtils';
@@ -65,7 +65,7 @@ const Position = ({ position, userBudget }: IPosition) => {
     const breakEvenPrice = position.totalFee / position.quantity;
     setBep(
       position.averagePrice +
-        CryptoUtils.getPriceRound(breakEvenPrice) * (position.positionType === PositionType.LONG ? 1 : -1),
+        CryptoUtils.getPriceRound(breakEvenPrice) * (position.positionType === PositionTypes.LONG ? 1 : -1),
     );
     const _pnl =
       CryptoUtils.getPnl(marketPrice, position.quantity, position.averagePrice, position.positionType) -
@@ -73,22 +73,22 @@ const Position = ({ position, userBudget }: IPosition) => {
     setPnl(_pnl);
     setPnlRatio(_pnl / position.marginPrice);
     if (_pnl < 0) {
-      if (position.marginMode === MarginModeType.CROSSED) {
+      if (position.marginMode === MarginModeTypes.CROSSED) {
         const margin = position.marginPrice + userBudget;
         setMarginRatio(Math.abs(_pnl) / margin);
-      } else if (position.marginMode === MarginModeType.ISOLATED) {
+      } else if (position.marginMode === MarginModeTypes.ISOLATED) {
         setMarginRatio(Math.abs(_pnl) / position.marginPrice);
       }
     }
   }, [position, marketPrice]);
 
   const orderClose = useCallback(
-    async (_orderType: TradeOrderTypeValues) => {
+    async (_orderType: TradeOrderType) => {
       const data = {
         market_code: position.market.code,
-        trade_type: TradeType.CLOSE,
+        trade_type: TradeTypes.CLOSE,
         margin_mode: position.marginMode,
-        position_type: position.positionType === PositionType.LONG ? PositionType.SHORT : PositionType.LONG,
+        position_type: position.positionType === PositionTypes.LONG ? PositionTypes.SHORT : PositionTypes.LONG,
         cost: position.cost,
         price: Number(marketPrice),
         quantity: Number(closeQuantity),
@@ -98,13 +98,13 @@ const Position = ({ position, userBudget }: IPosition) => {
       };
 
       let result = false;
-      if (_orderType === TradeOrderType.LIMIT) {
+      if (_orderType === TradeOrderTypes.LIMIT) {
         data.price = Number(closePrice);
         data.quantity = Number(closeQuantity);
         data.size = Number(closeQuantity) * Number(closePrice);
 
         result = await CryptoApi.orderLimit(data);
-      } else if (_orderType === TradeOrderType.MARKET) {
+      } else if (_orderType === TradeOrderTypes.MARKET) {
         data.price = marketPrice;
         data.quantity = Number(closeQuantity);
         data.size = Number(closeQuantity) * marketPrice;
@@ -127,8 +127,8 @@ const Position = ({ position, userBudget }: IPosition) => {
       <S.PositionHeader>
         <div className="row">
           <div className="section">
-            <div className={`position ${position.positionType === PositionType.LONG ? 'long' : 'short'}`}>
-              {position.positionType === PositionType.LONG ? 'LONG' : 'SHORT'}
+            <div className={`position ${position.positionType === PositionTypes.LONG ? 'long' : 'short'}`}>
+              {position.positionType === PositionTypes.LONG ? 'LONG' : 'SHORT'}
             </div>
 
             <p className="title max-sm:!hidden">
@@ -182,13 +182,13 @@ const Position = ({ position, userBudget }: IPosition) => {
           <dd>{CryptoUtils.getPriceText(marketPrice)}</dd>
         </S.PositionItem>
 
-        <S.PositionItem className={`${position.positionType === PositionType.LONG ? 'long' : 'short'}`}>
+        <S.PositionItem className={`${position.positionType === PositionTypes.LONG ? 'long' : 'short'}`}>
           <dt>
             포지션 크기 <span>Size</span>
           </dt>
           <dd className="flex flex-col w-full">
             <span className="font-medium">
-              {position.positionType === PositionType.SHORT && '-'}
+              {position.positionType === PositionTypes.SHORT && '-'}
               {CryptoUtils.getPriceText(size)}
               {'TW'}
             </span>
@@ -228,7 +228,7 @@ const Position = ({ position, userBudget }: IPosition) => {
             <button
               type="button"
               onClick={() => {
-                orderClose(TradeOrderType.LIMIT);
+                orderClose(TradeOrderTypes.LIMIT);
               }}
             >
               지정가
@@ -236,7 +236,7 @@ const Position = ({ position, userBudget }: IPosition) => {
             <button
               type="button"
               onClick={() => {
-                orderClose(TradeOrderType.MARKET);
+                orderClose(TradeOrderTypes.MARKET);
               }}
             >
               시장가

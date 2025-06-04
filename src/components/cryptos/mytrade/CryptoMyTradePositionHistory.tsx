@@ -3,7 +3,7 @@
 import CryptoApi from '@/apis/api/cryptos/CryptoApi';
 import usePageScroll from '@/hooks/usePageScroll';
 import * as S from '@/styles/CryptoMyTradeStyles';
-import { MarginModeTypeNames, PositionType } from '@/types/cryptos/CryptoTypes';
+import { MarginModeTypeNames, PositionTypes } from '@/types/cryptos/CryptoTypes';
 import type TradePosition from '@/types/cryptos/TradePosition';
 import CryptoUtils from '@/utils/CryptoUtils';
 import dayjs from 'dayjs';
@@ -91,8 +91,8 @@ const Position = ({ position }: IPosition) => {
               <span>{dayjs(position.createdDate).format('YYYY-MM-DD HH:mm:ss')}</span>
             </div>
 
-            <div className={`position ${position.positionType === PositionType.LONG ? 'long' : 'short'}`}>
-              {position.positionType === PositionType.LONG ? 'LONG' : 'SHORT'}
+            <div className={`position ${position.positionType === PositionTypes.LONG ? 'long' : 'short'}`}>
+              {position.positionType === PositionTypes.LONG ? 'LONG' : 'SHORT'}
             </div>
 
             <p className="title">

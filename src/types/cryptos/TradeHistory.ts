@@ -1,13 +1,13 @@
 import { AbsApiObject } from '../ApiTypes';
-import { PositionType, type PositionTypeValues, TradeOrderType, type TradeOrderTypeValues } from './CryptoTypes';
+import { PositionTypes, type PositionType, TradeOrderTypes, type TradeOrderType } from './CryptoTypes';
 import TradeOrder from './TradeOrder';
 
 export default class TradeHistory extends AbsApiObject {
-  private _id: number;
+  protected _id: number;
 
   private _order: TradeOrder;
-  private _orderType: TradeOrderTypeValues;
-  private _positionType: PositionTypeValues;
+  private _orderType: TradeOrderType;
+  private _positionType: PositionType;
   private _price: number;
   private _quantity: number;
   private _leverage: number;
@@ -20,8 +20,8 @@ export default class TradeHistory extends AbsApiObject {
     super();
     this._id = -1;
     this._order = new TradeOrder();
-    this._orderType = TradeOrderType.NONE;
-    this._positionType = PositionType.LONG;
+    this._orderType = TradeOrderTypes.NONE;
+    this._positionType = PositionTypes.LONG;
     this._price = 0;
     this._quantity = 0;
     this._leverage = 0;
@@ -53,10 +53,10 @@ export default class TradeHistory extends AbsApiObject {
   public get order(): TradeOrder {
     return this._order;
   }
-  public get orderType(): TradeOrderTypeValues {
+  public get orderType(): TradeOrderType {
     return this._orderType;
   }
-  public get positionType(): PositionTypeValues {
+  public get positionType(): PositionType {
     return this._positionType;
   }
   public get price(): number {

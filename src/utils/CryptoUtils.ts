@@ -1,11 +1,11 @@
 import { TextFormats } from '@/types/CommonTypes';
-import { PositionType, type PriceChangeTypeValues, PriceChangeTypes } from '@/types/cryptos/CryptoTypes';
+import { PositionTypes, type PriceChangeType, PriceChangeTypes } from '@/types/cryptos/CryptoTypes';
 import CommonUtils from './CommonUtils';
 import TypeUtils from './TypeUtils';
 
 export default class CryptoUtils {
   // 유저 타입에따라 쓰기가 가능한 현황만 가져온다.
-  static getPriceChangeType(price: number, openingPrice: number): PriceChangeTypeValues {
+  static getPriceChangeType(price: number, openingPrice: number): PriceChangeType {
     let changeType = PriceChangeTypes.EVEN;
 
     if (price > openingPrice) {
@@ -60,7 +60,7 @@ export default class CryptoUtils {
   }
 
   static getPnl(currentPrice: number, quantity: number, entryPrice: number, positionType: PositionType): number {
-    if (positionType === PositionType.LONG) {
+    if (positionType === PositionTypes.LONG) {
       return (currentPrice - entryPrice) * quantity;
     } else {
       return (entryPrice - currentPrice) * quantity;

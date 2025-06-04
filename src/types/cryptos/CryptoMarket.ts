@@ -1,9 +1,9 @@
 import CryptoUtils from '@/utils/CryptoUtils';
 import { AbsApiObject } from '../ApiTypes';
-import type { PriceChangeTypeValues } from './CryptoTypes';
+import type { PriceChangeType } from './CryptoTypes';
 
 export default class CryptoMarket extends AbsApiObject {
-  private _id: number;
+  protected _id: number;
 
   private _code: string;
   private _koreanName: string;
@@ -57,7 +57,7 @@ export default class CryptoMarket extends AbsApiObject {
   public get isClosed(): boolean {
     return this._isClosed;
   }
-  public get change(): PriceChangeTypeValues {
+  public get change(): PriceChangeType {
     return CryptoUtils.getPriceChangeType(this._price, this._openingPrice);
   }
   public get changePrice(): number {

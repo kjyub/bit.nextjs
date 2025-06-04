@@ -5,7 +5,7 @@ import TradeGoApi from '@/apis/api/cryptos/TradeGoApi';
 import useUserInfoStore from '@/store/useUserInfo';
 import * as S from '@/styles/CryptoMyTradeStyles';
 import type { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
-import { PositionType, TradeOrderTypeNames } from '@/types/cryptos/CryptoTypes';
+import { PositionTypes, TradeOrderTypeNames } from '@/types/cryptos/CryptoTypes';
 import type TradeOrder from '@/types/cryptos/TradeOrder';
 import CryptoUtils from '@/utils/CryptoUtils';
 import dayjs from 'dayjs';
@@ -146,11 +146,11 @@ const Order = ({ order, updateInfo }: IOrder) => {
           </dt>
           <dd>{CryptoUtils.getPriceText(order.size)}TW</dd>
         </S.OrderItem>
-        <S.OrderItem className={`${order.positionType === PositionType.LONG ? 'long' : 'short'}`}>
+        <S.OrderItem className={`${order.positionType === PositionTypes.LONG ? 'long' : 'short'}`}>
           <dt>
             방향 <span>Side</span>
           </dt>
-          <dd>{order.positionType === PositionType.LONG ? '롱' : '숏'}</dd>
+          <dd>{order.positionType === PositionTypes.LONG ? '롱' : '숏'}</dd>
         </S.OrderItem>
       </S.OrderBody>
 

@@ -4,7 +4,7 @@ export const UserTypes = {
   BRAND: 1,
   GENERAL: 2,
 } as const;
-export type UserTypeValues = (typeof UserTypes)[keyof typeof UserTypes];
+export type UserType = (typeof UserTypes)[keyof typeof UserTypes];
 export const UserTypeNames = {
   '-1': '-',
   0: '스태프',
@@ -17,20 +17,20 @@ export const AccountStatusTypes = {
   NORMAL: 1,
   BLOCK: 2,
 } as const;
-export type AccountStatusTypeValues = (typeof AccountStatusTypes)[keyof typeof AccountStatusTypes];
+export type AccountStatusType = (typeof AccountStatusTypes)[keyof typeof AccountStatusTypes];
 
 export const StaffTypes = {
   ADMIN: 0,
   STAFF: 1,
 } as const;
-export type StaffTypeValues = (typeof StaffTypes)[keyof typeof StaffTypes];
+export type StaffType = (typeof StaffTypes)[keyof typeof StaffTypes];
 
 export const UserGenderTypes = {
   MALE: 0,
   FEMALE: 1,
   NONE: 2,
 } as const;
-export type UserGenderTypeValues = (typeof UserGenderTypes)[keyof typeof UserGenderTypes];
+export type UserGenderType = (typeof UserGenderTypes)[keyof typeof UserGenderTypes];
 export const UserGenderNames = {
   0: '남성',
   1: '여성',

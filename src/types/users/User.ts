@@ -1,11 +1,11 @@
-import { AccountStatusTypes, type UserTypeValues, UserTypes } from '@/types/users/UserTypes';
+import { AccountStatusTypes, type UserType, UserTypes } from '@/types/users/UserTypes';
 import { AbsApiObject } from '../ApiTypes';
 
 export default class User extends AbsApiObject {
-  private _id: number;
+  protected _id: number;
 
   private _uuid: string;
-  private _userType: UserTypeValues;
+  private _userType: UserType;
   private _accountStatus: AccountStatusTypes;
   private _email: string;
   private _nickname: string;
@@ -51,7 +51,7 @@ export default class User extends AbsApiObject {
   public get uuid(): string {
     return this._uuid;
   }
-  public get userType(): UserTypeValues {
+  public get userType(): UserType {
     return this._userType;
   }
   public get accountStatus(): AccountStatusTypes {

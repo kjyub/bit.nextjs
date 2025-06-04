@@ -50,7 +50,7 @@ export const SessionStorageConsts = {
   USER_DATA: 'user_data',
 };
 
-export type ApiParamsType = {
+export type ApiParamsTypes = {
   params: {
     [key: string]: string;
   };

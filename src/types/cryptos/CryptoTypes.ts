@@ -1,10 +1,10 @@
-export const WalletTransactionType = {
+export const WalletTransactionTypes = {
   SYSTEM: 0,
   DEPOSIT: 1,
   WITHDRAW: 2,
   TRADE: 3,
 } as const;
-export type WalletTransactionTypeValues = (typeof WalletTransactionType)[keyof typeof WalletTransactionType];
+export type WalletTransactionType = (typeof WalletTransactionTypes)[keyof typeof WalletTransactionTypes];
 export const WalletTransactionTypeNames = {
   0: '시스템',
   1: '입금',
@@ -16,30 +16,30 @@ export const TransferTypes = {
   TO_WALLET: 0,
   TO_ACCOUNT: 1,
 } as const;
-export type TransferTypeValues = (typeof TransferTypes)[keyof typeof TransferTypes];
+export type TransferType = (typeof TransferTypes)[keyof typeof TransferTypes];
 
-export const MarginModeType = {
+export const MarginModeTypes = {
   ISOLATED: 0,
   CROSSED: 1,
 } as const;
-export type MarginModeTypeValues = (typeof MarginModeType)[keyof typeof MarginModeType];
+export type MarginModeType = (typeof MarginModeTypes)[keyof typeof MarginModeTypes];
 export const MarginModeTypeNames = {
   0: '격리',
   1: '교차',
 };
 
-export const PositionType = {
+export const PositionTypes = {
   LONG: 0,
   SHORT: 1,
 } as const;
-export type PositionTypeValues = (typeof PositionType)[keyof typeof PositionType];
+export type PositionType = (typeof PositionTypes)[keyof typeof PositionTypes];
 
-export const TradeType = {
+export const TradeTypes = {
   OPEN: 0,
   CLOSE: 1,
   LIQ: 2,
 } as const;
-export type TradeTypeValues = (typeof TradeType)[keyof typeof TradeType];
+export type TradeType = (typeof TradeTypes)[keyof typeof TradeTypes];
 
 export const TradeStatus = {
   WAIT: 0,
@@ -48,7 +48,7 @@ export const TradeStatus = {
 };
 export type TradeStatusKeys = (typeof TradeStatus)[keyof typeof TradeStatus];
 
-export const TradeOrderType = {
+export const TradeOrderTypes = {
   NONE: 0,
   LIMIT: 1,
   MARKET: 2,
@@ -56,7 +56,7 @@ export const TradeOrderType = {
   STOP_LOSS: 4,
   LIQUIDATE: 5,
 } as const;
-export type TradeOrderTypeValues = (typeof TradeOrderType)[keyof typeof TradeOrderType];
+export type TradeOrderType = (typeof TradeOrderTypes)[keyof typeof TradeOrderTypes];
 export const TradeOrderTypeNames = {
   0: '-',
   1: '지정가',
@@ -70,7 +70,7 @@ export const MarketTypes = {
   USDT: 'USDT',
   HOLD: 'HOLD',
 } as const;
-export type MarketTypeValues = (typeof MarketTypes)[keyof typeof MarketTypes];
+export type MarketType = (typeof MarketTypes)[keyof typeof MarketTypes];
 export const MarketTypeNames = {
   KRW: 'KRW',
   BTC: 'BTC',
@@ -83,7 +83,7 @@ export const PriceChangeTypes = {
   RISE: 'RISE',
   FALL: 'FALL',
 } as const;
-export type PriceChangeTypeValues = (typeof PriceChangeTypes)[keyof typeof PriceChangeTypes];
+export type PriceChangeType = (typeof PriceChangeTypes)[keyof typeof PriceChangeTypes];
 
 export const MarketSortTypes = {
   NAME: 'korean_name',
@@ -91,7 +91,7 @@ export const MarketSortTypes = {
   CHANGE: 'change_rate',
   TRADE_PRICE: 'trade_price',
 } as const;
-export type MarketSortTypeValues = (typeof MarketSortTypes)[keyof typeof MarketSortTypes];
+export type MarketSortType = (typeof MarketSortTypes)[keyof typeof MarketSortTypes];
 export const MarketSortTypeNames = {
   korean_name: '이름',
   price: '가격',
@@ -103,6 +103,6 @@ export const SizeUnitTypes = {
   PRICE: 0,
   QUANTITY: 1,
 } as const;
-export type SizeUnitTypeValues = (typeof SizeUnitTypes)[keyof typeof SizeUnitTypes];
+export type SizeUnitType = (typeof SizeUnitTypes)[keyof typeof SizeUnitTypes];
 
 export type CandleMinuteUnits = 1 | 3 | 5 | 15 | 30 | 60 | 240;

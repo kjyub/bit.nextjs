@@ -105,7 +105,7 @@ const List = ({ children }: { children: React.ReactNode }) => {
 };
 
 const Price = ({ price }: { price: number }) => {
-  const [changeType, setChangeType] = useState<PriceChangeTypeValues>(PriceChangeTypes.EVEN);
+  const [changeType, setChangeType] = useState<PriceChangeType>(PriceChangeTypes.EVEN);
   const [oldPrice, setOldPrice] = useState<number>(price);
 
   const { setTradePrice } = useCryptoMarketTrade();
