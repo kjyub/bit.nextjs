@@ -12,7 +12,7 @@ export const useImageLoaded = () => {
   };
 
   useEffect(() => {
-    if (ref.current && ref.current.complete) {
+    if (ref.current?.complete) {
       setLoad();
     }
   });

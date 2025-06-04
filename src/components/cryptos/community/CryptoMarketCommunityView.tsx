@@ -4,10 +4,10 @@ import { MARKET_COMMUNITY_COMMENT_PAGE_SIZE } from '@/constants/CryptoConsts';
 import * as CS from '@/styles/CryptoMarketCommunityStyles';
 import { TextFormats } from '@/types/CommonTypes';
 import Pagination from '@/types/api/pagination';
-import { LikeTypeValues, LikeTypes } from '@/types/common/CommonTypes';
+import { type LikeTypeValues, LikeTypes } from '@/types/common/CommonTypes';
 import MarketCommunity from '@/types/cryptos/MarketCommunity';
-import MarketCommunityComment from '@/types/cryptos/MarketCommunityComment';
-import User from '@/types/users/User';
+import type MarketCommunityComment from '@/types/cryptos/MarketCommunityComment';
+import type User from '@/types/users/User';
 import { UserTypes } from '@/types/users/UserTypes';
 import CommonUtils from '@/utils/CommonUtils';
 import { useEffect, useRef, useState } from 'react';
@@ -55,7 +55,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
   };
 
   // 댓글 목록 가져오기
-  const getComments = async (_pageIndex: number, requireId: number = -1) => {
+  const getComments = async (_pageIndex: number, requireId = -1) => {
     let response = new Pagination<MarketCommunityComment>();
     response = await CryptoApi.getCommunityCommentList(communityNanoId, _pageIndex, MARKET_COMMUNITY_COMMENT_PAGE_SIZE);
 
@@ -94,7 +94,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
   };
 
   // 댓글 및 대댓글 작성
-  const handleComment = async (value: string, parentId: number = -1) => {
+  const handleComment = async (value: string, parentId = -1) => {
     if (isCommentLoading) {
       return;
     }
@@ -111,7 +111,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
     };
 
     if (parentId >= 0) {
-      data['parent_id'] = parentId;
+      data.parent_id = parentId;
     }
 
     const result = await CryptoApi.createCommunityComment(data);
@@ -237,7 +237,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
             onKeyDown={handleCommentEnter}
             onInput={(e) => {
               e.target.style.height = '48px';
-              e.target.style.height = Number(e.target.scrollHeight) + 'px';
+              e.target.style.height = `${Number(e.target.scrollHeight)}px`;
             }}
           />
           <button
@@ -401,7 +401,7 @@ const Comment = ({ user, comment, handleComment }: IComment) => {
             onKeyDown={handleCommentEnter}
             onInput={(e) => {
               e.target.style.height = '48px';
-              e.target.style.height = Number(e.target.scrollHeight) + 'px';
+              e.target.style.height = `${Number(e.target.scrollHeight)}px`;
             }}
           />
           <button
@@ -465,7 +465,7 @@ const CommentContent = ({ content, hasParent, parentName, isEdit, handleComment 
             onKeyDown={handleCommentEnter}
             onInput={(e) => {
               e.target.style.height = '48px';
-              e.target.style.height = Number(e.target.scrollHeight) + 'px';
+              e.target.style.height = `${Number(e.target.scrollHeight)}px`;
             }}
           />
           <button

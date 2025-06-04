@@ -1,5 +1,5 @@
 import { upbitInstance } from '@/apis/utils/upbitInstances';
-import { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
+import type { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
 import ky from 'ky';
 
 class UpbitServerApi {

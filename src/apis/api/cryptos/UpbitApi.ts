@@ -1,6 +1,6 @@
 import { upbitInstance } from '@/apis/utils/upbitInstances';
-import { IUpbitCandle, IUpbitOrderBook } from '@/types/cryptos/CryptoInterfaces';
-import { CandleMinuteUnits } from '@/types/cryptos/CryptoTypes';
+import type { IUpbitCandle, IUpbitOrderBook } from '@/types/cryptos/CryptoInterfaces';
+import type { CandleMinuteUnits } from '@/types/cryptos/CryptoTypes';
 
 class UpbitApi {
   // region Market
@@ -61,7 +61,7 @@ class UpbitApi {
 
   // region Candle
   // to: ISO8061 포맷 (yyyy-MM-dd'T'HH:mm:ss'Z' or yyyy-MM-dd HH:mm:ss).
-  static async getCandleSeconds(marketCode: string, count: number = 200, to?: string): Promise<Array<IUpbitCandle>> {
+  static async getCandleSeconds(marketCode: string, count = 200, to?: string): Promise<Array<IUpbitCandle>> {
     let result: Array<IUpbitCandle> = [];
 
     try {
@@ -83,7 +83,7 @@ class UpbitApi {
   }
   static async getCandleMinutes(
     marketCode: string,
-    count: number = 200,
+    count,
     unit: CandleMinuteUnits,
     to?: string,
   ): Promise<Array<IUpbitCandle>> {
@@ -107,7 +107,7 @@ class UpbitApi {
 
     return result;
   }
-  static async getCandleDays(marketCode: string, count: number = 200, to?: string): Promise<Array<IUpbitCandle>> {
+  static async getCandleDays(marketCode: string, count = 200, to?: string): Promise<Array<IUpbitCandle>> {
     let result: Array<IUpbitCandle> = [];
 
     try {
@@ -127,7 +127,7 @@ class UpbitApi {
 
     return result;
   }
-  static async getCandleWeeks(marketCode: string, count: number = 200, to?: string): Promise<Array<IUpbitCandle>> {
+  static async getCandleWeeks(marketCode: string, count = 200, to?: string): Promise<Array<IUpbitCandle>> {
     let result: Array<IUpbitCandle> = [];
 
     try {
@@ -146,7 +146,7 @@ class UpbitApi {
 
     return result;
   }
-  static async getCandleMonths(marketCode: string, count: number = 200, to?: string): Promise<Array<IUpbitCandle>> {
+  static async getCandleMonths(marketCode: string, count = 200, to?: string): Promise<Array<IUpbitCandle>> {
     let result: Array<IUpbitCandle> = [];
 
     try {
@@ -169,11 +169,11 @@ class UpbitApi {
   // endregion
 
   // region OrderBook
-  static async getOrderBook(marketCode: string, level: number = 0): Promise<IUpbitOrderBook> {
+  static async getOrderBook(marketCode: string, level = 0): Promise<IUpbitOrderBook> {
     let result: IUpbitOrderBook = {};
 
     try {
-      const response = await upbitInstance.get(`orderbook`, {
+      const response = await upbitInstance.get('orderbook', {
         searchParams: { market: marketCode, level: level.toString() },
       });
       const data = await response.json();

@@ -36,7 +36,7 @@ const SignupPage = () => {
     if (user.accountStatus === AccountStatusTypes.NORMAL) {
       router.push('/');
     } else if (user.accountStatus === AccountStatusTypes.TEMP) {
-      router.push(`/auth/signup`);
+      router.push('/auth/signup');
     } else {
       alert('이용할 수 없는 계정입니다.');
       router.push('/');

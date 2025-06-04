@@ -1,7 +1,7 @@
 'use client';
 
-import { CandleTimeType, CandleTimes } from '@/components/cryptos/chart/Types';
-import { IUpbitCandle } from '@/types/cryptos/CryptoInterfaces';
+import { type CandleTimeType, CandleTimes } from '@/components/cryptos/chart/Types';
+import type { IUpbitCandle } from '@/types/cryptos/CryptoInterfaces';
 import { useRef } from 'react';
 import { v4 as uuid } from 'uuid';
 import useSocketManager from './useSocketManager';
@@ -12,13 +12,17 @@ export default function useTradeMarketChartSocket(
 ) {
   const socketRef = useRef<WebSocket | null>(null);
 
-  useSocketManager(() => {
-    connectChart(marketCode, CandleTimes.SECOND);
-  }, () => {
-    if (socketRef.current) {
-      socketRef.current.close();
-    }
-  }, marketCode);
+  useSocketManager(
+    () => {
+      connectChart(marketCode, CandleTimes.SECOND);
+    },
+    () => {
+      if (socketRef.current) {
+        socketRef.current.close();
+      }
+    },
+    marketCode,
+  );
 
   const connectChart = async (marketCode: string, timeType: CandleTimeType) => {
     if (socketRef.current) {
@@ -46,7 +50,7 @@ export default function useTradeMarketChartSocket(
 
     newSocket.onopen = () => {
       const ticket = String(uuid());
-      const requestData = [{ ticket: ticket }, { type: `candle.1s`, codes: [marketCode] }];
+      const requestData = [{ ticket: ticket }, { type: 'candle.1s', codes: [marketCode] }];
       newSocket.send(JSON.stringify(requestData));
     };
   };

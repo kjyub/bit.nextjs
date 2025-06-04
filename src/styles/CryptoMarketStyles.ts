@@ -1,4 +1,4 @@
-import { StyleProps } from '@/types/StyleTypes';
+import type { StyleProps } from '@/types/StyleTypes';
 import Link from 'next/link';
 import tw from 'tailwind-styled-components';
 

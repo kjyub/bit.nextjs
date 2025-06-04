@@ -4,17 +4,13 @@ import Inko from 'inko';
 
 export default class CommonUtils {
   static getBaseUrl(): string {
-    const currentURL =
-      window.location.protocol +
-      '//' +
-      window.location.hostname +
-      (window.location.port ? ':' + window.location.port : '');
+    const currentURL = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}`;
     return currentURL;
   }
   static toCamelCase(str: string) {
     return str.replace(/([-_][a-z])/g, (group) => group.toUpperCase().replace('-', '').replace('_', ''));
   }
-  static round(value: number, round: number = 0): number {
+  static round(value: number, round = 0): number {
     // return Math.round(value * Math.pow(10, round)) / Math.pow(10, round)
     return Number(value.toPrecision(round));
   }
@@ -94,7 +90,7 @@ export default class CommonUtils {
       if (number === 0) {
         result = '0';
       } else if (
-        !isNaN(number) &&
+        !Number.isNaN(number) &&
         result[result.length - 1] !== '.' &&
         result !== '' &&
         !(result.includes('.') && result[result.length - 1] === '0')
@@ -118,7 +114,7 @@ export default class CommonUtils {
       // console.log(decimalPart)
     } else if (format === TextFormats.PRICE) {
       const number = CommonUtils.textFormat(text, TextFormats.NUMBER);
-      result = number + '원';
+      result = `${number}원`;
     } else if (format === TextFormats.KOREAN_PRICE) {
       const inputNumber = text < 0 ? false : text;
       const unitWords = ['', '만', '억', '조', '경'];
@@ -128,7 +124,7 @@ export default class CommonUtils {
       let resultString = '';
 
       for (let i = 0; i < splitCount; i++) {
-        let unitResult = (inputNumber % Math.pow(splitUnit, i + 1)) / Math.pow(splitUnit, i);
+        let unitResult = (inputNumber % splitUnit ** (i + 1)) / splitUnit ** i;
         unitResult = Math.floor(unitResult);
         if (unitResult > 0) {
           resultArray[i] = unitResult;
@@ -137,7 +133,7 @@ export default class CommonUtils {
 
       for (let i = 0; i < resultArray.length; i++) {
         if (!resultArray[i]) continue;
-        resultString = String(this.textFormat(resultArray[i], TextFormats.NUMBER)) + unitWords[i] + resultString;
+        resultString = String(CommonUtils.textFormat(resultArray[i], TextFormats.NUMBER)) + unitWords[i] + resultString;
       }
 
       result = resultString;
@@ -154,7 +150,7 @@ export default class CommonUtils {
       let resultString = '';
 
       for (let i = 0; i < splitCount; i++) {
-        let unitResult = (inputNumber % Math.pow(splitUnit, i + 1)) / Math.pow(splitUnit, i);
+        let unitResult = (inputNumber % splitUnit ** (i + 1)) / splitUnit ** i;
         unitResult = Math.floor(unitResult);
         if (unitResult > 0) {
           resultArray[i] = unitResult;
@@ -162,7 +158,7 @@ export default class CommonUtils {
       }
 
       const lastIndex = resultArray.length - 1;
-      resultString = String(this.textFormat(resultArray[lastIndex], TextFormats.NUMBER)) + unitWords[lastIndex];
+      resultString = String(CommonUtils.textFormat(resultArray[lastIndex], TextFormats.NUMBER)) + unitWords[lastIndex];
 
       result = resultString;
     }
@@ -227,7 +223,7 @@ export default class CommonUtils {
     }
 
     element.style.height = 'auto';
-    element.style.height = Number(element.scrollHeight) + 4 + 'px';
+    element.style.height = `${Number(element.scrollHeight) + 4}px`;
   }
   static koreanToEnglish = (value: string): string => {
     const inko = new Inko();
@@ -236,7 +232,7 @@ export default class CommonUtils {
   };
   static async getAddressCode(callback: (adderssCode: string, address1: string) => void) {
     new window.daum.Postcode({
-      oncomplete: function (data) {
+      oncomplete: (data) => {
         let addr = '';
         let extraAddr = '';
 
@@ -251,10 +247,10 @@ export default class CommonUtils {
             extraAddr += data.bname;
           }
           if (data.buildingName !== '' && data.apartment === 'Y') {
-            extraAddr += extraAddr !== '' ? ', ' + data.buildingName : data.buildingName;
+            extraAddr += extraAddr !== '' ? `, ${data.buildingName}` : data.buildingName;
           }
           if (extraAddr !== '') {
-            extraAddr = ' (' + extraAddr + ')';
+            extraAddr = ` (${extraAddr})`;
           }
         } else {
           extraAddr = '';

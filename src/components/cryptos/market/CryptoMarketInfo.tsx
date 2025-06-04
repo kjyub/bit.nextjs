@@ -76,8 +76,12 @@ export default function CryptoMarketInfo({ marketCode, marketData, marketCurrent
           </div>
           <h1 className="max-md:text-xl md:text-3xl text-slate-50 font-semibold">{market.koreanName}</h1>
           <div className="flex flex-col justify-center">
-            <span className="max-md:text-xs md:text-sm text-slate-400 max-md:leading-4 md:leading-3">{market.englishName}</span>
-            <span className="max-md:text-[8px] md:text-[10px] text-slate-500 max-md:leading-2 md:leading-4">{market.code}</span>
+            <span className="max-md:text-xs md:text-sm text-slate-400 max-md:leading-4 md:leading-3">
+              {market.englishName}
+            </span>
+            <span className="max-md:text-[8px] md:text-[10px] text-slate-500 max-md:leading-2 md:leading-4">
+              {market.code}
+            </span>
           </div>
         </S.MainTitleBox>
 
@@ -88,7 +92,7 @@ export default function CryptoMarketInfo({ marketCode, marketData, marketCurrent
           } change`}
         >
           {/* tailwind 변수 테스트 */}
-          <span className={`price`}>
+          <span className={'price'}>
             {/* <CountUp start={startPrice} end={price} duration={0.3} separator="," />  */}
             {CryptoUtils.getPriceText(price)}
             <span className="currency">{currency}</span>

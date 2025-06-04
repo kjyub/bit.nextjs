@@ -1,5 +1,5 @@
 import { AbsApiObject } from '../ApiTypes';
-import { PositionType, PositionTypeValues, TradeOrderType, TradeOrderTypeValues } from './CryptoTypes';
+import { PositionType, type PositionTypeValues, TradeOrderType, type TradeOrderTypeValues } from './CryptoTypes';
 import TradeOrder from './TradeOrder';
 
 export default class TradeHistory extends AbsApiObject {
@@ -34,17 +34,17 @@ export default class TradeHistory extends AbsApiObject {
     if (!super.isValidParseResponse(json)) return;
     // ApiUtils.parseData(this, json)
 
-    this._id = json['id'];
-    this._order.parseResponse(json['order'] as object);
-    this._orderType = json['order_type'];
-    this._positionType = json['position_type'];
-    this._price = json['price'];
-    this._quantity = json['quantity'];
-    this._leverage = json['leverage'];
-    this._fee = json['fee'];
-    this._pnl = json['pnl'];
+    this._id = json.id;
+    this._order.parseResponse(json.order as object);
+    this._orderType = json.order_type;
+    this._positionType = json.position_type;
+    this._price = json.price;
+    this._quantity = json.quantity;
+    this._leverage = json.leverage;
+    this._fee = json.fee;
+    this._pnl = json.pnl;
 
-    this._createdDate = json['created_date'];
+    this._createdDate = json.created_date;
   }
 
   public get id(): number {

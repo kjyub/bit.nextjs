@@ -5,11 +5,11 @@ export const REQUEST_TYPE_SELECT = 'REQUEST_TYPE_SELECT';
 export const REQUEST_TYPE_INSERT_OR_UPDATE = 'REQUEST_TYPE_INSERT_OR_UPDATE';
 
 export enum QueryTypes {
-  Insert,
-  Select,
-  Update,
-  Delete,
-  InsertOrUpdate,
+  Insert = 0,
+  Select = 1,
+  Update = 2,
+  Delete = 3,
+  InsertOrUpdate = 4,
 }
 
 export abstract class AbsApiObject {

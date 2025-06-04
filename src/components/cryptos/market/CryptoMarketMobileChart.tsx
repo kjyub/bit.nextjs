@@ -1,13 +1,13 @@
 'use client';
 
-import dynamic from 'next/dynamic';
-import CryptoMarketChartControlBar from '../chart/ControlBar';
-import CryptoMarketChartProvider from './CryptoMarketChartProvider';
+import useBreakpoint from '@/hooks/useBreakpoint';
 import { useCryptoUi } from '@/hooks/useCryptoUi';
 import { ModalDimmer } from '@/styles/MainStyles';
-import { createPortal } from 'react-dom';
 import BrowserUtils from '@/utils/BrowserUtils';
-import useBreakpoint from '@/hooks/useBreakpoint';
+import dynamic from 'next/dynamic';
+import { createPortal } from 'react-dom';
+import CryptoMarketChartControlBar from '../chart/ControlBar';
+import CryptoMarketChartProvider from './CryptoMarketChartProvider';
 
 const CryptoMarketFinancialChart = dynamic(() => import('../chart/Chart'), { ssr: false });
 
@@ -23,13 +23,16 @@ export default function CryptoMarketMobileChart({ marketCode }: Props) {
         <div className="flex flex-col w-[95vw] p-1.5 rounded-lg bg-slate-800" onClick={(e) => e.stopPropagation()}>
           <div className="flex justify-between items-center h-10 px-2">
             <span className="text-base font-semibold text-slate-100">차트</span>
-            <button className="flex items-center justify-center size-6 rounded-full bg-slate-700" onClick={() => setIsShowMobileChart(false)}>
+            <button
+              className="flex items-center justify-center size-6 rounded-full bg-slate-700"
+              onClick={() => setIsShowMobileChart(false)}
+            >
               <i className="fa-solid fa-x text-xs text-slate-400"></i>
             </button>
           </div>
-          
+
           <CryptoMarketChartControlBar />
-          
+
           <div className="relative h-[360px] select-none touch-none">
             <CryptoMarketFinancialChart />
           </div>
@@ -46,9 +49,13 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => {
   if (!BrowserUtils.isClient() || breakpointState.md) return null;
 
   return createPortal(
-    <ModalDimmer $is_active={isShowMobileChart} className="flex flex-center" onClick={() => setIsShowMobileChart(false)}>
+    <ModalDimmer
+      $is_active={isShowMobileChart}
+      className="flex flex-center"
+      onClick={() => setIsShowMobileChart(false)}
+    >
       {isShowMobileChart && children}
     </ModalDimmer>,
-    document.body
+    document.body,
   );
 };

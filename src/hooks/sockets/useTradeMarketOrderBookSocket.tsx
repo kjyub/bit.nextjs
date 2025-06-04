@@ -1,23 +1,24 @@
 'use client';
 
-import { IUpbitOrderBook } from '@/types/cryptos/CryptoInterfaces';
+import type { IUpbitOrderBook } from '@/types/cryptos/CryptoInterfaces';
 import { useRef } from 'react';
 import { v4 as uuid } from 'uuid';
 import useSocketManager from './useSocketManager';
 
-export default function useTradeMarketOrderBookSocket(
-  marketCode: string,
-  receive: (data: IUpbitOrderBook) => void,
-) {
+export default function useTradeMarketOrderBookSocket(marketCode: string, receive: (data: IUpbitOrderBook) => void) {
   const socketRef = useRef<WebSocket | null>(null);
 
-  useSocketManager(() => {
-    connectChart(marketCode)
-  }, () => {
-    if (socketRef.current) {
-      socketRef.current.close();
-    }
-  }, marketCode);
+  useSocketManager(
+    () => {
+      connectChart(marketCode);
+    },
+    () => {
+      if (socketRef.current) {
+        socketRef.current.close();
+      }
+    },
+    marketCode,
+  );
 
   const connectChart = async (marketCode: string) => {
     if (socketRef.current) {
@@ -45,7 +46,7 @@ export default function useTradeMarketOrderBookSocket(
 
     newSocket.onopen = () => {
       const ticket = String(uuid());
-      const requestData = [{ ticket: ticket }, { type: `orderbook`, codes: [marketCode] }];
+      const requestData = [{ ticket: ticket }, { type: 'orderbook', codes: [marketCode] }];
       newSocket.send(JSON.stringify(requestData));
     };
   };

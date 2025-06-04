@@ -40,7 +40,7 @@ export default function SignupLobby() {
           </div>
 
           <div className="agreement">
-            {`로그인 시 `}
+            {'로그인 시 '}
             <button
               onClick={() => {
                 setShowAgreement(true);
@@ -48,7 +48,7 @@ export default function SignupLobby() {
             >
               서비스 이용약관
             </button>
-            {`에 동의하게 됩니다.`}
+            {'에 동의하게 됩니다.'}
           </div>
         </SS.AuthTypeSection>
       </SS.BoxContainer>

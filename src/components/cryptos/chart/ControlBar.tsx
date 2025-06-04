@@ -1,10 +1,10 @@
 import * as CS from '@/styles/CryptoChartStyles';
-import { CandleTimes, ChartTypes } from './Types';
 import { useCryptoMarketChart } from '../market/CryptoMarketChartProvider';
+import { CandleTimes, ChartTypes } from './Types';
 
 export default function CryptoMarketChartControlBar() {
   const { timeType, chartType, setChartType, initChart } = useCryptoMarketChart();
-  
+
   return (
     <CS.ControlBar>
       <button onClick={() => initChart(CandleTimes.SECOND)} className={timeType === CandleTimes.SECOND ? 'active' : ''}>

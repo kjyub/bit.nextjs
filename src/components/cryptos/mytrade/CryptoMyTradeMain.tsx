@@ -10,11 +10,11 @@ import CryptoMyTradePosition from './CryptoMyTradePosition';
 import CryptoMyTradePositionHistory from './CryptoMyTradePositionHistory';
 
 export enum MyTradePage {
-  POSITION,
-  ORDER,
-  ORDER_HISTORY,
-  TRADE_HISTORY,
-  POSITION_HISTORY,
+  POSITION = 0,
+  ORDER = 1,
+  ORDER_HISTORY = 2,
+  TRADE_HISTORY = 3,
+  POSITION_HISTORY = 4,
 }
 const MyTradePageNames = {
   [MyTradePage.POSITION]: '포지션',

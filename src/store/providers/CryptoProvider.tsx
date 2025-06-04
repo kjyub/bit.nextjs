@@ -1,7 +1,7 @@
 'use client';
 
 import useTradeMarketSocket from '@/hooks/sockets/useTradeMarketSocket';
-import { Dispatch, SetStateAction, createContext, useState } from 'react';
+import { type Dispatch, type SetStateAction, createContext, useState } from 'react';
 
 interface CryptoState {
   isShowMarketList: boolean;
@@ -26,8 +26,12 @@ export const CryptoProvider = ({
 }) => {
   useTradeMarketSocket();
 
-  const [isShowMarketList, setIsShowMarketList] = useState<boolean>(false); 
+  const [isShowMarketList, setIsShowMarketList] = useState<boolean>(false);
   const [isShowMobileChart, setIsShowMobileChart] = useState<boolean>(false);
 
-  return <CryptoContext.Provider value={{ isShowMarketList, setIsShowMarketList, isShowMobileChart, setIsShowMobileChart }}>{children}</CryptoContext.Provider>;
+  return (
+    <CryptoContext.Provider value={{ isShowMarketList, setIsShowMarketList, isShowMobileChart, setIsShowMobileChart }}>
+      {children}
+    </CryptoContext.Provider>
+  );
 };

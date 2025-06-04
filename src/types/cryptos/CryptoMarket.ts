@@ -1,6 +1,6 @@
 import CryptoUtils from '@/utils/CryptoUtils';
 import { AbsApiObject } from '../ApiTypes';
-import { PriceChangeTypeValues } from './CryptoTypes';
+import type { PriceChangeTypeValues } from './CryptoTypes';
 
 export default class CryptoMarket extends AbsApiObject {
   private _id: number;
@@ -27,13 +27,13 @@ export default class CryptoMarket extends AbsApiObject {
     if (!super.isValidParseResponse(json)) return;
     // ApiUtils.parseData(this, json)
 
-    this._id = json['id'];
-    this._code = json['code'];
-    this._koreanName = json['korean_name'];
-    this._englishName = json['english_name'];
-    this._price = json['price'];
-    this._openingPrice = json['opening_price'];
-    this._isClosed = json['is_closed'];
+    this._id = json.id;
+    this._code = json.code;
+    this._koreanName = json.korean_name;
+    this._englishName = json.english_name;
+    this._price = json.price;
+    this._openingPrice = json.opening_price;
+    this._isClosed = json.is_closed;
   }
 
   public get id(): number {

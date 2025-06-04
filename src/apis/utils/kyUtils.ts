@@ -1,4 +1,4 @@
-import { HTTPError } from "ky";
+import { HTTPError } from 'ky';
 
 export const toHttpError = (error: unknown): HTTPError | null => {
   if (error instanceof HTTPError) {

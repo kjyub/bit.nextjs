@@ -1,14 +1,14 @@
-import { IUpbitMarketTicker, IUpbitOrderBook, IUpbitOrderBookUnit } from "@/types/cryptos/CryptoInterfaces";
+import { useCryptoMarketTrade } from '@/hooks/useCryptoMarketTrade';
+import useMarketPriceStore from '@/store/useMarketPriceStore';
+import { TextFormats } from '@/types/CommonTypes';
+import { type IUpbitMarketTicker, type IUpbitOrderBook, IUpbitOrderBookUnit } from '@/types/cryptos/CryptoInterfaces';
+import { PriceChangeTypes } from '@/types/cryptos/CryptoTypes';
+import CommonUtils from '@/utils/CommonUtils';
+import CryptoUtils from '@/utils/CryptoUtils';
+import { cn } from '@/utils/StyleUtils';
+import { useParams } from 'next/navigation';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import * as S from './OrderBookStyle';
-import { useMemo, useRef, useEffect, useState } from "react";
-import { cn } from "@/utils/StyleUtils";
-import { useParams } from "next/navigation";
-import CryptoUtils from "@/utils/CryptoUtils";
-import CommonUtils from "@/utils/CommonUtils";
-import { TextFormats } from "@/types/CommonTypes";
-import useMarketPriceStore from "@/store/useMarketPriceStore";
-import { PriceChangeTypes } from "@/types/cryptos/CryptoTypes";
-import { useCryptoMarketTrade } from "@/hooks/useCryptoMarketTrade";
 
 interface Unit {
   price: number;
@@ -35,10 +35,12 @@ export default function OrderBook({ orderBook, marketCode, marketCurrent }: IOrd
   }, [socketData]);
 
   const riseUnits: Unit[] = useMemo(() => {
-    return orderBook.orderbook_units.map((unit) => ({
-      price: unit.ask_price,
-      size: unit.ask_size,
-    })).toReversed();
+    return orderBook.orderbook_units
+      .map((unit) => ({
+        price: unit.ask_price,
+        size: unit.ask_size,
+      }))
+      .toReversed();
   }, [orderBook]);
 
   const fallUnits: Unit[] = useMemo(() => {
@@ -58,7 +60,7 @@ export default function OrderBook({ orderBook, marketCode, marketCurrent }: IOrd
 
       <List>
         {riseUnits.map((unit, index) => (
-          <Row 
+          <Row
             key={index}
             unit={unit}
             max={orderBook.total_ask_size}
@@ -68,7 +70,7 @@ export default function OrderBook({ orderBook, marketCode, marketCurrent }: IOrd
         ))}
 
         <Price price={price} />
-        
+
         {fallUnits.map((unit, index) => (
           <Row
             key={index}
@@ -99,8 +101,8 @@ const List = ({ children }: { children: React.ReactNode }) => {
     <div ref={scrollRef} className="flex flex-col w-full flex-1 max-md:py-16 overflow-y-auto scroll-transparent">
       {children}
     </div>
-  )
-}
+  );
+};
 
 const Price = ({ price }: { price: number }) => {
   const [changeType, setChangeType] = useState<PriceChangeTypeValues>(PriceChangeTypes.EVEN);
@@ -114,12 +116,19 @@ const Price = ({ price }: { price: number }) => {
   }, [price]);
 
   return (
-    <div 
+    <div
       className="flex items-center w-full py-2 gap-2 cursor-pointer active:bg-slate-100/10 select-none"
       onClick={() => setTradePrice(price)}
     >
-      <span 
-        className={cn(['trade-price font-semibold text-lg', changeType === PriceChangeTypes.EVEN ? 'text-slate-400' : changeType === PriceChangeTypes.RISE ? 'text-red-500' : 'text-blue-500'])}
+      <span
+        className={cn([
+          'trade-price font-semibold text-lg',
+          changeType === PriceChangeTypes.EVEN
+            ? 'text-slate-400'
+            : changeType === PriceChangeTypes.RISE
+              ? 'text-red-500'
+              : 'text-blue-500',
+        ])}
       >
         {CryptoUtils.getPriceText(price)}
       </span>
@@ -129,14 +138,14 @@ const Price = ({ price }: { price: number }) => {
         {changeType === PriceChangeTypes.FALL && <i className="fa-solid fa-arrow-down text-blue-500"></i>}
       </div>
     </div>
-  )
-}
+  );
+};
 
-const Row = ({ unit, max, className }: { unit: Unit, max: number, className: string }) => {
+const Row = ({ unit, max, className }: { unit: Unit; max: number; className: string }) => {
   const { setTradePrice } = useCryptoMarketTrade();
 
   return (
-    <S.Row 
+    <S.Row
       className={cn(['relative py-1 text-xs active:bg-slate-100/10 cursor-pointer', className])}
       onClick={() => setTradePrice(unit.price)}
     >
@@ -144,16 +153,14 @@ const Row = ({ unit, max, className }: { unit: Unit, max: number, className: str
       <span className="trade-price">{CryptoUtils.getPriceText(unit.price)}</span>
       <div className="flex max-sm:flex-col max-sm:w-[50px] sm:w-[100px]">
         <span className="size font-light text-slate-200/90">
-          {unit.size >= 1000 ? 
-            CommonUtils.textFormat(CryptoUtils.getPriceRound(unit.size), TextFormats.KOREAN_PRICE_SIMPLE) : 
-            CryptoUtils.getPriceRound(unit.size)
-          }
+          {unit.size >= 1000
+            ? CommonUtils.textFormat(CryptoUtils.getPriceRound(unit.size), TextFormats.KOREAN_PRICE_SIMPLE)
+            : CryptoUtils.getPriceRound(unit.size)}
         </span>
         <span className="price font-light text-slate-200/90 max-sm:hidden">
-          {unit.size * unit.price >= 1000 ? 
-            CommonUtils.textFormat(CryptoUtils.getPriceRound(unit.size * unit.price), TextFormats.KOREAN_PRICE_SIMPLE) :
-            CryptoUtils.getPriceRound(unit.size * unit.price)
-          }
+          {unit.size * unit.price >= 1000
+            ? CommonUtils.textFormat(CryptoUtils.getPriceRound(unit.size * unit.price), TextFormats.KOREAN_PRICE_SIMPLE)
+            : CryptoUtils.getPriceRound(unit.size * unit.price)}
         </span>
       </div>
 

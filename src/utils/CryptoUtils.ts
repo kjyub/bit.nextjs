@@ -1,5 +1,5 @@
 import { TextFormats } from '@/types/CommonTypes';
-import { PositionType, PriceChangeTypeValues, PriceChangeTypes } from '@/types/cryptos/CryptoTypes';
+import { PositionType, type PriceChangeTypeValues, PriceChangeTypes } from '@/types/cryptos/CryptoTypes';
 import CommonUtils from './CommonUtils';
 import TypeUtils from './TypeUtils';
 
@@ -22,7 +22,7 @@ export default class CryptoUtils {
       return price.toString().length;
     } else if (price >= 1) {
       return 4;
-    } else if (price == 0) {
+    } else if (price === 0) {
       return 1;
     } else {
       const decimalPlaces = Math.abs(Math.floor(Math.log10(price)));
@@ -47,13 +47,13 @@ export default class CryptoUtils {
     return price;
   }
   static getPriceText(price: number): string {
-    return CommonUtils.textFormat(this.getPriceRound(price), TextFormats.NUMBER);
+    return CommonUtils.textFormat(CryptoUtils.getPriceRound(price), TextFormats.NUMBER);
   }
   static getTradePriceText(price: number): string {
     if (price >= 1000000) {
-      return CommonUtils.textFormat((price / 1000000).toFixed(0), TextFormats.NUMBER) + '백만';
+      return `${CommonUtils.textFormat((price / 1000000).toFixed(0), TextFormats.NUMBER)}백만`;
     } else if (price >= 10000) {
-      return CommonUtils.textFormat((price / 10000).toFixed(0), TextFormats.NUMBER) + '만';
+      return `${CommonUtils.textFormat((price / 10000).toFixed(0), TextFormats.NUMBER)}만`;
     } else {
       return price.toString();
     }

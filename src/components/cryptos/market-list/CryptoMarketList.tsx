@@ -3,9 +3,9 @@
 import CryptoApi from '@/apis/api/cryptos/CryptoApi';
 import TradeGoApi from '@/apis/api/cryptos/TradeGoApi';
 import * as S from '@/styles/CryptoMarketStyles';
-import { OrderTypeValues, OrderTypes } from '@/types/common/CommonTypes';
-import CryptoMarket from '@/types/cryptos/CryptoMarket';
-import { MarketSortTypeValues, MarketSortTypes, MarketTypes } from '@/types/cryptos/CryptoTypes';
+import { type OrderTypeValues, OrderTypes } from '@/types/common/CommonTypes';
+import type CryptoMarket from '@/types/cryptos/CryptoMarket';
+import { type MarketSortTypeValues, MarketSortTypes, MarketTypes } from '@/types/cryptos/CryptoTypes';
 import { Suspense, useCallback, useEffect, useState } from 'react';
 import Market from './Market';
 import MarketSortType from './MarketSortType';

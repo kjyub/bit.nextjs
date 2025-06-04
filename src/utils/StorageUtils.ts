@@ -19,7 +19,7 @@ export default class StorageUtils {
     }
   }
   static pushSessionStorageList(storageKey: string, value: string) {
-    const data: Array<any> = this.getSessionStorageList(storageKey);
+    const data: Array<any> = StorageUtils.getSessionStorageList(storageKey);
     data.push(value);
 
     const storageList = JSON.stringify(data);

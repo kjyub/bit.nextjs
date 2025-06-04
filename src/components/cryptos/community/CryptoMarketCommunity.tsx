@@ -1,13 +1,13 @@
 'use client';
 import CryptoApi from '@/apis/api/cryptos/CryptoApi';
-import { IMarketPageSearchParams } from '@/app/(front)/crypto/[code]/page';
+import type { IMarketPageSearchParams } from '@/app/(front)/crypto/[code]/page';
 import { MARKET_COMMUNITY_PAGE_SIZE } from '@/constants/CryptoConsts';
 import { useUser } from '@/hooks/useUser';
 import * as CS from '@/styles/CryptoMarketCommunityStyles';
 import { TextFormats } from '@/types/CommonTypes';
 import Pagination from '@/types/api/pagination';
 import MarketCommunity from '@/types/cryptos/MarketCommunity';
-import User from '@/types/users/User';
+import type User from '@/types/users/User';
 import { UserTypes } from '@/types/users/UserTypes';
 import CommonUtils from '@/utils/CommonUtils';
 import FrontUtils from '@/utils/FrontUtils';

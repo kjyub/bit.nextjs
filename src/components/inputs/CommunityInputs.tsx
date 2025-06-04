@@ -1,5 +1,6 @@
 import * as S from '@/styles/CommunityInputStyles';
-import React, { useState } from 'react';
+import type React from 'react';
+import { useState } from 'react';
 
 interface InputProps {
   type: string;
@@ -43,7 +44,7 @@ export const ContentInput = ({ placeholder, value, setValue }: InputProps) => {
       onChange={(e) => setValue(e.target.value)}
       onInput={(e) => {
         e.target.style.height = '48px';
-        e.target.style.height = Number(e.target.scrollHeight) + 'px';
+        e.target.style.height = `${Number(e.target.scrollHeight)}px`;
       }}
     />
   );

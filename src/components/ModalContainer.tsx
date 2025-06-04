@@ -1,4 +1,5 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import type React from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import Modal from 'react-modal';
 import tw from 'tailwind-styled-components';
 

@@ -4,15 +4,16 @@ import * as S from '@/styles/CryptoTradeStyles';
 import { TextFormats } from '@/types/CommonTypes';
 import {
   MarginModeType,
-  MarginModeTypeValues,
-  SizeUnitTypeValues,
+  type MarginModeTypeValues,
+  type SizeUnitTypeValues,
   SizeUnitTypes,
   TradeOrderType,
-  TradeOrderTypeValues,
+  type TradeOrderTypeValues,
 } from '@/types/cryptos/CryptoTypes';
 import CommonUtils from '@/utils/CommonUtils';
 import TypeUtils from '@/utils/TypeUtils';
-import React, { useEffect, useRef, useState } from 'react';
+import type React from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const HelpBox = ({ children }: { children: React.ReactNode }) => {
   const [ref, isHover] = useMouseHover();
@@ -163,11 +164,11 @@ export const LeverageInput = ({ leverageRatio, setLeverageRatio, maxRatio = 75 }
   }, [leverageRatio]);
 
   const handleValue = (e: ChangeEvent<HTMLDivElement>) => {
-    const value = parseInt(e.target.textContent);
+    const value = Number.parseInt(e.target.textContent);
     let _leverage = value;
     let refreshValue = false; // 입력하지 말아야 할 값이 들어온 경우 editable div에 값을 새로 써준다
 
-    if (isNaN(value) || leverageRatio < 1) {
+    if (Number.isNaN(value) || leverageRatio < 1) {
       _leverage = 1;
       refreshValue = true;
     } else if (value > maxRatio) {
@@ -308,8 +309,8 @@ export const NumberInput = ({
       return;
     }
 
-    const _value = parseFloat(replaceComma);
-    if (isNaN(_value)) return;
+    const _value = Number.parseFloat(replaceComma);
+    if (Number.isNaN(_value)) return;
 
     // 소수점 입력하는 경우 1
     if (replaceComma[replaceComma.length - 1] === '.') {
@@ -317,7 +318,7 @@ export const NumberInput = ({
       return;
     }
     // 소수점 입력하는 경우 2
-    if (replaceComma.includes('.') && replaceComma[replaceComma.length - 1] == '0') {
+    if (replaceComma.includes('.') && replaceComma[replaceComma.length - 1] === '0') {
       setValue(replaceComma);
       return;
     }
@@ -354,16 +355,16 @@ interface LimitSizeInputProps {
 }
 export const LimitSizeInput = ({ amount, setAmount, maxAmount }: LimitSizeInputProps) => {
   const stepValue = maxAmount / 100;
-  const step = isNaN(stepValue) ? 1 : stepValue;
+  const step = Number.isNaN(stepValue) ? 1 : stepValue;
 
   const percentValue = amount / maxAmount;
-  const percent = isNaN(percentValue) ? 0 : percentValue;
+  const percent = Number.isNaN(percentValue) ? 0 : percentValue;
 
   return (
     <div className="flex flex-col w-full space-y-2">
       <NumberInput label={'크기'} value={amount} setValue={setAmount} />
       <div className="flex items-center px-2 space-x-2">
-        <span className="font-light text-xs text-slate-400/80 w-12">{`크기`}</span>
+        <span className="font-light text-xs text-slate-400/80 w-12">{'크기'}</span>
         <div className="flex-1">
           <SlideInput value={amount} setValue={setAmount} min={0} max={maxAmount} step={step} />
         </div>
@@ -380,7 +381,7 @@ interface LimitPriceInputProps {
 }
 export const LimitPriceInput = ({ price, setPrice, initPrice }: LimitPriceInputProps) => {
   return (
-    <div className={`flex w-full justify-between`}>
+    <div className={'flex w-full justify-between'}>
       <div className="w-[calc(100%-24px)]">
         <NumberInput label={'가격'} value={price} setValue={setPrice} />
       </div>
@@ -403,13 +404,13 @@ interface MarketPriceInputProps {
 }
 export const MarketPriceInput = ({ targetPrice, setTargetPrice, maxSize }: MarketPriceInputProps) => {
   const percentValue = targetPrice / maxSize;
-  const percent = isNaN(percentValue) ? 0 : percentValue;
+  const percent = Number.isNaN(percentValue) ? 0 : percentValue;
 
   return (
     <div className="flex flex-col w-full space-y-2">
       <NumberInput label={'총액'} value={targetPrice} setValue={setTargetPrice} />
       <div className="flex items-center px-2 space-x-2">
-        <span className="font-light text-xs text-slate-400/80 w-12">{`총액(잔고)`}</span>
+        <span className="font-light text-xs text-slate-400/80 w-12">{'총액(잔고)'}</span>
         <div className="flex-1">
           <SlideInput value={targetPrice} setValue={setTargetPrice} min={0} max={maxSize} step={maxSize / 100} />
         </div>
@@ -633,7 +634,7 @@ export const PositionCloseSizeInput = ({ label, value, setValue, max }: Position
   const [ref, isSliderShow, setSliderShow] = useDetectClose();
 
   useEffect(() => {
-    if (ref.current && ref.current.querySelector('input.input')) {
+    if (ref.current?.querySelector('input.input')) {
       const closeSizeInput = ref.current.getElementsByClassName('close-size-input')[0];
 
       const handler = () => {

@@ -12,15 +12,15 @@ import { TextFormats } from '@/types/CommonTypes';
 import { CryptoFee, MAX_COST_RATIO } from '@/types/cryptos/CryptoConsts';
 import {
   MarginModeType,
-  MarginModeTypeValues,
+  type MarginModeTypeValues,
   PositionType,
-  PositionTypeValues,
-  SizeUnitTypeValues,
+  type PositionTypeValues,
+  type SizeUnitTypeValues,
   TradeOrderType,
-  TradeOrderTypeValues,
+  type TradeOrderTypeValues,
   TradeType,
 } from '@/types/cryptos/CryptoTypes';
-import User from '@/types/users/User';
+import type User from '@/types/users/User';
 import CommonUtils from '@/utils/CommonUtils';
 import TypeUtils from '@/utils/TypeUtils';
 import { useEffect, useState } from 'react';
@@ -184,22 +184,20 @@ export default function CryptoMarketTrade({
       )}
 
       {orderType === TradeOrderType.MARKET && (
-        <>
-          <I.TradeSizeInput
-            orderType={orderType}
-            size={size}
-            setQuantity={setQuantity}
-            setSize={setSize}
-            maxSize={maxCost}
-            setCost={setCost}
-            leverage={leverageRatio}
-            price={price}
-            fee={fee}
-            unit={unit}
-            sizeUnitType={sizeUnitType}
-            setSizeUnitType={setSizeUnitType}
-          />
-        </>
+        <I.TradeSizeInput
+          orderType={orderType}
+          size={size}
+          setQuantity={setQuantity}
+          setSize={setSize}
+          maxSize={maxCost}
+          setCost={setCost}
+          leverage={leverageRatio}
+          price={price}
+          fee={fee}
+          unit={unit}
+          sizeUnitType={sizeUnitType}
+          setSizeUnitType={setSizeUnitType}
+        />
       )}
 
       <I.TpSlLayout>

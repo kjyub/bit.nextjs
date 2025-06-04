@@ -23,13 +23,13 @@ export default class Sigungu extends AbsApiObject {
   parseResponse(json) {
     if (!super.isValidParseResponse(json)) return;
 
-    this._id = json['id'];
-    this._index = json['index'];
-    this._sido = json['sido'];
-    this._sidoEnglish = json['sido_english'];
-    this._sidoShort = json['sido_short'];
-    this._sigungu = json['sigungu'];
-    this._sigunguEnglish = json['sigungu_english'];
+    this._id = json.id;
+    this._index = json.index;
+    this._sido = json.sido;
+    this._sidoEnglish = json.sido_english;
+    this._sidoShort = json.sido_short;
+    this._sigungu = json.sigungu;
+    this._sigunguEnglish = json.sigungu_english;
   }
 
   title(): string {

@@ -1,11 +1,11 @@
-import { AbsApiObject } from '../ApiTypes';
+import type { AbsApiObject } from '../ApiTypes';
 
 export default class Pagination<T extends AbsApiObject> {
   private _count: number;
   private _items: Array<T>;
   private _pageIndex: number;
 
-  constructor(count: number = 0, items: Array<T> = []) {
+  constructor(count = 0, items: Array<T> = []) {
     this._count = count;
     this._items = items;
     this._pageIndex = 1;
@@ -22,7 +22,7 @@ export default class Pagination<T extends AbsApiObject> {
   }
 
   parseResponse(data: object, cls: new () => T): void {
-    const results = data['results'] ?? [];
+    const results = data.results ?? [];
 
     this._items = results.map((result) => {
       const instance: T = new cls();
@@ -30,7 +30,7 @@ export default class Pagination<T extends AbsApiObject> {
       return instance;
     });
 
-    this._count = data['count'] ?? 0;
-    this._pageIndex = data['current_page'] ?? -1;
+    this._count = data.count ?? 0;
+    this._pageIndex = data.current_page ?? -1;
   }
 }

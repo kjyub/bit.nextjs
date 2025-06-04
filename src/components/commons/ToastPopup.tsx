@@ -1,6 +1,6 @@
 'use client';
 import { TOAST_MESSAGE_ANIMATION_DURATION, TOAST_MESSAGE_DURATION } from '@/constants/ToastConsts';
-import useToastMessageStore, { ToastMessage } from '@/store/useToastMessageStore';
+import useToastMessageStore, { type ToastMessage } from '@/store/useToastMessageStore';
 import { cn } from '@/utils/StyleUtils';
 import { useEffect, useState } from 'react';
 

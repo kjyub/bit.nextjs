@@ -4,7 +4,7 @@ import CryptoApi from '@/apis/api/cryptos/CryptoApi';
 import usePageScroll from '@/hooks/usePageScroll';
 import * as S from '@/styles/CryptoMyTradeStyles';
 import { MarginModeTypeNames, PositionType } from '@/types/cryptos/CryptoTypes';
-import TradePosition from '@/types/cryptos/TradePosition';
+import type TradePosition from '@/types/cryptos/TradePosition';
 import CryptoUtils from '@/utils/CryptoUtils';
 import dayjs from 'dayjs';
 import { useState } from 'react';
@@ -22,7 +22,7 @@ export default function CryptoMyTradePositionHistory() {
   const [dateStart, setDateStart] = useState<string>('');
   const [dateEnd, setDateEnd] = useState<string>('');
 
-  const getHistories = async (_pageIndex: number, dateStart: string = '', dateEnd: string = '') => {
+  const getHistories = async (_pageIndex: number, dateStart = '', dateEnd = '') => {
     if (isLoading) {
       return;
     }
@@ -108,13 +108,13 @@ const Position = ({ position }: IPosition) => {
       </S.OrderHeader>
 
       <S.OrderBody>
-        <S.OrderItem className={``}>
+        <S.OrderItem className={''}>
           <dt>
             진입 가격 <span>Entry Price</span>
           </dt>
           <dd>{CryptoUtils.getPriceText(position.entryPrice)}</dd>
         </S.OrderItem>
-        <S.OrderItem className={``}>
+        <S.OrderItem className={''}>
           <dt>
             평균 종료 가격 <span>Avg. Close Price</span>
           </dt>
@@ -126,13 +126,13 @@ const Position = ({ position }: IPosition) => {
           </dt>
           <dd className="!font-medium">{CryptoUtils.getPriceText(position.pnl)}TW</dd>
         </S.OrderItem>
-        <S.OrderItem className={``}>
+        <S.OrderItem className={''}>
           <dt>
             시작 일시 <span>Opened</span>
           </dt>
           <dd>{dayjs(position.entryTime).format('YYYY-MM-DD HH:mm:ss')}</dd>
         </S.OrderItem>
-        <S.OrderItem className={``}>
+        <S.OrderItem className={''}>
           <dt>
             종료 일시 <span>Closed</span>
           </dt>

@@ -16,16 +16,16 @@ export default function CommunitySearch({ onSearch, defaultValue = '', placehold
   }, [defaultValue]);
 
   return (
-    <div className={`flex items-center flex-1 h-10 px-3 space-x-2 rounded-lg bg-slate-500/30 backdrop-blur-sm`}>
+    <div className={'flex items-center flex-1 h-10 px-3 space-x-2 rounded-lg bg-slate-500/30 backdrop-blur-sm'}>
       <input
-        className={`w-full bg-transparent text-sm text-slate-300 placeholder:text-slate-500`}
+        className={'w-full bg-transparent text-sm text-slate-300 placeholder:text-slate-500'}
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onKeyPress={(e) => e.key === 'Enter' && onSearch(value)}
         placeholder={placeholder}
       />
 
-      <button className={`text-slate-400 hover:text-slate-200 text-sm`}>
+      <button className={'text-slate-400 hover:text-slate-200 text-sm'}>
         <i className="fa-solid fa-magnifying-glass"></i>
       </button>
     </div>

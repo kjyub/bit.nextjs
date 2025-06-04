@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import type React from 'react';
+import { useEffect } from 'react';
 
 export default function KakaoContainer({ children }: { children: React.ReactNode }) {
   // 카카오

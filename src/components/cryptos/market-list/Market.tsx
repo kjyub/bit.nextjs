@@ -1,7 +1,7 @@
 import { useCryptoUi } from '@/hooks/useCryptoUi';
 import useMarketPriceStore from '@/store/useMarketPriceStore';
 import * as S from '@/styles/CryptoMarketStyles';
-import CryptoMarket from '@/types/cryptos/CryptoMarket';
+import type CryptoMarket from '@/types/cryptos/CryptoMarket';
 import { PriceChangeTypes } from '@/types/cryptos/CryptoTypes';
 import CryptoUtils from '@/utils/CryptoUtils';
 import { usePathname } from 'next/navigation';
@@ -36,7 +36,7 @@ export default memo(function Market({ market }: Props) {
   const tradePrice24 = socketData.acc_trade_price_24h || 0;
   const changeRate = socketData.signed_change_rate;
   const changePrice = socketData.signed_change_price;
-  const changeRateText = !isNaN(changeRate) ? `${(changeRate * 100).toFixed(2)}%` : '-';
+  const changeRateText = !Number.isNaN(changeRate) ? `${(changeRate * 100).toFixed(2)}%` : '-';
 
   return (
     <S.MarketListItem

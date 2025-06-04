@@ -16,7 +16,7 @@ export default class AuthUtils {
       atob(base64)
         .split('')
         .map((c) => {
-          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+          return `%${(`00${c.charCodeAt(0).toString(16)}`).slice(-2)}`;
         })
         .join(''),
     );
@@ -28,7 +28,7 @@ export default class AuthUtils {
       return null;
     }
 
-    const decodedToken = this.parseJwt(token);
+    const decodedToken = AuthUtils.parseJwt(token);
 
     if (decodedToken.exp) {
       return new Date(decodedToken.exp * 1000); // 초 단위를 밀리초로 변환
@@ -41,7 +41,7 @@ export default class AuthUtils {
       return true;
     }
 
-    const expireDate = this.getTokenExpires(token);
+    const expireDate = AuthUtils.getTokenExpires(token);
     if (!expireDate) {
       return false;
     }

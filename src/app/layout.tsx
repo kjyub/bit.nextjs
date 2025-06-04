@@ -2,11 +2,11 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import '@/styles/css/globals.css';
 import UserApi from '@/apis/api/users/UserApi';
+import { setAuthToken } from '@/apis/utils/instances';
 import AppClientLayout from '@/layouts/AppClientLayout';
 import { AuthProvider } from '@/store/providers/AuthProvider';
 import AuthServerUtils from '@/utils/AuthUtils.server';
 import Script from 'next/script';
-import { setAuthToken } from '@/apis/utils/instances';
 
 const pretendard = localFont({
   src: '../static/fonts/PretendardVariable.woff2',

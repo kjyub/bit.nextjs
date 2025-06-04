@@ -11,10 +11,10 @@ import {
   PositionType,
   SizeUnitTypes,
   TradeOrderType,
-  TradeOrderTypeValues,
+  type TradeOrderTypeValues,
   TradeType,
 } from '@/types/cryptos/CryptoTypes';
-import TradePosition from '@/types/cryptos/TradePosition';
+import type TradePosition from '@/types/cryptos/TradePosition';
 import CommonUtils from '@/utils/CommonUtils';
 import CryptoUtils from '@/utils/CryptoUtils';
 import TypeUtils from '@/utils/TypeUtils';
@@ -99,15 +99,15 @@ const Position = ({ position, userBudget }: IPosition) => {
 
       let result = false;
       if (_orderType === TradeOrderType.LIMIT) {
-        data['price'] = Number(closePrice);
-        data['quantity'] = Number(closeQuantity);
-        data['size'] = Number(closeQuantity) * Number(closePrice);
+        data.price = Number(closePrice);
+        data.quantity = Number(closeQuantity);
+        data.size = Number(closeQuantity) * Number(closePrice);
 
         result = await CryptoApi.orderLimit(data);
       } else if (_orderType === TradeOrderType.MARKET) {
-        data['price'] = marketPrice;
-        data['quantity'] = Number(closeQuantity);
-        data['size'] = Number(closeQuantity) * marketPrice;
+        data.price = marketPrice;
+        data.quantity = Number(closeQuantity);
+        data.size = Number(closeQuantity) * marketPrice;
 
         result = await CryptoApi.orderMarket(data);
       }
@@ -155,7 +155,7 @@ const Position = ({ position, userBudget }: IPosition) => {
       </S.PositionHeader>
 
       <S.PositionBody>
-        <S.PositionItem className={``}>
+        <S.PositionItem className={''}>
           <dt>
             진입가격 <span>Entry Price</span>
           </dt>
@@ -173,7 +173,7 @@ const Position = ({ position, userBudget }: IPosition) => {
           </dt>
           <dd>{CryptoUtils.getPriceText(bep)}</dd>
         </S.PositionItem>
-        <S.PositionItem className={`[&>dd]:font-medium`}>
+        <S.PositionItem className={'[&>dd]:font-medium'}>
           <dt>
             현재가격 <span>Price</span>
           </dt>

@@ -4,7 +4,7 @@ import CryptoApi from '@/apis/api/cryptos/CryptoApi';
 import usePageScroll from '@/hooks/usePageScroll';
 import * as S from '@/styles/CryptoMyTradeStyles';
 import { PositionType, TradeOrderTypeNames } from '@/types/cryptos/CryptoTypes';
-import TradeOrder from '@/types/cryptos/TradeOrder';
+import type TradeOrder from '@/types/cryptos/TradeOrder';
 import CryptoUtils from '@/utils/CryptoUtils';
 import dayjs from 'dayjs';
 import { useState } from 'react';
@@ -22,7 +22,7 @@ export default function CryptoMyTradeOrderHistory() {
   const [dateStart, setDateStart] = useState<string>('');
   const [dateEnd, setDateEnd] = useState<string>('');
 
-  const getHistories = async (_pageIndex: number, dateStart: string = '', dateEnd: string = '') => {
+  const getHistories = async (_pageIndex: number, dateStart = '', dateEnd = '') => {
     if (isLoading) {
       return;
     }
@@ -110,25 +110,25 @@ const Order = ({ order }: IOrder) => {
       </S.OrderHeader>
 
       <S.OrderBody>
-        <S.OrderItem className={``}>
+        <S.OrderItem className={''}>
           <dt>
             가격 <span>Price</span>
           </dt>
           <dd>{CryptoUtils.getPriceText(order.entryPrice)}</dd>
         </S.OrderItem>
-        <S.OrderItem className={``}>
+        <S.OrderItem className={''}>
           <dt>
             수량 <span>Amount</span>
           </dt>
           <dd>{CryptoUtils.getPriceText(order.size)}TW</dd>
         </S.OrderItem>
-        <S.OrderItem className={``}>
+        <S.OrderItem className={''}>
           <dt>
             타입 <span>Type</span>
           </dt>
           <dd>{TradeOrderTypeNames[order.orderType]}</dd>
         </S.OrderItem>
-        <S.OrderItem className={``}>
+        <S.OrderItem className={''}>
           <dt>
             트리거 <span>Trigger</span>
           </dt>

@@ -1,5 +1,5 @@
 import { tradeInstance } from '@/apis/utils/tradeInstances';
-import { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
+import type { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
 
 class TradeGoServerApi {
   // region Market

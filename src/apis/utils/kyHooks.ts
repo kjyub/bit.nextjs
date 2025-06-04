@@ -1,6 +1,6 @@
-import { LoginResponse } from '@/types/users/UserTypes';
+import type { LoginResponse } from '@/types/users/UserTypes';
+import ky, { type KyRequest, type KyResponse, type NormalizedOptions } from 'ky';
 import { getAuthToken, removeAuthToken, setAuthToken } from './instances';
-import ky, { KyRequest, KyResponse, NormalizedOptions } from 'ky';
 
 export const setAuthorization = (request: KyRequest) => {
   const token = getAuthToken();
@@ -24,7 +24,7 @@ export const validateAuthToken = async (request: KyRequest, _options: Normalized
   if (response?.status === 401 && request.headers.get('x-retry') !== 'true') {
     try {
       const token = getAuthToken();
-      const refreshResponse = await fetch(process.env.NEXT_PUBLIC_API_SERVER + '/api/auth/refresh/', {
+      const refreshResponse = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER}/api/auth/refresh/`, {
         credentials: 'include',
         method: 'POST',
         body: JSON.stringify({ refresh: token.refresh }),
@@ -54,7 +54,7 @@ export const validateAuthToken = async (request: KyRequest, _options: Normalized
 
       // 새로고침
       if (typeof window !== 'undefined' && typeof window.document !== 'undefined') {
-        await fetch(process.env.NEXT_PUBLIC_API_SERVER + '/api/auth/signout/');
+        await fetch(`${process.env.NEXT_PUBLIC_API_SERVER}/api/auth/signout/`);
         window.location.reload();
       }
 

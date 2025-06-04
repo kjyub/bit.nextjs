@@ -33,7 +33,7 @@ export default class StyleUtils {
 
   static initScrollEvent() {
     const initScroll = () => {
-      if (!this.isVisibleVirtualKeyboard()) {
+      if (!StyleUtils.isVisibleVirtualKeyboard()) {
         rollbackScreen();
       }
     };

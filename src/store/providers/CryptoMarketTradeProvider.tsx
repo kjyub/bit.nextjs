@@ -2,7 +2,7 @@
 
 'use client';
 
-import { Dispatch, SetStateAction, createContext, useState } from 'react';
+import { type Dispatch, type SetStateAction, createContext, useState } from 'react';
 
 interface CryptoState {
   tradePrice: number;
@@ -23,5 +23,9 @@ export const CryptoMarketTradeProvider = ({
 }) => {
   const [tradePrice, setTradePrice] = useState<number>(0);
 
-  return <CryptoMarketTradeContext.Provider value={{ tradePrice, setTradePrice }}>{children}</CryptoMarketTradeContext.Provider>;
+  return (
+    <CryptoMarketTradeContext.Provider value={{ tradePrice, setTradePrice }}>
+      {children}
+    </CryptoMarketTradeContext.Provider>
+  );
 };

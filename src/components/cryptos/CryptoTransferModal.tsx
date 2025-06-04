@@ -4,7 +4,7 @@ import * as I from '@/components/inputs/UserInputs';
 import useUserInfoStore from '@/store/useUserInfo';
 import * as S from '@/styles/CryptoWalletStyles';
 import { TextFormats } from '@/types/CommonTypes';
-import { TransferTypeValues, TransferTypes, WalletTransactionType } from '@/types/cryptos/CryptoTypes';
+import { type TransferTypeValues, TransferTypes, WalletTransactionType } from '@/types/cryptos/CryptoTypes';
 import CommonUtils from '@/utils/CommonUtils';
 import { useEffect, useState } from 'react';
 import ModalLayout from '../atomics/ModalLayout';
@@ -60,7 +60,7 @@ export default function CryptoTransferModal({ defaultTransferType }: CryptoTrans
 
   const handleValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const _value = Number(e.target.value.replaceAll(',', ''));
-    if (isNaN(_value)) return;
+    if (Number.isNaN(_value)) return;
 
     if (_value < 0) return;
 
@@ -89,7 +89,7 @@ export default function CryptoTransferModal({ defaultTransferType }: CryptoTrans
   };
 
   return (
-    <ModalLayout title={`환전`} layoutClassName="max-sm:w-[80vw] sm:w-96" contentClassName="max-h-[80vh]">
+    <ModalLayout title={'환전'} layoutClassName="max-sm:w-[80vw] sm:w-96" contentClassName="max-h-[80vh]">
       <S.TransferTypeBox>
         <button
           className={transferType === TransferTypes.TO_ACCOUNT ? 'active' : ''}
@@ -103,7 +103,7 @@ export default function CryptoTransferModal({ defaultTransferType }: CryptoTrans
             setBgActive(false);
           }}
         >
-          <span>{`거래 지갑 -> 통장`}</span>
+          <span>{'거래 지갑 -> 통장'}</span>
           <i className="fa-solid fa-building-columns"></i>
         </button>
         <button
@@ -118,7 +118,7 @@ export default function CryptoTransferModal({ defaultTransferType }: CryptoTrans
             setBgActive(false);
           }}
         >
-          <span>{`통장 -> 거래 지갑`}</span>
+          <span>{'통장 -> 거래 지갑'}</span>
           <i className="fa-brands fa-bitcoin"></i>
         </button>
         <div className={`thumb ${transferType === TransferTypes.TO_WALLET ? 'right' : ''}`} />
@@ -127,10 +127,10 @@ export default function CryptoTransferModal({ defaultTransferType }: CryptoTrans
 
       <div className="flex flex-col w-full mt-4 space-y-6">
         <I.Input
-          label={`이체 금액`}
+          label={'이체 금액'}
           value={CommonUtils.textFormat(value, TextFormats.NUMBER)}
           onChange={handleValue}
-          placeholder={`금액을 입력`}
+          placeholder={'금액을 입력'}
           className="h-10 px-4"
           suffix={TransferSuffix[transferType]}
           errorMessage={errorMessage}

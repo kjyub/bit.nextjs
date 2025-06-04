@@ -3,7 +3,7 @@
 import { useCryptoUi } from '@/hooks/useCryptoUi';
 import { useIsScrollUp } from '@/hooks/useIsScrollUp';
 import * as NS from '@/styles/NavigationStyles';
-import { StyleProps } from '@/types/StyleTypes';
+import type { StyleProps } from '@/types/StyleTypes';
 import Link from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
 import tw from 'tailwind-styled-components';

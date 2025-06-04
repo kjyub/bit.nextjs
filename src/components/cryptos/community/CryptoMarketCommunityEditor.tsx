@@ -2,7 +2,7 @@ import CryptoApi from '@/apis/api/cryptos/CryptoApi';
 import ModalLayout from '@/components/atomics/ModalLayout';
 import { ContentInput, TitleInput } from '@/components/inputs/CommunityInputs';
 import * as CS from '@/styles/CryptoMarketCommunityStyles';
-import MarketCommunity from '@/types/cryptos/MarketCommunity';
+import type MarketCommunity from '@/types/cryptos/MarketCommunity';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -27,7 +27,7 @@ export default function CryptoMarketCommunityEditor({ marketCode, community, onC
 
     if (isCreate) {
       // create
-      data['market_code'] = marketCode;
+      data.market_code = marketCode;
       create(data);
     } else {
       // update

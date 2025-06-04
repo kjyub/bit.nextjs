@@ -4,9 +4,9 @@ import CryptoApi from '@/apis/api/cryptos/CryptoApi';
 import TradeGoApi from '@/apis/api/cryptos/TradeGoApi';
 import useUserInfoStore from '@/store/useUserInfo';
 import * as S from '@/styles/CryptoMyTradeStyles';
-import { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
+import type { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
 import { PositionType, TradeOrderTypeNames } from '@/types/cryptos/CryptoTypes';
-import TradeOrder from '@/types/cryptos/TradeOrder';
+import type TradeOrder from '@/types/cryptos/TradeOrder';
 import CryptoUtils from '@/utils/CryptoUtils';
 import dayjs from 'dayjs';
 
@@ -130,13 +130,13 @@ const Order = ({ order, updateInfo }: IOrder) => {
       </S.OrderHeader>
 
       <S.OrderBody>
-        <S.OrderItem className={``}>
+        <S.OrderItem className={''}>
           <dt>
             가격 <span>Price</span>
           </dt>
           <dd>{CryptoUtils.getPriceText(order.entryPrice)}</dd>
         </S.OrderItem>
-        <S.OrderItem className={``}>
+        <S.OrderItem className={''}>
           <dt>
             수량 <span>Amount</span>
           </dt>

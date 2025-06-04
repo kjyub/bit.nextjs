@@ -22,13 +22,13 @@ export default class extends AbsApiObject {
   parseResponse(json) {
     if (!super.isValidParseResponse(json)) return;
 
-    this._id = json['id'];
-    this._nanoId = json['nano_id'];
+    this._id = json.id;
+    this._nanoId = json.nano_id;
     this._user = new User();
-    this._user.parseResponse(json['user']);
-    this._name = json['name'];
-    this._size = json['size'];
-    this._fileUrl = json['file'];
+    this._user.parseResponse(json.user);
+    this._name = json.name;
+    this._size = json.size;
+    this._fileUrl = json.file;
   }
 
   public get id(): number {

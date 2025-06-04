@@ -1,17 +1,17 @@
 'use client';
 import { useUser } from '@/hooks/useUser';
+import { CryptoMarketTradeProvider } from '@/store/providers/CryptoMarketTradeProvider';
 import useUserInfoStore from '@/store/useUserInfo';
 import * as S from '@/styles/CryptoMarketStyles';
-import { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
+import type { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
 import { SizeUnitTypes } from '@/types/cryptos/CryptoTypes';
 import { useEffect, useState } from 'react';
-import CryptoMarketInfo from './CryptoMarketInfo';
-import CryptoMarketTrade from './CryptoMarketTrade';
-import CryptoMarketChart from './CryptoMarketChart';
 import CryptoMyTrade from '../mytrade/CryptoMyTradeMain';
-import CryptoMarketOrderBook from './CryptoMarketOrderBook';
-import { CryptoMarketTradeProvider } from '@/store/providers/CryptoMarketTradeProvider';
+import CryptoMarketChart from './CryptoMarketChart';
+import CryptoMarketInfo from './CryptoMarketInfo';
 import CryptoMarketMobileChart from './CryptoMarketMobileChart';
+import CryptoMarketOrderBook from './CryptoMarketOrderBook';
+import CryptoMarketTrade from './CryptoMarketTrade';
 
 interface ICryptoMarket {
   marketCode: string;
@@ -59,7 +59,7 @@ export default function CryptoMarketMain({ marketCode, marketData, marketCurrent
                 unit={imageCode}
                 sizeUnitType={sizeUnitType}
                 setSizeUnitType={setSizeUnitType}
-                />
+              />
             </S.TradeLayout>
           </CryptoMarketTradeProvider>
         </S.ChartAndTradeLayout>

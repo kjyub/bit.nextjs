@@ -1,5 +1,5 @@
 import { TOAST_MESSAGE_ANIMATION_DURATION, TOAST_MESSAGE_DURATION } from '@/constants/ToastConsts';
-import React from 'react';
+import type React from 'react';
 import { create } from 'zustand';
 
 export interface ToastMessage {

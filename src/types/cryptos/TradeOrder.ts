@@ -2,12 +2,12 @@ import { AbsApiObject } from '../ApiTypes';
 import CryptoMarket from './CryptoMarket';
 import {
   MarginModeType,
-  MarginModeTypeValues,
+  type MarginModeTypeValues,
   PositionType,
   TradeOrderType,
-  TradeOrderTypeValues,
+  type TradeOrderTypeValues,
   TradeType,
-  TradeTypeValues,
+  type TradeTypeValues,
 } from './CryptoTypes';
 
 export default class TradeOrder extends AbsApiObject {
@@ -63,27 +63,27 @@ export default class TradeOrder extends AbsApiObject {
     if (!super.isValidParseResponse(json)) return;
     // ApiUtils.parseData(this, json)
 
-    this._id = json['id'];
-    this._marketCode = json['market_code'];
-    this._market.parseResponse(json['market'] as object);
-    this._isOpen = json['is_open'];
-    this._marginMode = json['margin_mode'];
-    this._orderType = json['order_type'];
-    this._positionType = json['position_type'];
-    this._tradeType = json['trade_type'];
-    this._tradeTime = json['trade_time'];
-    this._entryPrice = json['entry_price'];
-    this._quantity = json['quantity'];
-    this._leverage = json['leverage'];
-    this._fee = json['fee'];
-    this._size = json['size'];
-    this._cost = json['cost'];
-    this._totalCost = json['total_cost'];
-    this._closeTime = json['close_time'];
-    this._isOpen = json['is_open'];
-    this._isCancel = json['is_cancel'];
+    this._id = json.id;
+    this._marketCode = json.market_code;
+    this._market.parseResponse(json.market as object);
+    this._isOpen = json.is_open;
+    this._marginMode = json.margin_mode;
+    this._orderType = json.order_type;
+    this._positionType = json.position_type;
+    this._tradeType = json.trade_type;
+    this._tradeTime = json.trade_time;
+    this._entryPrice = json.entry_price;
+    this._quantity = json.quantity;
+    this._leverage = json.leverage;
+    this._fee = json.fee;
+    this._size = json.size;
+    this._cost = json.cost;
+    this._totalCost = json.total_cost;
+    this._closeTime = json.close_time;
+    this._isOpen = json.is_open;
+    this._isCancel = json.is_cancel;
 
-    this._createdDate = json['created_date'];
+    this._createdDate = json.created_date;
   }
 
   public get id(): number {

@@ -111,7 +111,7 @@ export default function SignupInfo() {
           />
         </SS.SignupSection>
 
-        <SS.SignupSection className={`mt-10`} $is_active={isActiveGameInfo}>
+        <SS.SignupSection className={'mt-10'} $is_active={isActiveGameInfo}>
           <span className="title">게임 정보</span>
 
           <div className="flex flex-col w-full space-y-2">
@@ -138,7 +138,7 @@ export default function SignupInfo() {
           </div>
         </SS.SignupSection>
 
-        <SS.SignupSection className={`mt-8`} $is_active={isActiveSave}>
+        <SS.SignupSection className={'mt-8'} $is_active={isActiveSave}>
           <SS.SignupButton
             $is_active={isActiveSave}
             onClick={() => {

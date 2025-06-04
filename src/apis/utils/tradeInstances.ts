@@ -1,4 +1,4 @@
-import ky, { Options } from 'ky';
+import ky, { type Options } from 'ky';
 
 const URL = process.env.NEXT_PUBLIC_TRADE_SERVER;
 

@@ -133,7 +133,7 @@ const Date = ({ date, setDate }: IDate) => {
   }, [date]);
 
   const handleYear = (year: number) => {
-    if (!year || isNaN(Number(year)) || Number(year) < 0 || Number(year) > 2100) return;
+    if (!year || Number.isNaN(Number(year)) || Number(year) < 0 || Number(year) > 2100) return;
 
     const _date = `${year}-${month}-${day}`;
     if (dayjs(_date).isValid()) {
@@ -141,7 +141,7 @@ const Date = ({ date, setDate }: IDate) => {
     }
   };
   const handleMonth = (month: number) => {
-    if (!month || isNaN(Number(month)) || Number(month) < 0 || Number(month) > 12) return;
+    if (!month || Number.isNaN(Number(month)) || Number(month) < 0 || Number(month) > 12) return;
 
     const _date = `${year}-${month}-${day}`;
     if (dayjs(_date).isValid()) {
@@ -149,7 +149,7 @@ const Date = ({ date, setDate }: IDate) => {
     }
   };
   const handleDay = (day: number) => {
-    if (!day || isNaN(Number(day)) || Number(day) < 0 || Number(day) > 31) return;
+    if (!day || Number.isNaN(Number(day)) || Number(day) < 0 || Number(day) > 31) return;
 
     const _date = `${year}-${month}-${day}`;
     if (dayjs(_date).isValid()) {

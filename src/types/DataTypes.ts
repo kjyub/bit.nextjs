@@ -1,7 +1,7 @@
 export enum EditTypes {
-  ADD,
-  MODIFY,
-  REMOVE,
+  ADD = 0,
+  MODIFY = 1,
+  REMOVE = 2,
 }
 
 export enum EditStateTypes {
@@ -25,6 +25,6 @@ export const PagingBlank = {
 };
 
 export enum DataTypes {
-  TEXT,
-  IMAGE,
+  TEXT = 0,
+  IMAGE = 1,
 }

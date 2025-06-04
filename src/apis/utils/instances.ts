@@ -1,6 +1,6 @@
+import type { Token } from '@/types/users/UserTypes';
 import ky, { type KyInstance, type Options } from 'ky';
 import { setAuthorization, validateAuthToken } from './kyHooks';
-import { Token } from '@/types/users/UserTypes';
 
 const URL = process.env.NEXT_PUBLIC_DJANGO_SERVER;
 

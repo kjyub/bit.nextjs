@@ -1,5 +1,5 @@
-import { OrderTypeValues, OrderTypes } from '@/types/common/CommonTypes';
-import { MarketSortTypeNames, MarketSortTypeValues } from '@/types/cryptos/CryptoTypes';
+import { type OrderTypeValues, OrderTypes } from '@/types/common/CommonTypes';
+import { MarketSortTypeNames, type MarketSortTypeValues } from '@/types/cryptos/CryptoTypes';
 import { memo } from 'react';
 
 interface Props {

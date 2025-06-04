@@ -13,9 +13,9 @@ import { isEqual } from 'lodash';
 export default class FileUtils {
   static getMediaURL() {
     if (!process.env.NEXT_PUBLIC_STORAGE_SERVER) {
-      return process.env.NEXT_PUBLIC_DJANGO_SERVER + '/media/';
+      return `${process.env.NEXT_PUBLIC_DJANGO_SERVER}/media/`;
     } else {
-      return process.env.NEXT_PUBLIC_STORAGE_SERVER + '/'; // 릴리즈서버에선 스토리지 서버로 사용한다.
+      return `${process.env.NEXT_PUBLIC_STORAGE_SERVER}/`; // 릴리즈서버에선 스토리지 서버로 사용한다.
     }
   }
 
@@ -25,11 +25,11 @@ export default class FileUtils {
       return '';
     }
 
-    return this.getMediaURL() + fileURL;
+    return FileUtils.getMediaURL() + fileURL;
   }
   // 해당 주소가 MediaFileURL인지 확인한다.
   static isMediaFileURL(fileURL) {
-    return decodeURIComponent(fileURL).includes(this.getMediaURL());
+    return decodeURIComponent(fileURL).includes(FileUtils.getMediaURL());
   }
   // 텍스트 에디터 내용에 있는 파일 소스 URL은 서버주소를 포함하지 않기 때문에 붙여준다.
   static replaceMedieFileURL(content: string) {
@@ -41,7 +41,7 @@ export default class FileUtils {
 
     bs('img').each((_i, el) => {
       const oldSrc = bs(el).attr('src');
-      const newSrc = this.getMediaURL() + oldSrc;
+      const newSrc = FileUtils.getMediaURL() + oldSrc;
       bs(el).attr('src', newSrc);
     });
 
@@ -60,13 +60,13 @@ export default class FileUtils {
       return content;
     }
 
-    return content.replace(this.getMediaURL(), '');
+    return content.replace(FileUtils.getMediaURL(), '');
   }
   // 텍스트 에디터 내용을 다시 업로드할 때 서버에 저장용으로 처리한다.
   static getRequestContent(content) {
     let converted = content;
-    converted = this.removeMediaFileURL(converted);
-    converted = this.getSantinizedContent(converted);
+    converted = FileUtils.removeMediaFileURL(converted);
+    converted = FileUtils.getSantinizedContent(converted);
 
     return converted;
   }
@@ -80,14 +80,14 @@ export default class FileUtils {
 
     // 1. cheerio 모듈을 사용하여 비교할 두 HTML 문자열을 각각 파싱합니다.
     try {
-      let sanitized1 = this.getSantinizedContent(html1);
-      let sanitized2 = this.getSantinizedContent(html2);
+      let sanitized1 = FileUtils.getSantinizedContent(html1);
+      let sanitized2 = FileUtils.getSantinizedContent(html2);
 
       // 내용을 다시 모두 지운 경우 "<p><br></p>"가 되기 때문에 이런 경우 빈 텍스트로 바꾼다.
-      if (sanitized1 === this.BLANK_CONTENT) {
+      if (sanitized1 === FileUtils.BLANK_CONTENT) {
         sanitized1 = '';
       }
-      if (sanitized2 === this.BLANK_CONTENT) {
+      if (sanitized2 === FileUtils.BLANK_CONTENT) {
         sanitized2 = '';
       }
 
@@ -112,7 +112,7 @@ export default class FileUtils {
     }
   }
   static isBlankContent(content) {
-    return !content || content === this.BLANK_CONTENT;
+    return !content || content === FileUtils.BLANK_CONTENT;
   }
   static isFileOverVolume(fileSize, fileSizeMB = 10) {
     // 파일 사이즈가 더 크면 true
@@ -127,9 +127,9 @@ export default class FileUtils {
   static getFileSize(file) {
     const sizeInBytes = file.size;
     const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-    if (sizeInBytes == 0) return '0 Byte';
-    const i = parseInt(Math.floor(Math.log(sizeInBytes) / Math.log(1024)));
-    return Math.round(sizeInBytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+    if (sizeInBytes === 0) return '0 Byte';
+    const i = Number.parseInt(Math.floor(Math.log(sizeInBytes) / Math.log(1024)));
+    return `${Math.round(sizeInBytes / 1024 ** i, 2)} ${sizes[i]}`;
   }
   // html 태그들을 제거하고 텍스트만 가져온다.
   static getTextContent(content: string) {

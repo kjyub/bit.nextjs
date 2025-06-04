@@ -1,11 +1,11 @@
 'use client';
 
 import UserApi from '@/apis/api/users/UserApi';
-import User from '@/types/users/User';
-import { AccountStatusTypes, LoginResponse } from '@/types/users/UserTypes';
-import { Dispatch, SetStateAction, createContext, useCallback, useEffect, useMemo, useState } from 'react';
-import useUserInfoStore from '../useUserInfo';
 import { removeAuthToken, setAuthToken } from '@/apis/utils/instances';
+import User from '@/types/users/User';
+import { AccountStatusTypes, type LoginResponse } from '@/types/users/UserTypes';
+import { type Dispatch, type SetStateAction, createContext, useCallback, useEffect, useMemo, useState } from 'react';
+import useUserInfoStore from '../useUserInfo';
 
 interface AuthState {
   user: User;
@@ -72,7 +72,7 @@ export const AuthProvider = ({
   }, [isAuth]);
 
   const getUser = useCallback(
-    async (isLoadingDisable: boolean = false) => {
+    async (isLoadingDisable = false) => {
       if (!isLoadingDisable) {
         setIsLoading(true);
       }
@@ -87,7 +87,7 @@ export const AuthProvider = ({
 
   const kakaoAuth = useCallback(
     async (code: string) => {
-      const response = await fetch('/api/auth/kakao?code=' + code);
+      const response = await fetch(`/api/auth/kakao?code=${code}`);
       const result = (await response.json()) as LoginResponse;
 
       if (!result.token.access) {

@@ -4,7 +4,7 @@ import CryptoApi from '@/apis/api/cryptos/CryptoApi';
 import usePageScroll from '@/hooks/usePageScroll';
 import * as S from '@/styles/CryptoMyTradeStyles';
 import { PositionType, TradeOrderTypeNames } from '@/types/cryptos/CryptoTypes';
-import TradeHistory from '@/types/cryptos/TradeHistory';
+import type TradeHistory from '@/types/cryptos/TradeHistory';
 import CryptoUtils from '@/utils/CryptoUtils';
 import dayjs from 'dayjs';
 import { useState } from 'react';
@@ -22,7 +22,7 @@ export default function CryptoMyTradeHistory() {
   const [dateStart, setDateStart] = useState<string>('');
   const [dateEnd, setDateEnd] = useState<string>('');
 
-  const getHistories = async (_pageIndex: number, dateStart: string = '', dateEnd: string = '') => {
+  const getHistories = async (_pageIndex: number, dateStart = '', dateEnd = '') => {
     if (isLoading) {
       return;
     }
@@ -108,25 +108,25 @@ const History = ({ history }: IHistory) => {
       </S.OrderHeader>
 
       <S.OrderBody>
-        <S.OrderItem className={``}>
+        <S.OrderItem className={''}>
           <dt>
             가격 <span>Price</span>
           </dt>
           <dd>{CryptoUtils.getPriceText(history.price)}</dd>
         </S.OrderItem>
-        <S.OrderItem className={``}>
+        <S.OrderItem className={''}>
           <dt>
             수량 <span>Quantity</span>
           </dt>
           <dd>{CryptoUtils.getPriceText(history.price * history.quantity)}TW</dd>
         </S.OrderItem>
-        <S.OrderItem className={``}>
+        <S.OrderItem className={''}>
           <dt>
             수수료 <span>Fee</span>
           </dt>
           <dd>{CryptoUtils.getPriceText(history.fee)}TW</dd>
         </S.OrderItem>
-        <S.OrderItem className={``}>
+        <S.OrderItem className={''}>
           <dt>
             실현손익 <span>Realized Profit</span>
           </dt>

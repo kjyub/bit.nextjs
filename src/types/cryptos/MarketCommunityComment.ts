@@ -30,16 +30,16 @@ export default class MarketCommunityComment extends AbsApiObject {
     if (!super.isValidParseResponse(json)) return;
     // ApiUtils.parseData(this, json)
 
-    this._id = json['id'];
-    this._communityNanoId = json['community_nano_id'];
-    this._parentId = json['parentId'];
+    this._id = json.id;
+    this._communityNanoId = json.community_nano_id;
+    this._parentId = json.parentId;
     this._user = new User();
-    this._user.parseResponse(json['user']);
-    this._content = json['content'];
-    this._likes = json['likes'];
-    this._dislikes = json['dislikes'];
-    this._createdDate = json['created_date'];
-    this._updatedDate = json['updated_date'];
+    this._user.parseResponse(json.user);
+    this._content = json.content;
+    this._likes = json.likes;
+    this._dislikes = json.dislikes;
+    this._createdDate = json.created_date;
+    this._updatedDate = json.updated_date;
   }
 
   public get id(): number {

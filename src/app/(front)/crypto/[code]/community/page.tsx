@@ -1,10 +1,10 @@
-import CryptoMarketCommunity from '@/components/cryptos/community/CryptoMarketCommunity';
-import { Suspense } from 'react';
-import CryptoMarketCommunityPage from '../community';
-import { IMarketPageSearchParams } from '../page';
-import CryptoMarketInfo from '@/components/cryptos/market/CryptoMarketInfo';
 import CryptoServerApi from '@/apis/api/cryptos/CryptoServerApi';
 import TradeGoServerApi from '@/apis/api/cryptos/TradeGoServerApi';
+import CryptoMarketCommunity from '@/components/cryptos/community/CryptoMarketCommunity';
+import CryptoMarketInfo from '@/components/cryptos/market/CryptoMarketInfo';
+import { Suspense } from 'react';
+import CryptoMarketCommunityPage from '../community';
+import type { IMarketPageSearchParams } from '../page';
 
 interface Props {
   params: Promise<{ code: string }>;

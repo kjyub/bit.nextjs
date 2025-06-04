@@ -1,6 +1,6 @@
 // store.js
 import TradeGoApi from '@/apis/api/cryptos/TradeGoApi';
-import { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
+import type { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
 import { create } from 'zustand';
 
 const getInitData = async () => {

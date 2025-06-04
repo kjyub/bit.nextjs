@@ -1,4 +1,4 @@
-import { AccountStatusTypes, UserTypeValues, UserTypes } from '@/types/users/UserTypes';
+import { AccountStatusTypes, type UserTypeValues, UserTypes } from '@/types/users/UserTypes';
 import { AbsApiObject } from '../ApiTypes';
 
 export default class User extends AbsApiObject {
@@ -30,20 +30,20 @@ export default class User extends AbsApiObject {
     if (!super.isValidParseResponse(json)) return;
     // ApiUtils.parseData(this, json)
 
-    this._id = json['id'];
-    this._uuid = json['uuid'];
-    this._userType = json['user_type'];
-    this._accountStatus = json['account_status'];
-    this._email = json['email'];
-    this._nickname = json['nickname'];
-    this._profileImageUrl = json['profile_image_url'];
-    this._cash = json['cash'];
-    this._rep = json['rep'];
+    this._id = json.id;
+    this._uuid = json.uuid;
+    this._userType = json.user_type;
+    this._accountStatus = json.account_status;
+    this._email = json.email;
+    this._nickname = json.nickname;
+    this._profileImageUrl = json.profile_image_url;
+    this._cash = json.cash;
+    this._rep = json.rep;
   }
 
   public get id(): number {
     if (typeof this._id === 'string') {
-      return parseInt(this._id);
+      return Number.parseInt(this._id);
     }
 
     return this._id;

@@ -1,4 +1,4 @@
-import { StyleProps } from '@/types/StyleTypes';
+import type { StyleProps } from '@/types/StyleTypes';
 import styled from 'styled-components';
 import tw from 'tailwind-styled-components';
 

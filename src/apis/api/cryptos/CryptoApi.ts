@@ -1,5 +1,6 @@
+import { authInstance, defaultInstance } from '@/apis/utils/instances';
 import Pagination from '@/types/api/pagination';
-import { IMyTradeData } from '@/types/cryptos/CryptoInterfaces';
+import type { IMyTradeData } from '@/types/cryptos/CryptoInterfaces';
 import CryptoMarket from '@/types/cryptos/CryptoMarket';
 import CryptoWallet from '@/types/cryptos/CryptoWallet';
 import MarketCommunity from '@/types/cryptos/MarketCommunity';
@@ -7,7 +8,6 @@ import MarketCommunityComment from '@/types/cryptos/MarketCommunityComment';
 import TradeHistory from '@/types/cryptos/TradeHistory';
 import TradeOrder from '@/types/cryptos/TradeOrder';
 import TradePosition from '@/types/cryptos/TradePosition';
-import { authInstance, defaultInstance } from '@/apis/utils/instances';
 
 class CryptoApi {
   // region MyTrades
@@ -217,10 +217,10 @@ class CryptoApi {
 
   // region History
   static async getTradeOrderHistories(
-    pageIndex: number = 1,
-    pageSize: number = 50,
-    dateStart: string = '',
-    dateEnd: string = '',
+    pageIndex = 1,
+    pageSize = 50,
+    dateStart = '',
+    dateEnd = '',
   ): Promise<Pagination<TradeOrder>> {
     const result = new Pagination<TradeOrder>();
 
@@ -230,10 +230,10 @@ class CryptoApi {
     };
 
     if (dateStart) {
-      searchParams['date_start'] = dateStart;
+      searchParams.date_start = dateStart;
     }
     if (dateEnd) {
-      searchParams['date_end'] = dateEnd;
+      searchParams.date_end = dateEnd;
     }
 
     try {
@@ -247,10 +247,10 @@ class CryptoApi {
     return result;
   }
   static async getTradeHistories(
-    pageIndex: number = 1,
-    pageSize: number = 50,
-    dateStart: string = '',
-    dateEnd: string = '',
+    pageIndex = 1,
+    pageSize = 50,
+    dateStart = '',
+    dateEnd = '',
   ): Promise<Pagination<TradeHistory>> {
     const result = new Pagination<TradeHistory>();
 
@@ -260,10 +260,10 @@ class CryptoApi {
     };
 
     if (dateStart) {
-      searchParams['date_start'] = dateStart;
+      searchParams.date_start = dateStart;
     }
     if (dateEnd) {
-      searchParams['date_end'] = dateEnd;
+      searchParams.date_end = dateEnd;
     }
 
     try {
@@ -277,10 +277,10 @@ class CryptoApi {
     return result;
   }
   static async getTradePositionHistories(
-    pageIndex: number = 1,
-    pageSize: number = 50,
-    dateStart: string = '',
-    dateEnd: string = '',
+    pageIndex = 1,
+    pageSize = 50,
+    dateStart = '',
+    dateEnd = '',
   ): Promise<Pagination<TradePosition>> {
     const result = new Pagination<TradePosition>();
 
@@ -290,10 +290,10 @@ class CryptoApi {
     };
 
     if (dateStart) {
-      searchParams['date_start'] = dateStart;
+      searchParams.date_start = dateStart;
     }
     if (dateEnd) {
-      searchParams['date_end'] = dateEnd;
+      searchParams.date_end = dateEnd;
     }
 
     try {
@@ -407,7 +407,7 @@ class CryptoApi {
     const result: Pagination<MarketCommunityComment> = new Pagination<MarketCommunityComment>();
 
     try {
-      const response = await defaultInstance.get(`api/cryptos/community_comment/`, {
+      const response = await defaultInstance.get('api/cryptos/community_comment/', {
         searchParams: {
           community_id: communityNanoId,
           page: pageIndex.toString(),

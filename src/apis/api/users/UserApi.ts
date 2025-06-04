@@ -1,7 +1,7 @@
-import User from '@/types/users/User';
-import { UserTypeValues } from '@/types/users/UserTypeValues';
-import { LoginResponse } from '@/types/users/UserTypes';
 import { authInstance, credentialInstance, defaultInstance } from '@/apis/utils/instances';
+import User from '@/types/users/User';
+import type { UserTypeValues } from '@/types/users/UserTypeValues';
+import type { LoginResponse } from '@/types/users/UserTypes';
 
 class UserApi {
   // static async getAccessToken() {
@@ -25,7 +25,7 @@ class UserApi {
     };
 
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_DJANGO_SERVER + '/api/users/jwt_auth/refresh/', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_DJANGO_SERVER}/api/users/jwt_auth/refresh/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ class UserApi {
     };
 
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_DJANGO_SERVER + '/api/users/kakao_auth/', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_DJANGO_SERVER}/api/users/kakao_auth/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -107,7 +107,7 @@ class UserApi {
     };
 
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_DJANGO_SERVER + '/api/users/backdoor_login/', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_DJANGO_SERVER}/api/users/backdoor_login/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

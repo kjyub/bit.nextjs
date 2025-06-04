@@ -1,4 +1,4 @@
-import { StyleProps } from '@/types/StyleTypes';
+import type { StyleProps } from '@/types/StyleTypes';
 import { useEffect, useState } from 'react';
 import tw from 'tailwind-styled-components';
 
@@ -30,7 +30,7 @@ export default function CommunityPagination({ page, setPage, itemCount, pageSize
 
   useEffect(() => {
     // eslint-disable-next-line prefer-const
-    let indexes = [];
+    const indexes = [];
 
     const _pageCount = Math.ceil(itemCount / pageSize);
     setPageCount(_pageCount);

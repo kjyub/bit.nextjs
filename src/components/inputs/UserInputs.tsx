@@ -1,6 +1,7 @@
 import { useDetectClose } from '@/hooks/useDetectClose';
 import * as S from '@/styles/UserInputStyles';
-import React, { useState } from 'react';
+import type React from 'react';
+import { useState } from 'react';
 
 interface InputProps {
   type: string;
@@ -55,7 +56,7 @@ export const Input: React.FC<InputProps> = ({
   const isError = value && errorMessage;
 
   const handleEnter = (e) => {
-    if (e.key == 'Enter' && onEnter) {
+    if (e.key === 'Enter' && onEnter) {
       onEnter();
     }
   };

@@ -1,5 +1,5 @@
 import CryptoApi from '@/apis/api/cryptos/CryptoApi';
-import { IMyTradeData } from '@/types/cryptos/CryptoInterfaces';
+import type { IMyTradeData } from '@/types/cryptos/CryptoInterfaces';
 import { create } from 'zustand';
 
 const getInitData = async () => {

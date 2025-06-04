@@ -1,6 +1,6 @@
 import UserApi from '@/apis/api/users/UserApi';
 import { CookieConsts } from '@/types/ApiTypes';
-import { LoginResponse } from '@/types/users/UserTypes';
+import type { LoginResponse } from '@/types/users/UserTypes';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 

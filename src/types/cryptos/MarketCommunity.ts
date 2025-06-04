@@ -1,6 +1,6 @@
 import User from '@/types/users/User';
 import { AbsApiObject } from '../ApiTypes';
-import { LikeTypeValues, LikeTypes } from '../common/CommonTypes';
+import { type LikeTypeValues, LikeTypes } from '../common/CommonTypes';
 
 export default class MarketCommunity extends AbsApiObject {
   private _id: number;
@@ -39,20 +39,20 @@ export default class MarketCommunity extends AbsApiObject {
     if (!super.isValidParseResponse(json)) return;
     // ApiUtils.parseData(this, json)
 
-    this._id = json['id'];
-    this._nanoId = json['nano_id'];
-    this._marketCode = json['market_code'];
+    this._id = json.id;
+    this._nanoId = json.nano_id;
+    this._marketCode = json.market_code;
     this._user = new User();
-    this._user.parseResponse(json['user']);
-    this._title = json['title'];
-    this._content = json['content'];
-    this._views = json['views'];
-    this._likes = json['likes'];
-    this._dislikes = json['dislikes'];
-    this._likeType = json['like_type'] ?? LikeTypes.NONE;
-    this._comments = json['comment_count'] ?? 0;
-    this._createdDate = json['created_date'];
-    this._updatedDate = json['updated_date'];
+    this._user.parseResponse(json.user);
+    this._title = json.title;
+    this._content = json.content;
+    this._views = json.views;
+    this._likes = json.likes;
+    this._dislikes = json.dislikes;
+    this._likeType = json.like_type ?? LikeTypes.NONE;
+    this._comments = json.comment_count ?? 0;
+    this._createdDate = json.created_date;
+    this._updatedDate = json.updated_date;
   }
 
   public get id(): number {

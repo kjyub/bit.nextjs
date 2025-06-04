@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { ISetDivIntersected } from '../features/qfd/QFDMain';
+import type { ISetDivIntersected } from '../features/qfd/QFDMain';
 
 export const useScrollObserver = (
   setDivIntersected: ISetDivIntersected,
@@ -7,7 +7,7 @@ export const useScrollObserver = (
 ): React.MutableRefObject<HTMLElement | null>[] => {
   const isRef = useRef<HTMLElement | null>(null);
   // threshold : 영역 비율, rootMargin : 영역 마진
-  const option = { threshold: 0.5, rootMargin: `-40px 0px -40px` };
+  const option = { threshold: 0.5, rootMargin: '-40px 0px -40px' };
   useEffect(() => {
     const observer = new IntersectionObserver((entry) => {
       if (entry[0].isIntersecting) {

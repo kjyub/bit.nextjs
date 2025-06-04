@@ -13,7 +13,7 @@ export default class BrowserUtils {
     }
   }
   static goExternalBrowser(): boolean {
-    let isRedirect = false;
+    const isRedirect = false;
 
     // const copyToClipboard = async (val: string) => {
     //   await navigator.clipboard.writeText(val)

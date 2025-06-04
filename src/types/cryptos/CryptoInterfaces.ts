@@ -1,6 +1,6 @@
-import CryptoWallet from './CryptoWallet';
-import TradeOrder from './TradeOrder';
-import TradePosition from './TradePosition';
+import type CryptoWallet from './CryptoWallet';
+import type TradeOrder from './TradeOrder';
+import type TradePosition from './TradePosition';
 
 export interface IMarketPrice {
   marketCode: string;

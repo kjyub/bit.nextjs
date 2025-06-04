@@ -22,12 +22,12 @@ export default function CryptoMarketListWrapper({ children }: { children: React.
   const { isShowMarketList, setIsShowMarketList } = useCryptoUi();
 
   useEffect(() => {
-    if (breakpointState['full']) {
+    if (breakpointState.full) {
       setIsShowMarketList(false);
     }
   }, [breakpointState]);
 
-  if (breakpointState['full']) {
+  if (breakpointState.full) {
     return children;
   }
 

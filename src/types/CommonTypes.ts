@@ -1,11 +1,11 @@
 export enum TextFormats {
-  TEXT,
-  NUMBER,
-  NUMBER_ONLY,
-  PRICE,
-  TEL,
-  KOREAN_PRICE,
-  KOREAN_PRICE_SIMPLE,
+  TEXT = 0,
+  NUMBER = 1,
+  NUMBER_ONLY = 2,
+  PRICE = 3,
+  TEL = 4,
+  KOREAN_PRICE = 5,
+  KOREAN_PRICE_SIMPLE = 6,
 }
 
 export type objectType = {

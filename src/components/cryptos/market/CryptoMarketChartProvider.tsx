@@ -2,10 +2,10 @@
 
 import UpbitApi from '@/apis/api/cryptos/UpbitApi';
 import useTradeMarketChartSocket from '@/hooks/sockets/useTradeMarketChartSocket';
-import { IUpbitCandle } from '@/types/cryptos/CryptoInterfaces';
-import { Dispatch, SetStateAction, createContext, useCallback, useContext, useEffect, useState } from 'react';
+import type { IUpbitCandle } from '@/types/cryptos/CryptoInterfaces';
+import { type Dispatch, type SetStateAction, createContext, useCallback, useContext, useEffect, useState } from 'react';
 import CryptoMarketChartControlBar from '../chart/ControlBar';
-import { CANDLE_SIZE, CandleTimeType, CandleTimes, ChartType, ChartTypes } from '../chart/Types';
+import { CANDLE_SIZE, type CandleTimeType, CandleTimes, type ChartType, ChartTypes } from '../chart/Types';
 
 interface CryptoMarketChartState {
   initChart: (timeType: CandleTimeType) => void;
@@ -29,7 +29,7 @@ const initCryptoMarketChartState: CryptoMarketChartState = {
 
 const CryptoMarketChartContext = createContext<CryptoMarketChartState>(initCryptoMarketChartState);
 
-const isSameTimeCandle = (lastCandle?: IUpbitCandle, candle: IUpbitCandle, timeType: CandleTimeType) => {
+const isSameTimeCandle = (lastCandle: IUpbitCandle, candle: IUpbitCandle, timeType: CandleTimeType) => {
   if (!lastCandle) {
     return true;
   }
@@ -41,25 +41,25 @@ const isSameTimeCandle = (lastCandle?: IUpbitCandle, candle: IUpbitCandle, timeT
     case CandleTimes.SECOND:
       return lastCandleTime.getTime() + 1000 < candleTime.getTime();
     case CandleTimes.MINUTE1:
-      return lastCandleTime.getMinutes() != candleTime.getMinutes();
+      return lastCandleTime.getMinutes() !== candleTime.getMinutes();
     case CandleTimes.MINUTE3:
-      return Math.floor(lastCandleTime.getMinutes() / 3) != Math.floor(candleTime.getMinutes() / 3);
+      return Math.floor(lastCandleTime.getMinutes() / 3) !== Math.floor(candleTime.getMinutes() / 3);
     case CandleTimes.MINUTE5:
-      return Math.floor(lastCandleTime.getMinutes() / 5) != Math.floor(candleTime.getMinutes() / 5);
+      return Math.floor(lastCandleTime.getMinutes() / 5) !== Math.floor(candleTime.getMinutes() / 5);
     case CandleTimes.MINUTE10:
-      return Math.floor(lastCandleTime.getMinutes() / 10) != Math.floor(candleTime.getMinutes() / 10);
+      return Math.floor(lastCandleTime.getMinutes() / 10) !== Math.floor(candleTime.getMinutes() / 10);
     case CandleTimes.MINUTE15:
-      return Math.floor(lastCandleTime.getMinutes() / 15) != Math.floor(candleTime.getMinutes() / 15);
+      return Math.floor(lastCandleTime.getMinutes() / 15) !== Math.floor(candleTime.getMinutes() / 15);
     case CandleTimes.DAY:
-      return lastCandleTime.getDate() != candleTime.getDate();
+      return lastCandleTime.getDate() !== candleTime.getDate();
     case CandleTimes.WEEK:
       return (
         lastCandleTime.getDate() - candleTime.getDate() > 7 ||
-        (lastCandleTime.getDay() == 0 && candleTime.getDay() == 6) ||
-        (lastCandleTime.getDay() == 6 && candleTime.getDay() == 0)
+        (lastCandleTime.getDay() === 0 && candleTime.getDay() === 6) ||
+        (lastCandleTime.getDay() === 6 && candleTime.getDay() === 0)
       );
     case CandleTimes.MONTH:
-      return lastCandleTime.getMonth() != candleTime.getMonth();
+      return lastCandleTime.getMonth() !== candleTime.getMonth();
     default:
       return false;
   }
@@ -122,7 +122,7 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
     setCandleLoading(true);
 
     const last = candles[candles.length - 1];
-    const to = last.candle_date_time_kst + '+09:00';
+    const to = `${last.candle_date_time_kst}+09:00`;
 
     let newData = [];
 
@@ -227,7 +227,9 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
   const connectChart = useTradeMarketChartSocket(marketCode, addCandle);
 
   return (
-    <CryptoMarketChartContext.Provider value={{ initChart, timeType, chartType, setChartType, getBeforeCandleData, candles, isLoading }}>
+    <CryptoMarketChartContext.Provider
+      value={{ initChart, timeType, chartType, setChartType, getBeforeCandleData, candles, isLoading }}
+    >
       {children}
     </CryptoMarketChartContext.Provider>
   );
