@@ -34,7 +34,7 @@ export default function useTradeMarketChartSocket(
     newSocket.binaryType = 'arraybuffer';
     newSocket.onmessage = (event: MessageEvent) => {
       try {
-        const dataString = new TextDecoder('utf-8').decode(event.data as object);
+        const dataString = new TextDecoder('utf-8').decode(event.data as any);
         const data = JSON.parse(dataString as string);
         if (data.error) {
           console.error('WebSocket error:', data);

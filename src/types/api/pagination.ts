@@ -26,7 +26,7 @@ export default class Pagination<T extends AbsApiObject> {
 
     this._items = results.map((result) => {
       const instance: T = new cls();
-      instance.parseResponse(result as object);
+      instance.parseResponse(result as any);
       return instance;
     });
 

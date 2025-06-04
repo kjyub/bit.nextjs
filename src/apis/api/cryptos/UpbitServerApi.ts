@@ -13,7 +13,7 @@ class UpbitServerApi {
           markets: marketCode,
         },
       });
-      const data = await response.json();
+      const data = (await response.json()) as any;
       if (Array.isArray(data) && data.length > 0) {
         result = data[0];
       }

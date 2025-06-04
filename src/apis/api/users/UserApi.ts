@@ -35,7 +35,7 @@ class UserApi {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      const data = await response.json();
+      const data = (await response.json()) as any;
       result.token.access = data.access;
       result.token.refresh = data.refresh;
     } catch (error) {
@@ -57,7 +57,7 @@ class UserApi {
       const response = await defaultInstance.post('api/users/login/', {
         json: { email: email, password: password, user_type: userType },
       });
-      const data = await response.json();
+      const data = (await response.json()) as any;
       result.user = data.user;
       result.token.access = data.token.access;
       result.token.refresh = data.token.refresh;
@@ -87,7 +87,7 @@ class UserApi {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      const data = await response.json();
+      const data = (await response.json()) as any;
       result.user = data.user;
       result.token.access = data.token.access;
       result.token.refresh = data.token.refresh;
@@ -117,7 +117,7 @@ class UserApi {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      const data = await response.json();
+      const data = (await response.json()) as any;
       result.user = data.user;
       result.token.access = data.token.access;
       result.token.refresh = data.token.refresh;
@@ -132,7 +132,7 @@ class UserApi {
 
     try {
       const response = await authInstance.put('api/users/kakao_auth/', { json: requestData });
-      const data = await response.json();
+      const data = (await response.json()) as any;
       responseData = data.user;
     } catch (error) {
       console.log(error);
@@ -147,7 +147,7 @@ class UserApi {
       const response = await defaultInstance.post('api/users/user_check_email/', {
         json: { email: email, user_type: userType },
       });
-      const data = await response.json();
+      const data = (await response.json()) as any;
       result = data;
     } catch (error) {
       console.log(error);
@@ -160,7 +160,7 @@ class UserApi {
 
     try {
       const response = await defaultInstance.post('api/users/user_check_nickname/', { json: { nickname: nickname } });
-      const data = await response.json();
+      const data = (await response.json()) as any;
       result = data;
     } catch (error) {
       console.log(error);
@@ -175,7 +175,7 @@ class UserApi {
       const response = await defaultInstance.post('api/users/user_find_email/', {
         json: { name: name, tel: tel, user_type: userType },
       });
-      const data = await response.json();
+      const data = (await response.json()) as any;
       result = data;
     } catch (error) {
       console.log(error);
@@ -190,7 +190,7 @@ class UserApi {
       const response = await defaultInstance.post('api/users/user_find_password/', {
         json: { email: email, name: name, tel: tel, user_type: userType },
       });
-      const data = await response.json();
+      const data = (await response.json()) as any;
       result = data;
     } catch (error) {
       console.log(error);
@@ -217,7 +217,7 @@ class UserApi {
           password: password,
         },
       });
-      const data = await response.json();
+      const data = (await response.json()) as any;
       result = data;
     } catch (error) {
       console.log(error);
@@ -231,8 +231,8 @@ class UserApi {
 
     try {
       const response = await defaultInstance.post('api/users/signup/', { json: data });
-      const responseData = await response.json();
-      user.parseResponse(responseData.user as object);
+      const responseData = (await response.json()) as any;
+      user.parseResponse(responseData.user as any);
     } catch (error) {
       console.log(error);
     }
@@ -244,8 +244,8 @@ class UserApi {
 
     try {
       const response = await authInstance.get('api/users/detail_info_auth/');
-      const data = await response.json();
-      result.parseResponse(data as object);
+      const data = (await response.json()) as any;
+      result.parseResponse(data as any);
     } catch (error) {
       console.log(error);
     }
@@ -257,7 +257,7 @@ class UserApi {
 
     try {
       const response = await authInstance.get('api/users/detail_info_auth/');
-      const data = await response.json();
+      const data = (await response.json()) as any;
       userData = data;
     } catch (error) {
       console.log(error);

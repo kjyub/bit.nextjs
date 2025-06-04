@@ -11,7 +11,7 @@ class CryptoServerApi {
           market_type: marketType,
         },
       });
-      result = await response.json();
+      result = (await response.json()) as any;
     } catch (error) {
       console.log(error);
     }
@@ -22,7 +22,7 @@ class CryptoServerApi {
     let result: object = {};
     try {
       const response = await defaultInstance.get('api/cryptos/market_all/');
-      result = await response.json();
+      result = (await response.json()) as any;
     } catch (error) {
       console.log(error);
     }
@@ -32,7 +32,7 @@ class CryptoServerApi {
     let result: object = {};
     try {
       const response = await defaultInstance.get(`api/cryptos/market/${code}/`);
-      result = await response.json();
+      result = (await response.json()) as any;
     } catch (error) {
       console.log(error);
     }
@@ -52,7 +52,7 @@ class CryptoServerApi {
           page_size: pageSize.toString(),
         },
       });
-      result = await response.json();
+      result = (await response.json()) as any;
     } catch (error) {
       console.log(error);
     }
@@ -62,7 +62,7 @@ class CryptoServerApi {
     let result: object = {};
     try {
       const response = await defaultInstance.get(`api/cryptos/community/${nanoId}/`);
-      result = await response.json();
+      result = (await response.json()) as any;
     } catch (error) {
       console.log(error);
     }
@@ -80,7 +80,7 @@ class CryptoServerApi {
           page_size: pageSize.toString(),
         },
       });
-      result = await response.json();
+      result = (await response.json()) as any;
     } catch (error) {
       console.log(error);
     }

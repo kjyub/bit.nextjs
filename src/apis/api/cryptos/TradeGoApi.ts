@@ -12,7 +12,7 @@ class TradeGoApi {
           markets: marketCodes,
         },
       });
-      const data = await response.json();
+      const data = (await response.json()) as any;
       if (Array.isArray(data)) {
         result = data;
       }
@@ -41,7 +41,7 @@ class TradeGoApi {
           codes: [marketCode],
         },
       });
-      const data = await response.json();
+      const data = (await response.json()) as any;
       if (Array.isArray(data) && data.length > 0) {
         result = data[0];
       }

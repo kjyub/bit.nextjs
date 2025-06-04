@@ -4,7 +4,7 @@ import type { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
 class TradeGoServerApi {
   // region Market
   static async getMarketCurrent(marketCode: string): Promise<IUpbitMarketTicker> {
-    let result: IUpbitMarketTicker = {};
+    let result: IUpbitMarketTicker = {} as IUpbitMarketTicker;
 
     try {
       const response = await tradeInstance.post('markets', {
@@ -12,7 +12,7 @@ class TradeGoServerApi {
           codes: [marketCode],
         },
       });
-      const data = await response.json();
+      const data = (await response.json()) as any;
       if (Array.isArray(data) && data.length > 0) {
         result = data[0];
       }

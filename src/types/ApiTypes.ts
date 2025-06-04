@@ -13,7 +13,7 @@ export enum QueryTypes {
 }
 
 export abstract class AbsApiObject {
-  private _id: string;
+  protected _id: string | number;
 
   constructor() {
     this._id = '';
@@ -22,16 +22,16 @@ export abstract class AbsApiObject {
   isEmpty(): boolean {
     return !this._id;
   }
-  isValidParseResponse(json: object): boolean {
+  isValidParseResponse(json: any): boolean {
     return json && Object.keys(json).length > 0;
   }
-  parseResponse(json: object) {
+  parseResponse(json: any) {
     if (!json) {
       return;
     }
   }
-  parseRequest(): object {}
-  stringifyRequest(): object {}
+  parseRequest(): any {}
+  stringifyRequest(): any {}
 }
 
 export const CookieConsts = {

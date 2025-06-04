@@ -26,7 +26,7 @@ export default class User extends AbsApiObject {
     this._rep = 0;
   }
 
-  parseResponse(json: object): void {
+  parseResponse(json: any): void {
     if (!super.isValidParseResponse(json)) return;
     // ApiUtils.parseData(this, json)
 

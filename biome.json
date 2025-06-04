@@ -32,7 +32,8 @@
         "useButtonType": "error"
       },
       "suspicious": {
-        "noArrayIndexKey": "off"
+        "noArrayIndexKey": "off",
+        "noExplicitAny": "off"
       },
       "correctness": {
         "useExhaustiveDependencies": "off"

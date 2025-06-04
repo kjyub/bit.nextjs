@@ -38,7 +38,7 @@ export const AuthProvider = ({
 }) => {
   const initialUser = useMemo(() => {
     const user = new User();
-    user.parseResponse(userData as object);
+    user.parseResponse(userData as any);
     return user;
   }, [userData]);
 
@@ -55,7 +55,7 @@ export const AuthProvider = ({
       setAuthToken(authToken);
       if (userData) {
         const newUser = new User();
-        newUser.parseResponse(userData as object);
+        newUser.parseResponse(userData as any);
         setUser(newUser);
       }
 

@@ -175,9 +175,9 @@ const parseCandleData = (candles: IUpbitCandle[]): [TimeScaleProvider, number[]]
 
   try {
     const _ema12 = ema12(parsedData)
-    const _ema26 = ema26(_ema12 as object[])
-    const _elder = elder(_ema26 as object[])
-    chartData = elder(_elder as object[])
+    const _ema26 = ema26(_ema12 as any[])
+    const _elder = elder(_ema26 as any[])
+    chartData = elder(_elder as any[])
   } catch {
     //
   }

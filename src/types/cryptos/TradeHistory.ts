@@ -30,12 +30,12 @@ export default class TradeHistory extends AbsApiObject {
     this._createdDate = '';
   }
 
-  parseResponse(json: object): void {
+  parseResponse(json: any): void {
     if (!super.isValidParseResponse(json)) return;
     // ApiUtils.parseData(this, json)
 
     this._id = json.id;
-    this._order.parseResponse(json.order as object);
+    this._order.parseResponse(json.order as any);
     this._orderType = json.order_type;
     this._positionType = json.position_type;
     this._price = json.price;

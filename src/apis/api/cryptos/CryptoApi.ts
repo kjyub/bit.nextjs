@@ -20,19 +20,19 @@ class CryptoApi {
 
     try {
       const response = await authInstance.post('api/cryptos/my_trades/');
-      const data = await response.json();
-      result.wallet.parseResponse(data.wallet as object);
+      const data = (await response.json()) as any;
+      result.wallet.parseResponse(data.wallet);
       if (data.positions && Array.isArray(data.positions)) {
-        data.positions.forEach((item) => {
+        data.positions.forEach((item: any) => {
           const tradePosition: TradePosition = new TradePosition();
-          tradePosition.parseResponse(item as object);
+          tradePosition.parseResponse(item as any);
           result.positions.push(tradePosition);
         });
       }
       if (data.orders && Array.isArray(data.orders)) {
-        data.orders.forEach((item) => {
+        data.orders.forEach((item: any) => {
           const tradeOrder: TradeOrder = new TradeOrder();
-          tradeOrder.parseResponse(item as object);
+          tradeOrder.parseResponse(item as any);
           result.orders.push(tradeOrder);
         });
       }
@@ -49,8 +49,8 @@ class CryptoApi {
 
     try {
       const response = await authInstance.get('api/cryptos/wallet/');
-      const data = await response.json();
-      result.parseResponse(data as object);
+      const data = (await response.json()) as any;
+      result.parseResponse(data as any);
     } catch (error) {
       console.log(error);
     }
@@ -81,11 +81,11 @@ class CryptoApi {
           market_type: marketType,
         },
       });
-      const data = await response.json();
-      if (Array.isArray(data as object)) {
-        data.forEach((item) => {
+      const data = (await response.json()) as any;
+      if (Array.isArray(data as any)) {
+        data.forEach((item: any) => {
           const market: CryptoMarket = new CryptoMarket();
-          market.parseResponse(item as object);
+          market.parseResponse(item as any);
           result.push(market);
         });
       }
@@ -101,11 +101,11 @@ class CryptoApi {
 
     try {
       const response = await defaultInstance.get('api/cryptos/market_all/');
-      const data = await response.json();
-      if (Array.isArray(data as object)) {
-        data.forEach((item) => {
+      const data = (await response.json()) as any;
+      if (Array.isArray(data as any)) {
+        data.forEach((item: any) => {
           const market: CryptoMarket = new CryptoMarket();
-          market.parseResponse(item as object);
+          market.parseResponse(item as any);
           result.push(market);
         });
       }
@@ -123,7 +123,7 @@ class CryptoApi {
 
     try {
       const response = await authInstance.post('api/cryptos/order_market/', { json: requestData });
-      const data = await response.json();
+      const data = (await response.json()) as any;
       result = data as boolean;
     } catch (error) {
       console.log(error);
@@ -136,7 +136,7 @@ class CryptoApi {
 
     try {
       const response = await authInstance.post('api/cryptos/order_limit/', { json: requestData });
-      const data = await response.json();
+      const data = (await response.json()) as any;
       result = data as boolean;
     } catch (error) {
       console.log(error);
@@ -149,7 +149,7 @@ class CryptoApi {
 
     try {
       const response = await authInstance.post('api/cryptos/order_limit_cancel/', { json: { order_id: orderId } });
-      const data = await response.json();
+      const data = (await response.json()) as any;
       result = data as boolean;
     } catch (error) {
       console.log(error);
@@ -164,7 +164,7 @@ class CryptoApi {
       const response = await authInstance.post('api/cryptos/order_limit_chase/', {
         json: { order_id: orderId, price },
       });
-      const data = await response.json();
+      const data = (await response.json()) as any;
       result = data as boolean;
     } catch (error) {
       console.log(error);
@@ -180,11 +180,11 @@ class CryptoApi {
 
     try {
       const response = await authInstance.get('api/cryptos/my_position/');
-      const data = await response.json();
-      if (Array.isArray(data as object)) {
-        data.forEach((item) => {
+      const data = (await response.json()) as any;
+      if (Array.isArray(data as any)) {
+        data.forEach((item: any) => {
           const tradePosition: TradePosition = new TradePosition();
-          tradePosition.parseResponse(item as object);
+          tradePosition.parseResponse(item as any);
           result.push(tradePosition);
         });
       }
@@ -199,11 +199,11 @@ class CryptoApi {
 
     try {
       const response = await authInstance.get('api/cryptos/my_order/');
-      const data = await response.json();
-      if (Array.isArray(data as object)) {
-        data.forEach((item) => {
+      const data = (await response.json()) as any;
+      if (Array.isArray(data as any)) {
+        data.forEach((item: any) => {
           const tradeOrder: TradeOrder = new TradeOrder();
-          tradeOrder.parseResponse(item as object);
+          tradeOrder.parseResponse(item as any);
           result.push(tradeOrder);
         });
       }
@@ -224,7 +224,12 @@ class CryptoApi {
   ): Promise<Pagination<TradeOrder>> {
     const result = new Pagination<TradeOrder>();
 
-    const searchParams = {
+    const searchParams: {
+      page: string;
+      page_size: string;
+      date_start?: string;
+      date_end?: string;
+    } = {
       page: pageIndex.toString(),
       page_size: pageSize.toString(),
     };
@@ -238,8 +243,8 @@ class CryptoApi {
 
     try {
       const response = await authInstance.get('api/cryptos/my_order_history/', { searchParams });
-      const data = await response.json();
-      result.parseResponse(data as object, TradeOrder);
+      const data = (await response.json()) as any;
+      result.parseResponse(data as any, TradeOrder);
     } catch (error) {
       console.log(error);
     }
@@ -268,8 +273,8 @@ class CryptoApi {
 
     try {
       const response = await authInstance.get('api/cryptos/my_trade_history/', { searchParams });
-      const data = await response.json();
-      result.parseResponse(data as object, TradeHistory);
+      const data = (await response.json()) as any;
+      result.parseResponse(data as any, TradeHistory);
     } catch (error) {
       console.log(error);
     }
@@ -298,8 +303,8 @@ class CryptoApi {
 
     try {
       const response = await authInstance.get('api/cryptos/my_position_history/', { searchParams });
-      const data = await response.json();
-      result.parseResponse(data as object, TradePosition);
+      const data = (await response.json()) as any;
+      result.parseResponse(data as any, TradePosition);
     } catch (error) {
       console.log(error);
     }
@@ -326,8 +331,8 @@ class CryptoApi {
           page_size: pageSize.toString(),
         },
       });
-      const data = await response.json();
-      result.parseResponse(data as object, MarketCommunity);
+      const data = (await response.json()) as any;
+      result.parseResponse(data as any, MarketCommunity);
     } catch (error) {
       console.log(error);
     }
@@ -339,8 +344,8 @@ class CryptoApi {
 
     try {
       const response = await defaultInstance.get(`api/cryptos/community/${nanoId}/`);
-      const data = await response.json();
-      result.parseResponse(data as object);
+      const data = (await response.json()) as any;
+      result.parseResponse(data as any);
     } catch (error) {
       console.log(error);
     }
@@ -352,8 +357,8 @@ class CryptoApi {
 
     try {
       const response = await authInstance.post('api/cryptos/community_create/', { json: requestData });
-      const data = await response.json();
-      result.parseResponse(data as object);
+      const data = (await response.json()) as any;
+      result.parseResponse(data as any);
     } catch (error) {
       console.log(error);
     }
@@ -365,8 +370,8 @@ class CryptoApi {
 
     try {
       const response = await authInstance.put(`api/cryptos/community_update/${nanoId}/`, { json: requestData });
-      const data = await response.json();
-      result.parseResponse(data as object);
+      const data = (await response.json()) as any;
+      result.parseResponse(data as any);
     } catch (error) {
       console.log(error);
     }
@@ -414,8 +419,8 @@ class CryptoApi {
           page_size: pageSize.toString(),
         },
       });
-      const data = await response.json();
-      result.parseResponse(data as object, MarketCommunityComment);
+      const data = (await response.json()) as any;
+      result.parseResponse(data as any, MarketCommunityComment);
     } catch (error) {
       console.log(error);
     }
@@ -427,8 +432,8 @@ class CryptoApi {
 
     try {
       const response = await authInstance.post('api/cryptos/community_comment_create/', { json: requestData });
-      const data = await response.json();
-      result.parseResponse(data as object);
+      const data = (await response.json()) as any;
+      result.parseResponse(data as any);
     } catch (error) {
       console.log(error);
     }
@@ -440,8 +445,8 @@ class CryptoApi {
 
     try {
       const response = await authInstance.put(`api/cryptos/community_comment_update/${id}/`, { json: requestData });
-      const data = await response.json();
-      result.parseResponse(data as object);
+      const data = (await response.json()) as any;
+      result.parseResponse(data as any);
     } catch (error) {
       console.log(error);
     }

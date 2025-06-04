@@ -43,13 +43,13 @@ export default class TradePosition extends AbsApiObject {
     this._closeTime = '';
   }
 
-  parseResponse(json: object): void {
+  parseResponse(json: any): void {
     if (!super.isValidParseResponse(json)) return;
     // ApiUtils.parseData(this, json)
 
     this._id = json.id;
     this._marketCode = json.market_code;
-    this._market.parseResponse(json.market as object);
+    this._market.parseResponse(json.market as any);
     this._isOpen = json.is_open;
     this._marginMode = json.margin_mode;
     this._positionType = json.position_type;

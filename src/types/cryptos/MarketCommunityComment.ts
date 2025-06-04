@@ -26,7 +26,7 @@ export default class MarketCommunityComment extends AbsApiObject {
     this._updatedDate = '';
   }
 
-  parseResponse(json: object): void {
+  parseResponse(json: any): void {
     if (!super.isValidParseResponse(json)) return;
     // ApiUtils.parseData(this, json)
 

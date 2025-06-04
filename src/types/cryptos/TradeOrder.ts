@@ -4,6 +4,7 @@ import {
   MarginModeType,
   type MarginModeTypeValues,
   PositionType,
+  type PositionTypeValues,
   TradeOrderType,
   type TradeOrderTypeValues,
   TradeType,
@@ -11,14 +12,14 @@ import {
 } from './CryptoTypes';
 
 export default class TradeOrder extends AbsApiObject {
-  private _id: number;
+  protected _id: number;
 
   private _marketCode: string;
   private _market: CryptoMarket;
   private _isOpen: boolean;
   private _marginMode: MarginModeTypeValues;
   private _orderType: TradeOrderTypeValues;
-  private _positionType: PositionType;
+  private _positionType: PositionTypeValues;
   private _tradeType: TradeTypeValues;
   private _tradeTime: string;
   private _entryPrice: number;
@@ -57,13 +58,13 @@ export default class TradeOrder extends AbsApiObject {
     this._createdDate = '';
   }
 
-  parseResponse(json: object): void {
+  parseResponse(json: any): void {
     if (!super.isValidParseResponse(json)) return;
     // ApiUtils.parseData(this, json)
 
     this._id = json.id;
     this._marketCode = json.market_code;
-    this._market.parseResponse(json.market as object);
+    this._market.parseResponse(json.market as any);
     this._isOpen = json.is_open;
     this._marginMode = json.margin_mode;
     this._orderType = json.order_type;
@@ -101,7 +102,7 @@ export default class TradeOrder extends AbsApiObject {
   public get orderType(): TradeOrderTypeValues {
     return this._orderType;
   }
-  public get positionType(): PositionType {
+  public get positionType(): PositionTypeValues {
     return this._positionType;
   }
   public get tradeType(): TradeTypeValues {

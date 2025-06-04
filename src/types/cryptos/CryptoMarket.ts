@@ -23,7 +23,7 @@ export default class CryptoMarket extends AbsApiObject {
     this._isClosed = false;
   }
 
-  parseResponse(json: object): void {
+  parseResponse(json: any): void {
     if (!super.isValidParseResponse(json)) return;
     // ApiUtils.parseData(this, json)
 
