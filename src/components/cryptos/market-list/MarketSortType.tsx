@@ -26,7 +26,11 @@ export default memo(function MarketSortType({
   };
 
   return (
-    <button className={`${sortType === currentSortType ? 'active' : ''} ${sortType}`} type="button" onClick={() => handleClick()}>
+    <button
+      className={`${sortType === currentSortType ? 'active' : ''} ${sortType}`}
+      type="button"
+      onClick={() => handleClick()}
+    >
       <div className="icon">
         {currentOrderType === OrderTypes.ASC ? (
           <i className="fa-solid fa-sort-up"></i>

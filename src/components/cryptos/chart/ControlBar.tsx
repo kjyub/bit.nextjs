@@ -7,7 +7,11 @@ export default function CryptoMarketChartControlBar() {
 
   return (
     <CS.ControlBar>
-      <button type="button" onClick={() => initChart(CandleTimes.SECOND)} className={timeType === CandleTimes.SECOND ? 'active' : ''}>
+      <button
+        type="button"
+        onClick={() => initChart(CandleTimes.SECOND)}
+        className={timeType === CandleTimes.SECOND ? 'active' : ''}
+      >
         초
       </button>
       <button
@@ -24,13 +28,25 @@ export default function CryptoMarketChartControlBar() {
       >
         15분
       </button>
-      <button type="button" onClick={() => initChart(CandleTimes.DAY)} className={timeType === CandleTimes.DAY ? 'active' : ''}>
+      <button
+        type="button"
+        onClick={() => initChart(CandleTimes.DAY)}
+        className={timeType === CandleTimes.DAY ? 'active' : ''}
+      >
         일
       </button>
-      <button type="button" onClick={() => initChart(CandleTimes.WEEK)} className={timeType === CandleTimes.WEEK ? 'active' : ''}>
+      <button
+        type="button"
+        onClick={() => initChart(CandleTimes.WEEK)}
+        className={timeType === CandleTimes.WEEK ? 'active' : ''}
+      >
         주
       </button>
-      <button type="button" onClick={() => initChart(CandleTimes.MONTH)} className={timeType === CandleTimes.MONTH ? 'active' : ''}>
+      <button
+        type="button"
+        onClick={() => initChart(CandleTimes.MONTH)}
+        className={timeType === CandleTimes.MONTH ? 'active' : ''}
+      >
         월
       </button>
 
@@ -43,7 +59,11 @@ export default function CryptoMarketChartControlBar() {
       >
         <i className="fa-solid fa-chart-column"></i>
       </button>
-      <button type="button" onClick={() => setChartType(ChartTypes.AREA)} className={chartType === ChartTypes.AREA ? 'active' : ''}>
+      <button
+        type="button"
+        onClick={() => setChartType(ChartTypes.AREA)}
+        className={chartType === ChartTypes.AREA ? 'active' : ''}
+      >
         <i className="fa-solid fa-chart-line"></i>
       </button>
     </CS.ControlBar>

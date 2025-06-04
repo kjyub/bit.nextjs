@@ -29,7 +29,6 @@ export default class TradeOrder extends AbsApiObject {
   private _cost: number;
   private _totalCost: number;
   private _closeTime: string;
-  private _isOpen: boolean;
   private _isCancel: boolean;
 
   private _createdDate: string;
@@ -53,7 +52,6 @@ export default class TradeOrder extends AbsApiObject {
     this._cost = 0;
     this._totalCost = 0;
     this._closeTime = '';
-    this._isOpen = false;
     this._isCancel = false;
 
     this._createdDate = '';
@@ -80,7 +78,6 @@ export default class TradeOrder extends AbsApiObject {
     this._cost = json.cost;
     this._totalCost = json.total_cost;
     this._closeTime = json.close_time;
-    this._isOpen = json.is_open;
     this._isCancel = json.is_cancel;
 
     this._createdDate = json.created_date;
@@ -136,9 +133,6 @@ export default class TradeOrder extends AbsApiObject {
   }
   public get closeTime(): string {
     return this._closeTime;
-  }
-  public get isOpen(): boolean {
-    return this._isOpen;
   }
   public get isCancel(): boolean {
     return this._isCancel;

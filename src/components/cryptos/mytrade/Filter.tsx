@@ -117,6 +117,7 @@ interface IDate {
   date: string;
   setDate: (date: string) => void;
 }
+// biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
 const Date = ({ date, setDate }: IDate) => {
   const [year, setYear] = useState<string>('');
   const [month, setMonth] = useState<string>('');

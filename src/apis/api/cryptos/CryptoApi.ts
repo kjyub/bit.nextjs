@@ -23,14 +23,14 @@ class CryptoApi {
       const data = await response.json();
       result.wallet.parseResponse(data.wallet as object);
       if (data.positions && Array.isArray(data.positions)) {
-        (data.positions as any[]).forEach((item) => {
+        data.positions.forEach((item) => {
           const tradePosition: TradePosition = new TradePosition();
           tradePosition.parseResponse(item as object);
           result.positions.push(tradePosition);
         });
       }
       if (data.orders && Array.isArray(data.orders)) {
-        (data.orders as any[]).forEach((item) => {
+        data.orders.forEach((item) => {
           const tradeOrder: TradeOrder = new TradeOrder();
           tradeOrder.parseResponse(item as object);
           result.orders.push(tradeOrder);
@@ -83,7 +83,7 @@ class CryptoApi {
       });
       const data = await response.json();
       if (Array.isArray(data as object)) {
-        (data as any[]).forEach((item) => {
+        data.forEach((item) => {
           const market: CryptoMarket = new CryptoMarket();
           market.parseResponse(item as object);
           result.push(market);
@@ -103,7 +103,7 @@ class CryptoApi {
       const response = await defaultInstance.get('api/cryptos/market_all/');
       const data = await response.json();
       if (Array.isArray(data as object)) {
-        (data as any[]).forEach((item) => {
+        data.forEach((item) => {
           const market: CryptoMarket = new CryptoMarket();
           market.parseResponse(item as object);
           result.push(market);
@@ -182,7 +182,7 @@ class CryptoApi {
       const response = await authInstance.get('api/cryptos/my_position/');
       const data = await response.json();
       if (Array.isArray(data as object)) {
-        (data as any[]).forEach((item) => {
+        data.forEach((item) => {
           const tradePosition: TradePosition = new TradePosition();
           tradePosition.parseResponse(item as object);
           result.push(tradePosition);
@@ -201,7 +201,7 @@ class CryptoApi {
       const response = await authInstance.get('api/cryptos/my_order/');
       const data = await response.json();
       if (Array.isArray(data as object)) {
-        (data as any[]).forEach((item) => {
+        data.forEach((item) => {
           const tradeOrder: TradeOrder = new TradeOrder();
           tradeOrder.parseResponse(item as object);
           result.push(tradeOrder);

@@ -53,6 +53,7 @@
     line-height: 100% !important;
 
     background-attachment: fixed !important;
+    /* biome-ignore lint/suspicious/noShorthandPropertyOverrides: <explanation> */
     background: linear-gradient(
       188deg,
       rgba(1, 0, 24, 1) 0%,

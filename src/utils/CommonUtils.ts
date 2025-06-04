@@ -76,7 +76,7 @@ export default class CommonUtils {
   static telFormatter(e): string {
     const value = e.target.value;
     if (!value) {
-      e.target.value = e.target.value;
+      e.target.value = value;
     }
 
     e.target.value = CommonUtils.telFormat(value);
@@ -205,7 +205,7 @@ export default class CommonUtils {
 
     // 날짜가 최대 날짜 수를 초과하면 최대 날짜로 설정
     if (day > maxDay) {
-      day = maxDay;
+      return maxDay;
     }
 
     return day;
@@ -215,7 +215,7 @@ export default class CommonUtils {
     const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
     return regex.test(value);
   }
-  static setTextareaAutoHeight(e: any) {
+  static setTextareaAutoHeight(e: React.ChangeEvent<HTMLTextAreaElement>) {
     const element = e.target;
 
     if (!element) {

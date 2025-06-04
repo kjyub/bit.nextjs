@@ -94,12 +94,12 @@ export const TitleBox = tw.div`
   [&>input]:text-slate-200
   [&>input]:placeholder:text-slate-400
 
-  [&>label]:absolute [&>label]:z-10
-  [&>label]:top-2 [&>label]:left-2
-  [&>label]:text-slate-400
-  [&>label.active]:-top-3 [&>label.active]:left-0
-  [&>label.active]:text-[13px]
-  [&>label.focus]:text-blue-400
+  [&>strong]:absolute [&>strong]:z-10
+  [&>strong]:top-2 [&>strong]:left-2
+  [&>strong]:text-slate-400
+  [&>strong.active]:-top-3 [&>strong.active]:left-0
+  [&>strong.active]:text-[13px]
+  [&>strong.focus]:text-blue-400
 `;
 
 export const ContentTextArea = tw.textarea`

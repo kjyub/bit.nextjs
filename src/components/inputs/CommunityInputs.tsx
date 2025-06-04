@@ -25,7 +25,7 @@ export const TitleInput = ({ label, value, setValue }: InputProps) => {
 
   return (
     <S.TitleBox>
-      <label className={`${isLabelActive ? 'active' : ''} ${isFocus ? 'focus' : ''}`}>{label}</label>
+      <strong className={`${isLabelActive ? 'active' : ''} ${isFocus ? 'focus' : ''}`}>{label}</strong>
       <input
         value={value}
         onChange={(e) => setValue(e.target.value)}

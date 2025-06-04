@@ -231,8 +231,8 @@ class UserApi {
 
     try {
       const response = await defaultInstance.post('api/users/signup/', { json: data });
-      const data = await response.json();
-      user.parseResponse(data.user as object);
+      const responseData = await response.json();
+      user.parseResponse(responseData.user as object);
     } catch (error) {
       console.log(error);
     }

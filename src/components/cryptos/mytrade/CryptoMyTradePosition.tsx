@@ -141,7 +141,9 @@ const Position = ({ position, userBudget }: IPosition) => {
           <div className="section">
             <div className="info">{CommonUtils.round(position.averageLeverage, 2)}x</div>
             <div className="info">{MarginModeTypeNames[position.marginMode]}</div>
-            <button className="info" type="button">TP/SL</button>
+            <button className="info" type="button">
+              TP/SL
+            </button>
           </div>
         </div>
 

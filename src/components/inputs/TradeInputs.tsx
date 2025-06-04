@@ -127,12 +127,12 @@ export const MarginModeInput = ({ marginMode, setMarginMode, disabled = false }:
       </S.MarginModeBox>
 
       <HelpBox>
-        <div className="flex flex-col space-y-1 [&>label]:font-semibold">
-          <label>교차모드</label>
+        <div className="flex flex-col space-y-1 [&>strong]:font-semibold">
+          <strong>교차모드</strong>
           <span>투입한 자금과 지갑 내의 돈까지 사용</span>
         </div>
-        <div className="flex flex-col space-y-1 [&>label]:font-semibold">
-          <label>격리모드</label>
+        <div className="flex flex-col space-y-1 [&>strong]:font-semibold">
+          <strong>격리모드</strong>
           <span>투입한 자금 내의 돈만 사용하여 손실 최소화</span>
         </div>
       </HelpBox>
@@ -230,8 +230,8 @@ export const LeverageInput = ({ leverageRatio, setLeverageRatio, maxRatio = 75 }
             <span className="text-xs text-slate-400 ml-0.5 mt-0.5 select-none">x</span>
           </S.InputBox>
           <HelpBox>
-            <div className="flex flex-col space-y-1 [&>label]:font-semibold">
-              <label>레버리지</label>
+            <div className="flex flex-col space-y-1 [&>strong]:font-semibold">
+              <strong>레버리지</strong>
               <span>수량을 배율만큼 더 빌려서 구매한다</span>
             </div>
           </HelpBox>

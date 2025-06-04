@@ -1,6 +1,6 @@
 export default () => {
   // 사용자의 페이지 이탈을 막음.
-  const listener = (event: any) => {
+  const listener = (event: BeforeUnloadEvent) => {
     event.preventDefault();
     event.returnValue = '';
   };
