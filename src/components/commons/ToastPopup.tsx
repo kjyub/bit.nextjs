@@ -64,7 +64,7 @@ const Message = ({ message }: { message: ToastMessage }) => {
         ])}
       >
         <div className="">{message.content}</div>
-        <button className="text-slate-500 hover:text-slate-300 transition-colors" onClick={handleClose}>
+        <button className="text-slate-500 hover:text-slate-300 transition-colors" onClick={handleClose} type="button">
           <i className="fa-solid fa-xmark" />
         </button>
       </div>

@@ -176,7 +176,7 @@ const List = ({
 // }
 // const MarketType = ({ marketType, currentMarketType, setMarketType }: IMarketType) => {
 //   return (
-//     <button className={marketType === currentMarketType ? 'active' : ''} onClick={() => setMarketType(marketType)}>
+//     <button className={marketType === currentMarketType ? 'active' : ''} type="button" onClick={() => setMarketType(marketType)}>
 //       {MarketTypeNames[marketType]}
 //     </button>
 //   )

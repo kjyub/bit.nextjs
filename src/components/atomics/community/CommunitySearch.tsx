@@ -25,7 +25,7 @@ export default function CommunitySearch({ onSearch, defaultValue = '', placehold
         placeholder={placeholder}
       />
 
-      <button className={'text-slate-400 hover:text-slate-200 text-sm'}>
+      <button className={'text-slate-400 hover:text-slate-200 text-sm'} type="button">
         <i className="fa-solid fa-magnifying-glass"></i>
       </button>
     </div>

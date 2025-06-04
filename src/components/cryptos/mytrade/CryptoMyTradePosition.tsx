@@ -141,7 +141,7 @@ const Position = ({ position, userBudget }: IPosition) => {
           <div className="section">
             <div className="info">{CommonUtils.round(position.averageLeverage, 2)}x</div>
             <div className="info">{MarginModeTypeNames[position.marginMode]}</div>
-            <button className="info">TP/SL</button>
+            <button className="info" type="button">TP/SL</button>
           </div>
         </div>
 
@@ -224,6 +224,7 @@ const Position = ({ position, userBudget }: IPosition) => {
           <div className="title">포지션 종료</div>
           <div className="buttons">
             <button
+              type="button"
               onClick={() => {
                 orderClose(TradeOrderType.LIMIT);
               }}
@@ -231,6 +232,7 @@ const Position = ({ position, userBudget }: IPosition) => {
               지정가
             </button>
             <button
+              type="button"
               onClick={() => {
                 orderClose(TradeOrderType.MARKET);
               }}

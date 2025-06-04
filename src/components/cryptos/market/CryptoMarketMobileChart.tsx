@@ -25,6 +25,7 @@ export default function CryptoMarketMobileChart({ marketCode }: Props) {
             <span className="text-base font-semibold text-slate-100">차트</span>
             <button
               className="flex items-center justify-center size-6 rounded-full bg-slate-700"
+              type="button"
               onClick={() => setIsShowMobileChart(false)}
             >
               <i className="fa-solid fa-x text-xs text-slate-400"></i>

@@ -40,7 +40,7 @@ export default function Header() {
             // 회원
             <>
               <span>{user.nickname}님</span>
-              <button className="btn" onClick={handleLogout}>
+              <button className="btn" onClick={handleLogout} type="button">
                 <span>로그아웃</span>
               </button>
             </>

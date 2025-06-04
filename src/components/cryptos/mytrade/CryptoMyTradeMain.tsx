@@ -57,6 +57,7 @@ interface IPageTabBar {
 const PageTab = ({ page, setPage, currentPage, count }: IPageTabBar) => {
   return (
     <button
+      type="button"
       onClick={() => {
         setPage(page);
       }}

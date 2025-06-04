@@ -92,6 +92,7 @@ export default function CryptoTransferModal({ defaultTransferType }: CryptoTrans
     <ModalLayout title={'환전'} layoutClassName="max-sm:w-[80vw] sm:w-96" contentClassName="max-h-[80vh]">
       <S.TransferTypeBox>
         <button
+          type="button"
           className={transferType === TransferTypes.TO_ACCOUNT ? 'active' : ''}
           onClick={() => {
             setTransferType(TransferTypes.TO_ACCOUNT);
@@ -107,6 +108,7 @@ export default function CryptoTransferModal({ defaultTransferType }: CryptoTrans
           <i className="fa-solid fa-building-columns"></i>
         </button>
         <button
+          type="button"
           className={transferType === TransferTypes.TO_WALLET ? 'active' : ''}
           onClick={() => {
             setTransferType(TransferTypes.TO_WALLET);

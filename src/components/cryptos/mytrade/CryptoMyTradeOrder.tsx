@@ -76,6 +76,7 @@ const Order = ({ order, updateInfo }: IOrder) => {
           <div className="section sm:!hidden">
             <button
               className="info text-violet-300!"
+              type="button"
               onClick={() => {
                 handleChase();
               }}
@@ -84,6 +85,7 @@ const Order = ({ order, updateInfo }: IOrder) => {
             </button>
             <button
               className="info text-yellow-500!"
+              type="button"
               onClick={() => {
                 handleCancel();
               }}
@@ -111,6 +113,7 @@ const Order = ({ order, updateInfo }: IOrder) => {
           <div className="section max-sm:!hidden">
             <button
               className="info text-violet-400!"
+              type="button"
               onClick={() => {
                 handleChase();
               }}
@@ -119,6 +122,7 @@ const Order = ({ order, updateInfo }: IOrder) => {
             </button>
             <button
               className="info text-yellow-500!"
+              type="button"
               onClick={() => {
                 handleCancel();
               }}
@@ -153,8 +157,8 @@ const Order = ({ order, updateInfo }: IOrder) => {
       {/* <S.PositionClose>
                 <div className="title">포지션 종료</div>
                 <div className="buttons">
-                    <button onClick={() => {orderClose(OrderType.LIMIT)}}>지정가</button>
-                    <button onClick={() => {orderClose(OrderType.MARKET)}}>시장가</button>
+                    <button type="button" onClick={() => orderClose(OrderType.LIMIT)}>지정가</button>
+                    <button type="button" onClick={() => orderClose(OrderType.MARKET)}>시장가</button>
                 </div>
                 <div className="inputs">
                     <I.NumberInput label={"가격"} value={closePrice} setValue={setClosePrice} />

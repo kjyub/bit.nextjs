@@ -104,6 +104,7 @@ export default function CryptoMarketCommunity({ marketCode, params, communityLis
           />
 
           <button
+            type="button"
             onClick={() => {
               handleCreate();
             }}

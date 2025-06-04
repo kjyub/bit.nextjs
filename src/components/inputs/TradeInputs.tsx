@@ -90,6 +90,7 @@ export const MarginModeInput = ({ marginMode, setMarginMode, disabled = false }:
       <S.MarginModeBox>
         <button
           className={marginMode === MarginModeType.CROSSED ? 'active' : ''}
+          type="button"
           onClick={() => {
             setMarginMode(MarginModeType.CROSSED);
           }}
@@ -106,6 +107,7 @@ export const MarginModeInput = ({ marginMode, setMarginMode, disabled = false }:
         </button>
         <button
           className={marginMode === MarginModeType.ISOLATED ? 'active' : ''}
+          type="button"
           onClick={() => {
             setMarginMode(MarginModeType.ISOLATED);
           }}
@@ -253,6 +255,7 @@ export const OrderTypeInput = ({ orderType, setOrderType }: OrderTypeInputProps)
       <S.OrderTypeBox>
         <button
           className={orderType === TradeOrderType.LIMIT ? 'active' : ''}
+          type="button"
           onClick={() => {
             setOrderType(TradeOrderType.LIMIT);
           }}
@@ -261,6 +264,7 @@ export const OrderTypeInput = ({ orderType, setOrderType }: OrderTypeInputProps)
         </button>
         <button
           className={orderType === TradeOrderType.MARKET ? 'active' : ''}
+          type="button"
           onClick={() => {
             setOrderType(TradeOrderType.MARKET);
           }}
@@ -387,6 +391,7 @@ export const LimitPriceInput = ({ price, setPrice, initPrice }: LimitPriceInputP
       </div>
       <button
         className="w-4 text-sm text-slate-500 hover:text-slate-400"
+        type="button"
         onClick={() => {
           initPrice();
         }}
@@ -540,6 +545,7 @@ export const TradeSizeInput = ({
 
         <button
           className="w-4 text-sm text-slate-500 hover:text-slate-400"
+          type="button"
           onClick={() => {
             setSizeUnitType(sizeUnitType === SizeUnitTypes.PRICE ? SizeUnitTypes.QUANTITY : SizeUnitTypes.PRICE);
           }}
@@ -599,6 +605,7 @@ export const TpSlLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="flex space-x-2">
           <button
             className={`${isShow ? 'text-violet-500' : 'text-slate-500'} transition-colors`}
+            type="button"
             onClick={() => {
               setShow(!isShow);
             }}
@@ -607,12 +614,12 @@ export const TpSlLayout = ({ children }: { children: React.ReactNode }) => {
           </button>
 
           <HelpBox>
-            <div className="flex flex-col space-y-1 [&>label]:font-semibold">
-              <label>TP (Take Profit)</label>
+            <div className="flex flex-col space-y-1 [&>dt]:font-semibold">
+              <dt>{'TP (Take Profit)'}</dt>
               <span>투입한 자금과 지갑 내의 돈까지 사용</span>
             </div>
-            <div className="flex flex-col space-y-1 [&>label]:font-semibold">
-              <label>SL (Stop Loss)</label>
+            <div className="flex flex-col space-y-1 [&>dt]:font-semibold">
+              <dt>{'SL (Stop Loss)'}</dt>
               <span>투입한 자금 내의 돈만 사용하여 손실 최소화</span>
             </div>
           </HelpBox>

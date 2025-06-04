@@ -49,6 +49,7 @@ export default function CryptoMarketOrderBook({ marketCode, marketCurrent }: ICr
         <span className="px-0 py-1 font-medium max-md:leading-3">호가</span>
         <button
           className="md:hidden px-1 py-1 text-slate-300/70 active:text-slate-100/90 transition-colors"
+          type="button"
           onClick={() => setIsShowMobileChart(!isShowMobileChart)}
         >
           <i className="fa-solid fa-chart-line"></i>

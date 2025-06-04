@@ -44,6 +44,7 @@ const Navigation = () => {
       <button
         className={`btn full:!hidden ml-auto ${isShowMarketList ? 'active' : ''}`}
         onClick={() => setIsShowMarketList(!isShowMarketList)}
+        type="button"
       >
         <i className="fa-solid fa-magnifying-glass"></i>
         <span>종목 검색</span>

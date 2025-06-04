@@ -29,6 +29,7 @@ export default function SignupLobby() {
             <KakaoContainer>
               <button
                 className="bg-kakao-container rounded-xl px-5 py-1"
+                type="button"
                 onClick={() => {
                   handleKakao();
                 }}
@@ -42,6 +43,7 @@ export default function SignupLobby() {
           <div className="agreement">
             {'로그인 시 '}
             <button
+              type="button"
               onClick={() => {
                 setShowAgreement(true);
               }}

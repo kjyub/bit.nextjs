@@ -187,6 +187,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
       <CS.ItemViewLikeBox>
         <button
           className={`like ${myLikeType === LikeTypes.LIKE ? 'active' : ''}`}
+          type="button"
           onClick={() => {
             handleLike(LikeTypes.LIKE);
           }}
@@ -196,6 +197,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
         </button>
         <button
           className={`dislike ${myLikeType === LikeTypes.DISLIKE ? 'active' : ''}`}
+          type="button"
           onClick={() => {
             handleLike(LikeTypes.DISLIKE);
           }}
@@ -241,6 +243,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
             }}
           />
           <button
+            type="button"
             onClick={() => {
               handleComment(commentValue);
             }}
@@ -405,6 +408,7 @@ const Comment = ({ user, comment, handleComment }: IComment) => {
             }}
           />
           <button
+            type="button"
             onClick={() => {
               handleCommentReply();
             }}
@@ -469,6 +473,7 @@ const CommentContent = ({ content, hasParent, parentName, isEdit, handleComment 
             }}
           />
           <button
+            type="button"
             onClick={() => {
               handleCommentEdit();
             }}
