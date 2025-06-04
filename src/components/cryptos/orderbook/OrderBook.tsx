@@ -142,7 +142,7 @@ const Row = ({ unit, max, className }: { unit: Unit, max: number, className: str
     >
       {/* <span className="trade-price">{(unit.bid_price + unit.ask_price) / 2}</span> */}
       <span className="trade-price">{CryptoUtils.getPriceText(unit.price)}</span>
-      <div className="flex max-sm:flex-col max-sm:w-[50px] sm:w-[100px] [&>span]:text-right">
+      <div className="flex max-sm:flex-col max-sm:w-[50px] sm:w-[100px]">
         <span className="size font-light text-slate-200/90">
           {unit.size >= 1000 ? 
             CommonUtils.textFormat(CryptoUtils.getPriceRound(unit.size), TextFormats.KOREAN_PRICE_SIMPLE) : 
