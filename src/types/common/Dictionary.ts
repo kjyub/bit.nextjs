@@ -4,7 +4,7 @@ export class Dictionary<T extends KeyTypes, K> {
   // public id: string
   private data: Record<KeyTypes, K> = {};
 
-  constructor(_dic: Dictionary<T, K> = null) {
+  constructor(_dic: Dictionary<T, K> | null = null) {
     // this.id = v4()
 
     if (_dic) {

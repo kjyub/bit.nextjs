@@ -10,6 +10,7 @@ export interface ToastMessage {
 interface IToastMessageStore {
   messages: ToastMessage[];
   createMessage: (content: string | React.ReactNode) => void;
+  deleteMessage: (key: number) => void;
 }
 const useToastMessageStore = create<IToastMessageStore>((set) => ({
   messages: [],

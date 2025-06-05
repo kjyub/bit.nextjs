@@ -3,7 +3,7 @@
 import UserApi from '@/apis/api/users/UserApi';
 import { removeAuthToken, setAuthToken } from '@/apis/utils/instances';
 import User from '@/types/users/User';
-import { AccountStatusTypes, type LoginResponse } from '@/types/users/UserTypes';
+import { AccountStatusTypes, type Token, type LoginResponse } from '@/types/users/UserTypes';
 import { type Dispatch, type SetStateAction, createContext, useCallback, useEffect, useMemo, useState } from 'react';
 import useUserInfoStore from '../useUserInfo';
 
@@ -21,7 +21,7 @@ const initAuthState: AuthState = {
   setUser: () => {},
   isLoading: true,
   isAuth: false,
-  kakaoAuth: async () => {},
+  kakaoAuth: async () => new User(),
   signOut: async () => {},
 };
 
@@ -32,7 +32,7 @@ export const AuthProvider = ({
   userData,
   children,
 }: {
-  accessToken: string;
+  authToken: Token;
   userData: object;
   children: React.ReactNode;
 }) => {
@@ -45,7 +45,7 @@ export const AuthProvider = ({
   const [user, setUser] = useState<User>(initialUser);
 
   // 유저 데이터 가져오는데 성공했으면 이미 불러온 상태로 시작
-  const [isAuth, setIsAuth] = useState<boolean>(userData);
+  const [isAuth, setIsAuth] = useState<boolean>(!!userData);
   const [isLoading, setIsLoading] = useState<boolean>(!userData);
 
   const updateAuth = useUserInfoStore((state) => state.updateAuth);

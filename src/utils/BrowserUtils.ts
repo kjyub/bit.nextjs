@@ -1,5 +1,5 @@
-export default class BrowserUtils {
-  static redirectToExternalBrowser() {
+namespace BrowserUtils {
+  export function redirectToExternalBrowser() {
     const targetUrl = window.location.href;
     // copyToClipboard(targetUrl)
 
@@ -12,7 +12,7 @@ export default class BrowserUtils {
       )}#Intentscheme=httppackage=com.android.chromeend`;
     }
   }
-  static goExternalBrowser(): boolean {
+  export function goExternalBrowser(): boolean {
     const isRedirect = false;
 
     // const copyToClipboard = async (val: string) => {
@@ -41,7 +41,9 @@ export default class BrowserUtils {
 
     return isRedirect;
   }
-  static isClient(): boolean {
+  export function isClient(): boolean {
     return typeof window !== 'undefined' && typeof window.document !== 'undefined';
   }
 }
+
+export default BrowserUtils;

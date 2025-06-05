@@ -1,5 +1,5 @@
 import { upbitInstance } from '@/apis/utils/upbitInstances';
-import type { IUpbitCandle, IUpbitOrderBook } from '@/types/cryptos/CryptoInterfaces';
+import type { IUpbitCandle, IUpbitMarket, IUpbitMarketTicker, IUpbitOrderBook } from '@/types/cryptos/CryptoInterfaces';
 import type { CandleMinuteUnits } from '@/types/cryptos/CryptoTypes';
 
 class UpbitApi {
@@ -39,7 +39,7 @@ class UpbitApi {
     return result;
   }
   static async getMarketCurrent(marketCode: string): Promise<IUpbitMarketTicker> {
-    let result: IUpbitMarketTicker = {};
+    let result = {} as IUpbitMarketTicker;
 
     try {
       const response = await upbitInstance.get('ticker', {
@@ -83,7 +83,7 @@ class UpbitApi {
   }
   static async getCandleMinutes(
     marketCode: string,
-    count,
+    count: number,
     unit: CandleMinuteUnits,
     to?: string,
   ): Promise<Array<IUpbitCandle>> {
@@ -170,7 +170,7 @@ class UpbitApi {
 
   // region OrderBook
   static async getOrderBook(marketCode: string, level = 0): Promise<IUpbitOrderBook> {
-    let result: IUpbitOrderBook = {};
+    let result = {} as IUpbitOrderBook;
 
     try {
       const response = await upbitInstance.get('orderbook', {

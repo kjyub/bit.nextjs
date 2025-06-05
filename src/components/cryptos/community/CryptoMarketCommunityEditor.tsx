@@ -21,6 +21,7 @@ export default function CryptoMarketCommunityEditor({ marketCode, community, onC
 
   const handleSave = async () => {
     const data = {
+      market_code: marketCode,
       title: title,
       content: content,
     };
@@ -66,9 +67,9 @@ export default function CryptoMarketCommunityEditor({ marketCode, community, onC
       contentClassName="max-h-[80vh]"
     >
       <div className="flex flex-col w-full space-y-4">
-        <TitleInput value={title} setValue={setTitle} label="제목" />
+        <TitleInput value={title} setValue={(value) => setTitle(value as string)} label="제목" />
 
-        <ContentInput value={content} setValue={setContent} placeholder="내용을 입력해주세요." />
+        <ContentInput value={content} setValue={(value) => setContent(value as string)} placeholder="내용을 입력해주세요." />
 
         <div className="flex justify-end items-center space-x-2">
           <CS.SaveButton

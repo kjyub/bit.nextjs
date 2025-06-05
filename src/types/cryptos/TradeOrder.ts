@@ -1,14 +1,14 @@
 import { AbsApiObject } from '../ApiTypes';
 import CryptoMarket from './CryptoMarket';
 import {
-  MarginModeTypes,
   type MarginModeType,
-  PositionTypes,
+  MarginModeTypes,
   type PositionType,
-  TradeOrderTypes,
+  PositionTypes,
   type TradeOrderType,
-  TradeTypes,
+  TradeOrderTypes,
   type TradeType,
+  TradeTypes,
 } from './CryptoTypes';
 
 export default class TradeOrder extends AbsApiObject {
@@ -60,7 +60,6 @@ export default class TradeOrder extends AbsApiObject {
 
   parseResponse(json: any): void {
     if (!super.isValidParseResponse(json)) return;
-    // ApiUtils.parseData(this, json)
 
     this._id = json.id;
     this._marketCode = json.market_code;

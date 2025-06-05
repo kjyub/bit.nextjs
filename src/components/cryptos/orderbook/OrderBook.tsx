@@ -2,7 +2,7 @@ import { useCryptoMarketTrade } from '@/hooks/useCryptoMarketTrade';
 import useMarketPriceStore from '@/store/useMarketPriceStore';
 import { TextFormats } from '@/types/CommonTypes';
 import { type IUpbitMarketTicker, type IUpbitOrderBook, IUpbitOrderBookUnit } from '@/types/cryptos/CryptoInterfaces';
-import { PriceChangeTypes } from '@/types/cryptos/CryptoTypes';
+import { type PriceChangeType, PriceChangeTypes } from '@/types/cryptos/CryptoTypes';
 import CommonUtils from '@/utils/CommonUtils';
 import CryptoUtils from '@/utils/CryptoUtils';
 import { cn } from '@/utils/StyleUtils';
@@ -65,7 +65,6 @@ export default function OrderBook({ orderBook, marketCode, marketCurrent }: IOrd
             unit={unit}
             max={orderBook.total_ask_size}
             className="[&_.trade-price]:text-red-500 [&_.percent]:bg-red-500/50"
-            isAsk={true}
           />
         ))}
 
@@ -77,7 +76,6 @@ export default function OrderBook({ orderBook, marketCode, marketCurrent }: IOrd
             unit={unit}
             max={orderBook.total_bid_size}
             className="[&_.trade-price]:text-blue-500 [&_.percent]:bg-blue-500/50"
-            isAsk={false}
           />
         ))}
       </List>

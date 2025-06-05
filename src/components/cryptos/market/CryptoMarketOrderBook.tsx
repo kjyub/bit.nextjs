@@ -3,7 +3,7 @@
 import UpbitApi from '@/apis/api/cryptos/UpbitApi';
 import useTradeMarketOrderBookSocket from '@/hooks/sockets/useTradeMarketOrderBookSocket';
 import { useCryptoUi } from '@/hooks/useCryptoUi';
-import type { IUpbitOrderBook } from '@/types/cryptos/CryptoInterfaces';
+import type { IUpbitMarketTicker, IUpbitOrderBook } from '@/types/cryptos/CryptoInterfaces';
 import { useCallback, useEffect, useState } from 'react';
 import OrderBook from '../orderbook/OrderBook';
 
@@ -13,7 +13,7 @@ interface ICryptoMarketOrderBook {
 }
 export default function CryptoMarketOrderBook({ marketCode, marketCurrent }: ICryptoMarketOrderBook) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [orderBook, setOrderBook] = useState<IUpbitOrderBook>({});
+  const [orderBook, setOrderBook] = useState<IUpbitOrderBook>({} as IUpbitOrderBook);
 
   const { isShowMobileChart, setIsShowMobileChart } = useCryptoUi();
 

@@ -34,9 +34,9 @@ const kyAuthApi = (options: Options = {}) => {
 export const credentialInstance = kyCredentialApi();
 export const defaultInstance = kyApi();
 export const authInstance = kyAuthApi();
-export const fileNoneAuthInstance = kyApi({ headers: { 'Content-Type': 'multipart/form-data' } });
-export const fileInstance = kyAuthApi({ headers: { 'Content-Type': 'multipart/form-data' } });
-export const downloadInstance = kyApi({ responseType: 'blob' });
+export const fileNoneAuthInstance = kyApi();
+export const fileInstance = kyAuthApi();
+export const downloadInstance = kyApi({ headers: { 'Content-Type': 'application/octet-stream' } });
 
 export const getAuthToken = (): Token | null => {
   return globalAuthToken;

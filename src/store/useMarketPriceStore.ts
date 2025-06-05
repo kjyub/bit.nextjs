@@ -20,6 +20,7 @@ const useMarketPriceStore = create<IMarketPriceStore>((set, get) => ({
     const data = await getInitData();
     set({ marketDic: data });
   },
+  marketPriceSocket: null,
   connectMarketPriceSocket: () => {
     const socket = TradeGoApi.getMarketSocket();
     set({ marketPriceSocket: socket });

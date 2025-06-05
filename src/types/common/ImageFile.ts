@@ -14,10 +14,10 @@ export default class extends CommonFile {
     this._height = '';
   }
 
-  convertByResponse() {
+  parseResponse(json: any) {
     if (!super.isValidParseResponse(json)) return;
 
-    super.convertByResponse(json);
+    super.parseResponse(json);
 
     this._base64 = json.base64;
     this._width = json.width;

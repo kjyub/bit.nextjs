@@ -38,8 +38,8 @@ export const UserGenderNames = {
 };
 
 export interface Token {
-  access: string;
-  refresh: string;
+  access?: string;
+  refresh?: string;
 }
 export interface LoginResponse {
   user: object;

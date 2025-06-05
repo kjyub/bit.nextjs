@@ -12,7 +12,6 @@ export default class CryptoWallet extends AbsApiObject {
 
   parseResponse(json: any): void {
     if (!super.isValidParseResponse(json)) return;
-    // ApiUtils.parseData(this, json)
 
     this._balance = Number(json.balance ?? '0');
     this._locked = Number(json.locked ?? '0');

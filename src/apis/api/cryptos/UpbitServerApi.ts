@@ -1,11 +1,10 @@
 import { upbitInstance } from '@/apis/utils/upbitInstances';
 import type { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
-import ky from 'ky';
 
 class UpbitServerApi {
   // region Market
   static async getMarketCurrent(marketCode: string): Promise<IUpbitMarketTicker> {
-    let result: IUpbitMarketTicker = {};
+    let result = {} as IUpbitMarketTicker;
 
     try {
       const response = await upbitInstance.get('ticker', {

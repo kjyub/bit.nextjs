@@ -3,12 +3,12 @@ import { useMouseHover } from '@/hooks/useMouseHover';
 import * as S from '@/styles/CryptoTradeStyles';
 import { TextFormats } from '@/types/CommonTypes';
 import {
-  MarginModeTypes,
   type MarginModeType,
+  MarginModeTypes,
   type SizeUnitType,
   SizeUnitTypes,
-  TradeOrderTypes,
   type TradeOrderType,
+  TradeOrderTypes,
 } from '@/types/cryptos/CryptoTypes';
 import CommonUtils from '@/utils/CommonUtils';
 import TypeUtils from '@/utils/TypeUtils';
@@ -16,7 +16,8 @@ import type React from 'react';
 import { useEffect, useRef, useState } from 'react';
 
 const HelpBox = ({ children }: { children: React.ReactNode }) => {
-  const [ref, isHover] = useMouseHover();
+  const [ref, isHover] = useMouseHover<HTMLDivElement>();
+
   return (
     <S.HelpBox ref={ref}>
       <i className="fa-solid fa-circle-question"></i>
@@ -165,8 +166,8 @@ export const LeverageInput = ({ leverageRatio, setLeverageRatio, maxRatio = 75 }
     }
   }, [leverageRatio]);
 
-  const handleValue = (e: ChangeEvent<HTMLDivElement>) => {
-    const value = Number.parseInt(e.target.textContent);
+  const handleValue = (e: React.ChangeEvent<HTMLDivElement>) => {
+    const value = Number.parseInt(e.target.textContent ?? '1');
     let _leverage = value;
     let refreshValue = false; // 입력하지 말아야 할 값이 들어온 경우 editable div에 값을 새로 써준다
 
@@ -305,11 +306,11 @@ export const NumberInput = ({
   className = '',
   suffix = '',
 }: NumberInputProps) => {
-  const handleValue = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const replaceComma = String(e.target.value.replace(/,/g, ''));
 
     if (replaceComma === '') {
-      setValue();
+      setValue(0);
       return;
     }
 
@@ -318,12 +319,12 @@ export const NumberInput = ({
 
     // 소수점 입력하는 경우 1
     if (replaceComma[replaceComma.length - 1] === '.') {
-      setValue(replaceComma);
+      setValue(_value);
       return;
     }
     // 소수점 입력하는 경우 2
     if (replaceComma.includes('.') && replaceComma[replaceComma.length - 1] === '0') {
-      setValue(replaceComma);
+      setValue(_value);
       return;
     }
 
@@ -638,7 +639,7 @@ interface PositionCloseSizeInputProps {
   max: number;
 }
 export const PositionCloseSizeInput = ({ label, value, setValue, max }: PositionCloseSizeInputProps) => {
-  const [ref, isSliderShow, setSliderShow] = useDetectClose();
+  const [ref, isSliderShow, setSliderShow] = useDetectClose<HTMLDivElement>();
 
   useEffect(() => {
     if (ref.current?.querySelector('input.input')) {

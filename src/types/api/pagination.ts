@@ -21,10 +21,10 @@ export default class Pagination<T extends AbsApiObject> {
     return this._pageIndex;
   }
 
-  parseResponse(data: object, cls: new () => T): void {
+  parseResponse(data: any, cls: new () => T): void {
     const results = data.results ?? [];
 
-    this._items = results.map((result) => {
+    this._items = results.map((result: any) => {
       const instance: T = new cls();
       instance.parseResponse(result as any);
       return instance;

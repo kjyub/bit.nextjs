@@ -1,6 +1,7 @@
 import * as cheerio from 'cheerio';
 // import Cheerio from "cheerio"
 import { isEqual } from 'lodash';
+import TypeUtils from './TypeUtils';
 
 // const SANITIZE_CONFIG = {
 //   allowedTags: ['img'],
@@ -10,8 +11,8 @@ import { isEqual } from 'lodash';
 //   },
 //   disallowedTags: ['html', 'head', 'body'],
 // }
-export default class FileUtils {
-  static getMediaURL() {
+namespace FileUtils {
+  export function getMediaURL() {
     if (!process.env.NEXT_PUBLIC_STORAGE_SERVER) {
       return `${process.env.NEXT_PUBLIC_DJANGO_SERVER}/media/`;
     } else {
@@ -20,7 +21,7 @@ export default class FileUtils {
   }
 
   // 서버에 파일 URL은 서버주소를 포함하지 않기 때문에 붙여준다. (리액트에서만 붙여서 쓴다. 백엔드로 다시 보낼때는 제거해야한다.)
-  static getMediaFileUrl(fileURL) {
+  export function getMediaFileUrl(fileURL: string) {
     if (!fileURL) {
       return '';
     }
@@ -28,11 +29,11 @@ export default class FileUtils {
     return FileUtils.getMediaURL() + fileURL;
   }
   // 해당 주소가 MediaFileURL인지 확인한다.
-  static isMediaFileURL(fileURL) {
+  export function isMediaFileURL(fileURL: string) {
     return decodeURIComponent(fileURL).includes(FileUtils.getMediaURL());
   }
   // 텍스트 에디터 내용에 있는 파일 소스 URL은 서버주소를 포함하지 않기 때문에 붙여준다.
-  static replaceMedieFileURL(content: string) {
+  export function replaceMedieFileURL(content: string): string {
     if (!content) {
       return '';
     }
@@ -48,14 +49,14 @@ export default class FileUtils {
     return bs.html();
   }
   // 텍스트 에디터 내용을 안전하게 사용하지 않는 태그들을 제거한다.
-  static getSantinizedContent(content) {
+  export function getSantinizedContent(content: string): string {
     // const sanitized = sanitizeHtml(content, SANITIZE_CONFIG)
     // const sanitized = dompurify.sanitize(content, {FORCE_BODY: true})
     // return sanitized
     return content; // CKEditor5는 내용 업데이트 시 자체 sanitze기능이 있다.
   }
   // 텍스트 에디터 내용을 다시 업로드할 때 서버 주소를 다시 제거한다.
-  static removeMediaFileURL(content) {
+  export function removeMediaFileURL(content: string): string {
     if (!content) {
       return content;
     }
@@ -63,16 +64,16 @@ export default class FileUtils {
     return content.replace(FileUtils.getMediaURL(), '');
   }
   // 텍스트 에디터 내용을 다시 업로드할 때 서버에 저장용으로 처리한다.
-  static getRequestContent(content) {
+  export function getRequestContent(content: string): string {
     let converted = content;
     converted = FileUtils.removeMediaFileURL(converted);
     converted = FileUtils.getSantinizedContent(converted);
 
     return converted;
   }
-  static BLANK_CONTENT = '<p><br></p>';
+  export const BLANK_CONTENT = '<p><br></p>';
   // 텍스트 에디터의 내용을 비교한다.
-  static equalsContent(html1, html2) {
+  export function equalsContent(html1: string, html2: string): boolean {
     if (!html1 || !html2) {
       return false;
     }
@@ -111,10 +112,10 @@ export default class FileUtils {
       return true;
     }
   }
-  static isBlankContent(content) {
+  export function isBlankContent(content: string): boolean {
     return !content || content === FileUtils.BLANK_CONTENT;
   }
-  static isFileOverVolume(fileSize, fileSizeMB = 10) {
+  export function isFileOverVolume(fileSize: number, fileSizeMB = 10): boolean {
     // 파일 사이즈가 더 크면 true
     // 파일 사이즈가 더 작으면 false
     const maxFileSize = fileSizeMB * 1024 * 1024;
@@ -124,15 +125,17 @@ export default class FileUtils {
       return false;
     }
   }
-  static getFileSize(file) {
+  export function getFileSize(file: File): string {
     const sizeInBytes = file.size;
     const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
     if (sizeInBytes === 0) return '0 Byte';
-    const i = Number.parseInt(Math.floor(Math.log(sizeInBytes) / Math.log(1024)));
-    return `${Math.round(sizeInBytes / 1024 ** i, 2)} ${sizes[i]}`;
+    const i = Number.parseInt(Math.floor(Math.log(sizeInBytes) / Math.log(1024)).toString());
+    return `${TypeUtils.round(sizeInBytes / 1024 ** i, 2)} ${sizes[i]}`;
   }
   // html 태그들을 제거하고 텍스트만 가져온다.
-  static getTextContent(content: string) {
+  export function getTextContent(content: string): string {
     return content.replace(/<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/gi, '');
   }
 }
+
+export default FileUtils;

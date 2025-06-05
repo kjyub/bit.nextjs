@@ -1,5 +1,5 @@
 import { type OrderType, OrderTypes } from '@/types/common/CommonTypes';
-import { MarketSortTypeNames, type MarketSortType } from '@/types/cryptos/CryptoTypes';
+import { type MarketSortType, MarketSortTypeNames } from '@/types/cryptos/CryptoTypes';
 import { memo } from 'react';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
   currentOrderType: OrderType;
   setOrderType: (orderType: OrderType) => void;
 }
-export default memo(function MarketSortType({
+export default memo(function MarketSortTypeButton({
   sortType,
   currentSortType,
   setSortType,

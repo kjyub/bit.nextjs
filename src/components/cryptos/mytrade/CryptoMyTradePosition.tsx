@@ -6,12 +6,12 @@ import useMarketPriceStore from '@/store/useMarketPriceStore';
 import useUserInfoStore from '@/store/useUserInfo';
 import * as S from '@/styles/CryptoMyTradeStyles';
 import {
-  MarginModeTypes,
   MarginModeTypeNames,
+  MarginModeTypes,
   PositionTypes,
   SizeUnitTypes,
-  TradeOrderTypes,
   type TradeOrderType,
+  TradeOrderTypes,
   TradeTypes,
 } from '@/types/cryptos/CryptoTypes';
 import type TradePosition from '@/types/cryptos/TradePosition';
@@ -89,7 +89,6 @@ const Position = ({ position, userBudget }: IPosition) => {
         trade_type: TradeTypes.CLOSE,
         margin_mode: position.marginMode,
         position_type: position.positionType === PositionTypes.LONG ? PositionTypes.SHORT : PositionTypes.LONG,
-        cost: position.cost,
         price: Number(marketPrice),
         quantity: Number(closeQuantity),
         size: Number(closeQuantity) * Number(closePrice),

@@ -20,7 +20,7 @@ export default class Sigungu extends AbsApiObject {
     this._sigunguEnglish = '';
   }
 
-  parseResponse(json) {
+  parseResponse(json: any) {
     if (!super.isValidParseResponse(json)) return;
 
     this._id = json.id;

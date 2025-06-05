@@ -28,7 +28,6 @@ export default class MarketCommunityComment extends AbsApiObject {
 
   parseResponse(json: any): void {
     if (!super.isValidParseResponse(json)) return;
-    // ApiUtils.parseData(this, json)
 
     this._id = json.id;
     this._communityNanoId = json.community_nano_id;

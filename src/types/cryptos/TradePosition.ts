@@ -1,6 +1,6 @@
 import { AbsApiObject } from '../ApiTypes';
 import CryptoMarket from './CryptoMarket';
-import { MarginModeTypes, type MarginModeType, PositionTypes } from './CryptoTypes';
+import { type MarginModeType, MarginModeTypes, type PositionType, PositionTypes } from './CryptoTypes';
 
 export default class TradePosition extends AbsApiObject {
   protected _id: number;
@@ -21,6 +21,7 @@ export default class TradePosition extends AbsApiObject {
   private _averageClosePrice: number;
   private _pnl: number;
   private _closeTime: string;
+  private _createdDate: string;
 
   constructor() {
     super();
@@ -37,15 +38,15 @@ export default class TradePosition extends AbsApiObject {
     this._averageLeverage = 1;
     this._liquidatePrice = 0;
     this._totalFee = 0;
-    this._entryPrice = '';
+    this._entryPrice = 0;
     this._averageClosePrice = 0;
     this._pnl = 0;
     this._closeTime = '';
+    this._createdDate = '';
   }
 
   parseResponse(json: any): void {
     if (!super.isValidParseResponse(json)) return;
-    // ApiUtils.parseData(this, json)
 
     this._id = json.id;
     this._marketCode = json.market_code;
@@ -64,6 +65,7 @@ export default class TradePosition extends AbsApiObject {
     this._averageClosePrice = json.average_close_price;
     this._pnl = json.pnl;
     this._closeTime = json.close_time;
+    this._createdDate = json.created_date;
   }
 
   public get id(): number {
@@ -120,5 +122,8 @@ export default class TradePosition extends AbsApiObject {
   }
   public get closeTime(): string {
     return this._closeTime;
+  }
+  public get createdDate(): string {
+    return this._createdDate;
   }
 }

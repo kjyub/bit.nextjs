@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
 export default function AppClientLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }) {
   const pathname = usePathname();
   const params = useSearchParams();

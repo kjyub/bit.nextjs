@@ -1,7 +1,7 @@
 // 로컬, 세션 스토리지 관련 유틸
 
-export default class StorageUtils {
-  static getSessionStorageList(storageKey: string): Array<unknown> {
+namespace StorageUtils {
+  export function getSessionStorageList(storageKey: string): Array<unknown> {
     if (!storageKey) {
       return [];
     }
@@ -18,7 +18,7 @@ export default class StorageUtils {
       return [];
     }
   }
-  static pushSessionStorageList(storageKey: string, value: string) {
+  export function pushSessionStorageList(storageKey: string, value: string) {
     const data: Array<unknown> = StorageUtils.getSessionStorageList(storageKey);
     data.push(value);
 
@@ -26,3 +26,5 @@ export default class StorageUtils {
     sessionStorage.setItem(storageKey, storageList);
   }
 }
+
+export default StorageUtils;

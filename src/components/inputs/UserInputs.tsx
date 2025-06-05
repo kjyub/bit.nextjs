@@ -3,25 +3,21 @@ import * as S from '@/styles/UserInputStyles';
 import type React from 'react';
 import { useState } from 'react';
 
-interface InputProps {
-  type: string;
-  label: string;
+interface InputContainerProps {
+  label?: string;
   labelWidth?: string;
-  placeholder?: string;
   helpText?: string;
-  autoComplete: boolean;
-  value: string;
-  setValue: React.Dispatch<React.SetStateAction<unknown>>;
-  errorMessage?: string;
-  suffix?: string;
-  setFocus?: React.Dispatch<React.SetStateAction<boolean>>;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onEnter: () => void;
-  disabled: boolean;
   children?: React.ReactNode;
 }
+interface InputBaseProps<T> extends InputContainerProps {
+  value: T;
+  setValue: React.Dispatch<React.SetStateAction<T>>;
+  errorMessage?: string;
+  disabled?: boolean;
+  className?: string;
+}
 
-const FrontInputContainer: React.FC<InputProps> = ({ label, labelWidth = 'w-[80px]', helpText, children }) => {
+const InputContainer: React.FC<InputContainerProps> = ({ label, labelWidth = 'w-[80px]', helpText, children }) => {
   return (
     <S.Layout>
       <div className="flex justify-between items-center w-full">
@@ -34,71 +30,79 @@ const FrontInputContainer: React.FC<InputProps> = ({ label, labelWidth = 'w-[80p
   );
 };
 
-export const Input: React.FC<InputProps> = ({
+interface InputProps<T> extends Omit<InputBaseProps<T>, 'setValue'> {
+  type?: string;
+  setValue?: React.Dispatch<React.SetStateAction<T>>;
+  placeholder?: string;
+  errorMessage?: string;
+  suffix?: string;
+  setFocus?: React.Dispatch<React.SetStateAction<boolean>>;
+  onEnter?: () => void;
+  inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  autoComplete?: boolean;
+}
+export const Input: React.FC<InputProps<string | number>> = ({
   type,
   label,
   labelWidth = 'w-[80px]',
-  placeholder,
   helpText,
-  autoComplete = false,
+  placeholder,
   value,
+  setValue,
   errorMessage,
   suffix = '',
-  onChange,
   onEnter,
-  setFocus,
-  disabled,
+  inputProps,
+  className,
   children,
 }) => {
   const [isInputFoucs, setInputFocus] = useState<boolean>(false);
 
   // 보통 상황에선 값이 있을 때만 유효성 에러 메세지 표시한다.
-  const isError = value && errorMessage;
+  const isError = !!(value && errorMessage);
 
-  const handleEnter = (e) => {
+  const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && onEnter) {
       onEnter();
     }
   };
 
-  const handleFocus = (_isFocus: boolean) => {
-    if (setFocus) {
-      setFocus(_isFocus);
-    }
-    setInputFocus(_isFocus);
-  };
-
   return (
-    <FrontInputContainer label={label} labelWidth={labelWidth} helpText={helpText}>
+    <InputContainer label={label} labelWidth={labelWidth} helpText={helpText}>
       <S.InputContainer>
-        <S.InputBox $is_active={isInputFoucs} $is_error={isError}>
+        <S.InputBox $is_active={isInputFoucs} $is_error={!!isError}>
           <S.Input
             type={type}
             value={value}
+            className={className}
             placeholder={placeholder}
-            onChange={onChange}
-            autoComplete={autoComplete ? null : 'new-password'}
-            onFocus={() => {
-              handleFocus(true);
+            onChange={(e) => {
+              setValue?.(e.target.value);
+              inputProps?.onChange?.(e);
             }}
-            onBlur={() => {
-              handleFocus(false);
-            }}
+            autoComplete={inputProps?.autoComplete ? undefined : 'new-password'}
             onKeyDown={handleEnter}
-            disabled={disabled}
-            $is_error={isError}
+            onFocus={(e) => {
+              setInputFocus(true);
+              inputProps?.onFocus?.(e);
+            }}
+            onBlur={(e) => {
+              setInputFocus(false);
+              inputProps?.onBlur?.(e);
+            }}
+            {...inputProps}
           />
         </S.InputBox>
         {children}
         {suffix && <S.Suffix>{suffix}</S.Suffix>}
         {isError && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
       </S.InputContainer>
-    </FrontInputContainer>
+    </InputContainer>
   );
 };
 
-interface IBooleanInputProps extends InputProps {
-  setValue: React.Dispatch<React.SetStateAction<boolean>>;
+interface IBooleanInputProps extends InputBaseProps<boolean> {
   yesText: string;
   noText: string;
 }
@@ -111,11 +115,11 @@ export const BooleanInput: React.FC<IBooleanInputProps> = ({
   noText = '아니요',
 }) => {
   return (
-    <FrontInputContainer label={label} labelWidth={labelWidth}>
+    <InputContainer label={label} labelWidth={labelWidth}>
       <S.InputContainer>
         <S.BoolInput>
           <S.BoolButton
-            $is_active={value === true}
+            $is_active={!!value}
             onClick={() => {
               setValue(true);
             }}
@@ -123,7 +127,7 @@ export const BooleanInput: React.FC<IBooleanInputProps> = ({
             {yesText}
           </S.BoolButton>
           <S.BoolButton
-            $is_active={value === false}
+            $is_active={!value}
             onClick={() => {
               setValue(false);
             }}
@@ -132,16 +136,16 @@ export const BooleanInput: React.FC<IBooleanInputProps> = ({
           </S.BoolButton>
         </S.BoolInput>
       </S.InputContainer>
-    </FrontInputContainer>
+    </InputContainer>
   );
 };
 
-interface IComboInputProps extends InputProps {
+interface IComboInputProps extends InputBaseProps<string | number> {
+  placeholder?: string;
   optionKeys: string[];
   optionNames: string[];
 }
 export const Combo: React.FC<IComboInputProps> = ({
-  type,
   label,
   labelWidth = 'w-[80px]',
   placeholder,
@@ -153,32 +157,31 @@ export const Combo: React.FC<IComboInputProps> = ({
   errorMessage,
 }) => {
   // 보통 상황에선 값이 있을 때만 유효성 에러 메세지 표시한다.
-  const isError = value && errorMessage;
+  const isError = !!(value && errorMessage);
 
-  const [optionRef, isOptionShow, setOptionShow] = useDetectClose();
+  const [optionRef, isOptionShow, setOptionShow] = useDetectClose<HTMLDivElement>();
 
   // 값이 선택되었는지 여부
   const isSelected = value;
 
   return (
-    <FrontInputContainer label={label} labelWidth={labelWidth} helpText={helpText}>
+    <InputContainer label={label} labelWidth={labelWidth} helpText={helpText}>
       <S.InputContainer ref={optionRef}>
         <S.InputBox
-          type={type}
           onClick={() => {
             setOptionShow(!isOptionShow);
           }}
           $is_active={isOptionShow}
-          $is_error={isError}
+          $is_error={!!isError}
         >
-          <span className={`${isSelected ? 'active' : ''}`}>{isSelected ? optionNames[value] : placeholder}</span>
+          <span className={`${isSelected ? 'active' : ''}`}>{isSelected ? optionNames[Number(value)] : placeholder}</span>
           <i className="fa-solid fa-chevron-down"></i>
         </S.InputBox>
 
         {isOptionShow && (
           <S.OptionBox>
             {optionKeys.map((key, index) => (
-              <option
+              <li
                 key={key}
                 onClick={() => {
                   setValue(key);
@@ -186,23 +189,20 @@ export const Combo: React.FC<IComboInputProps> = ({
                 }}
               >
                 {optionNames[index]}
-              </option>
+              </li>
             ))}
           </S.OptionBox>
         )}
         {isError && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
       </S.InputContainer>
-    </FrontInputContainer>
+    </InputContainer>
   );
 };
 
-interface ICheckbox extends IUserInputText {
-  value: string;
-  setValue: Dispatch<SetStateAction<boolean>>;
+interface ICheckbox extends InputBaseProps<boolean> {
   label: string;
-  disabled: boolean;
 }
-export const Checkbox = ({ value, setValue, label = '', disabled = false }: ICheckbox) => {
+export const Checkbox: React.FC<ICheckbox> = ({ value, setValue, label = '', disabled = false }) => {
   return (
     <div
       className="flex items-center space-x-0.5 cursor-pointer"

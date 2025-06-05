@@ -2,32 +2,27 @@ import { TextFormats } from '@/types/CommonTypes';
 import dayjs from 'dayjs';
 import Inko from 'inko';
 
-export default class CommonUtils {
-  static getBaseUrl(): string {
+namespace CommonUtils {
+  export function getBaseUrl(): string {
     const currentURL = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}`;
     return currentURL;
   }
-  static toCamelCase(str: string) {
+  export function toCamelCase(str: string) {
     return str.replace(/([-_][a-z])/g, (group) => group.toUpperCase().replace('-', '').replace('_', ''));
   }
-  static round(value: number, round = 0): number {
+  export function round(value: number, round = 0): number {
     // return Math.round(value * Math.pow(10, round)) / Math.pow(10, round)
     return Number(value.toPrecision(round));
   }
-  static getRandomEnumValue<T>(enumeration: T): T[keyof T] {
-    const enumValues = Object.values(enumeration);
-    const randomIndex = Math.floor(Math.random() * enumValues.length);
-    return enumValues[randomIndex];
-  }
-  static getRandomChoice<T>(list: Array<T>): T {
+  export function getRandomChoice<T>(list: Array<T>): T {
     const randomIndex = Math.floor(Math.random() * list.length);
 
     return list[randomIndex];
   }
-  static getCurrentBaseUrl(): string {
+  export function getCurrentBaseUrl(): string {
     return window.location.href.split('/').slice(0, 3).join('/');
   }
-  static async copyClipboard(value: string): boolean {
+  export async function copyClipboard(value: string): Promise<boolean> {
     try {
       await navigator.clipboard.writeText(value);
     } catch {
@@ -35,12 +30,7 @@ export default class CommonUtils {
     }
     return true;
   }
-  static sha256(value: string): string {
-    const hash = crypto.createHash('sha256');
-    hash.update(value);
-    return hash.digest('hex');
-  }
-  static telFormat(v: string): string {
+  export function telFormat(v: string): string {
     const value = v.replace(/[^0-9]/g, '');
 
     const result = [];
@@ -73,7 +63,7 @@ export default class CommonUtils {
 
     return result.filter((val) => val).join('-');
   }
-  static telFormatter(e): string {
+  export function telFormatter(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
     if (!value) {
       e.target.value = value;
@@ -81,7 +71,7 @@ export default class CommonUtils {
 
     e.target.value = CommonUtils.telFormat(value);
   }
-  static textFormat(text: string, format: TextFormats): string {
+  export function textFormat(text: string | number, format: TextFormats): string {
     let result = !text ? '' : String(text);
 
     if (format === TextFormats.NUMBER) {
@@ -116,7 +106,11 @@ export default class CommonUtils {
       const number = CommonUtils.textFormat(text, TextFormats.NUMBER);
       result = `${number}원`;
     } else if (format === TextFormats.KOREAN_PRICE) {
-      const inputNumber = text < 0 ? false : text;
+      if (Number.isNaN(Number(text)) || Number(text) < 0) {
+        return String(text);
+      }
+
+      const inputNumber = Number(text);
       const unitWords = ['', '만', '억', '조', '경'];
       const splitUnit = 10000;
       const splitCount = unitWords.length;
@@ -138,11 +132,11 @@ export default class CommonUtils {
 
       result = resultString;
     } else if (format === TextFormats.KOREAN_PRICE_SIMPLE) {
-      if (!text || Number(text) <= 1) {
-        return text;
+      if (Number.isNaN(Number(text)) || Number(text) < 0) {
+        return String(text);
       }
 
-      const inputNumber = text;
+      const inputNumber = Number(text);
       const unitWords = ['', '만', '억', '조', '경'];
       const splitUnit = 10000;
       const splitCount = unitWords.length;
@@ -169,7 +163,7 @@ export default class CommonUtils {
 
     return result;
   }
-  static textFormatInput(text: string, format: TextFormats): string {
+  export function textFormatInput(text: string, format: TextFormats): string {
     let result = text;
 
     if (format === TextFormats.NUMBER) {
@@ -186,7 +180,7 @@ export default class CommonUtils {
 
     return result;
   }
-  static setMaxDays(year: number, month: number, day: number) {
+  export function setMaxDays(year: number, month: number, day: number) {
     // 각 월의 최대 날짜 수
     const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
@@ -210,12 +204,12 @@ export default class CommonUtils {
 
     return day;
   }
-  static isValidPassword(value: string): boolean {
+  export function isValidPassword(value: string): boolean {
     // 정규식: 최소 6자리, 영문자와 숫자 포함
     const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
     return regex.test(value);
   }
-  static setTextareaAutoHeight(e: React.ChangeEvent<HTMLTextAreaElement>) {
+  export function setTextareaAutoHeight(e: React.ChangeEvent<HTMLTextAreaElement>) {
     const element = e.target;
 
     if (!element) {
@@ -225,48 +219,15 @@ export default class CommonUtils {
     element.style.height = 'auto';
     element.style.height = `${Number(element.scrollHeight) + 4}px`;
   }
-  static koreanToEnglish = (value: string): string => {
+  export function koreanToEnglish(value: string): string {
     const inko = new Inko();
     // const convertedInput = value.replace(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, (char) => romanize(char))
     return inko.ko2en(value);
   };
-  static async getAddressCode(callback: (adderssCode: string, address1: string) => void) {
-    new window.daum.Postcode({
-      oncomplete: (data) => {
-        let addr = '';
-        let extraAddr = '';
-
-        if (data.userSelectedType === 'R') {
-          addr = data.roadAddress;
-        } else {
-          addr = data.jibunAddress;
-        }
-
-        if (data.userSelectedType === 'R') {
-          if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-            extraAddr += data.bname;
-          }
-          if (data.buildingName !== '' && data.apartment === 'Y') {
-            extraAddr += extraAddr !== '' ? `, ${data.buildingName}` : data.buildingName;
-          }
-          if (extraAddr !== '') {
-            extraAddr = ` (${extraAddr})`;
-          }
-        } else {
-          extraAddr = '';
-        }
-
-        const addressCode = data.zonecode;
-        const address1 = addr + extraAddr;
-
-        callback(addressCode, address1);
-      },
-    }).open();
-  }
-  static rowIndex(index: number, pageIndex: number, pageSize: number, itemCount: number): number {
+  export function rowIndex(index: number, pageIndex: number, pageSize: number, itemCount: number): number {
     return itemCount - ((pageIndex - 1) * pageSize + index);
   }
-  static getDateShorten(date: string): string {
+  export function getDateShorten(date: string): string {
     try {
       const now = dayjs();
       const inputDate = dayjs(date);
@@ -290,7 +251,7 @@ export default class CommonUtils {
       return '';
     }
   }
-  static isPathActive(pathname: string, path: string): boolean {
+  export function isPathActive(pathname: string, path: string): boolean {
     try {
       return pathname.split('/')[1] === path.split('/')[1];
     } catch {
@@ -298,3 +259,5 @@ export default class CommonUtils {
     }
   }
 }
+
+export default CommonUtils;

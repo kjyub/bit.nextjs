@@ -11,13 +11,13 @@ import * as S from '@/styles/CryptoTradeStyles';
 import { TextFormats } from '@/types/CommonTypes';
 import { CryptoFee, MAX_COST_RATIO } from '@/types/cryptos/CryptoConsts';
 import {
-  MarginModeTypes,
   type MarginModeType,
-  PositionTypes,
+  MarginModeTypes,
   type PositionType,
+  PositionTypes,
   type SizeUnitType,
-  TradeOrderTypes,
   type TradeOrderType,
+  TradeOrderTypes,
   TradeTypes,
 } from '@/types/cryptos/CryptoTypes';
 import type User from '@/types/users/User';

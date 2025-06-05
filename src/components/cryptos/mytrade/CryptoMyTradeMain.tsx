@@ -64,7 +64,7 @@ const PageTab = ({ page, setPage, currentPage, count }: IPageTabBar) => {
       className={`tab ${page === currentPage ? 'active' : ''}`}
     >
       {MyTradePageNames[page]}
-      {count > 0 && ` (${count})`}
+      {count && count > 0 && ` (${count})`}
     </button>
   );
 };

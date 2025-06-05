@@ -3,6 +3,7 @@
 import useIsScrollTop from '@/hooks/useIsScrollTop';
 import useMarketPriceStore from '@/store/useMarketPriceStore';
 import * as S from '@/styles/CryptoMarketStyles';
+import type { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
 import CryptoMarket from '@/types/cryptos/CryptoMarket';
 import { PriceChangeTypes } from '@/types/cryptos/CryptoTypes';
 import CryptoUtils from '@/utils/CryptoUtils';

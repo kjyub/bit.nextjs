@@ -2,10 +2,11 @@
 
 import useBreakpoint from '@/hooks/useBreakpoint';
 import { useCryptoUi } from '@/hooks/useCryptoUi';
+import type { StyleProps } from '@/types/StyleTypes';
 import { useEffect } from 'react';
 import tw from 'tailwind-styled-components';
 
-const Wrapper = tw.div`
+const Wrapper = tw.div<StyleProps>`
   fixed max-md:top-4 md:top-30 max-sm:inset-x-4 sm:right-4 z-50
   flex
   rounded-md bg-slate-900/70 backdrop-blur-lg

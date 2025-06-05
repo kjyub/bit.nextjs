@@ -105,7 +105,11 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
 
     setCommentLoading(true);
 
-    const data = {
+    const data: {
+      community_nano_id: string;
+      content: string;
+      parent_id?: number;
+    } = {
       community_nano_id: community.nanoId,
       content: value,
     };
@@ -149,7 +153,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
     }
 
     // 이미 추천이 된 경우는 취소
-    let type = LikeTypes.NONE;
+    let type: LikeType = LikeTypes.NONE;
     if (myLikeType === LikeTypes.NONE && _type !== myLikeType) {
       type = _type;
     }
@@ -237,9 +241,10 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
               setCommentValue(e.target.value);
             }}
             onKeyDown={handleCommentEnter}
-            onInput={(e) => {
-              e.target.style.height = '48px';
-              e.target.style.height = `${Number(e.target.scrollHeight)}px`;
+            onInput={(e: React.FormEvent<HTMLTextAreaElement>) => {
+              const target = e.target as HTMLTextAreaElement;
+              target.style.height = '48px';
+              target.style.height = `${Number(target.scrollHeight)}px`;
             }}
           />
           <button
@@ -276,7 +281,7 @@ const Comment = ({ user, comment, handleComment }: IComment) => {
   const [commentValue, setCommentValue] = useState<string>('');
   const commentInputRef = useRef<HTMLTextAreaElement>(null);
 
-  const hasParent = comment.parentId && comment.parentId >= 0;
+  const hasParent = !!(comment.parentId && comment.parentId >= 0);
   const isMaster = user.uuid === comment.user.uuid || user.userType === UserTypes.STAFF;
 
   useEffect(() => {
@@ -385,7 +390,7 @@ const Comment = ({ user, comment, handleComment }: IComment) => {
       <CommentContent
         content={content}
         hasParent={hasParent}
-        parentName={comment.parentName}
+        parentName={"parentName"}
         isEdit={isShowEdit}
         handleComment={handleCommentEdit}
       />
@@ -395,16 +400,16 @@ const Comment = ({ user, comment, handleComment }: IComment) => {
         <CS.ItemCommentWriteBox className="mt-4! pl-6 [&>button]:w-24">
           <textarea
             ref={commentInputRef}
-            type={'text'}
             value={commentValue}
             placeholder="답글을 입력해주세요"
             onChange={(e) => {
               setCommentValue(e.target.value);
             }}
             onKeyDown={handleCommentEnter}
-            onInput={(e) => {
-              e.target.style.height = '48px';
-              e.target.style.height = `${Number(e.target.scrollHeight)}px`;
+            onInput={(e: React.FormEvent<HTMLTextAreaElement>) => {
+              const target = e.target as HTMLTextAreaElement;
+              target.style.height = '48px';
+              target.style.height = `${Number(target.scrollHeight)}px`;
             }}
           />
           <button
@@ -461,15 +466,15 @@ const CommentContent = ({ content, hasParent, parentName, isEdit, handleComment 
         <CS.ItemCommentWriteBox className="mt-4! [&>button]:w-24">
           <textarea
             ref={commentInputRef}
-            type={'text'}
             value={commentValue}
             onChange={(e) => {
               setCommentValue(e.target.value);
             }}
             onKeyDown={handleCommentEnter}
-            onInput={(e) => {
-              e.target.style.height = '48px';
-              e.target.style.height = `${Number(e.target.scrollHeight)}px`;
+            onInput={(e: React.FormEvent<HTMLTextAreaElement>) => {
+              const target = e.target as HTMLTextAreaElement;
+              target.style.height = '48px';
+              target.style.height = `${Number(target.scrollHeight)}px`;
             }}
           />
           <button

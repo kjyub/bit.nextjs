@@ -2,6 +2,7 @@
 import CryptoApi from '@/apis/api/cryptos/CryptoApi';
 import UserApi from '@/apis/api/users/UserApi';
 import type { IMyTradeData } from '@/types/cryptos/CryptoInterfaces';
+import CryptoWallet from '@/types/cryptos/CryptoWallet';
 import { create } from 'zustand';
 
 const getInitData = async () => {
@@ -41,6 +42,7 @@ const useUserInfoStore = create<IUserInfoStore>((set, get) => ({
   balance: 0,
   locked: 0,
   myTrades: {
+    wallet: new CryptoWallet(),
     positions: [],
     orders: [],
   },

@@ -1,7 +1,7 @@
 import CommonUtils from './CommonUtils';
 
-export default class AuthUtils {
-  static parseJwt(token: string): object {
+namespace AuthUtils {
+  export function parseJwt(token: string): Record<string, any> {
     if (!token) {
       return {};
     }
@@ -23,7 +23,7 @@ export default class AuthUtils {
 
     return JSON.parse(jsonPayload);
   }
-  static getTokenExpires(token: string): Date | null {
+  export function getTokenExpires(token: string): Date | null {
     if (!token) {
       return null;
     }
@@ -36,7 +36,7 @@ export default class AuthUtils {
       return null;
     }
   }
-  static isExpiredToken(token: string): boolean {
+  export function isExpiredToken(token: string): boolean {
     if (!token) {
       return true;
     }
@@ -50,7 +50,7 @@ export default class AuthUtils {
 
     return expireDate.getTime() <= now.getTime();
   }
-  static authKakao(): string {
+  export function authKakao(): void {
     const baseUrl = CommonUtils.getBaseUrl();
     const kakaoRedirectUrl = `${baseUrl}/oauth/kakao/callback`;
     window.Kakao.Auth.authorize({
@@ -59,3 +59,5 @@ export default class AuthUtils {
     });
   }
 }
+
+export default AuthUtils;

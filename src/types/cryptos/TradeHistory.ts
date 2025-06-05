@@ -1,5 +1,5 @@
 import { AbsApiObject } from '../ApiTypes';
-import { PositionTypes, type PositionType, TradeOrderTypes, type TradeOrderType } from './CryptoTypes';
+import { type PositionType, PositionTypes, type TradeOrderType, TradeOrderTypes } from './CryptoTypes';
 import TradeOrder from './TradeOrder';
 
 export default class TradeHistory extends AbsApiObject {
@@ -32,7 +32,6 @@ export default class TradeHistory extends AbsApiObject {
 
   parseResponse(json: any): void {
     if (!super.isValidParseResponse(json)) return;
-    // ApiUtils.parseData(this, json)
 
     this._id = json.id;
     this._order.parseResponse(json.order as any);

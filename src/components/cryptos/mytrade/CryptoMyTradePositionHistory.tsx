@@ -50,7 +50,7 @@ export default function CryptoMyTradePositionHistory() {
     getHistories(1, _dateStart, _dateEnd);
   };
 
-  const scrollRef = usePageScroll({
+  const scrollRef = usePageScroll<HTMLDivElement>({
     nextPage: handleNextPage,
     pageIndex: pageIndex,
     itemCount: itemCount,

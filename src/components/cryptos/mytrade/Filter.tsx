@@ -128,9 +128,9 @@ const Date = ({ date, setDate }: IDate) => {
       return;
     }
 
-    setYear(Number(date.split('-')[0]));
-    setMonth(Number(date.split('-')[1]));
-    setDay(Number(date.split('-')[2]));
+    setYear(date.split('-')[0]);
+    setMonth(date.split('-')[1]);
+    setDay(date.split('-')[2]);
   }, [date]);
 
   const handleYear = (year: number) => {
@@ -160,11 +160,11 @@ const Date = ({ date, setDate }: IDate) => {
 
   return (
     <S.FilterDateInputBox>
-      <input type="text" className="w-[28px]" value={year} onChange={(e) => handleYear(e.target.value)} />
+      <input type="text" className="w-[28px]" value={year} onChange={(e) => handleYear(Number(e.target.value))} />
       <span>-</span>
-      <input type="text" className="w-4" value={month} onChange={(e) => handleMonth(e.target.value)} />
+      <input type="text" className="w-4" value={month} onChange={(e) => handleMonth(Number(e.target.value))} />
       <span>-</span>
-      <input type="text" className="w-4" value={day} onChange={(e) => handleDay(e.target.value)} />
+      <input type="text" className="w-4" value={day} onChange={(e) => handleDay(Number(e.target.value))} />
     </S.FilterDateInputBox>
   );
 };

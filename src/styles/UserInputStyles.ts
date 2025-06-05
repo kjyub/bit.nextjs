@@ -24,12 +24,12 @@ export const InputContainer = tw.div`
   relative
   flex items-center w-full h-12 space-x-2
 `;
-export const InputBox = tw(InputColor)`
+export const InputBox = tw(InputColor)<StyleProps>`
   flex items-center justify-between w-full h-full p-4
   rounded-lg 
 
-  ${({ $is_active }: StyleProps) => ($is_active ? 'border-2 border-indigo-500!' : 'border')}
-  ${({ $is_error }: StyleProps) => ($is_error ? 'border-red-500' : '')}
+  ${({ $is_active }) => ($is_active ? 'border-2 border-indigo-500!' : 'border')}
+  ${({ $is_error }) => ($is_error ? 'border-red-500' : '')}
   duration-200
 `;
 export const Input = tw.input`
@@ -82,7 +82,7 @@ export const OptionBox = tw(InputColor)`
   rounded-lg border 
   overflow-y-auto
 
-  [&>option]:flex [&>option]:items-center [&>option]:shrink-0 [&>option]:px-2 [&>option]:py-1 
-  [&>option]:rounded-lg [&>option]:hover:bg-slate-200 dark:[&>option]:hover:bg-slate-600
-  [&>option]:text-slate-800 dark:[&>option]:text-slate-100
+  [&>li]:flex [&>li]:items-center [&>li]:shrink-0 [&>li]:px-2 [&>li]:py-1 
+  [&>li]:rounded-lg [&>li]:hover:bg-slate-200 dark:[&>li]:hover:bg-slate-600
+  [&>li]:text-slate-800 dark:[&>li]:text-slate-100
 `;

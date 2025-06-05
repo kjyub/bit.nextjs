@@ -1,5 +1,5 @@
-export default class FrontUtils {
-  static getSearchUrl(pathname: string, params: object, key: string, value: string): string {
+namespace FrontUtils {
+  export function getSearchUrl(pathname: string, params: Record<string, any>, key: string, value: string): string {
     let link = `${pathname}?`;
     const paramKeys = Object.keys(params);
     if (paramKeys.length > 0) {
@@ -17,7 +17,7 @@ export default class FrontUtils {
     return link;
     // router.push(link, { scroll: isScroll })
   }
-  static handleArrayParam(params: object, key: string, value: T): T {
+  export function handleArrayParam(params: Record<string, any>, key: string, value: any): string {
     let stringValues: string = params[key] ?? '';
 
     // params에 값이 없는 경우 값 하나만 추가
@@ -39,3 +39,5 @@ export default class FrontUtils {
     return stringValues;
   }
 }
+
+export default FrontUtils;

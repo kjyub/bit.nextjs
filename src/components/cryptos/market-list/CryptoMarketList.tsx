@@ -5,10 +5,10 @@ import TradeGoApi from '@/apis/api/cryptos/TradeGoApi';
 import * as S from '@/styles/CryptoMarketStyles';
 import { type OrderType, OrderTypes } from '@/types/common/CommonTypes';
 import type CryptoMarket from '@/types/cryptos/CryptoMarket';
-import { type MarketSortType, MarketSortTypes, MarketTypes } from '@/types/cryptos/CryptoTypes';
+import { type MarketSortType, MarketSortTypes, type MarketType, MarketTypes } from '@/types/cryptos/CryptoTypes';
 import { Suspense, useCallback, useEffect, useState } from 'react';
 import Market from './Market';
-import MarketSortType from './MarketSortType';
+import MarketSortTypeButton from './MarketSortTypeButton';
 
 const getSortedCodes = async (
   marketDic: Record<string, CryptoMarket>,
@@ -18,8 +18,8 @@ const getSortedCodes = async (
   const currentMarketData = await TradeGoApi.getMarketsCurrentDic();
 
   return Object.keys(marketDic).sort((a, b) => {
-    let valueA: string | number;
-    let valueB: string | number;
+    let valueA: string | number = 0;
+    let valueB: string | number = 0;
 
     if (sortType === MarketSortTypes.NAME) {
       valueA = marketDic[a].koreanName;
@@ -69,7 +69,7 @@ const getFilteredMarkets = (_search: string, _markets: Array<CryptoMarket>): Set
 export default function CryptoMarketList() {
   const [search, setSearch] = useState<string>(''); // 검색어
 
-  const [sortType, setSortType] = useState<MarketSortTypes>(MarketSortTypes.TRADE_PRICE); // 정렬 기준
+  const [sortType, setSortType] = useState<MarketSortType>(MarketSortTypes.TRADE_PRICE); // 정렬 기준
   const [orderType, setOrderType] = useState<OrderType>(OrderTypes.DESC); // 정렬 방식
 
   return (
@@ -78,28 +78,28 @@ export default function CryptoMarketList() {
 
       <div className="market-sort">
         <Suspense>
-          <MarketSortType
+          <MarketSortTypeButton
             sortType={MarketSortTypes.NAME}
             currentSortType={sortType}
             setSortType={setSortType}
             currentOrderType={orderType}
             setOrderType={setOrderType}
           />
-          <MarketSortType
+          <MarketSortTypeButton
             sortType={MarketSortTypes.PRICE}
             currentSortType={sortType}
             setSortType={setSortType}
             currentOrderType={orderType}
             setOrderType={setOrderType}
           />
-          <MarketSortType
+          <MarketSortTypeButton
             sortType={MarketSortTypes.CHANGE}
             currentSortType={sortType}
             setSortType={setSortType}
             currentOrderType={orderType}
             setOrderType={setOrderType}
           />
-          <MarketSortType
+          <MarketSortTypeButton
             sortType={MarketSortTypes.TRADE_PRICE}
             currentSortType={sortType}
             setSortType={setSortType}
@@ -114,14 +114,10 @@ export default function CryptoMarketList() {
   );
 }
 
-const List = ({
-  search,
-  sortType,
-  orderType,
-}: { search: string; sortType: MarketSortType; orderType: OrderType }) => {
+const List = ({ search, sortType, orderType }: { search: string; sortType: MarketSortType; orderType: OrderType }) => {
   const [marketDic, setMarketDic] = useState<Record<string, CryptoMarket>>({}); // 코인 목록
   const [marketFilteredCodeSet, setMarketFilteredCodeSet] = useState<Set<string>>(new Set<string>()); // 검색한 코인 목록
-  const [marketType, _setMarketType] = useState<MarketTypes>(MarketTypes.KRW); // 마켓 종류 (KRW, BTC, USDT, HOLD)
+  const [marketType, _setMarketType] = useState<MarketType>(MarketTypes.KRW); // 마켓 종류 (KRW, BTC, USDT, HOLD)
   const [sortedCodes, setSortedCodes] = useState<string[]>(['KRW-BTC']); // 정렬된 코드
 
   useEffect(() => {
@@ -141,14 +137,17 @@ const List = ({
   }, [marketDic, orderType, sortType]);
 
   const getMarkets = useCallback(
-    async (_search: string, marketType: MarketTypes) => {
+    async (_search: string, marketType: MarketType) => {
       // 마켓타입에 따른 모든 코인 목록을 가져온다
       const response = await CryptoApi.getMarkets('', marketType);
       setMarketDic(
-        response.reduce((acc, market) => {
-          acc[market.code] = market;
-          return acc;
-        }, {}),
+        response.reduce(
+          (acc, market) => {
+            acc[market.code] = market;
+            return acc;
+          },
+          {} as Record<string, CryptoMarket>,
+        ),
       );
 
       // 검색어에 따른 코인 목록을 가져온다

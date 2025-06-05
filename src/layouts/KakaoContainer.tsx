@@ -7,8 +7,7 @@ export default function KakaoContainer({ children }: { children: React.ReactNode
   // 카카오
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const { Kakao } = window;
-      console.log('KakaoContainer', Kakao);
+      const { Kakao } = window as Window & typeof globalThis;
 
       if (Kakao && !Kakao.isInitialized()) {
         initKakao();

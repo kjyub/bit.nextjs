@@ -17,13 +17,17 @@ export const setAuthorization = (request: KyRequest) => {
 export const validateAuthToken = async (request: KyRequest, _options: NormalizedOptions, response: KyResponse) => {
   // 재요청 실패 체크
   if (response?.status === 401 && request.headers.get('x-retry') === 'true') {
-    throw error;
+    throw new Error('토큰이 없습니다.');
   }
 
   // 401 에러시 토큰 재발급 시도
   if (response?.status === 401 && request.headers.get('x-retry') !== 'true') {
     try {
       const token = getAuthToken();
+      if (!token) {
+        throw new Error('토큰이 없습니다.');
+      }
+
       const refreshResponse = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER}/api/auth/refresh/`, {
         credentials: 'include',
         method: 'POST',
@@ -58,7 +62,7 @@ export const validateAuthToken = async (request: KyRequest, _options: Normalized
         window.location.reload();
       }
 
-      throw error;
+      throw new Error('토큰 갱신 실패');
     }
   }
 

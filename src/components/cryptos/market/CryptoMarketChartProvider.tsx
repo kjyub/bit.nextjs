@@ -124,7 +124,7 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
     const last = candles[candles.length - 1];
     const to = `${last.candle_date_time_kst}+09:00`;
 
-    let newData = [];
+    let newData: IUpbitCandle[] = [];
 
     switch (timeType) {
       case CandleTimes.SECOND:

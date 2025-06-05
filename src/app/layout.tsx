@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import '@/styles/css/globals.css';
 import UserApi from '@/apis/api/users/UserApi';
@@ -56,7 +56,7 @@ const FrontHead = () => {
         async
         src="https://t1.kakaocdn.net/kakao_js_sdk/2.5.0/kakao.min.js"
         integrity="sha384-kYPsUbBPlktXsY6/oNHSUDZoTX6+YI51f63jCPEIPFP09ttByAdxd2mEjKuhdqn4"
-        crossorigin="anonymous"
+        crossOrigin="anonymous"
       />
     </>
   );

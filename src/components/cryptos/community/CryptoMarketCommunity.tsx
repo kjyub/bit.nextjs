@@ -21,15 +21,15 @@ import CryptoMarketCommunityView from './CryptoMarketCommunityView';
 
 interface ICryptoMarketCommunity {
   marketCode: string;
-  params: IMarketPageSearchParams;
-  communityListData: object;
+  searchParams: IMarketPageSearchParams;
+  communityListData: Record<string, any>;
 }
-export default function CryptoMarketCommunity({ marketCode, params, communityListData }: ICryptoMarketCommunity) {
+export default function CryptoMarketCommunity({ marketCode, searchParams, communityListData }: ICryptoMarketCommunity) {
   const pagination = new Pagination<MarketCommunity>();
   pagination.parseResponse(communityListData, MarketCommunity);
-  const pageIndex = Number(params.page ?? 1);
+  const pageIndex = Number(searchParams.page ?? 1);
 
-  const user = useUser();
+  const { user } = useUser();
 
   const router = useRouter();
   const pathname = usePathname();
@@ -38,12 +38,12 @@ export default function CryptoMarketCommunity({ marketCode, params, communityLis
   const [selectedCommunity, setSelectedCommunity] = useState<MarketCommunity>(new MarketCommunity());
 
   const handlePageIndex = (_pageIndex: number) => {
-    const url = FrontUtils.getSearchUrl(pathname, params, 'page', _pageIndex.toString());
+    const url = FrontUtils.getSearchUrl(pathname, searchParams, 'page', _pageIndex.toString());
     router.push(url, { scroll: true });
   };
 
   const handleSearch = (_search: string) => {
-    const url = FrontUtils.getSearchUrl(pathname, params, 'search', _search);
+    const url = FrontUtils.getSearchUrl(pathname, searchParams, 'search', _search);
     router.push(url, { scroll: true });
   };
 
@@ -68,7 +68,7 @@ export default function CryptoMarketCommunity({ marketCode, params, communityLis
         <div className="header">
           <CommunitySearch
             onSearch={handleSearch}
-            defaultValue={params.search}
+            defaultValue={searchParams.search}
             width="200px"
             placeholder="검색어를 입력하세요."
           />

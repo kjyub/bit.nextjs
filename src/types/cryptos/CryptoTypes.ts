@@ -61,7 +61,9 @@ export const TradeOrderTypeNames = {
   0: '-',
   1: '지정가',
   2: '시장가',
-  3: '청산',
+  3: 'TP',
+  4: 'SL',
+  5: '청산',
 };
 
 export const MarketTypes = {
@@ -105,4 +107,4 @@ export const SizeUnitTypes = {
 } as const;
 export type SizeUnitType = (typeof SizeUnitTypes)[keyof typeof SizeUnitTypes];
 
-export type CandleMinuteUnits = 1 | 3 | 5 | 15 | 30 | 60 | 240;
+export type CandleMinuteUnits = 1 | 3 | 5 | 10 | 15 | 30 | 60 | 240;

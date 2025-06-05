@@ -1,6 +1,6 @@
 import { authInstance, credentialInstance, defaultInstance } from '@/apis/utils/instances';
 import User from '@/types/users/User';
-import type { UserType } from '@/types/users/UserType';
+import type { UserType } from '@/types/users/UserTypes';
 import type { LoginResponse } from '@/types/users/UserTypes';
 
 class UserApi {

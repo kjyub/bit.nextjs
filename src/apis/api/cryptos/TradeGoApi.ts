@@ -33,7 +33,7 @@ class TradeGoApi {
     return result;
   }
   static async getMarketCurrent(marketCode: string): Promise<IUpbitMarketTicker> {
-    let result: IUpbitMarketTicker = {};
+    let result = {} as IUpbitMarketTicker;
 
     try {
       const response = await tradeInstance.post('markets', {

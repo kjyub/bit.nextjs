@@ -1,5 +1,6 @@
 import CryptoApi from '@/apis/api/cryptos/CryptoApi';
 import type { IMyTradeData } from '@/types/cryptos/CryptoInterfaces';
+import CryptoWallet from '@/types/cryptos/CryptoWallet';
 import { create } from 'zustand';
 
 const getInitData = async () => {
@@ -11,7 +12,11 @@ interface IMyTradeStore {
   update: () => void;
 }
 const useMyTradeStore = create<IMyTradeStore>((set) => ({
-  myTrades: {},
+  myTrades: {
+    wallet: new CryptoWallet(),
+    positions: [],
+    orders: [],
+  },
   update: () => {
     getInitData().then((data) => {
       set({

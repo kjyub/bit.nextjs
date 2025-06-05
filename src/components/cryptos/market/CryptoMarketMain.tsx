@@ -4,7 +4,7 @@ import { CryptoMarketTradeProvider } from '@/store/providers/CryptoMarketTradePr
 import useUserInfoStore from '@/store/useUserInfo';
 import * as S from '@/styles/CryptoMarketStyles';
 import type { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
-import { SizeUnitTypes } from '@/types/cryptos/CryptoTypes';
+import { type SizeUnitType, SizeUnitTypes } from '@/types/cryptos/CryptoTypes';
 import { useEffect, useState } from 'react';
 import CryptoMyTrade from '../mytrade/CryptoMyTradeMain';
 import CryptoMarketChart from './CryptoMarketChart';
@@ -28,7 +28,7 @@ export default function CryptoMarketMain({ marketCode, marketData, marketCurrent
   }, [marketCode]);
 
   // 설정 정보
-  const [sizeUnitType, setSizeUnitType] = useState<SizeUnitTypes>(SizeUnitTypes.PRICE); // 단위 타입
+  const [sizeUnitType, setSizeUnitType] = useState<SizeUnitType>(SizeUnitTypes.PRICE); // 단위 타입
   const imageCode = marketCode.split('-')[1];
 
   if (Object.keys(marketCurrent).length === 0) {

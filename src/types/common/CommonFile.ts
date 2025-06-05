@@ -19,7 +19,7 @@ export default class extends AbsApiObject {
     this._fileUrl = '';
   }
 
-  parseResponse(json) {
+  parseResponse(json: any) {
     if (!super.isValidParseResponse(json)) return;
 
     this._id = json.id;

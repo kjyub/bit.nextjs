@@ -50,7 +50,7 @@ export default function CommunityPagination({ page, setPage, itemCount, pageSize
     setNextPage(indexes[indexes.length - 1] + 1);
   }, [page, itemCount, pageSize]);
 
-  const handlePage = (index) => {
+  const handlePage = (index: number) => {
     setTempPageIndex(index);
     setPage(index);
   };

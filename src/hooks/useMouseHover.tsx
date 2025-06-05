@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
-export const useMouseHover = (): [React.MutableRefObject<HTMLElement | null>, boolean] => {
-  const ref = useRef<HTMLElement | null>(null);
+export const useMouseHover = <T extends HTMLElement>(): [React.MutableRefObject<T | null>, boolean] => {
+  const ref = useRef<T | null>(null);
 
   const [showHover, setShowHover] = useState(false);
 

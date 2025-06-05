@@ -13,5 +13,5 @@ export default async function CryptoMarketCommunityPage({ params, searchParams }
 
   const communityListData = await CryptoServerApi.getCommunityList(search, code, page, MARKET_COMMUNITY_PAGE_SIZE);
 
-  return <CryptoMarketCommunity marketCode={code} params={params} communityListData={communityListData} />;
+  return <CryptoMarketCommunity marketCode={code} searchParams={searchParams} communityListData={communityListData} />;
 }

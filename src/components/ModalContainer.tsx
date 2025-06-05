@@ -10,8 +10,9 @@ const Background = tw.div`
 export interface IModalContainer {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  isBlur: boolean;
-  isCloseByBackground: boolean;
+  isBlur?: boolean;
+  isCloseByBackground?: boolean;
+  isCloseButtonShow?: boolean;
   children: React.ReactNode;
 }
 const ModalContainer = ({
