@@ -33,7 +33,7 @@ export default function CryptoMarketMobileChart({ marketCode }: Props) {
           <CryptoMarketChartControlBar />
 
           <div className="relative h-[calc(100dvh-16rem)] select-none touch-none">
-            <TradingChart />
+            <TradingChart marketCode={marketCode} />
           </div>
         </div>
       </CryptoMarketChartProvider>

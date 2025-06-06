@@ -1,12 +1,13 @@
 // https://tradingview.github.io/lightweight-charts/docs
 
-import { useEffect, useRef } from "react";
-import { createChart, ColorType, IChartApi, AreaSeries, ISeriesApi, CandlestickSeries, CrosshairMode, ChartOptions, DeepPartial, AreaSeriesOptions, CandlestickSeriesOptions, BarSeries, BarSeriesOptions, HistogramSeries, HistogramSeriesOptions } from 'lightweight-charts';
+import { MutableRefObject, useEffect, useRef } from "react";
+import { createChart, ColorType, IChartApi, AreaSeries, ISeriesApi, CandlestickSeries, CrosshairMode, ChartOptions, DeepPartial, AreaSeriesOptions, CandlestickSeriesOptions, BarSeries, BarSeriesOptions, HistogramSeries, HistogramSeriesOptions, CreatePriceLineOptions, IPriceLine } from 'lightweight-charts';
 import { useCryptoMarketChart } from "../market/CryptoMarketChartProvider";
 import CryptoUtils from "@/utils/CryptoUtils";
 import { getTimeFormatter, parseAreaData, parseCandleData, parseVolumeData } from "./utils";
 import { CandleTimes, ChartTypes } from "./Types";
 import { cn } from "@/utils/StyleUtils";
+import useUserInfoStore from "@/store/useUserInfo";
 
 const UP_COLOR = '#3b69cb';
 const DOWN_COLOR = '#c43a3a';
@@ -94,8 +95,12 @@ const volumeSeriesOptions: DeepPartial<HistogramSeriesOptions> = {
   // },
 } as const;
 
-export default function TradingChart() {
+interface Props {
+  marketCode: string;
+}
+export default function TradingChart({ marketCode }: Props) {
   const { timeType, chartType, candles, getBeforeCandleData, isLoading } = useCryptoMarketChart();
+  const { updateInfo, myTrades } = useUserInfoStore();
 
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
@@ -104,7 +109,13 @@ export default function TradingChart() {
 
   const volumeSeriesRef = useRef<ISeriesApi<'Histogram'> | null>(null);
 
+  const entryPriceLineRef = useRef<IPriceLine | null>(null);
+  const liqPriceLineRef = useRef<IPriceLine | null>(null);
+
+  // 차트 생성
   useEffect(() => {
+    updateInfo();
+
     const chart = createChart(chartContainerRef.current as HTMLElement, chartOptions)
     chart.timeScale().subscribeVisibleLogicalRangeChange((range) => {
       if (!range) return;
@@ -120,6 +131,7 @@ export default function TradingChart() {
     chartRef.current = chart;
   }, [])
 
+  // 차트 타입 변경 및 시리즈 재설정
   useEffect(() => {
     if (!chartRef.current) return;
     const chart = chartRef.current;
@@ -169,6 +181,7 @@ export default function TradingChart() {
     volumeSeriesRef.current = volumeSeries;
   }, [chartType])
 
+  // 시간 타입 변경
   useEffect(() => {
     if (!chartRef.current) return;
     const chart = chartRef.current;
@@ -185,6 +198,7 @@ export default function TradingChart() {
     })
   }, [timeType])
 
+  // 캔들 데이터 업데이트
   useEffect(() => {
     if (chartType === ChartTypes.AREA && areaSeriesRef.current) {
       areaSeriesRef.current.setData(parseAreaData(candles));
@@ -196,6 +210,50 @@ export default function TradingChart() {
       volumeSeriesRef.current.setData(parseVolumeData(candles));
     }
   }, [candles, chartType])
+
+  // 현재 내 포지션 정보
+  useEffect(() => {
+    const positon = myTrades.positions.find((position) => position.market.code === marketCode);
+    if (!positon) return;
+
+    const entryPrice = Number(positon.entryPrice);
+    const liqPrice = Number(positon.liquidatePrice);
+
+    const entryPriceLine: CreatePriceLineOptions = {
+      price: entryPrice,
+      color: '#2c7a25',
+      lineWidth: 1,
+      axisLabelVisible: true,
+      title: '진입 가격',
+    }
+    const liqPriceLine: CreatePriceLineOptions = {
+      price: liqPrice,
+      color: '#c43a3a',
+      lineWidth: 1,
+      axisLabelVisible: true,
+      title: '청산 가격',
+    }
+
+    let seriesRef: MutableRefObject<ISeriesApi<'Area' | 'Candlestick'> | null> | null = null;
+
+    if (chartType === ChartTypes.AREA && areaSeriesRef.current) {
+      seriesRef = areaSeriesRef;
+    } else if (chartType === ChartTypes.CANDLE && candleSeriesRef.current) {
+      seriesRef = candleSeriesRef;
+    }
+
+    if (seriesRef?.current) {
+      if (entryPriceLineRef.current) {
+        seriesRef.current.removePriceLine(entryPriceLineRef.current);
+      }
+      if (liqPriceLineRef.current) {
+        seriesRef.current.removePriceLine(liqPriceLineRef.current);
+      }
+
+      entryPriceLineRef.current = seriesRef.current.createPriceLine(entryPriceLine);
+      liqPriceLineRef.current = seriesRef.current.createPriceLine(liqPriceLine);
+    }
+  }, [myTrades.positions, marketCode, chartType])
 
   return (
     <div className="relative flex flex-col w-full h-full">

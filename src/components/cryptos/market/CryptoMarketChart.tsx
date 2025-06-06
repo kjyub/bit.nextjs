@@ -18,7 +18,7 @@ export default function CryptoMarketChart({ marketCode }: ICryptoMarketChart) {
 
         <div className="relative h-full select-none touch-none">
           {/* <CryptoMarketFinancialChart /> */}
-          <TradingChart />
+          <TradingChart marketCode={marketCode} />
         </div>
       </div>
     </CryptoMarketChartProvider>
