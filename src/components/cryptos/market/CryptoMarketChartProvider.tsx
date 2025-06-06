@@ -3,9 +3,11 @@
 import UpbitApi from '@/apis/api/cryptos/UpbitApi';
 import useTradeMarketChartSocket from '@/hooks/sockets/useTradeMarketChartSocket';
 import type { IUpbitCandle } from '@/types/cryptos/CryptoInterfaces';
-import { type Dispatch, type SetStateAction, createContext, useCallback, useContext, useEffect, useState } from 'react';
-import CryptoMarketChartControlBar from '../chart/ControlBar';
+import { type Dispatch, type SetStateAction, createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { CANDLE_SIZE, type CandleTimeType, CandleTimes, type ChartType, ChartTypes } from '../chart/Types';
+import useToastMessageStore from '@/store/useToastMessageStore';
+
+const MAX_CANDLES = 100000;
 
 interface CryptoMarketChartState {
   initChart: (timeType: CandleTimeType) => void;
@@ -15,6 +17,7 @@ interface CryptoMarketChartState {
   getBeforeCandleData: () => void;
   candles: IUpbitCandle[];
   isLoading: boolean;
+  isCandleLoading: boolean;
 }
 
 const initCryptoMarketChartState: CryptoMarketChartState = {
@@ -25,6 +28,7 @@ const initCryptoMarketChartState: CryptoMarketChartState = {
   getBeforeCandleData: () => {},
   candles: [],
   isLoading: true,
+  isCandleLoading: false,
 };
 
 const CryptoMarketChartContext = createContext<CryptoMarketChartState>(initCryptoMarketChartState);
@@ -93,15 +97,30 @@ interface ICryptoMarketChart {
   children: React.ReactNode;
 }
 export default function CryptoMarketChartProvider({ marketCode, children }: ICryptoMarketChart) {
+  const createToastMessage = useToastMessageStore((state) => state.createMessage);
+
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isCandleLoading, setCandleLoading] = useState<boolean>(false);
   const [candles, setCandles] = useState<IUpbitCandle[]>([]);
   const [timeType, setTimeType] = useState<CandleTimeType>(CandleTimes.SECOND);
   const [chartType, setChartType] = useState<ChartType>(ChartTypes.AREA);
 
+  const isCandleLoadingRef = useRef(isCandleLoading);
+  const candlesRef = useRef(candles);
+  const timeTypeRef = useRef<CandleTimeType>(CandleTimes.SECOND);
+  const isFullCandlesRef = useRef(false);
+
   useEffect(() => {
     initChart(CandleTimes.SECOND);
   }, [marketCode]);
+
+  useEffect(() => {
+    candlesRef.current = candles;
+  }, [candles]);
+
+  useEffect(() => {
+    timeTypeRef.current = timeType;
+  }, [timeType]);
 
   const initChart = useCallback(
     async (timeType: CandleTimeType) => {
@@ -112,21 +131,28 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
   );
 
   const getBeforeCandleData = useCallback(async () => {
-    if (isCandleLoading) {
+    if (isCandleLoadingRef.current) return;
+    if (candlesRef.current.length === 0) return;
+
+    // 최대 개수 메세지용
+    if (candlesRef.current.length > MAX_CANDLES && !isFullCandlesRef.current) {
+      isFullCandlesRef.current = true;
+      createToastMessage('차트 데이터가 너무 많습니다.');
       return;
     }
-    if (candles.length === 0) {
-      return;
-    }
+
+    // 최대 개수
+    if (isFullCandlesRef.current) return;
 
     setCandleLoading(true);
+    isCandleLoadingRef.current = true;
 
-    const last = candles[candles.length - 1];
+    const last = candlesRef.current[candlesRef.current.length - 1];
     const to = `${last.candle_date_time_kst}+09:00`;
 
     let newData: IUpbitCandle[] = [];
 
-    switch (timeType) {
+    switch (timeTypeRef.current) {
       case CandleTimes.SECOND:
         newData = await UpbitApi.getCandleSeconds(marketCode, CANDLE_SIZE, to);
         break;
@@ -158,19 +184,18 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
         break;
     }
 
-    const newCandles = [...candles, ...newData];
-    setCandles(newCandles);
+    setCandles((prevCandles) => [...prevCandles, ...newData]);
     setCandleLoading(false);
+    isCandleLoadingRef.current = false;
 
-    return newCandles;
-  }, [isCandleLoading, candles, marketCode, timeType]);
+    return newData;
+  }, [marketCode, timeType]);
 
   const getCandleData = useCallback(
     async (timeType: CandleTimeType) => {
-      if (isCandleLoading) {
-        return;
-      }
+      if (isCandleLoadingRef.current) return;
       setCandleLoading(true);
+      isCandleLoadingRef.current = true;
       setIsLoading(true);
 
       let data: IUpbitCandle[] = [];
@@ -213,6 +238,7 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
       setTimeType(timeType);
       setChartType(chartType);
       setCandleLoading(false);
+      isCandleLoadingRef.current = false;
       setIsLoading(false);
     },
     [isCandleLoading, marketCode],
@@ -228,7 +254,7 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
 
   return (
     <CryptoMarketChartContext.Provider
-      value={{ initChart, timeType, chartType, setChartType, getBeforeCandleData, candles, isLoading }}
+      value={{ initChart, timeType, chartType, setChartType, getBeforeCandleData, candles, isLoading, isCandleLoading }}
     >
       {children}
     </CryptoMarketChartContext.Provider>

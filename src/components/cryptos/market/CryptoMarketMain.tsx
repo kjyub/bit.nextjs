@@ -9,9 +9,11 @@ import { useEffect, useState } from 'react';
 import CryptoMyTrade from '../mytrade/CryptoMyTradeMain';
 import CryptoMarketChart from './CryptoMarketChart';
 import CryptoMarketInfo from './CryptoMarketInfo';
-import CryptoMarketMobileChart from './CryptoMarketMobileChart';
 import CryptoMarketOrderBook from './CryptoMarketOrderBook';
 import CryptoMarketTrade from './CryptoMarketTrade';
+import dynamic from 'next/dynamic';
+
+const CryptoMarketMobileChart = dynamic(() => import('./CryptoMarketMobileChart'), { ssr: false });
 
 interface ICryptoMarket {
   marketCode: string;

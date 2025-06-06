@@ -30,7 +30,7 @@ const BoxLayout = tw.div`
   rounded-lg bg-slate-800/60
 `;
 export const ChartLayout = tw(BoxLayout)`
-  max-md:hidden md:flex flex-col max-md:h-[400px] flex-1 md:h-full
+  max-md:hidden md:flex flex-col flex-1 md:h-full
 `;
 export const OrderBookLayout = tw(BoxLayout)`
   flex max-md:flex-1 sm:w-[220px] max-md:max-h-[440px] md:h-full

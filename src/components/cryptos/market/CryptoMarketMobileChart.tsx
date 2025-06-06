@@ -4,12 +4,10 @@ import useBreakpoint from '@/hooks/useBreakpoint';
 import { useCryptoUi } from '@/hooks/useCryptoUi';
 import { ModalDimmer } from '@/styles/MainStyles';
 import BrowserUtils from '@/utils/BrowserUtils';
-import dynamic from 'next/dynamic';
 import { createPortal } from 'react-dom';
 import CryptoMarketChartControlBar from '../chart/ControlBar';
 import CryptoMarketChartProvider from './CryptoMarketChartProvider';
-
-const CryptoMarketFinancialChart = dynamic(() => import('../chart/Chart'), { ssr: false });
+import TradingChart from '../chart/TradingChart';
 
 interface Props {
   marketCode: string;
@@ -34,8 +32,8 @@ export default function CryptoMarketMobileChart({ marketCode }: Props) {
 
           <CryptoMarketChartControlBar />
 
-          <div className="relative h-[360px] select-none touch-none">
-            <CryptoMarketFinancialChart />
+          <div className="relative h-[calc(100dvh-16rem)] select-none touch-none">
+            <TradingChart />
           </div>
         </div>
       </CryptoMarketChartProvider>
