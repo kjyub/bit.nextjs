@@ -122,7 +122,7 @@ const Price = ({ price }: { price: number }) => {
         className={cn([
           'trade-price font-semibold text-lg',
           changeType === PriceChangeTypes.EVEN
-            ? 'text-slate-400'
+            ? 'text-slate-300'
             : changeType === PriceChangeTypes.RISE
               ? 'text-red-500'
               : 'text-blue-500',
@@ -144,7 +144,7 @@ const Row = ({ unit, max, className }: { unit: Unit; max: number; className: str
 
   return (
     <S.Row
-      className={cn(['relative py-1 text-xs active:bg-slate-100/10 cursor-pointer', className])}
+      className={cn(['relative py-1 text-xs mouse:hover:bg-slate-100/10 active:bg-slate-100/10 cursor-pointer', className])}
       onClick={() => setTradePrice(unit.price)}
     >
       {/* <span className="trade-price">{(unit.bid_price + unit.ask_price) / 2}</span> */}

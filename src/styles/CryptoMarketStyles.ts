@@ -90,8 +90,8 @@ export const MarketListBox = tw.div`
 `;
 
 export const MarketListItem = tw(Link)`
-  flex shrink-0 items-center w-full h-12 max-md:px-1 md:px-2
-  rounded-md hover:bg-slate-700/30 
+  flex shrink-0 items-center w-full h-12 px-2
+  rounded-md hover:bg-slate-700/30 active:bg-slate-700/30 
   text-sm text-slate-200
   transition-colors
 
