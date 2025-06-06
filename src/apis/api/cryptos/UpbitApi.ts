@@ -2,9 +2,9 @@ import { upbitInstance } from '@/apis/utils/upbitInstances';
 import type { IUpbitCandle, IUpbitMarket, IUpbitMarketTicker, IUpbitOrderBook } from '@/types/cryptos/CryptoInterfaces';
 import type { CandleMinuteUnits } from '@/types/cryptos/CryptoTypes';
 
-class UpbitApi {
+namespace UpbitApi {
   // region Market
-  static async getMarketsAll(): Promise<Array<IUpbitMarket>> {
+  export async function getMarketsAll(): Promise<Array<IUpbitMarket>> {
     let result: Array<IUpbitMarket> = [];
 
     try {
@@ -19,7 +19,7 @@ class UpbitApi {
 
     return result;
   }
-  static async getMarketsCurrent(marketCodes: Array<string>): Promise<Array<IUpbitMarketTicker>> {
+  export async function getMarketsCurrent(marketCodes: Array<string>): Promise<Array<IUpbitMarketTicker>> {
     let result: Array<IUpbitMarketTicker> = [];
 
     try {
@@ -38,7 +38,7 @@ class UpbitApi {
 
     return result;
   }
-  static async getMarketCurrent(marketCode: string): Promise<IUpbitMarketTicker> {
+  export async function getMarketCurrent(marketCode: string): Promise<IUpbitMarketTicker> {
     let result = {} as IUpbitMarketTicker;
 
     try {
@@ -61,7 +61,7 @@ class UpbitApi {
 
   // region Candle
   // to: ISO8061 포맷 (yyyy-MM-dd'T'HH:mm:ss'Z' or yyyy-MM-dd HH:mm:ss).
-  static async getCandleSeconds(marketCode: string, count = 200, to?: string): Promise<Array<IUpbitCandle>> {
+  export async function getCandleSeconds(marketCode: string, count = 200, to?: string): Promise<Array<IUpbitCandle>> {
     let result: Array<IUpbitCandle> = [];
 
     try {
@@ -81,7 +81,7 @@ class UpbitApi {
 
     return result;
   }
-  static async getCandleMinutes(
+  export async function getCandleMinutes(
     marketCode: string,
     count: number,
     unit: CandleMinuteUnits,
@@ -107,7 +107,7 @@ class UpbitApi {
 
     return result;
   }
-  static async getCandleDays(marketCode: string, count = 200, to?: string): Promise<Array<IUpbitCandle>> {
+  export async function getCandleDays(marketCode: string, count = 200, to?: string): Promise<Array<IUpbitCandle>> {
     let result: Array<IUpbitCandle> = [];
 
     try {
@@ -127,7 +127,7 @@ class UpbitApi {
 
     return result;
   }
-  static async getCandleWeeks(marketCode: string, count = 200, to?: string): Promise<Array<IUpbitCandle>> {
+  export async function getCandleWeeks(marketCode: string, count = 200, to?: string): Promise<Array<IUpbitCandle>> {
     let result: Array<IUpbitCandle> = [];
 
     try {
@@ -146,7 +146,7 @@ class UpbitApi {
 
     return result;
   }
-  static async getCandleMonths(marketCode: string, count = 200, to?: string): Promise<Array<IUpbitCandle>> {
+  export async function getCandleMonths(marketCode: string, count = 200, to?: string): Promise<Array<IUpbitCandle>> {
     let result: Array<IUpbitCandle> = [];
 
     try {
@@ -169,7 +169,7 @@ class UpbitApi {
   // endregion
 
   // region OrderBook
-  static async getOrderBook(marketCode: string, level = 0): Promise<IUpbitOrderBook> {
+  export async function getOrderBook(marketCode: string, level = 0): Promise<IUpbitOrderBook> {
     let result = {} as IUpbitOrderBook;
 
     try {

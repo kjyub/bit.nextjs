@@ -2,9 +2,9 @@ import { defaultInstance, fileInstance } from '@/apis/utils/instances';
 
 import ImageFile from '@/types/common/ImageFile';
 
-class CommonApi {
+namespace CommonApi {
   // region File
-  static async uploadImage(image: File, isBase64 = false, isTemp = false): Promise<ImageFile | null> {
+  export async function uploadImage(image: File, isBase64 = false, isTemp = false): Promise<ImageFile | null> {
     try {
       const formData = new FormData();
       formData.append('image', image);
@@ -21,7 +21,7 @@ class CommonApi {
       return null;
     }
   }
-  static async getImageFile(imageID: number): Promise<ImageFile | null> {
+  export async function getImageFile(imageID: number): Promise<ImageFile | null> {
     try {
       const data = await defaultInstance.post('api/commons/image/', { json: { file_id: imageID } }).json();
       const result = new ImageFile();

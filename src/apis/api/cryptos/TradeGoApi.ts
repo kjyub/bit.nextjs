@@ -1,9 +1,9 @@
 import { tradeInstance } from '@/apis/utils/tradeInstances';
 import type { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
 
-class TradeGoApi {
+namespace TradeGoApi {
   // region Market
-  static async getMarketsCurrent(marketCodes: Array<string> = []): Promise<Array<IUpbitMarketTicker>> {
+  export async function getMarketsCurrent(marketCodes: Array<string> = []): Promise<Array<IUpbitMarketTicker>> {
     let result: Array<IUpbitMarketTicker> = [];
 
     try {
@@ -22,7 +22,7 @@ class TradeGoApi {
 
     return result;
   }
-  static async getMarketsCurrentDic(marketCodes: Array<string> = []): Promise<{ [key: string]: IUpbitMarketTicker }> {
+  export async function getMarketsCurrentDic(marketCodes: Array<string> = []): Promise<{ [key: string]: IUpbitMarketTicker }> {
     const markets = await TradeGoApi.getMarketsCurrent(marketCodes);
 
     const result: { [key: string]: IUpbitMarketTicker } = {};
@@ -32,7 +32,7 @@ class TradeGoApi {
 
     return result;
   }
-  static async getMarketCurrent(marketCode: string): Promise<IUpbitMarketTicker> {
+  export async function getMarketCurrent(marketCode: string): Promise<IUpbitMarketTicker> {
     let result = {} as IUpbitMarketTicker;
 
     try {
@@ -53,11 +53,11 @@ class TradeGoApi {
   }
   // endregion
 
-  static getMarketSocket(): WebSocket {
+  export function getMarketSocket(): WebSocket {
     return new WebSocket(`${process.env.NEXT_PUBLIC_TRADE_SOCKET_SERVER}/market`);
   }
 
-  static getAlarmSocket(userId?: number): WebSocket | null {
+  export function getAlarmSocket(userId?: number): WebSocket | null {
     if (!userId) {
       return null;
     }

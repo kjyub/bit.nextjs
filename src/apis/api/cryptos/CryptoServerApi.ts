@@ -1,8 +1,8 @@
 import { defaultInstance } from '@/apis/utils/instances';
 
-class CryptoServerApi {
+namespace CryptoServerApi {
   // region Market
-  static async getMarkets(search: string, marketType: string): Promise<object> {
+  export async function getMarkets(search: string, marketType: string): Promise<object> {
     let result: object = {};
     try {
       const response = await defaultInstance.get('api/cryptos/market/', {
@@ -18,7 +18,7 @@ class CryptoServerApi {
     return result;
   }
   // 가격을 제외한 심플한 데이터 전부 가져온다
-  static async getMarketAll(): Promise<object> {
+  export async function getMarketAll(): Promise<object> {
     let result: object = {};
     try {
       const response = await defaultInstance.get('api/cryptos/market_all/');
@@ -28,7 +28,7 @@ class CryptoServerApi {
     }
     return result;
   }
-  static async getMarket(code: string): Promise<object> {
+  export async function getMarket(code: string): Promise<object> {
     let result: object = {};
     try {
       const response = await defaultInstance.get(`api/cryptos/market/${code}/`);
@@ -41,7 +41,7 @@ class CryptoServerApi {
   // endregion
 
   // region Community
-  static async getCommunityList(search: string, marketCode: string, page: number, pageSize: number): Promise<object> {
+  export async function getCommunityList(search: string, marketCode: string, page: number, pageSize: number): Promise<object> {
     let result: object = {};
     try {
       const response = await defaultInstance.get('api/cryptos/community/', {
@@ -58,7 +58,7 @@ class CryptoServerApi {
     }
     return result;
   }
-  static async getCommunityDetail(nanoId: string): Promise<object> {
+  export async function getCommunityDetail(nanoId: string): Promise<object> {
     let result: object = {};
     try {
       const response = await defaultInstance.get(`api/cryptos/community/${nanoId}/`);
@@ -70,7 +70,7 @@ class CryptoServerApi {
   }
   // endregion
   // region Community Comment
-  static async getCommunityCommentList(communityId: number, pageIndex: number, pageSize: number): Promise<object> {
+  export async function getCommunityCommentList(communityId: number, pageIndex: number, pageSize: number): Promise<object> {
     let result: object = {};
     try {
       const response = await defaultInstance.get('api/cryptos/community_comment/', {

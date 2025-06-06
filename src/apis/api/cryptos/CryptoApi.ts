@@ -10,9 +10,9 @@ import TradeHistory from '@/types/cryptos/TradeHistory';
 import TradeOrder from '@/types/cryptos/TradeOrder';
 import TradePosition from '@/types/cryptos/TradePosition';
 
-class CryptoApi {
+namespace CryptoApi {
   // region MyTrades
-  static async getMyTrades(): Promise<IMyTradeData> {
+  export async function getMyTrades(): Promise<IMyTradeData> {
     const result: IMyTradeData = {
       wallet: new CryptoWallet(),
       positions: [],
@@ -45,7 +45,7 @@ class CryptoApi {
   }
   // endregion
   // region Wallet
-  static async getWallet(): Promise<CryptoWallet> {
+  export async function getWallet(): Promise<CryptoWallet> {
     const result: CryptoWallet = new CryptoWallet();
 
     try {
@@ -58,7 +58,7 @@ class CryptoApi {
 
     return result;
   }
-  static async transactionWallet(requestData: object): Promise<boolean> {
+  export async function transactionWallet(requestData: object): Promise<boolean> {
     let result = false;
 
     try {
@@ -72,7 +72,7 @@ class CryptoApi {
   }
   // endregion
   // region Market
-  static async getMarkets(search: string, marketType: string): Promise<Array<CryptoMarket>> {
+  export async function getMarkets(search: string, marketType: string): Promise<Array<CryptoMarket>> {
     const result: Array<CryptoMarket> = [];
 
     try {
@@ -97,7 +97,7 @@ class CryptoApi {
     return result;
   }
   // 가격을 제외한 심플한 데이터 전부 가져온다
-  static async getMarketAll(): Promise<Array<CryptoMarket>> {
+  export async function getMarketAll(): Promise<Array<CryptoMarket>> {
     const result: Array<CryptoMarket> = [];
 
     try {
@@ -119,7 +119,7 @@ class CryptoApi {
   // endregion
 
   // region Order
-  static async orderMarket(requestData: object): Promise<boolean> {
+  export async function orderMarket(requestData: object): Promise<boolean> {
     let result = false;
 
     try {
@@ -132,7 +132,7 @@ class CryptoApi {
 
     return result;
   }
-  static async orderLimit(requestData: object): Promise<boolean> {
+  export async function orderLimit(requestData: object): Promise<boolean> {
     let result = false;
 
     try {
@@ -145,7 +145,7 @@ class CryptoApi {
 
     return result;
   }
-  static async orderLimitCancel(orderId: number): Promise<boolean> {
+  export async function orderLimitCancel(orderId: number): Promise<boolean> {
     let result = false;
 
     try {
@@ -158,7 +158,7 @@ class CryptoApi {
 
     return result;
   }
-  static async orderLimitChase(orderId: number, price: number): Promise<boolean> {
+  export async function orderLimitChase(orderId: number, price: number): Promise<boolean> {
     let result = false;
 
     try {
@@ -176,7 +176,7 @@ class CryptoApi {
   // endregion
 
   // region Trade
-  static async getTradePostions(): Promise<Array<TradePosition>> {
+  export async function getTradePostions(): Promise<Array<TradePosition>> {
     const result: Array<TradePosition> = [];
 
     try {
@@ -195,7 +195,7 @@ class CryptoApi {
 
     return result;
   }
-  static async getTradeOrders(): Promise<Array<TradeOrder>> {
+  export async function getTradeOrders(): Promise<Array<TradeOrder>> {
     const result: Array<TradeOrder> = [];
 
     try {
@@ -217,7 +217,7 @@ class CryptoApi {
   // endregion
 
   // region History
-  static async getTradeOrderHistories(
+  export async function getTradeOrderHistories(
     pageIndex = 1,
     pageSize = 50,
     dateStart = '',
@@ -252,7 +252,7 @@ class CryptoApi {
 
     return result;
   }
-  static async getTradeHistories(
+  export async function getTradeHistories(
     pageIndex = 1,
     pageSize = 50,
     dateStart = '',
@@ -287,7 +287,7 @@ class CryptoApi {
 
     return result;
   }
-  static async getTradePositionHistories(
+  export async function getTradePositionHistories(
     pageIndex = 1,
     pageSize = 50,
     dateStart = '',
@@ -325,7 +325,7 @@ class CryptoApi {
   // endregion
 
   // region Community
-  static async getCommunityList(
+  export async function getCommunityList(
     search: string,
     marketCode: string,
     page: number,
@@ -350,7 +350,7 @@ class CryptoApi {
 
     return result;
   }
-  static async getCommunityDetail(nanoId: string): Promise<MarketCommunity> {
+  export async function getCommunityDetail(nanoId: string): Promise<MarketCommunity> {
     const result: MarketCommunity = new MarketCommunity();
 
     try {
@@ -363,7 +363,7 @@ class CryptoApi {
 
     return result;
   }
-  static async createCommunity(requestData: object): Promise<MarketCommunity> {
+  export async function createCommunity(requestData: object): Promise<MarketCommunity> {
     const result: MarketCommunity = new MarketCommunity();
 
     try {
@@ -376,7 +376,7 @@ class CryptoApi {
 
     return result;
   }
-  static async updateCommunity(nanoId: string, requestData: object): Promise<MarketCommunity> {
+  export async function updateCommunity(nanoId: string, requestData: object): Promise<MarketCommunity> {
     const result: MarketCommunity = new MarketCommunity();
 
     try {
@@ -389,7 +389,7 @@ class CryptoApi {
 
     return result;
   }
-  static async deleteCommunity(nanoId: string): Promise<boolean> {
+  export async function deleteCommunity(nanoId: string): Promise<boolean> {
     let result = false;
 
     try {
@@ -401,7 +401,7 @@ class CryptoApi {
 
     return result;
   }
-  static async likeCommunity(nanoId: string, likeType: LikeType): Promise<boolean> {
+  export async function likeCommunity(nanoId: string, likeType: LikeType): Promise<boolean> {
     let result = false;
 
     try {
@@ -415,7 +415,7 @@ class CryptoApi {
   }
   // endregion
   // region Community Comment
-  static async getCommunityCommentList(
+  export async function getCommunityCommentList(
     communityNanoId: string,
     pageIndex: number,
     pageSize: number,
@@ -438,7 +438,7 @@ class CryptoApi {
 
     return result;
   }
-  static async createCommunityComment(requestData: object): Promise<MarketCommunityComment> {
+  export async function createCommunityComment(requestData: object): Promise<MarketCommunityComment> {
     const result: MarketCommunityComment = new MarketCommunityComment();
 
     try {
@@ -451,7 +451,7 @@ class CryptoApi {
 
     return result;
   }
-  static async updateCommunityComment(id: number, requestData: object): Promise<MarketCommunityComment> {
+  export async function updateCommunityComment(id: number, requestData: object): Promise<MarketCommunityComment> {
     const result: MarketCommunityComment = new MarketCommunityComment();
 
     try {
@@ -464,7 +464,7 @@ class CryptoApi {
 
     return result;
   }
-  static async deleteCommunityComment(id: number): Promise<boolean> {
+  export async function deleteCommunityComment(id: number): Promise<boolean> {
     let result = false;
 
     try {

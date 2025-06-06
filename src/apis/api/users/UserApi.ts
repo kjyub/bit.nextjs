@@ -3,8 +3,8 @@ import User from '@/types/users/User';
 import type { UserType } from '@/types/users/UserTypes';
 import type { LoginResponse } from '@/types/users/UserTypes';
 
-class UserApi {
-  // static async getAccessToken() {
+namespace UserApi {
+  // export async function getAccessToken() {
   //     let notes = []
 
   //     await defaultInstance.post("/api/users/login/").then(({data}) => {
@@ -15,7 +15,7 @@ class UserApi {
 
   //     return result
   // }
-  static async refreshToken(refreshToken?: string): Promise<LoginResponse> {
+  export async function refreshToken(refreshToken?: string): Promise<LoginResponse> {
     const result: LoginResponse = {
       user: {},
       token: {
@@ -44,7 +44,7 @@ class UserApi {
 
     return result;
   }
-  static async getLogin(email: string, password: string, userType: UserType): Promise<LoginResponse> {
+  export async function getLogin(email: string, password: string, userType: UserType): Promise<LoginResponse> {
     const result: LoginResponse = {
       user: {},
       token: {
@@ -67,7 +67,7 @@ class UserApi {
 
     return result;
   }
-  static async kakaoAuth(code: string): Promise<LoginResponse> {
+  export async function kakaoAuth(code: string): Promise<LoginResponse> {
     const result: LoginResponse = {
       user: {},
       token: {
@@ -97,7 +97,7 @@ class UserApi {
 
     return result;
   }
-  static async backdoorAuth(email: string): Promise<LoginResponse> {
+  export async function backdoorAuth(email: string): Promise<LoginResponse> {
     const result: LoginResponse = {
       user: {},
       token: {
@@ -127,7 +127,7 @@ class UserApi {
 
     return result;
   }
-  static async kakaoAuthSignup(requestData: object): Promise<object> {
+  export async function kakaoAuthSignup(requestData: object): Promise<object> {
     let responseData = {};
 
     try {
@@ -140,7 +140,7 @@ class UserApi {
 
     return responseData;
   }
-  static async checkEmail(email: string, userType: UserType): Promise<boolean> {
+  export async function checkEmail(email: string, userType: UserType): Promise<boolean> {
     let result = false;
 
     try {
@@ -155,7 +155,7 @@ class UserApi {
 
     return result;
   }
-  static async checkNickname(nickname: string): Promise<boolean> {
+  export async function checkNickname(nickname: string): Promise<boolean> {
     let result = false;
 
     try {
@@ -168,7 +168,7 @@ class UserApi {
 
     return result;
   }
-  static async findEmail(name: string, tel: string, userType: UserType): Promise<Array<string>> {
+  export async function findEmail(name: string, tel: string, userType: UserType): Promise<Array<string>> {
     let result: Array<string> = [];
 
     try {
@@ -183,7 +183,7 @@ class UserApi {
 
     return result;
   }
-  static async findPasswordCheck(email: string, name: string, tel: string, userType: UserType): Promise<boolean> {
+  export async function findPasswordCheck(email: string, name: string, tel: string, userType: UserType): Promise<boolean> {
     let result = false;
 
     try {
@@ -198,7 +198,7 @@ class UserApi {
 
     return result;
   }
-  static async findPasswordUpdate(
+  export async function findPasswordUpdate(
     email: string,
     name: string,
     tel: string,
@@ -225,7 +225,7 @@ class UserApi {
 
     return result;
   }
-  static async signup(data: object): Promise<[User, string]> {
+  export async function signup(data: object): Promise<[User, string]> {
     const user: User = new User();
     const error = '';
 
@@ -239,7 +239,7 @@ class UserApi {
 
     return [user, error];
   }
-  static async getUserCurrent(): Promise<User> {
+  export async function getUserCurrent(): Promise<User> {
     const result = new User();
 
     try {
@@ -252,7 +252,7 @@ class UserApi {
 
     return result;
   }
-  static async getUserDataSelf(): Promise<object> {
+  export async function getUserDataSelf(): Promise<object> {
     let userData = {};
 
     try {
