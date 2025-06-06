@@ -5,13 +5,13 @@ import useUserInfoStore from '@/store/useUserInfo';
 import * as S from '@/styles/CryptoMarketStyles';
 import type { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
 import { type SizeUnitType, SizeUnitTypes } from '@/types/cryptos/CryptoTypes';
+import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import CryptoMyTrade from '../mytrade/CryptoMyTradeMain';
 import CryptoMarketChart from './CryptoMarketChart';
 import CryptoMarketInfo from './CryptoMarketInfo';
 import CryptoMarketOrderBook from './CryptoMarketOrderBook';
 import CryptoMarketTrade from './CryptoMarketTrade';
-import dynamic from 'next/dynamic';
 
 const CryptoMarketMobileChart = dynamic(() => import('./CryptoMarketMobileChart'), { ssr: false });
 

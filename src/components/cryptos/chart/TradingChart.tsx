@@ -1,13 +1,31 @@
 // https://tradingview.github.io/lightweight-charts/docs
 
-import { MutableRefObject, useEffect, useRef } from "react";
-import { createChart, ColorType, IChartApi, AreaSeries, ISeriesApi, CandlestickSeries, CrosshairMode, ChartOptions, DeepPartial, AreaSeriesOptions, CandlestickSeriesOptions, BarSeries, BarSeriesOptions, HistogramSeries, HistogramSeriesOptions, CreatePriceLineOptions, IPriceLine } from 'lightweight-charts';
-import { useCryptoMarketChart } from "../market/CryptoMarketChartProvider";
-import CryptoUtils from "@/utils/CryptoUtils";
-import { getTimeFormatter, parseAreaData, parseCandleData, parseVolumeData } from "./utils";
-import { CandleTimes, ChartTypes } from "./Types";
-import { cn } from "@/utils/StyleUtils";
-import useUserInfoStore from "@/store/useUserInfo";
+import useUserInfoStore from '@/store/useUserInfo';
+import CryptoUtils from '@/utils/CryptoUtils';
+import { cn } from '@/utils/StyleUtils';
+import {
+  AreaSeries,
+  type AreaSeriesOptions,
+  BarSeries,
+  BarSeriesOptions,
+  CandlestickSeries,
+  type CandlestickSeriesOptions,
+  type ChartOptions,
+  ColorType,
+  type CreatePriceLineOptions,
+  CrosshairMode,
+  type DeepPartial,
+  HistogramSeries,
+  type HistogramSeriesOptions,
+  type IChartApi,
+  type IPriceLine,
+  type ISeriesApi,
+  createChart,
+} from 'lightweight-charts';
+import { type MutableRefObject, useEffect, useRef } from 'react';
+import { useCryptoMarketChart } from '../market/CryptoMarketChartProvider';
+import { CandleTimes, ChartTypes } from './Types';
+import { getTimeFormatter, parseAreaData, parseCandleData, parseVolumeData } from './utils';
 
 const UP_COLOR = '#3b69cb';
 const DOWN_COLOR = '#c43a3a';
@@ -55,9 +73,9 @@ const chartOptions: DeepPartial<ChartOptions> = {
 } as const;
 
 const areaSeriesOptions: DeepPartial<AreaSeriesOptions> = {
-  lineColor: "#6408e4",
-  topColor: "rgba(119, 39, 230, 0.9)",
-  bottomColor: "rgba(127, 34, 254, 0.1)",
+  lineColor: '#6408e4',
+  topColor: 'rgba(119, 39, 230, 0.9)',
+  bottomColor: 'rgba(127, 34, 254, 0.1)',
   priceFormat: {
     type: 'custom',
     formatter: (price: number) => {
@@ -77,7 +95,7 @@ const candleSeriesOptions: DeepPartial<CandlestickSeriesOptions> = {
     formatter: (price: number) => {
       return CryptoUtils.getPriceText(price);
     },
-  }
+  },
 } as const;
 
 const volumeSeriesOptions: DeepPartial<HistogramSeriesOptions> = {
@@ -116,7 +134,7 @@ export default function TradingChart({ marketCode }: Props) {
   useEffect(() => {
     updateInfo();
 
-    const chart = createChart(chartContainerRef.current as HTMLElement, chartOptions)
+    const chart = createChart(chartContainerRef.current as HTMLElement, chartOptions);
     chart.timeScale().subscribeVisibleLogicalRangeChange((range) => {
       if (!range) return;
 
@@ -126,10 +144,10 @@ export default function TradingChart({ marketCode }: Props) {
           await getBeforeCandleData();
         })();
       }
-    })
+    });
 
     chartRef.current = chart;
-  }, [])
+  }, []);
 
   // 차트 타입 변경 및 시리즈 재설정
   useEffect(() => {
@@ -148,8 +166,8 @@ export default function TradingChart({ marketCode }: Props) {
         scaleMargins: {
           top: 0.2,
           bottom: 0.3,
-        }
-      })
+        },
+      });
       areaSeriesRef.current = areaSeries;
     } else if (chartType === ChartTypes.CANDLE) {
       // 기존 시리즈 제거
@@ -162,8 +180,8 @@ export default function TradingChart({ marketCode }: Props) {
         scaleMargins: {
           top: 0.2,
           bottom: 0.3,
-        }
-      })
+        },
+      });
       candleSeriesRef.current = candleSeries;
     }
 
@@ -177,15 +195,15 @@ export default function TradingChart({ marketCode }: Props) {
         top: 0.85,
         bottom: 0,
       },
-    })
+    });
     volumeSeriesRef.current = volumeSeries;
-  }, [chartType])
+  }, [chartType]);
 
   // 시간 타입 변경
   useEffect(() => {
     if (!chartRef.current) return;
     const chart = chartRef.current;
-    
+
     chart.applyOptions({
       localization: {
         timeFormatter: getTimeFormatter(timeType),
@@ -194,9 +212,9 @@ export default function TradingChart({ marketCode }: Props) {
         timeVisible: true,
         secondsVisible: true,
         tickMarkFormatter: getTimeFormatter(timeType),
-      }
-    })
-  }, [timeType])
+      },
+    });
+  }, [timeType]);
 
   // 캔들 데이터 업데이트
   useEffect(() => {
@@ -204,12 +222,12 @@ export default function TradingChart({ marketCode }: Props) {
       areaSeriesRef.current.setData(parseAreaData(candles));
     } else if (chartType === ChartTypes.CANDLE && candleSeriesRef.current) {
       candleSeriesRef.current.setData(parseCandleData(candles));
-    }    
+    }
 
     if (volumeSeriesRef.current) {
       volumeSeriesRef.current.setData(parseVolumeData(candles));
     }
-  }, [candles, chartType])
+  }, [candles, chartType]);
 
   // 현재 내 포지션 정보
   useEffect(() => {
@@ -225,14 +243,14 @@ export default function TradingChart({ marketCode }: Props) {
       lineWidth: 1,
       axisLabelVisible: true,
       title: '진입 가격',
-    }
+    };
     const liqPriceLine: CreatePriceLineOptions = {
       price: liqPrice,
       color: '#c43a3a',
       lineWidth: 1,
       axisLabelVisible: true,
       title: '청산 가격',
-    }
+    };
 
     let seriesRef: MutableRefObject<ISeriesApi<'Area' | 'Candlestick'> | null> | null = null;
 
@@ -253,15 +271,14 @@ export default function TradingChart({ marketCode }: Props) {
       entryPriceLineRef.current = seriesRef.current.createPriceLine(entryPriceLine);
       liqPriceLineRef.current = seriesRef.current.createPriceLine(liqPriceLine);
     }
-  }, [myTrades.positions, marketCode, chartType])
+  }, [myTrades.positions, marketCode, chartType]);
 
   return (
     <div className="relative flex flex-col w-full h-full">
-      <div ref={chartContainerRef} className="relative w-full flex-1">
-      </div>
-      <div 
+      <div ref={chartContainerRef} className="relative w-full flex-1"></div>
+      <div
         className={cn([
-          'absolute top-0 left-0 z-10 w-full h-full rounded-lg bg-slate-800', 
+          'absolute top-0 left-0 z-10 w-full h-full rounded-lg bg-slate-800',
           { 'opacity-100 animate-pulse': isLoading },
           { 'opacity-0 pointer-events-none': !isLoading },
         ])}

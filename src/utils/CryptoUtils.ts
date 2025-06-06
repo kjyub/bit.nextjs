@@ -59,7 +59,12 @@ namespace CryptoUtils {
     }
   }
 
-  export function getPnl(currentPrice: number, quantity: number, entryPrice: number, positionType: PositionType): number {
+  export function getPnl(
+    currentPrice: number,
+    quantity: number,
+    entryPrice: number,
+    positionType: PositionType,
+  ): number {
     if (positionType === PositionTypes.LONG) {
       return (currentPrice - entryPrice) * quantity;
     } else {

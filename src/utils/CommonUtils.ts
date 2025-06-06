@@ -223,7 +223,7 @@ namespace CommonUtils {
     const inko = new Inko();
     // const convertedInput = value.replace(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, (char) => romanize(char))
     return inko.ko2en(value);
-  };
+  }
   export function rowIndex(index: number, pageIndex: number, pageSize: number, itemCount: number): number {
     return itemCount - ((pageIndex - 1) * pageSize + index);
   }

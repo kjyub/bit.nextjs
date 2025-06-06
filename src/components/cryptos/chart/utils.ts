@@ -1,42 +1,47 @@
-import { CandleTimes, CandleTimeType } from "./Types";
-import { map, pipe, reverse, toArray, uniqBy } from "@fxts/core";
-import { IUpbitCandle } from "../../../types/cryptos/CryptoInterfaces";
-import { AreaData, CandlestickData, HistogramData, UTCTimestamp } from "lightweight-charts";
-
+import { map, pipe, reverse, toArray, uniqBy } from '@fxts/core';
+import type { AreaData, CandlestickData, HistogramData, UTCTimestamp } from 'lightweight-charts';
+import type { IUpbitCandle } from '../../../types/cryptos/CryptoInterfaces';
+import { type CandleTimeType, CandleTimes } from './Types';
 
 export const getTimeFormatter = (timeType: CandleTimeType) => {
   if (timeType === CandleTimes.SECOND) {
     return (time: number) => {
       const date = new Date(time);
       return date.toLocaleString('ko-KR', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
-    }
-  } else if (timeType === CandleTimes.MINUTE1 || timeType === CandleTimes.MINUTE3 || timeType === CandleTimes.MINUTE5 || timeType === CandleTimes.MINUTE10 || timeType === CandleTimes.MINUTE15) {
+    };
+  } else if (
+    timeType === CandleTimes.MINUTE1 ||
+    timeType === CandleTimes.MINUTE3 ||
+    timeType === CandleTimes.MINUTE5 ||
+    timeType === CandleTimes.MINUTE10 ||
+    timeType === CandleTimes.MINUTE15
+  ) {
     return (time: number) => {
       const date = new Date(time);
       return date.toLocaleString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false });
-    }
+    };
   } else if (timeType === CandleTimes.DAY) {
     return (time: number) => {
       const date = new Date(time);
       return date.toLocaleString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
-    }
+    };
   } else if (timeType === CandleTimes.WEEK) {
     return (time: number) => {
       const date = new Date(time);
       return date.toLocaleString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
-    }
+    };
   } else if (timeType === CandleTimes.MONTH) {
     return (time: number) => {
       const date = new Date(time);
       return date.toLocaleString('ko-KR', { year: 'numeric', month: '2-digit' });
-    }
+    };
   } else {
     return (time: number) => {
       const date = new Date(time);
       return date.toLocaleString('ko-KR', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
-    }
+    };
   }
-}
+};
 
 export const parseAreaData = (candles: IUpbitCandle[]): AreaData[] => {
   return pipe(
@@ -49,7 +54,7 @@ export const parseAreaData = (candles: IUpbitCandle[]): AreaData[] => {
     reverse,
     toArray,
   ) as AreaData[];
-}
+};
 
 export const parseCandleData = (candles: IUpbitCandle[]): CandlestickData[] => {
   return pipe(
@@ -63,9 +68,9 @@ export const parseCandleData = (candles: IUpbitCandle[]): CandlestickData[] => {
       close: c.trade_price,
     })),
     reverse,
-    toArray
+    toArray,
   ) as CandlestickData[];
-}
+};
 
 export const parseVolumeData = (candles: IUpbitCandle[]): HistogramData[] => {
   return pipe(
@@ -79,4 +84,4 @@ export const parseVolumeData = (candles: IUpbitCandle[]): HistogramData[] => {
     reverse,
     toArray,
   ) as HistogramData[];
-}
+};

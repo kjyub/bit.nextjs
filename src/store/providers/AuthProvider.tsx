@@ -3,7 +3,7 @@
 import UserApi from '@/apis/api/users/UserApi';
 import { removeAuthToken, setAuthToken } from '@/apis/utils/instances';
 import User from '@/types/users/User';
-import { AccountStatusTypes, type Token, type LoginResponse } from '@/types/users/UserTypes';
+import { AccountStatusTypes, type LoginResponse, type Token } from '@/types/users/UserTypes';
 import { type Dispatch, type SetStateAction, createContext, useCallback, useEffect, useMemo, useState } from 'react';
 import useUserInfoStore from '../useUserInfo';
 

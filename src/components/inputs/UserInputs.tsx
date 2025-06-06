@@ -174,7 +174,9 @@ export const Combo: React.FC<IComboInputProps> = ({
           $is_active={isOptionShow}
           $is_error={!!isError}
         >
-          <span className={`${isSelected ? 'active' : ''}`}>{isSelected ? optionNames[Number(value)] : placeholder}</span>
+          <span className={`${isSelected ? 'active' : ''}`}>
+            {isSelected ? optionNames[Number(value)] : placeholder}
+          </span>
           <i className="fa-solid fa-chevron-down"></i>
         </S.InputBox>
 

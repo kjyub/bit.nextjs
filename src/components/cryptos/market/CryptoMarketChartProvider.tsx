@@ -2,10 +2,19 @@
 
 import UpbitApi from '@/apis/api/cryptos/UpbitApi';
 import useTradeMarketChartSocket from '@/hooks/sockets/useTradeMarketChartSocket';
-import type { IUpbitCandle } from '@/types/cryptos/CryptoInterfaces';
-import { type Dispatch, type SetStateAction, createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { CANDLE_SIZE, type CandleTimeType, CandleTimes, type ChartType, ChartTypes } from '../chart/Types';
 import useToastMessageStore from '@/store/useToastMessageStore';
+import type { IUpbitCandle } from '@/types/cryptos/CryptoInterfaces';
+import {
+  type Dispatch,
+  type SetStateAction,
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import { CANDLE_SIZE, type CandleTimeType, CandleTimes, type ChartType, ChartTypes } from '../chart/Types';
 
 const MAX_CANDLES = 100000;
 

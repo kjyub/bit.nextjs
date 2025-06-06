@@ -7,7 +7,12 @@ interface Props {
   itemCount: number;
   pageSize: number;
 }
-export default function usePageScroll<T extends HTMLElement>({ nextPage, pageIndex, itemCount, pageSize }: Props): React.RefObject<T> {
+export default function usePageScroll<T extends HTMLElement>({
+  nextPage,
+  pageIndex,
+  itemCount,
+  pageSize,
+}: Props): React.RefObject<T> {
   const [scrollRef, scrollInView] = useInView();
 
   useEffect(() => {

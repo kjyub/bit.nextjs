@@ -390,7 +390,7 @@ const Comment = ({ user, comment, handleComment }: IComment) => {
       <CommentContent
         content={content}
         hasParent={hasParent}
-        parentName={"parentName"}
+        parentName={'parentName'}
         isEdit={isShowEdit}
         handleComment={handleCommentEdit}
       />

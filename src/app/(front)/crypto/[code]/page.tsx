@@ -28,7 +28,11 @@ export default async function CryptoMarketPage({ params, searchParams }: IMarket
       marketData={marketData}
       marketCurrent={marketCurrent}
       communityNode={
-        <Suspense fallback={<CryptoMarketCommunity marketCode={code} searchParams={{ search: '', page: 1 }} communityListData={{}} />}>
+        <Suspense
+          fallback={
+            <CryptoMarketCommunity marketCode={code} searchParams={{ search: '', page: 1 }} communityListData={{}} />
+          }
+        >
           <CryptoMarketCommunityPage params={awaitParams} searchParams={awaitSearchParams} />
         </Suspense>
       }

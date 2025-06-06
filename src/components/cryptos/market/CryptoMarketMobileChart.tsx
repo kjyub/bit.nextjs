@@ -6,8 +6,8 @@ import { ModalDimmer } from '@/styles/MainStyles';
 import BrowserUtils from '@/utils/BrowserUtils';
 import { createPortal } from 'react-dom';
 import CryptoMarketChartControlBar from '../chart/ControlBar';
-import CryptoMarketChartProvider from './CryptoMarketChartProvider';
 import TradingChart from '../chart/TradingChart';
+import CryptoMarketChartProvider from './CryptoMarketChartProvider';
 
 interface Props {
   marketCode: string;

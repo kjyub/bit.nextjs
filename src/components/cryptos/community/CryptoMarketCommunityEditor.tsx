@@ -69,7 +69,11 @@ export default function CryptoMarketCommunityEditor({ marketCode, community, onC
       <div className="flex flex-col w-full space-y-4">
         <TitleInput value={title} setValue={(value) => setTitle(value as string)} label="제목" />
 
-        <ContentInput value={content} setValue={(value) => setContent(value as string)} placeholder="내용을 입력해주세요." />
+        <ContentInput
+          value={content}
+          setValue={(value) => setContent(value as string)}
+          placeholder="내용을 입력해주세요."
+        />
 
         <div className="flex justify-end items-center space-x-2">
           <CS.SaveButton

@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 
-export const useDetectClose = <T extends HTMLElement>(): [React.MutableRefObject<T | null>, boolean, React.Dispatch<React.SetStateAction<boolean>>] => {
+export const useDetectClose = <T extends HTMLElement>(): [
+  React.MutableRefObject<T | null>,
+  boolean,
+  React.Dispatch<React.SetStateAction<boolean>>,
+] => {
   const ref = useRef<T | null>(null);
 
   const [isOpen, setIsOpen] = useState(false);
