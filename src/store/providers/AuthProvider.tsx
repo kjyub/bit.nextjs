@@ -45,7 +45,7 @@ export const AuthProvider = ({
   const [user, setUser] = useState<User>(initialUser);
 
   // 유저 데이터 가져오는데 성공했으면 이미 불러온 상태로 시작
-  const [isAuth, setIsAuth] = useState<boolean>(!!userData);
+  const [isAuth, setIsAuth] = useState<boolean>(!!userData && user.accountStatus === AccountStatusTypes.NORMAL);
   const [isLoading, setIsLoading] = useState<boolean>(!userData);
 
   const updateAuth = useUserInfoStore((state) => state.updateAuth);
