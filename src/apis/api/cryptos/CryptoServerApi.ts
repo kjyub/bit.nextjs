@@ -41,7 +41,12 @@ namespace CryptoServerApi {
   // endregion
 
   // region Community
-  export async function getCommunityList(search: string, marketCode: string, page: number, pageSize: number): Promise<object> {
+  export async function getCommunityList(
+    search: string,
+    marketCode: string,
+    page: number,
+    pageSize: number,
+  ): Promise<object> {
     let result: object = {};
     try {
       const response = await defaultInstance.get('api/cryptos/community/', {
@@ -70,7 +75,11 @@ namespace CryptoServerApi {
   }
   // endregion
   // region Community Comment
-  export async function getCommunityCommentList(communityId: number, pageIndex: number, pageSize: number): Promise<object> {
+  export async function getCommunityCommentList(
+    communityId: number,
+    pageIndex: number,
+    pageSize: number,
+  ): Promise<object> {
     let result: object = {};
     try {
       const response = await defaultInstance.get('api/cryptos/community_comment/', {

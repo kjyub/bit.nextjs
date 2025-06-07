@@ -2,7 +2,7 @@ import type { StyleProps } from '@/types/StyleTypes';
 import tw from 'tailwind-styled-components';
 
 export const Layout = tw.div`
-  flex flex-col w-full lg:h-[calc(100vh-208px)] space-y-2
+  flex flex-col w-full lg:h-full space-y-2
 `;
 export const PageTabBar = tw.div`
   flex items-center w-full px-1 md:gap-2

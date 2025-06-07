@@ -22,7 +22,9 @@ namespace TradeGoApi {
 
     return result;
   }
-  export async function getMarketsCurrentDic(marketCodes: Array<string> = []): Promise<{ [key: string]: IUpbitMarketTicker }> {
+  export async function getMarketsCurrentDic(
+    marketCodes: Array<string> = [],
+  ): Promise<{ [key: string]: IUpbitMarketTicker }> {
     const markets = await TradeGoApi.getMarketsCurrent(marketCodes);
 
     const result: { [key: string]: IUpbitMarketTicker } = {};

@@ -30,30 +30,32 @@ const BoxLayout = tw.div`
   rounded-lg bg-slate-800/60
 `;
 export const ChartLayout = tw(BoxLayout)`
-  max-md:hidden md:flex flex-col flex-1 md:h-full
+  max-lg:hidden lg:flex flex-col flex-1 lg:h-full
 `;
 export const OrderBookLayout = tw(BoxLayout)`
-  flex max-md:flex-1 sm:w-[220px] max-md:max-h-[440px] md:h-full
+  flex max-lg:flex-1 max-md:max-h-[440px] md:h-full
+  sm:w-[220px]
 `;
 export const MobileChartLayout = tw(BoxLayout)`
   max-md:flex md:hidden flex-col max-md:h-[400px] flex-1 md:h-full
 `;
 export const TradeLayout = tw.div`
   flex flex-col 
-  max-md:min-w-[160px] max-md:max-w-[50%] max-md:w-full md:flex-1 md:max-w-[264px] 
+  max-md:min-w-[160px] max-md:max-w-[50%] max-md:w-full 
   max-md:min-h-[440px] md:h-full
   max-md:px-2
+  md:min-w-[240px] md:flex-1 md:max-w-[264px] 
 `;
 
 export const BottomLayout = tw.div`
-  flex w-full gap-4 max-md:mt-4 max-md:!px-2
+  flex w-full gap-4 max-md:mt-4 max-md:!px-2 lg:h-[calc(100vh-20rem)]
 `;
 export const MyTradeLayout = tw.div`
-  md:sticky md:top-56
+  md:sticky md:top-48
   flex flex-col flex-1
 `;
 export const CommunityLayout = tw.div`
-  max-lg:hidden lg:flex flex-col w-128 min-h-[10rem]
+  max-lg:hidden lg:flex flex-col w-128 min-h-[10rem] lg:max-h-full
 `;
 
 export const MarketListLayout = tw.div`

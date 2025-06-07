@@ -51,7 +51,7 @@ export default function OrderBook({ orderBook, marketCode, marketCurrent }: IOrd
   }, [orderBook]);
 
   return (
-    <div className="flex flex-col w-full h-[calc(100%-2rem)]">
+    <div className="flex flex-col w-full h-[calc(100%-28px)]">
       <S.Row className="h-9 shrink-0 pr-2 text-sm font-light text-slate-400 max-sm:hidden">
         <span className="trade-price">가격</span>
         <span className="price">수량</span>

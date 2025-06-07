@@ -26,6 +26,7 @@ import { type MutableRefObject, useEffect, useRef } from 'react';
 import { useCryptoMarketChart } from '../market/CryptoMarketChartProvider';
 import { CandleTimes, ChartTypes } from './Types';
 import { getTimeFormatter, parseAreaData, parseCandleData, parseVolumeData } from './utils';
+import useBreakpoint from '@/hooks/useBreakpoint';
 
 const UP_COLOR = '#3b69cb';
 const DOWN_COLOR = '#c43a3a';
@@ -120,6 +121,8 @@ export default function TradingChart({ marketCode }: Props) {
   const { timeType, chartType, candles, getBeforeCandleData, isLoading } = useCryptoMarketChart();
   const { updateInfo, myTrades } = useUserInfoStore();
 
+  const { breakpointState } = useBreakpoint();
+
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
   const areaSeriesRef = useRef<ISeriesApi<'Area'> | null>(null);
@@ -148,6 +151,15 @@ export default function TradingChart({ marketCode }: Props) {
 
     chartRef.current = chart;
   }, []);
+
+  useEffect(() => {
+    if (chartRef.current) {
+      const rect = chartContainerRef.current?.getBoundingClientRect();
+      if (rect) {
+        chartRef.current.resize(rect.width, rect.height);
+      }
+    }
+  }, [breakpointState]);
 
   // 차트 타입 변경 및 시리즈 재설정
   useEffect(() => {

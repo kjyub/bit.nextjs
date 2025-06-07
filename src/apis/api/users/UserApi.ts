@@ -183,7 +183,12 @@ namespace UserApi {
 
     return result;
   }
-  export async function findPasswordCheck(email: string, name: string, tel: string, userType: UserType): Promise<boolean> {
+  export async function findPasswordCheck(
+    email: string,
+    name: string,
+    tel: string,
+    userType: UserType,
+  ): Promise<boolean> {
     let result = false;
 
     try {

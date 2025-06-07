@@ -10,7 +10,7 @@ namespace AuthServerUtils {
     if (!accessToken || !refreshToken) {
       return null;
     }
-    
+
     return { access: accessToken, refresh: refreshToken };
   }
 }

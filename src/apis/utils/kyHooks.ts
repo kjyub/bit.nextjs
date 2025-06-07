@@ -17,7 +17,7 @@ export const setAuthorization = (request: KyRequest) => {
 export const validateAuthToken = async (request: KyRequest, _options: NormalizedOptions, response: KyResponse) => {
   const token = getAuthToken();
   // 토큰이 없어서 401 뜬 경우 정상 처리
-  if (response?.status === 401 && token === null) { 
+  if (response?.status === 401 && token === null) {
     return response;
   }
 
