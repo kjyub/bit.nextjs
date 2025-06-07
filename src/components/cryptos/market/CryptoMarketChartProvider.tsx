@@ -2,10 +2,13 @@
 
 import UpbitApi from '@/apis/api/cryptos/UpbitApi';
 import useTradeMarketChartSocket from '@/hooks/sockets/useTradeMarketChartSocket';
+import { useCryptoMarketTrade } from '@/hooks/useCryptoMarketTrade';
 import useToastMessageStore from '@/store/useToastMessageStore';
 import type { IUpbitCandle } from '@/types/cryptos/CryptoInterfaces';
+import CryptoUtils from '@/utils/CryptoUtils';
 import {
   type Dispatch,
+  type MutableRefObject,
   type SetStateAction,
   createContext,
   useCallback,
@@ -28,6 +31,8 @@ interface CryptoMarketChartState {
   candles: IUpbitCandle[];
   isLoading: boolean;
   isCandleLoading: boolean;
+  selectedPriceRef: MutableRefObject<number | null>;
+  updateTradePrice: () => void;
 }
 
 const initCryptoMarketChartState: CryptoMarketChartState = {
@@ -39,6 +44,8 @@ const initCryptoMarketChartState: CryptoMarketChartState = {
   candles: [],
   isLoading: true,
   isCandleLoading: false,
+  selectedPriceRef: { current: null },
+  updateTradePrice: () => {},
 };
 
 const CryptoMarketChartContext = createContext<CryptoMarketChartState>(initCryptoMarketChartState);
@@ -117,17 +124,22 @@ interface ICryptoMarketChart {
 }
 export default function CryptoMarketChartProvider({ marketCode, children }: ICryptoMarketChart) {
   const createToastMessage = useToastMessageStore((state) => state.createMessage);
+  const { setTradePrice } = useCryptoMarketTrade();
+  const { createMessage } = useToastMessageStore();
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isCandleLoading, setCandleLoading] = useState<boolean>(false);
   const [candles, setCandles] = useState<IUpbitCandle[]>([]);
   const [timeType, setTimeType] = useState<CandleTimeType>(CandleTimes.SECOND);
   const [chartType, setChartType] = useState<ChartType>(ChartTypes.AREA);
+  const [selectedPrice, setSelectedPrice] = useState<number | null>(null); // 차트에서 선택한 가격
 
   const isCandleLoadingRef = useRef(isCandleLoading);
   const candlesRef = useRef(candles);
   const timeTypeRef = useRef<CandleTimeType>(CandleTimes.SECOND);
   const isFullCandlesRef = useRef(false);
+
+  const selectedPriceRef = useRef<number | null>(null);
 
   useEffect(() => {
     initChart(CandleTimes.SECOND);
@@ -271,9 +283,27 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
 
   const connectChart = useTradeMarketChartSocket(marketCode, addCandle);
 
+  const updateTradePrice = useCallback(() => {
+    if (selectedPriceRef.current === null) return;
+
+    setTradePrice(selectedPriceRef.current);
+    createMessage(`${CryptoUtils.getPriceText(selectedPriceRef.current)} 거래 가격 설정`);
+  }, []);
+
   return (
     <CryptoMarketChartContext.Provider
-      value={{ initChart, timeType, chartType, setChartType, getBeforeCandleData, candles, isLoading, isCandleLoading }}
+      value={{
+        initChart,
+        timeType,
+        chartType,
+        setChartType,
+        getBeforeCandleData,
+        candles,
+        isLoading,
+        isCandleLoading,
+        selectedPriceRef,
+        updateTradePrice,
+      }}
     >
       {children}
     </CryptoMarketChartContext.Provider>

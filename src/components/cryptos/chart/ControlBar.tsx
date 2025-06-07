@@ -3,7 +3,7 @@ import { useCryptoMarketChart } from '../market/CryptoMarketChartProvider';
 import { CandleTimes, ChartTypes } from './Types';
 
 export default function CryptoMarketChartControlBar() {
-  const { timeType, chartType, setChartType, initChart } = useCryptoMarketChart();
+  const { timeType, chartType, setChartType, initChart, updateTradePrice } = useCryptoMarketChart();
 
   return (
     <CS.ControlBar>
@@ -66,6 +66,12 @@ export default function CryptoMarketChartControlBar() {
       >
         <i className="fa-solid fa-chart-line"></i>
       </button>
+
+      <div className="flex items-center gap-1 ml-auto">
+        <button type="button" className="mouse:hidden text-sm" onClick={updateTradePrice}>
+          <i className="fa-solid fa-money-bill-wave"></i>
+        </button>
+      </div>
     </CS.ControlBar>
   );
 }

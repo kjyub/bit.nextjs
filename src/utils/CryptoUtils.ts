@@ -30,21 +30,13 @@ namespace CryptoUtils {
     }
   }
   export function getPriceRound(price: number): number {
-    if (price >= 1000) {
-      return TypeUtils.round(price, 0);
-    } else if (price >= 100) {
-      return TypeUtils.round(price, 1);
-    } else if (price >= 10) {
-      return TypeUtils.round(price, 2);
-    } else if (price >= 1) {
-      return TypeUtils.round(price, 3);
-    } else if (price > 0) {
-      return TypeUtils.round(price, 4);
-    } else if (price === 0) {
-      return 0;
-    }
-
-    return price;
+    if (price >= 1000) return TypeUtils.round(price, 0);
+    else if (price >= 100) return TypeUtils.round(price, 1);
+    else if (price >= 10) return TypeUtils.round(price, 2);
+    else if (price >= 1) return TypeUtils.round(price, 3);
+    else if (price > 0) return TypeUtils.round(price, 4);
+    else if (price === 0) return 0;
+    else return price;
   }
   export function getPriceText(price: number): string {
     return CommonUtils.textFormat(CryptoUtils.getPriceRound(price), TextFormats.NUMBER);
@@ -58,7 +50,18 @@ namespace CryptoUtils {
       return price.toString();
     }
   }
+  export function getPriceUnit(price: number): number {
+    let result = '';
 
+    if (price >= 100000) result = `${Math.round(price / 1000) * 1000}`;
+    else if (price >= 10000) result = `${Math.round(price / 100) * 100}`;
+    else if (price >= 1000) result = `${Math.round(price / 10) * 10}`;
+    else if (price >= 100) result = `${Math.round(price)}`;
+    else if (price >= 1) result = price.toFixed(1);
+    else result = price.toFixed(2);
+
+    return Number(result);
+  }
   export function getPnl(
     currentPrice: number,
     quantity: number,

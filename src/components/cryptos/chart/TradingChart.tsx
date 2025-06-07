@@ -1,32 +1,38 @@
 // https://tradingview.github.io/lightweight-charts/docs
 
+import useBreakpoint from '@/hooks/useBreakpoint';
 import useUserInfoStore from '@/store/useUserInfo';
+import { TextFormats } from '@/types/CommonTypes';
+import CommonUtils from '@/utils/CommonUtils';
 import CryptoUtils from '@/utils/CryptoUtils';
 import { cn } from '@/utils/StyleUtils';
 import {
+  AreaData,
   AreaSeries,
   type AreaSeriesOptions,
-  BarSeries,
-  BarSeriesOptions,
+  type CandlestickData,
   CandlestickSeries,
   type CandlestickSeriesOptions,
   type ChartOptions,
   ColorType,
   type CreatePriceLineOptions,
   CrosshairMode,
+  type CustomData,
   type DeepPartial,
   HistogramSeries,
   type HistogramSeriesOptions,
   type IChartApi,
   type IPriceLine,
   type ISeriesApi,
+  type MouseEventParams,
+  OhlcData,
+  type Time,
   createChart,
 } from 'lightweight-charts';
-import { type MutableRefObject, useEffect, useRef } from 'react';
+import { type MutableRefObject, useCallback, useEffect, useRef } from 'react';
 import { useCryptoMarketChart } from '../market/CryptoMarketChartProvider';
 import { CandleTimes, ChartTypes } from './Types';
-import { DOWN_COLOR, getTimeFormatter, parseAreaData, parseCandleData, parseVolumeData, UP_COLOR } from './utils';
-import useBreakpoint from '@/hooks/useBreakpoint';
+import { DOWN_COLOR, UP_COLOR, getTimeFormatter, parseAreaData, parseCandleData, parseVolumeData } from './utils';
 
 const chartOptions: DeepPartial<ChartOptions> = {
   layout: {
@@ -62,24 +68,20 @@ const chartOptions: DeepPartial<ChartOptions> = {
     timeVisible: true,
     secondsVisible: true,
   },
-  // overlayPriceScales: {
-  //   scaleMargins: {
-  //     top: 0.9,
-  //     bottom: 0,
-  //   },
-  // },
 } as const;
 
 const areaSeriesOptions: DeepPartial<AreaSeriesOptions> = {
-  lineColor: '#822afd',
+  lineColor: '#8a3bf8',
   topColor: 'rgba(119, 39, 230, 0.9)',
   bottomColor: 'rgba(127, 34, 254, 0.1)',
   priceFormat: {
     type: 'custom',
     formatter: (price: number) => {
-      return CryptoUtils.getPriceText(price);
+      return CommonUtils.textFormat(CryptoUtils.getPriceUnit(price), TextFormats.NUMBER);
     },
   },
+  crosshairMarkerVisible: false,
+  // crosshairMarkerBackgroundColor: '#2afd38',
 } as const;
 
 const candleSeriesOptions: DeepPartial<CandlestickSeriesOptions> = {
@@ -91,7 +93,7 @@ const candleSeriesOptions: DeepPartial<CandlestickSeriesOptions> = {
   priceFormat: {
     type: 'custom',
     formatter: (price: number) => {
-      return CryptoUtils.getPriceText(price);
+      return CryptoUtils.getPriceUnit(price);
     },
   },
 } as const;
@@ -105,17 +107,14 @@ const volumeSeriesOptions: DeepPartial<HistogramSeriesOptions> = {
     },
   },
   priceScaleId: '',
-  // scaleMargins: {
-  //   top: 0.8,
-  //   bottom: 0,
-  // },
 } as const;
 
 interface Props {
   marketCode: string;
 }
 export default function TradingChart({ marketCode }: Props) {
-  const { timeType, chartType, candles, getBeforeCandleData, isLoading } = useCryptoMarketChart();
+  const { timeType, chartType, candles, getBeforeCandleData, isLoading, selectedPriceRef, updateTradePrice } =
+    useCryptoMarketChart();
   const { updateInfo, myTrades } = useUserInfoStore();
 
   const { breakpointState } = useBreakpoint();
@@ -130,6 +129,8 @@ export default function TradingChart({ marketCode }: Props) {
   const entryPriceLineRef = useRef<IPriceLine | null>(null);
   const liqPriceLineRef = useRef<IPriceLine | null>(null);
 
+  const isCrossHairActiveRef = useRef<boolean>(false);
+
   // 차트 생성
   useEffect(() => {
     updateInfo();
@@ -140,7 +141,28 @@ export default function TradingChart({ marketCode }: Props) {
       //
     }
 
+    // 현재 마우스 위치의 가격 가져오기
+    const getChartCrosshairPrice = (param: MouseEventParams): number | null => {
+      let value: number | null = null;
+
+      let seriesRef: ISeriesApi<'Area' | 'Candlestick'> | null = null;
+      if (areaSeriesRef.current) {
+        seriesRef = areaSeriesRef.current;
+      } else if (candleSeriesRef.current) {
+        seriesRef = candleSeriesRef.current;
+      }
+
+      if (!seriesRef) return null;
+      const priceFromCoordinate = seriesRef.coordinateToPrice(param.point?.y ?? 0);
+      value = priceFromCoordinate ?? null;
+
+      if (!value) return null;
+
+      return CryptoUtils.getPriceUnit(value);
+    };
+
     const chart = createChart(chartContainerRef.current as HTMLElement, chartOptions);
+    // 과거 데이터 불러오기
     chart.timeScale().subscribeVisibleLogicalRangeChange((range) => {
       if (!range) return;
 
@@ -149,6 +171,26 @@ export default function TradingChart({ marketCode }: Props) {
         (async () => {
           await getBeforeCandleData();
         })();
+      }
+    });
+    // 크로스 헤어 이동 시
+    chart.subscribeCrosshairMove((param) => {
+      isCrossHairActiveRef.current = !!param.point;
+      if (!param.point) return;
+
+      const price = getChartCrosshairPrice(param);
+      if (price === null) return;
+
+      selectedPriceRef.current = price;
+    });
+    // 차트 클릭 시
+    chart.subscribeClick((param) => {
+      const price = getChartCrosshairPrice(param);
+      if (price === null) return;
+
+      // 마우스 환경인 경우
+      if (window.matchMedia('(pointer: fine)').matches) {
+        updateTradePrice();
       }
     });
 
@@ -175,6 +217,7 @@ export default function TradingChart({ marketCode }: Props) {
       if (candleSeriesRef.current) {
         try {
           chart.removeSeries(candleSeriesRef.current as ISeriesApi<'Candlestick'>);
+          candleSeriesRef.current = null;
         } catch {
           // 차트에 시리즈가 없어서 생기는 오류
         }
@@ -193,6 +236,7 @@ export default function TradingChart({ marketCode }: Props) {
       if (areaSeriesRef.current) {
         try {
           chart.removeSeries(areaSeriesRef.current as ISeriesApi<'Area'>);
+          areaSeriesRef.current = null;
         } catch {
           // 차트에 시리즈가 없어서 생기는 오류
         }
@@ -253,6 +297,11 @@ export default function TradingChart({ marketCode }: Props) {
 
     if (volumeSeriesRef.current) {
       volumeSeriesRef.current.setData(parseVolumeData(candles));
+    }
+
+    // 최신 캔들을 활성 가격으로 설정 (거래 가격 설정에 사용됨)
+    if (candles.length > 0 && !isCrossHairActiveRef.current) {
+      selectedPriceRef.current = Number(candles[0].trade_price);
     }
   }, [candles, chartType]);
 
