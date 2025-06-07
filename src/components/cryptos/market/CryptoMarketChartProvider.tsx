@@ -17,6 +17,7 @@ import {
 import { CANDLE_SIZE, type CandleTimeType, CandleTimes, type ChartType, ChartTypes } from '../chart/Types';
 
 const MAX_CANDLES = 100000;
+const REMOVE_CANDLES = 1000;
 
 interface CryptoMarketChartState {
   initChart: (timeType: CandleTimeType) => void;
@@ -78,25 +79,34 @@ const isSameTimeCandle = (lastCandle: IUpbitCandle, candle: IUpbitCandle, timeTy
   }
 };
 
+// 최신 데이터 추가
 const mergeCandle = (candles: IUpbitCandle[], candle: IUpbitCandle, timeType: CandleTimeType) => {
-  const isAdd = isSameTimeCandle(candles[0], candle, timeType);
-  if (isAdd) {
-    return [candle, ...candles];
-  }
   if (candles.length === 0) {
     return [candle];
   }
 
+  let oldCandles = [...candles];
+  // 최대 개수 초과 시, 과거 데이터 제거
+  if (candles.length > MAX_CANDLES) {
+    oldCandles = candles.slice(0, MAX_CANDLES - REMOVE_CANDLES);
+  }
+
+  // 최신 데이터가 마지막 데이터랑 다른 시간인 경우 추가
+  const isAdd = isSameTimeCandle(oldCandles[0], candle, timeType);
+  if (isAdd) {
+    return [candle, ...oldCandles];
+  }
+
   // 마지막 캔들이 같은 시간이라면, 마지막 캔들을 업데이트
-  const newCandles = [...candles];
+  const newCandles = [...oldCandles];
   const lastCandle = candle;
-  if (candles[0].high_price > lastCandle.high_price) {
-    lastCandle.high_price = candles[0].high_price;
+  if (oldCandles[0].high_price > lastCandle.high_price) {
+    lastCandle.high_price = oldCandles[0].high_price;
   }
-  if (candles[0].low_price < lastCandle.low_price) {
-    lastCandle.low_price = candles[0].low_price;
+  if (oldCandles[0].low_price < lastCandle.low_price) {
+    lastCandle.low_price = oldCandles[0].low_price;
   }
-  lastCandle.candle_acc_trade_volume += candles[0].candle_acc_trade_volume;
+  lastCandle.candle_acc_trade_volume += oldCandles[0].candle_acc_trade_volume;
   newCandles[0] = lastCandle;
   return newCandles;
 };
