@@ -7,6 +7,8 @@ export const CandleTimes = {
   MINUTE5: '5m',
   MINUTE10: '10m',
   MINUTE15: '15m',
+  MINUTE60: '60m',
+  MINUTE240: '240m',
   DAY: '1d',
   WEEK: '1w',
   MONTH: '1month',

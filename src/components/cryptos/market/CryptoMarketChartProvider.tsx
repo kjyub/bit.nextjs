@@ -71,6 +71,10 @@ const isSameTimeCandle = (lastCandle: IUpbitCandle, candle: IUpbitCandle, timeTy
       return Math.floor(lastCandleTime.getMinutes() / 10) !== Math.floor(candleTime.getMinutes() / 10);
     case CandleTimes.MINUTE15:
       return Math.floor(lastCandleTime.getMinutes() / 15) !== Math.floor(candleTime.getMinutes() / 15);
+    case CandleTimes.MINUTE60:
+      return Math.floor(lastCandleTime.getMinutes() / 60) !== Math.floor(candleTime.getMinutes() / 60);
+    case CandleTimes.MINUTE240:
+      return Math.floor(lastCandleTime.getMinutes() / 240) !== Math.floor(candleTime.getMinutes() / 240);
     case CandleTimes.DAY:
       return lastCandleTime.getDate() !== candleTime.getDate();
     case CandleTimes.WEEK:
@@ -202,6 +206,12 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
       case CandleTimes.MINUTE15:
         newData = await UpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 15, to);
         break;
+      case CandleTimes.MINUTE60:
+        newData = await UpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 60, to);
+        break;
+      case CandleTimes.MINUTE240:
+        newData = await UpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 240, to);
+        break;
       case CandleTimes.DAY:
         newData = await UpbitApi.getCandleDays(marketCode, CANDLE_SIZE, to);
         break;
@@ -251,6 +261,12 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
           break;
         case CandleTimes.MINUTE15:
           data = await UpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 15);
+          break;
+        case CandleTimes.MINUTE60:
+          data = await UpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 60);
+          break;
+        case CandleTimes.MINUTE240:
+          data = await UpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 240);
           break;
         case CandleTimes.DAY:
           data = await UpbitApi.getCandleDays(marketCode, CANDLE_SIZE);

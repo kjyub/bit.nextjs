@@ -9,4 +9,6 @@ export const ControlBar = tw.div`
   [&_button]:transition-colors
 
   [&>.split]:border-r [&>.split]:border-slate-500/50
+
+  [&>.list]:flex [&>.list]:flex-wrap [&>.list]:items-center [&>.list]:gap-1
 `;
