@@ -22,12 +22,12 @@ export default function Header() {
       <div className="content">
         {/* 왼쪽 */}
         <NS.Section>
-          <Link href="/" className={CommonUtils.isPathActive(pathname, '/') ? 'active' : ''}>
+          <Link href="/" className={`btn w-16 ${CommonUtils.isPathActive(pathname, '/') ? 'active' : ''}`}>
             <span>홈</span>
           </Link>
           <Link
             href={isAuth ? '/crypto' : `/crypto/${DEFAULT_MARKET_CODE}`}
-            className={CommonUtils.isPathActive(pathname, '/crypto') ? 'active' : ''}
+            className={`btn ${CommonUtils.isPathActive(pathname, '/crypto') ? 'active' : ''}`}
           >
             <span>암호화폐 거래</span>
           </Link>
@@ -51,7 +51,7 @@ export default function Header() {
                 href="/auth"
                 className={`btn ${CommonUtils.isPathActive(pathname, '/auth') ? 'active' : ''} bg-slate-100/10 hover:!bg-slate-100/20 !text-slate-300/80`}
               >
-                <span>로그인 / 가입</span>
+                <span>로그인</span>
               </Link>
             </>
           )}

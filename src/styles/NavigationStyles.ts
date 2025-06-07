@@ -8,7 +8,7 @@ export const Layout = tw.div`
   duration-300
 
   [&>.content]:flex [&>.content]:justify-between [&>.content]:items-center [&>.content]:w-full
-  [&>.content]:max-w-(--breakpoint-xl)
+  [&>.content]:max-w-(--breakpoint-2xl)
 `;
 
 export const Section = tw.div`
