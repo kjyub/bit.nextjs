@@ -10,11 +10,17 @@ export const setAuthorization = (request: KyRequest) => {
     request.headers.set('Authorization', `Bearer ${token.access}`);
   } else {
     // 토큰이 없는 경우 진행하지 않고 에러 처리
-    throw new Error('토큰이 없습니다.');
+    return;
   }
 };
 
 export const validateAuthToken = async (request: KyRequest, _options: NormalizedOptions, response: KyResponse) => {
+  const token = getAuthToken();
+  // 토큰이 없어서 401 뜬 경우 정상 처리
+  if (response?.status === 401 && token === null) { 
+    return response;
+  }
+
   // 재요청 실패 체크
   if (response?.status === 401 && request.headers.get('x-retry') === 'true') {
     throw new Error('토큰이 없습니다.');
@@ -23,15 +29,10 @@ export const validateAuthToken = async (request: KyRequest, _options: Normalized
   // 401 에러시 토큰 재발급 시도
   if (response?.status === 401 && request.headers.get('x-retry') !== 'true') {
     try {
-      const token = getAuthToken();
-      if (!token) {
-        throw new Error('토큰이 없습니다.');
-      }
-
       const refreshResponse = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER}/api/auth/refresh/`, {
         credentials: 'include',
         method: 'POST',
-        body: JSON.stringify({ refresh: token.refresh }),
+        body: JSON.stringify({ refresh: token?.refresh }),
       });
       if (!refreshResponse.ok) {
         throw new Error('토큰 갱신 실패');

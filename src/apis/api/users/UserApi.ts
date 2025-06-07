@@ -246,8 +246,8 @@ namespace UserApi {
       const response = await authInstance.get('api/users/detail_info_auth/');
       const data = (await response.json()) as any;
       result.parseResponse(data as any);
-    } catch (error) {
-      console.log(error);
+    } catch {
+      // console.log(error);
     }
 
     return result;
@@ -259,8 +259,8 @@ namespace UserApi {
       const response = await authInstance.get('api/users/detail_info_auth/');
       const data = (await response.json()) as any;
       userData = data;
-    } catch (error) {
-      console.log(error);
+    } catch {
+      // console.log(error);
     }
 
     return userData;

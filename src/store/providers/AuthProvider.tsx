@@ -32,7 +32,7 @@ export const AuthProvider = ({
   userData,
   children,
 }: {
-  authToken: Token;
+  authToken: Token | null;
   userData: object;
   children: React.ReactNode;
 }) => {
@@ -51,7 +51,7 @@ export const AuthProvider = ({
   const updateAuth = useUserInfoStore((state) => state.updateAuth);
 
   useEffect(() => {
-    if (authToken && Object.keys(authToken).length > 0) {
+    if (authToken) {
       setAuthToken(authToken);
       if (userData) {
         const newUser = new User();

@@ -42,7 +42,9 @@ export const getAuthToken = (): Token | null => {
   return globalAuthToken;
 };
 
-export const setAuthToken = (token: Token) => {
+export const setAuthToken = (token: Token | null) => {
+  if (!token) return;
+
   globalAuthToken = token;
 };
 
