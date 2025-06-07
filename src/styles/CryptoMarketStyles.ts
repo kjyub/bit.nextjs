@@ -48,7 +48,7 @@ export const TradeLayout = tw.div`
 `;
 
 export const BottomLayout = tw.div`
-  flex w-full gap-4 max-md:mt-4 max-md:!px-2 lg:h-[calc(100vh-20rem)]
+  flex w-full gap-4 max-md:mt-4 max-md:!px-2 md:!px-1 lg:h-[calc(100vh-20rem)]
 `;
 export const MyTradeLayout = tw.div`
   md:sticky md:top-48

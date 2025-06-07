@@ -23,8 +23,9 @@ interface ICryptoMarketCommunity {
   marketCode: string;
   searchParams: IMarketPageSearchParams;
   communityListData: Record<string, any>;
+  isLoading?: boolean;
 }
-export default function CryptoMarketCommunity({ marketCode, searchParams, communityListData }: ICryptoMarketCommunity) {
+export default function CryptoMarketCommunity({ marketCode, searchParams, communityListData, isLoading = false }: ICryptoMarketCommunity) {
   const pagination = new Pagination<MarketCommunity>();
   pagination.parseResponse(communityListData, MarketCommunity);
   const pageIndex = Number(searchParams.page ?? 1);
@@ -91,6 +92,14 @@ export default function CryptoMarketCommunity({ marketCode, searchParams, commun
               />
             );
           })}
+          {isLoading && (
+            <>
+              <CommunitySkeleton />
+              <CommunitySkeleton />
+              <CommunitySkeleton />
+              <CommunitySkeleton />
+            </>
+          )}
         </div>
 
         <div className="control">
@@ -224,5 +233,13 @@ const Community = ({ user, community, selectedCommunity, setSelectedCommunity, h
         <CryptoMarketCommunityView user={user} communityNanoId={community.nanoId} />
       )}
     </CS.ItemLayout>
+  );
+};
+
+const CommunitySkeleton = () => {
+  return (
+    <div className="w-full py-1">
+      <div className="w-full h-15 rounded-lg skeleton" />
+    </div>
   );
 };

@@ -186,4 +186,90 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
+
+  .skeleton {
+    color: transparent !important;
+    @apply after:content-['S'] rounded-lg bg-slate-500/50 animate-pulse;
+  }
+}
+
+@layer components {
+  .trade-slider {
+    input[type="range"] {
+      -webkit-appearance: none; /* 기본 스타일 제거 */
+      width: 100%; /* 원하는 넓이 설정 */
+      height: 16px; /* 높이는 thumb 크기와 일치 */
+      background: transparent; /* 기본 배경 제거 */
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Track 스타일 */
+    input[type="range"]::-webkit-slider-runnable-track {
+      -webkit-appearance: none;
+      background: transparent;
+    }
+
+    input[type="range"]::-moz-range-track {
+      background: transparent;
+    }
+
+    input[type="range"]::-ms-track {
+      background: transparent;
+      border-color: transparent;
+      color: transparent;
+    }
+
+    /* Thumb 스타일 */
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; /* 기본 스타일 제거 */
+      width: 16px;
+      height: 16px;
+      background: #6d28d9 !important; /* 보라색 */
+      &:hover {
+        background: #8b5cf6; /* 보라색 */
+      }
+      &:active {
+        background: #7c3aed; /* 보라색 */
+      }
+      transition: background 0.15s;
+      border-radius: 50%; /* 원형 */
+      cursor: pointer;
+      margin-top: 0px; /* 중앙 맞추기 */
+      border-width: 10px;
+      border-color: #4c1d95;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      background: #6d28d9;
+      &:hover {
+        background: #8b5cf6; /* 보라색 */
+      }
+      &:active {
+        background: #7c3aed; /* 보라색 */
+      }
+      transition: background 0.15s;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-ms-thumb {
+      width: 16px;
+      height: 16px;
+      background: #6d28d9;
+      &:hover {
+        background: #8b5cf6; /* 보라색 */
+      }
+      &:active {
+        background: #7c3aed; /* 보라색 */
+      }
+      transition: background 0.15s;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  }
 }

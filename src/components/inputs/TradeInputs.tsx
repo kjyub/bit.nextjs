@@ -55,10 +55,9 @@ export const SlideInput = ({ value, setValue, min, max, step = 1, mark }: SlideI
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(Number(e.target.value));
   };
-  // console.log(min, max, step)
 
   return (
-    <S.Slider className="">
+    <S.SliderBox className="trade-slider">
       <input
         type="range"
         className="w-full bg-transparent text-violet-600"
@@ -76,7 +75,7 @@ export const SlideInput = ({ value, setValue, min, max, step = 1, mark }: SlideI
           ))}
         </div>
       </div>
-    </S.Slider>
+    </S.SliderBox>
   );
 };
 
