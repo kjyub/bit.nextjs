@@ -134,6 +134,12 @@ export default function TradingChart({ marketCode }: Props) {
   useEffect(() => {
     updateInfo();
 
+    try {
+      chartRef.current?.remove();
+    } catch {
+      //
+    }
+
     const chart = createChart(chartContainerRef.current as HTMLElement, chartOptions);
     chart.timeScale().subscribeVisibleLogicalRangeChange((range) => {
       if (!range) return;
@@ -297,8 +303,6 @@ export default function TradingChart({ marketCode }: Props) {
   return (
     <div className="relative flex flex-col w-full h-full">
       <div ref={chartContainerRef} className={cn(['relative w-full flex-1', { 'animate-pulse': isLoading }])}></div>
-      {/* <div ref={volumeChartContainerRef} className="relative w-full h-36">
-      </div> */}
     </div>
   );
 }
