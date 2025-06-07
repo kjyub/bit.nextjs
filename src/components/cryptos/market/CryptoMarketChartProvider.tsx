@@ -40,7 +40,7 @@ interface CryptoMarketChartState {
 
 const initCryptoMarketChartState: CryptoMarketChartState = {
   initChart: () => {},
-  timeType: CandleTimes.SECOND,
+  timeType: CandleTimes.MINUTE1,
   chartType: ChartTypes.AREA,
   setChartType: () => {},
   crosshairMode: CrosshairMode.Normal,
@@ -139,7 +139,7 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isCandleLoading, setCandleLoading] = useState<boolean>(false);
   const [candles, setCandles] = useState<IUpbitCandle[]>([]);
-  const [timeType, setTimeType] = useState<CandleTimeType>(CandleTimes.SECOND);
+  const [timeType, setTimeType] = useState<CandleTimeType>(CandleTimes.MINUTE1);
   const [chartType, setChartType] = useState<ChartType>(ChartTypes.AREA);
   const [crosshairMode, setCrosshairMode] = useState<CrosshairMode>(CrosshairMode.Normal);
 
@@ -151,7 +151,7 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
   const selectedPriceRef = useRef<number | null>(null);
 
   useEffect(() => {
-    initChart(CandleTimes.SECOND);
+    initChart(CandleTimes.MINUTE1);
   }, [marketCode]);
 
   useEffect(() => {
@@ -254,6 +254,7 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
           break;
         case CandleTimes.MINUTE1:
           data = await UpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 1);
+          chartType = ChartTypes.AREA;
           break;
         case CandleTimes.MINUTE3:
           data = await UpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 3);
