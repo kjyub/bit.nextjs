@@ -17,7 +17,11 @@ import type React from 'react';
 import { useEffect, useRef, useState } from 'react';
 
 type HelpBoxPosition = 'left-top' | 'left-bottom' | 'right-top' | 'right-bottom';
-export const HelpBox = ({ className, position = 'left-top', children }: { className?: string; position?: HelpBoxPosition; children: React.ReactNode }) => {
+export const HelpBox = ({
+  className,
+  position = 'left-top',
+  children,
+}: { className?: string; position?: HelpBoxPosition; children: React.ReactNode }) => {
   const [ref, isHover] = useMouseHover<HTMLDivElement>();
 
   return (

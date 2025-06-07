@@ -5,18 +5,17 @@ import useUserInfoStore from '@/store/useUserInfo';
 import * as S from '@/styles/CryptoMarketStyles';
 import type { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
 import { type SizeUnitType, SizeUnitTypes } from '@/types/cryptos/CryptoTypes';
+import User from '@/types/users/User';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
+import CryptoMarketCommunity from '../community/CryptoMarketCommunity';
 import CryptoMyTrade from '../mytrade/CryptoMyTradeMain';
 import CryptoMarketChart from './CryptoMarketChart';
 import CryptoMarketInfo from './CryptoMarketInfo';
 import CryptoMarketOrderBook from './CryptoMarketOrderBook';
 import CryptoMarketTrade from './CryptoMarketTrade';
-import User from '@/types/users/User';
-import CryptoMarketCommunity from '../community/CryptoMarketCommunity';
 
 export default function CryptoMarketLoading() {
-
   return (
     <S.MarketLayout>
       {/* <CryptoMarketInfo marketCode={marketCode} marketData={marketData} marketCurrent={marketCurrent} /> */}
@@ -32,9 +31,7 @@ export default function CryptoMarketLoading() {
 
           {/* 코인 가격 */}
           <S.MainPriceBox>
-            <div className="change skeleton w-84">
-              변동률
-            </div>
+            <div className="change skeleton w-84">변동률</div>
           </S.MainPriceBox>
         </div>
 
@@ -92,7 +89,12 @@ export default function CryptoMarketLoading() {
           <CryptoMyTrade />
         </S.MyTradeLayout>
         <S.CommunityLayout>
-          <CryptoMarketCommunity marketCode={'KRW-BTC'} searchParams={{ search: '', page: 1 }} communityListData={{}} isLoading={true} />
+          <CryptoMarketCommunity
+            marketCode={'KRW-BTC'}
+            searchParams={{ search: '', page: 1 }}
+            communityListData={{}}
+            isLoading={true}
+          />
         </S.CommunityLayout>
       </S.BottomLayout>
     </S.MarketLayout>

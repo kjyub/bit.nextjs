@@ -1,6 +1,7 @@
 import CryptoApi from '@/apis/api/cryptos/CryptoApi';
 import CommunityPagination from '@/components/atomics/community/CommunityPagination';
 import { MARKET_COMMUNITY_COMMENT_PAGE_SIZE } from '@/constants/CryptoConsts';
+import useToastMessageStore from '@/store/useToastMessageStore';
 import * as CS from '@/styles/CryptoMarketCommunityStyles';
 import { TextFormats } from '@/types/CommonTypes';
 import Pagination from '@/types/api/pagination';
@@ -17,6 +18,7 @@ interface ICryptoMarketCommunityView {
   communityNanoId: string;
 }
 export default function CryptoMarketCommunityView({ user, communityNanoId }: ICryptoMarketCommunityView) {
+  const { createMessage } = useToastMessageStore();
   const [community, setCommunity] = useState<MarketCommunity>(new MarketCommunity());
 
   const [myLikeType, setMyLikeType] = useState<LikeType>(LikeTypes.NONE);
@@ -99,7 +101,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
       return;
     }
     if (!user.uuid) {
-      alert('회원 정보를 찾을 수 없습니다.');
+      createMessage('회원 정보를 찾을 수 없습니다.');
       return;
     }
 
@@ -122,7 +124,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
 
     if (result.id < 0) {
       setCommentLoading(false);
-      alert('작성 실패했습니다.');
+      createMessage('작성 실패했습니다.');
       return;
     }
 
@@ -147,12 +149,17 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
   };
 
   const handleLike = async (_type: LikeType) => {
-    if (user.uuid) {
-      alert('로그인 후 이용 가능합니다.');
+    if (!user.uuid) {
+      createMessage('로그인 후 이용 가능합니다.');
       return;
     }
 
     // 이미 추천이 된 경우는 취소
+    if (myLikeType !== LikeTypes.NONE && myLikeType !== _type) {
+      createMessage('추천 취소 후 다시 시도해주세요.');
+      return;
+    }
+
     let type: LikeType = LikeTypes.NONE;
     if (myLikeType === LikeTypes.NONE && _type !== myLikeType) {
       type = _type;
@@ -160,7 +167,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
     const result = await CryptoApi.likeCommunity(community.nanoId, type);
 
     if (!result) {
-      alert('추천 실패했습니다.');
+      createMessage('추천 실패했습니다.');
       return;
     }
 
@@ -267,6 +274,8 @@ interface IComment {
   handleComment: (value: string, parentId: number) => void;
 }
 const Comment = ({ user, comment, handleComment }: IComment) => {
+  const { createMessage } = useToastMessageStore();
+
   const [content, setContent] = useState<string>(comment.content);
 
   // 댓글 수정
@@ -294,7 +303,7 @@ const Comment = ({ user, comment, handleComment }: IComment) => {
       return;
     }
     if (!user.uuid) {
-      alert('회원 정보를 찾을 수 없습니다.');
+      createMessage('회원 정보를 찾을 수 없습니다.');
       return;
     }
 
@@ -308,7 +317,7 @@ const Comment = ({ user, comment, handleComment }: IComment) => {
 
     if (result.id < 0) {
       setEditLoading(false);
-      alert('수정 실패했습니다.');
+      createMessage('수정 실패했습니다.');
       return;
     }
     setContent(result.content);
@@ -342,14 +351,14 @@ const Comment = ({ user, comment, handleComment }: IComment) => {
 
     if (response) {
       setDeleted(true);
-      alert('삭제되었습니다');
+      createMessage('삭제되었습니다');
     } else {
-      alert('삭제에 실패했습니다.');
+      createMessage('삭제에 실패했습니다.');
     }
   };
 
   return (
-    <CS.ItemCommentBox className={`${hasParent ? 'pl-6' : ''}`} $is_deleted={isDeleted}>
+    <CS.ItemCommentBox className={`${hasParent ? 'ml-4 w-[calc(100%-1rem)]' : ''}`} $is_deleted={isDeleted}>
       <div className="header">
         <div className="user">
           <i className="fa-solid fa-user" />
@@ -488,11 +497,11 @@ const CommentContent = ({ content, hasParent, parentName, isEdit, handleComment 
         </CS.ItemCommentWriteBox>
       ) : (
         <pre className="content font-pretendard">
-          {hasParent && (
+          {/* {hasParent && (
             <div className="h-fit mt-1 mr-1 px-1 py-0.5 -translate-y-0.5 rounded-sm bg-[#edfcf1] text-brand_green-4 text-xs font-light">
               {parentName}
             </div>
-          )}
+          )} */}
           {content}
         </pre>
       )}

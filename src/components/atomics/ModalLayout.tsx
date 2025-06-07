@@ -10,16 +10,18 @@ export default function ModalLayout({ title, layoutClassName = 'w-96', contentCl
   return (
     <div
       className={cn(
-        'flex flex-col [&>div]:w-full [&>div]:p-6 [&>div]:bg-slate-700/50 backdrop-blur-xl',
+        'flex flex-col [&>div]:w-full [&>div]:p-6 [&>div]:bg-slate-800/50 backdrop-blur-xl',
         layoutClassName,
       )}
     >
       {/* 헤더 */}
-      <div className="flex items-center h-16 rounded-t-xl border-b border-slate-700/50">
+      <div className="flex items-center h-16 rounded-t-xl border-x border-t border-slate-700/50">
         <span className="text-xl font-medium text-slate-200">{title}</span>
       </div>
       {/* 내용 */}
-      <div className={`flex flex-col !pb-5 rounded-b-xl ${contentClassName}`}>{children}</div>
+      <div className={`flex flex-col !pb-5 rounded-b-xl border border-slate-700/50 ${contentClassName}`}>
+        {children}
+      </div>
     </div>
   );
 }

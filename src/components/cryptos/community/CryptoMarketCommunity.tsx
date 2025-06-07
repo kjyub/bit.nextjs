@@ -25,7 +25,12 @@ interface ICryptoMarketCommunity {
   communityListData: Record<string, any>;
   isLoading?: boolean;
 }
-export default function CryptoMarketCommunity({ marketCode, searchParams, communityListData, isLoading = false }: ICryptoMarketCommunity) {
+export default function CryptoMarketCommunity({
+  marketCode,
+  searchParams,
+  communityListData,
+  isLoading = false,
+}: ICryptoMarketCommunity) {
   const pagination = new Pagination<MarketCommunity>();
   pagination.parseResponse(communityListData, MarketCommunity);
   const pageIndex = Number(searchParams.page ?? 1);
@@ -238,7 +243,7 @@ const Community = ({ user, community, selectedCommunity, setSelectedCommunity, h
 
 const CommunitySkeleton = () => {
   return (
-    <div className="w-full py-1">
+    <div className="w-full p-2">
       <div className="w-full h-15 rounded-lg skeleton" />
     </div>
   );

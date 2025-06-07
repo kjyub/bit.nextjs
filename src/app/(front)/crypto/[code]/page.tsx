@@ -27,7 +27,7 @@ export default async function CryptoMarketPage({ params, searchParams }: IMarket
       marketCode={code}
       marketData={marketData}
       marketCurrent={marketCurrent}
-      communityNode={ <CryptoMarketCommunityPage params={awaitParams} searchParams={awaitSearchParams} /> }
+      communityNode={<CryptoMarketCommunityPage params={awaitParams} searchParams={awaitSearchParams} />}
     />
   );
 }

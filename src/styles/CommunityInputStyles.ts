@@ -104,7 +104,7 @@ export const TitleBox = tw.div`
 
 export const ContentTextArea = tw.textarea`
   w-full h-24 min-h-[20vh] max-h-[50vh] p-3
-  bg-slate-700/50
+  bg-slate-600/50
   text-slate-200
   border-slate-600
   rounded-lg border

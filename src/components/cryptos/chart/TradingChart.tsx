@@ -176,7 +176,9 @@ export default function TradingChart({ marketCode }: Props) {
           const data: ({ value?: number } & CustomData<Time>) | undefined = param.seriesData.get(areaSeriesRef.current);
           value = data?.value ?? null;
         } else if (candleSeriesRef.current) {
-          const data: ({ close?: number } & CustomData<Time>) | undefined = param.seriesData.get(candleSeriesRef.current);
+          const data: ({ close?: number } & CustomData<Time>) | undefined = param.seriesData.get(
+            candleSeriesRef.current,
+          );
           value = data?.close ?? null;
         }
       }

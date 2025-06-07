@@ -3,8 +3,9 @@ import ModalLayout from '@/components/atomics/ModalLayout';
 import { ContentInput, TitleInput } from '@/components/inputs/CommunityInputs';
 import * as CS from '@/styles/CryptoMarketCommunityStyles';
 import type MarketCommunity from '@/types/cryptos/MarketCommunity';
+import { cn } from '@/utils/StyleUtils';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface ICryptoMarketCommunityEditor {
   marketCode: string;
@@ -18,6 +19,21 @@ export default function CryptoMarketCommunityEditor({ marketCode, community, onC
 
   const [title, setTitle] = useState<string>(community.title);
   const [content, setContent] = useState<string>(community.content);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (community.nanoId) {
+      getCommunity();
+    }
+  }, [community.nanoId]);
+
+  const getCommunity = async () => {
+    setIsLoading(true);
+    const response = await CryptoApi.getCommunityDetail(community.nanoId);
+    setTitle(response.title);
+    setContent(response.content);
+    setIsLoading(false);
+  };
 
   const handleSave = async () => {
     const data = {
@@ -66,7 +82,7 @@ export default function CryptoMarketCommunityEditor({ marketCode, community, onC
       layoutClassName="max-sm:w-[90vw] sm:w-128"
       contentClassName="max-h-[80vh]"
     >
-      <div className="flex flex-col w-full space-y-4">
+      <div className={cn(['flex flex-col w-full space-y-4', isLoading && '[&_textarea]:animate-pulse'])}>
         <TitleInput value={title} setValue={(value) => setTitle(value as string)} label="제목" />
 
         <ContentInput

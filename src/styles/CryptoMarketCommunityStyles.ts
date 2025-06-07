@@ -38,7 +38,7 @@ export const SaveButton = tw.button`
 
 export const ItemLayout = tw.div`
   ${({ $is_deleted }: StyleProps) => ($is_deleted ? 'hidden' : 'flex')}
-  flex-col items-center w-full p-1 space-y-2
+  flex-col items-center w-full p-2 space-y-2
 
 `;
 export const ItemRow = tw.div<StyleProps>`

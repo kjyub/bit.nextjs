@@ -31,7 +31,7 @@ export default class MarketCommunityComment extends AbsApiObject {
 
     this._id = json.id;
     this._communityNanoId = json.community_nano_id;
-    this._parentId = json.parentId;
+    this._parentId = json.parent_id;
     this._user = new User();
     this._user.parseResponse(json.user);
     this._content = json.content;
