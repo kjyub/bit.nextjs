@@ -60,6 +60,13 @@ namespace UpbitApi {
   // endregion
 
   // region Candle
+  function isBeforeServiceStart(to: string): boolean {
+    // 업비트 서비스 시작일인 2017년 10월 이전을 조회할려는지 확인
+    const date = new Date(to);
+    const startDate = new Date('2017-10-01');
+    return date < startDate;
+  }
+
   // to: ISO8061 포맷 (yyyy-MM-dd'T'HH:mm:ss'Z' or yyyy-MM-dd HH:mm:ss).
   export async function getCandleSeconds(marketCode: string, count = 200, to?: string): Promise<Array<IUpbitCandle>> {
     let result: Array<IUpbitCandle> = [];
@@ -69,7 +76,7 @@ namespace UpbitApi {
         market: marketCode,
         count: count.toString(),
       };
-      if (to) {
+      if (to && !isBeforeServiceStart(to)) {
         searchParams.to = to;
       }
 
@@ -95,7 +102,7 @@ namespace UpbitApi {
         count: count.toString(),
       };
 
-      if (to) {
+      if (to && !isBeforeServiceStart(to)) {
         searchParams.to = to;
       }
 
@@ -115,7 +122,7 @@ namespace UpbitApi {
         market: marketCode,
         count: count.toString(),
       };
-      if (to) {
+      if (to && !isBeforeServiceStart(to)) {
         searchParams.to = to;
       }
 
@@ -135,7 +142,7 @@ namespace UpbitApi {
         market: marketCode,
         count: count.toString(),
       };
-      if (to) {
+      if (to && !isBeforeServiceStart(to)) {
         searchParams.to = to;
       }
       const response = await upbitInstance.get('candles/weeks', { searchParams });
@@ -154,7 +161,7 @@ namespace UpbitApi {
         market: marketCode,
         count: count.toString(),
       };
-      if (to) {
+      if (to && !isBeforeServiceStart(to)) {
         searchParams.to = to;
       }
 

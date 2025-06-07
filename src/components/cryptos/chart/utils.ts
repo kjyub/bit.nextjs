@@ -19,26 +19,61 @@ export const getTimeFormatter = (timeType: CandleTimeType) => {
     timeType === CandleTimes.MINUTE1 ||
     timeType === CandleTimes.MINUTE3 ||
     timeType === CandleTimes.MINUTE5 ||
-    timeType === CandleTimes.MINUTE10 ||
-    timeType === CandleTimes.MINUTE15
+    timeType === CandleTimes.MINUTE10
   ) {
     return (time: number) => {
       const date = new Date(time);
       return date.toLocaleString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false });
     };
+  } else if (timeType === CandleTimes.MINUTE15) {
+    return (time: number) => {
+      const date = new Date(time);
+      // 15분으로 내림 처리
+      const minutes = Math.floor(date.getMinutes() / 15) * 15;
+      date.setMinutes(minutes);
+      return date.toLocaleString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false });
+    };
+  } else if (timeType === CandleTimes.MINUTE60) {
+    return (time: number) => {
+      const date = new Date(time);
+      // 1시간으로 내림 처리
+      const hours = Math.floor(date.getHours() / 1) * 1;
+      date.setHours(hours);
+      date.setMinutes(0);
+      return date.toLocaleString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false });
+    };
+  } else if (timeType === CandleTimes.MINUTE240) {
+    return (time: number) => {
+      const date = new Date(time);
+      // 4시간으로 내림 처리 (UTC 기준)
+      const utcHours = date.getUTCHours();
+      const roundedUTCHours = Math.floor(utcHours / 4) * 4;
+      date.setUTCHours(roundedUTCHours, 0, 0, 0);
+      return date.toLocaleString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false });
+    };
   } else if (timeType === CandleTimes.DAY) {
     return (time: number) => {
       const date = new Date(time);
+      // 일자로 내림 처리
+      const day = Math.floor(date.getDate() / 1) * 1;
+      date.setDate(day);
       return date.toLocaleString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
     };
   } else if (timeType === CandleTimes.WEEK) {
     return (time: number) => {
       const date = new Date(time);
+      // 일자로 내림 처리
+      const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+      const day = Math.floor(utcDate.getDate() / 7) * 7;
+      utcDate.setDate(day);
       return date.toLocaleString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
     };
   } else if (timeType === CandleTimes.MONTH) {
     return (time: number) => {
       const date = new Date(time);
+      // 월로 내림 처리
+      const month = Math.floor(date.getMonth() / 1) * 1;
+      date.setMonth(month);
       return date.toLocaleString('ko-KR', { year: 'numeric', month: '2-digit' });
     };
   } else {

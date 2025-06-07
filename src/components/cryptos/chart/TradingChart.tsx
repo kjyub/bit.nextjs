@@ -93,7 +93,7 @@ const candleSeriesOptions: DeepPartial<CandlestickSeriesOptions> = {
   priceFormat: {
     type: 'custom',
     formatter: (price: number) => {
-      return CryptoUtils.getPriceUnit(price);
+      return CommonUtils.textFormat(CryptoUtils.getPriceUnit(price), TextFormats.NUMBER);
     },
   },
 } as const;
