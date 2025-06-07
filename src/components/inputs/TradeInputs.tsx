@@ -11,15 +11,17 @@ import {
   TradeOrderTypes,
 } from '@/types/cryptos/CryptoTypes';
 import CommonUtils from '@/utils/CommonUtils';
+import { cn } from '@/utils/StyleUtils';
 import TypeUtils from '@/utils/TypeUtils';
 import type React from 'react';
 import { useEffect, useRef, useState } from 'react';
 
-const HelpBox = ({ children }: { children: React.ReactNode }) => {
+type HelpBoxPosition = 'left-top' | 'left-bottom' | 'right-top' | 'right-bottom';
+export const HelpBox = ({ className, position = 'left-top', children }: { className?: string; position?: HelpBoxPosition; children: React.ReactNode }) => {
   const [ref, isHover] = useMouseHover<HTMLDivElement>();
 
   return (
-    <S.HelpBox ref={ref}>
+    <S.HelpBox ref={ref} className={cn([position, className])}>
       <i className="fa-solid fa-circle-question"></i>
 
       {children && <div className={`w-fit ${isHover ? 'show' : ''}`}>{children}</div>}
@@ -127,7 +129,7 @@ export const MarginModeInput = ({ marginMode, setMarginMode, disabled = false }:
         <div className={`absolute-center bg ${isBgActive ? 'active' : ''}`} />
       </S.MarginModeBox>
 
-      <HelpBox>
+      <HelpBox position="left-bottom">
         <div className="flex flex-col space-y-1 [&>strong]:font-semibold">
           <strong>교차모드</strong>
           <span>투입한 자금과 지갑 내의 돈까지 사용</span>
@@ -230,7 +232,7 @@ export const LeverageInput = ({ leverageRatio, setLeverageRatio, maxRatio = 75 }
             />
             <span className="text-xs text-slate-400 ml-0.5 mt-0.5 select-none">x</span>
           </S.InputBox>
-          <HelpBox>
+          <HelpBox position="left-bottom">
             <div className="flex flex-col space-y-1 [&>strong]:font-semibold">
               <strong>레버리지</strong>
               <span>수량을 배율만큼 더 빌려서 구매한다</span>

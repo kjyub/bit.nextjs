@@ -6,6 +6,7 @@ import { useCryptoMarketTrade } from '@/hooks/useCryptoMarketTrade';
 import useToastMessageStore from '@/store/useToastMessageStore';
 import type { IUpbitCandle } from '@/types/cryptos/CryptoInterfaces';
 import CryptoUtils from '@/utils/CryptoUtils';
+import { CrosshairMode } from 'lightweight-charts';
 import {
   type Dispatch,
   type MutableRefObject,
@@ -27,6 +28,8 @@ interface CryptoMarketChartState {
   timeType: CandleTimeType;
   chartType: ChartType;
   setChartType: Dispatch<SetStateAction<ChartType>>;
+  crosshairMode: CrosshairMode;
+  setCrosshairMode: Dispatch<SetStateAction<CrosshairMode>>;
   getBeforeCandleData: () => void;
   candles: IUpbitCandle[];
   isLoading: boolean;
@@ -40,6 +43,8 @@ const initCryptoMarketChartState: CryptoMarketChartState = {
   timeType: CandleTimes.SECOND,
   chartType: ChartTypes.AREA,
   setChartType: () => {},
+  crosshairMode: CrosshairMode.Normal,
+  setCrosshairMode: () => {},
   getBeforeCandleData: () => {},
   candles: [],
   isLoading: true,
@@ -136,7 +141,7 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
   const [candles, setCandles] = useState<IUpbitCandle[]>([]);
   const [timeType, setTimeType] = useState<CandleTimeType>(CandleTimes.SECOND);
   const [chartType, setChartType] = useState<ChartType>(ChartTypes.AREA);
-  const [selectedPrice, setSelectedPrice] = useState<number | null>(null); // 차트에서 선택한 가격
+  const [crosshairMode, setCrosshairMode] = useState<CrosshairMode>(CrosshairMode.Normal);
 
   const isCandleLoadingRef = useRef(isCandleLoading);
   const candlesRef = useRef(candles);
@@ -313,6 +318,8 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
         timeType,
         chartType,
         setChartType,
+        crosshairMode,
+        setCrosshairMode,
         getBeforeCandleData,
         candles,
         isLoading,

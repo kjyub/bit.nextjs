@@ -12,7 +12,12 @@ export const HelpBox = tw.div`
   text-slate-400 hover:text-slate-300
   transition-colors cursor-pointer
 
-  [&>div]:absolute [&>div]:-z-10 [&>div]:bottom-8 [&>div]:right-0
+  [&.left-top>div]:bottom-7 [&.left-top>div]:right-0
+  [&.left-bottom>div]:top-7 [&.left-bottom>div]:right-0
+  [&.right-top>div]:bottom-7 [&.right-top>div]:left-0
+  [&.right-bottom>div]:top-7 [&.right-bottom>div]:left-0
+
+  [&>div]:absolute [&>div]:-z-10 
   [&>div]:opacity-0 [&>div.show]:opacity-100 [&>div.show]:z-50 [&>div]:transition-opacity
   [&>div]:flex [&>div]:flex-col [&>div]:space-y-2
   [&>div]:w-64 [&>div]:px-2 [&>div]:py-1.5 [&>div]:rounded-sm [&>div]:bg-slate-700

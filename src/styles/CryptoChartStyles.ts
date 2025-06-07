@@ -5,10 +5,10 @@ export const ControlBar = tw.div`
   border-b border-slate-500/50
 
   max-sm:[&_button]:px-1.5 sm:[&_button]:px-2 [&_button]:py-1
-  [&_button]:text-slate-300/70 [&_button]:hover:text-slate-200/90 [&_button.active]:text-slate-100/90
+  [&_button]:text-slate-300/60 [&_button]:hover:text-slate-200/90 [&_button.active]:text-slate-50/90
   [&_button]:transition-colors
 
-  [&>.split]:border-r [&>.split]:border-slate-500/50
+  [&_.split]:border-r [&_.split]:border-slate-500/50
 
-  [&>.list]:flex [&>.list]:flex-wrap [&>.list]:items-center [&>.list]:gap-1
+  [&>.list]:flex [&>.list]:flex-wrap [&>.list]:gap-1
 `;

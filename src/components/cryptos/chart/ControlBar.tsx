@@ -1,9 +1,12 @@
 import * as CS from '@/styles/CryptoChartStyles';
 import { useCryptoMarketChart } from '../market/CryptoMarketChartProvider';
 import { CandleTimes, ChartTypes } from './Types';
+import { CrosshairMode } from 'lightweight-charts';
+import { HelpBox } from '@/components/inputs/TradeInputs';
 
 export default function CryptoMarketChartControlBar() {
-  const { timeType, chartType, setChartType, initChart, updateTradePrice } = useCryptoMarketChart();
+  const { timeType, chartType, setChartType, initChart, updateTradePrice, crosshairMode, setCrosshairMode } =
+    useCryptoMarketChart();
 
   return (
     <CS.ControlBar>
@@ -83,6 +86,46 @@ export default function CryptoMarketChartControlBar() {
         >
           <i className="fa-solid fa-chart-line"></i>
         </button>
+
+        <div className="split"></div>
+
+        <button
+          type="button"
+          onClick={() => setCrosshairMode(CrosshairMode.Normal)}
+          className={crosshairMode === CrosshairMode.Normal ? 'active' : ''}
+          title="십자선 자유 모드"
+        >
+          <i className="fa-solid fa-plus"></i>
+        </button>
+        <button
+          type="button"
+          onClick={() => setCrosshairMode(CrosshairMode.Magnet)}
+          className={crosshairMode === CrosshairMode.Magnet ? 'active' : ''}
+          title="십자선 자석 모드"
+        >
+          <i className="fa-solid fa-magnet"></i>
+        </button>
+
+        <HelpBox className="[&>div]:w-32 h-6" position="right-bottom">
+          <div className="[&>div]:flex [&>div]:items-center [&>div]:px-0.5 [&>div]:py-0.5 [&>div]:gap-1.5 max-md:[&_i]:text-xs md:[&_i]:text-sm max-md:[&_span]:text-xs md:[&_span]:text-sm [&_span]:text-slate-300">
+            <div>
+              <i className="fa-solid fa-chart-column"></i>
+              <span>캔들 차트</span>
+            </div>
+            <div>
+              <i className="fa-solid fa-chart-line"></i>
+              <span>라인 차트</span>
+            </div>
+            <div>
+              <i className="fa-solid fa-plus"></i>
+              <span>십자선 자유 모드</span>
+            </div>
+            <div>
+              <i className="fa-solid fa-magnet"></i>
+              <span>십자선 자석 모드</span>
+            </div>
+          </div>
+        </HelpBox>
 
         <div className="flex items-center gap-1 ml-auto">
           <button type="button" className="mouse:hidden text-sm" onClick={updateTradePrice}>

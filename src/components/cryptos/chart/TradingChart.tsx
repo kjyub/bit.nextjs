@@ -54,6 +54,12 @@ const chartOptions: DeepPartial<ChartOptions> = {
   },
   crosshair: {
     mode: CrosshairMode.Normal,
+    vertLine: {
+      labelBackgroundColor: '#6408e4',
+    },
+    horzLine: {
+      labelBackgroundColor: '#6408e4',
+    },
   },
   localization: {
     timeFormatter: getTimeFormatter(CandleTimes.SECOND),
@@ -113,8 +119,16 @@ interface Props {
   marketCode: string;
 }
 export default function TradingChart({ marketCode }: Props) {
-  const { timeType, chartType, candles, getBeforeCandleData, isLoading, selectedPriceRef, updateTradePrice } =
-    useCryptoMarketChart();
+  const {
+    timeType,
+    chartType,
+    crosshairMode,
+    candles,
+    getBeforeCandleData,
+    isLoading,
+    selectedPriceRef,
+    updateTradePrice,
+  } = useCryptoMarketChart();
   const { updateInfo, myTrades } = useUserInfoStore();
 
   const { breakpointState } = useBreakpoint();
@@ -129,6 +143,7 @@ export default function TradingChart({ marketCode }: Props) {
   const entryPriceLineRef = useRef<IPriceLine | null>(null);
   const liqPriceLineRef = useRef<IPriceLine | null>(null);
 
+  const crosshairModeRef = useRef<CrosshairMode>(CrosshairMode.Normal);
   const isCrossHairActiveRef = useRef<boolean>(false);
 
   // 차트 생성
@@ -145,16 +160,26 @@ export default function TradingChart({ marketCode }: Props) {
     const getChartCrosshairPrice = (param: MouseEventParams): number | null => {
       let value: number | null = null;
 
-      let seriesRef: ISeriesApi<'Area' | 'Candlestick'> | null = null;
-      if (areaSeriesRef.current) {
-        seriesRef = areaSeriesRef.current;
-      } else if (candleSeriesRef.current) {
-        seriesRef = candleSeriesRef.current;
-      }
+      if (crosshairModeRef.current === CrosshairMode.Normal) {
+        let seriesRef: ISeriesApi<'Area' | 'Candlestick'> | null = null;
+        if (areaSeriesRef.current) {
+          seriesRef = areaSeriesRef.current;
+        } else if (candleSeriesRef.current) {
+          seriesRef = candleSeriesRef.current;
+        }
 
-      if (!seriesRef) return null;
-      const priceFromCoordinate = seriesRef.coordinateToPrice(param.point?.y ?? 0);
-      value = priceFromCoordinate ?? null;
+        if (!seriesRef) return null;
+        const priceFromCoordinate = seriesRef.coordinateToPrice(param.point?.y ?? 0);
+        value = priceFromCoordinate ?? null;
+      } else if (crosshairModeRef.current === CrosshairMode.Magnet) {
+        if (areaSeriesRef.current) {
+          const data: ({ value?: number } & CustomData<Time>) | undefined = param.seriesData.get(areaSeriesRef.current);
+          value = data?.value ?? null;
+        } else if (candleSeriesRef.current) {
+          const data: ({ close?: number } & CustomData<Time>) | undefined = param.seriesData.get(candleSeriesRef.current);
+          value = data?.close ?? null;
+        }
+      }
 
       if (!value) return null;
 
@@ -286,6 +311,18 @@ export default function TradingChart({ marketCode }: Props) {
       },
     });
   }, [timeType]);
+
+  // 크로스 헤어 모드 변경
+  useEffect(() => {
+    if (!chartRef.current) return;
+    const chart = chartRef.current;
+    chart.applyOptions({
+      crosshair: {
+        mode: crosshairMode,
+      },
+    });
+    crosshairModeRef.current = crosshairMode;
+  }, [crosshairMode]);
 
   // 캔들 데이터 업데이트
   useEffect(() => {
