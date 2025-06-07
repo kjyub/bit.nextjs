@@ -25,11 +25,8 @@ import {
 import { type MutableRefObject, useEffect, useRef } from 'react';
 import { useCryptoMarketChart } from '../market/CryptoMarketChartProvider';
 import { CandleTimes, ChartTypes } from './Types';
-import { getTimeFormatter, parseAreaData, parseCandleData, parseVolumeData } from './utils';
+import { DOWN_COLOR, getTimeFormatter, parseAreaData, parseCandleData, parseVolumeData, UP_COLOR } from './utils';
 import useBreakpoint from '@/hooks/useBreakpoint';
-
-const UP_COLOR = '#3b69cb';
-const DOWN_COLOR = '#c43a3a';
 
 const chartOptions: DeepPartial<ChartOptions> = {
   layout: {
@@ -74,7 +71,7 @@ const chartOptions: DeepPartial<ChartOptions> = {
 } as const;
 
 const areaSeriesOptions: DeepPartial<AreaSeriesOptions> = {
-  lineColor: '#6408e4',
+  lineColor: '#822afd',
   topColor: 'rgba(119, 39, 230, 0.9)',
   bottomColor: 'rgba(127, 34, 254, 0.1)',
   priceFormat: {
@@ -102,10 +99,10 @@ const candleSeriesOptions: DeepPartial<CandlestickSeriesOptions> = {
 const volumeSeriesOptions: DeepPartial<HistogramSeriesOptions> = {
   color: '#6408e4',
   priceFormat: {
-    type: 'volume',
-    // formatter: (price: number) => {
-    //   return CryptoUtils.getPriceText(price);
-    // },
+    type: 'custom',
+    formatter: (price: number) => {
+      return CryptoUtils.getPriceText(price);
+    },
   },
   priceScaleId: '',
   // scaleMargins: {
@@ -170,7 +167,11 @@ export default function TradingChart({ marketCode }: Props) {
     if (chartType === ChartTypes.AREA) {
       // 기존 시리즈 제거
       if (candleSeriesRef.current) {
-        chart.removeSeries(candleSeriesRef.current as ISeriesApi<'Candlestick'>);
+        try {
+          chart.removeSeries(candleSeriesRef.current as ISeriesApi<'Candlestick'>);
+        } catch {
+          // 차트에 시리즈가 없어서 생기는 오류
+        }
       }
 
       const areaSeries = chart.addSeries(AreaSeries, areaSeriesOptions);
@@ -184,7 +185,11 @@ export default function TradingChart({ marketCode }: Props) {
     } else if (chartType === ChartTypes.CANDLE) {
       // 기존 시리즈 제거
       if (areaSeriesRef.current) {
-        chart.removeSeries(areaSeriesRef.current as ISeriesApi<'Area'>);
+        try {
+          chart.removeSeries(areaSeriesRef.current as ISeriesApi<'Area'>);
+        } catch {
+          // 차트에 시리즈가 없어서 생기는 오류
+        }
       }
 
       const candleSeries = chart.addSeries(CandlestickSeries, candleSeriesOptions);
@@ -198,7 +203,11 @@ export default function TradingChart({ marketCode }: Props) {
     }
 
     if (volumeSeriesRef.current) {
-      chart.removeSeries(volumeSeriesRef.current as ISeriesApi<'Histogram'>);
+      try {
+        chart.removeSeries(volumeSeriesRef.current as ISeriesApi<'Histogram'>);
+      } catch {
+        // 차트에 시리즈가 없어서 생기는 오류
+      }
     }
 
     const volumeSeries = chart.addSeries(HistogramSeries, volumeSeriesOptions);
@@ -287,14 +296,7 @@ export default function TradingChart({ marketCode }: Props) {
 
   return (
     <div className="relative flex flex-col w-full h-full">
-      <div ref={chartContainerRef} className="relative w-full flex-1"></div>
-      <div
-        className={cn([
-          'absolute top-0 left-0 z-10 w-full h-full rounded-lg bg-slate-800',
-          { 'opacity-100 animate-pulse': isLoading },
-          { 'opacity-0 pointer-events-none': !isLoading },
-        ])}
-      ></div>
+      <div ref={chartContainerRef} className={cn(['relative w-full flex-1', { 'animate-pulse': isLoading }])}></div>
       {/* <div ref={volumeChartContainerRef} className="relative w-full h-36">
       </div> */}
     </div>
