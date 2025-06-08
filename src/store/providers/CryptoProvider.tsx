@@ -1,7 +1,8 @@
 'use client';
 
 import useTradeMarketSocket from '@/hooks/sockets/useTradeMarketSocket';
-import { type Dispatch, type SetStateAction, createContext, useState } from 'react';
+import useBreakpoint from '@/hooks/useBreakpoint';
+import { type Dispatch, type SetStateAction, createContext, useLayoutEffect, useState } from 'react';
 
 interface CryptoState {
   isShowMarketList: boolean;
@@ -28,6 +29,14 @@ export const CryptoProvider = ({
 
   const [isShowMarketList, setIsShowMarketList] = useState<boolean>(false);
   const [isShowMobileChart, setIsShowMobileChart] = useState<boolean>(false);
+
+  const { breakpointState } = useBreakpoint();
+
+  useLayoutEffect(() => {
+    if (breakpointState.full) {
+      setIsShowMarketList(false);
+    }
+  }, [breakpointState.full]);
 
   return (
     <CryptoContext.Provider value={{ isShowMarketList, setIsShowMarketList, isShowMobileChart, setIsShowMobileChart }}>

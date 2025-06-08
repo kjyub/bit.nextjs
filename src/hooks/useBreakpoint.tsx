@@ -1,7 +1,9 @@
 'use client';
+import BrowserUtils from '@/utils/BrowserUtils';
+import { debounce } from 'lodash';
 import { useLayoutEffect, useState } from 'react';
 
-const breakpoints = {
+export const breakpoints = {
   sm: 640,
   md: 768,
   lg: 1024,
@@ -21,28 +23,24 @@ type BreakpointState = {
   [K in keyof typeof breakpoints]: boolean;
 };
 
+const getBreakpointState = (): BreakpointState => {
+  return Object.fromEntries(
+    Object.entries(breakpoints).map(([key, breakpoint]) => [key, window.matchMedia(`(min-width: ${breakpoint}px)`).matches]),
+  ) as BreakpointState;
+};
+
 const useBreakpoint = (): { breakpointState: BreakpointState; width: number } => {
   const [width, setWidth] = useState(0);
   const [breakpointState, setBreakpointState] = useState<BreakpointState>(initialBreakpointState);
 
   useLayoutEffect(() => {
-    // const onResize = debounce(() => {
-    //   setWidth(window.innerWidth);
-    //   setBreakpointState(
-    //     Object.fromEntries(
-    //       Object.entries(breakpoints).map(([key, value]) => [key, matchMedia(`(min-width: ${value}px)`).matches]),
-    //     ) as BreakpointState,
-    //   );
-    // }, 500);
+    setBreakpointState(getBreakpointState());
 
-    const onResize = () => {
+    const onResize = debounce(() => {
       setWidth(window.innerWidth);
-      setBreakpointState(
-        Object.fromEntries(
-          Object.entries(breakpoints).map(([key, value]) => [key, matchMedia(`(min-width: ${value}px)`).matches]),
-        ) as BreakpointState,
-      );
-    };
+      setBreakpointState(getBreakpointState());
+    }, 500);
+
     window.addEventListener('resize', onResize);
     onResize();
 
