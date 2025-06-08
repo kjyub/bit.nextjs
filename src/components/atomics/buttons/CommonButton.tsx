@@ -3,7 +3,7 @@ import tw from 'tailwind-styled-components';
 const Button = tw.button`
     px-3 py-1 
     rounded-md bg-slate-500/50 hover:bg-slate-500/70
-    text-sm text-slate-300 
+    text-sm text-slate-200 
     transition-colors
 `;
 

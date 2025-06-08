@@ -1,5 +1,6 @@
 'use client';
 
+import Guage from '@/components/atomics/Guage';
 import useMarketPriceStore from '@/store/useMarketPriceStore';
 import useUserInfoStore from '@/store/useUserInfo';
 import * as S from '@/styles/CryptoWalletStyles';
@@ -11,7 +12,6 @@ import CryptoUtils from '@/utils/CryptoUtils';
 import TypeUtils from '@/utils/TypeUtils';
 import { useMemo } from 'react';
 import { Position } from '../mytrade/MyTradePosition';
-import Guage from '@/components/atomics/Guage';
 
 export default function BalanceManager() {
   const { marketDic } = useMarketPriceStore();

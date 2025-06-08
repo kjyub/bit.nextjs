@@ -112,14 +112,8 @@ export default function CryptoTransferModal({ defaultTransferType }: CryptoTrans
           onClick={() => {
             setTransferType(TransferTypes.TO_ACCOUNT);
           }}
-          onMouseEnter={() => {
-            if (transferType === TransferTypes.TO_WALLET) setBgActive(true);
-          }}
-          onMouseLeave={() => {
-            setBgActive(false);
-          }}
         >
-          <span>{'거래 지갑 -> 통장'}</span>
+          <span>{'거래 지갑 > 통장'}</span>
           <i className="fa-solid fa-building-columns"></i>
         </button>
         <button
@@ -128,18 +122,12 @@ export default function CryptoTransferModal({ defaultTransferType }: CryptoTrans
           onClick={() => {
             setTransferType(TransferTypes.TO_WALLET);
           }}
-          onMouseEnter={() => {
-            if (transferType === TransferTypes.TO_ACCOUNT) setBgActive(true);
-          }}
-          onMouseLeave={() => {
-            setBgActive(false);
-          }}
         >
-          <span>{'통장 -> 거래 지갑'}</span>
+          <span>{'통장 > 거래 지갑'}</span>
           <i className="fa-brands fa-bitcoin"></i>
         </button>
         <div className={`thumb ${transferType === TransferTypes.TO_WALLET ? 'right' : ''}`} />
-        <div className={`absolute-center bg ${isBgActive ? 'active' : ''}`} />
+        <div className="absolute-center bg" />
       </S.TransferTypeBox>
 
       <div className="flex flex-col w-full mt-4 space-y-6">

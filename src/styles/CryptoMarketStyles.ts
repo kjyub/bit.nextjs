@@ -3,7 +3,7 @@ import Link from 'next/link';
 import tw from 'tailwind-styled-components';
 
 export const MarketLayout = tw.div`
-  flex flex-col flex-1 max-xl:w-full max-w-xl:max-w-full xl:w-[1280px] pb-8 md:space-y-4
+  flex flex-col flex-1 max-xl:w-full max-w-xl:max-w-full xl:w-[1280px] pb-8 max-md:mb-24 md:space-y-4
   [&>div]:px-4
 `;
 

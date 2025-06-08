@@ -32,7 +32,7 @@ export default function OrderBook({ orderBook, marketCode, marketCurrent }: IOrd
     return {
       price: socketData.trade_price,
     };
-  }, [socketData.trade_price]);
+  }, [socketData]);
 
   const riseUnits: Unit[] = useMemo(() => {
     return orderBook.orderbook_units

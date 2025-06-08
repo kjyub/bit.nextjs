@@ -36,7 +36,7 @@ export default function AppClientLayout({
       (async () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
         alert(userEmail);
-        
+
         const response = await UserApi.backdoorAuth(userEmail);
         setAuthToken(response.token);
         const user = new User();

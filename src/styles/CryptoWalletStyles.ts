@@ -38,8 +38,10 @@ export const TransferTypeBox = tw.div`
 
   [&>.bg]:w-full [&>.bg]:h-full
   [&>.bg]:rounded-full [&>.bg]:bg-transparent
-  [&>.bg.active]:bg-slate-700/50
-  [&>.bg.active]:w-[calc(100%+0.5rem)] [&>.bg.active]:h-[calc(100%+0.5rem)]
+  mouse:hover:[&>.bg]:bg-slate-700/50
+  mouse:hover:[&>.bg]:w-[calc(100%+0.5rem)] mouse:hover:[&>.bg]:h-[calc(100%+0.5rem)]
+  active:[&>.bg]:bg-slate-700/50
+  active:[&>.bg]:w-[calc(100%+0.5rem)] active:[&>.bg]:h-[calc(100%+0.5rem)]
 `;
 
 export const TransferInfoList = tw.div`
@@ -52,7 +54,7 @@ export const TransferInfoBox = tw.div`
   [&>.value]:text-base [&>.value]:text-slate-300
 `;
 export const TransferButton = tw.button`
-  w-48 h-11 ml-auto
+  max-sm:w-full sm:w-48 h-11 mx-auto
   rounded-lg bg-indigo-600/90 hover:bg-indigo-700/90
   disabled:bg-slate-500/50 disabled:cursor-not-allowed
   text-base text-slate-200
