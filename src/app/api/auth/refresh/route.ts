@@ -4,11 +4,19 @@ import type { LoginResponse } from '@/types/users/UserTypes';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
-export async function GET() {
+export async function POST(request: Request) {
   const cookie = await cookies();
 
   try {
-    const refreshToken = cookie.get(CookieConsts.USER_REFRESH_TOKEN)?.value;
+    let refreshToken = cookie.get(CookieConsts.USER_REFRESH_TOKEN)?.value;
+    if (!refreshToken) {
+      const body = await request.json();
+      refreshToken = body.refresh;
+    }
+
+    if (!refreshToken) {
+      throw Error('refreshToken is required');
+    }
 
     const result = await UserApi.refreshToken(refreshToken);
 
