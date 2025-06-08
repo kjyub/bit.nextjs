@@ -85,23 +85,8 @@ namespace CommonUtils {
         result !== '' &&
         !(result.includes('.') && result[result.length - 1] === '0')
       ) {
-        result = number.toLocaleString();
+        result = number.toLocaleString(undefined, { maximumFractionDigits: 8 });
       }
-      // // 숫자를 문자열로 변환
-      // let numStr = text.toString()
-
-      // // 정수 부분과 소수 부분 분리
-      // const parts = numStr.split(".")
-      // const integerPart = parts[0]
-      // const decimalPart = parts[1] || ""
-
-      // // 정수 부분에 콤마 추가
-      // const integerWithCommas = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-
-      // // 소수 부분과 합치기
-      // result =
-      //     decimalPart || text[text.length - 1] === "." ? `${integerWithCommas}.${decimalPart}` : integerWithCommas
-      // console.log(decimalPart)
     } else if (format === TextFormats.PRICE) {
       const number = CommonUtils.textFormat(text, TextFormats.NUMBER);
       result = `${number}원`;

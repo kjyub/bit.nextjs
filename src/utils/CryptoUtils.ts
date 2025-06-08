@@ -34,7 +34,7 @@ namespace CryptoUtils {
     else if (price >= 100) return TypeUtils.round(price, 1);
     else if (price >= 10) return TypeUtils.round(price, 2);
     else if (price >= 1) return TypeUtils.round(price, 3);
-    else if (price > 0) return TypeUtils.round(price, 4);
+    else if (price > 0) return TypeUtils.round(price, 8);
     else if (price === 0) return 0;
     else return price;
   }
@@ -55,10 +55,11 @@ namespace CryptoUtils {
 
     if (price >= 100000) result = `${Math.round(price / 1000) * 1000}`;
     else if (price >= 10000) result = `${Math.round(price / 100) * 100}`;
-    else if (price >= 1000) result = `${Math.round(price / 10) * 10}`;
-    else if (price >= 100) result = `${Math.round(price)}`;
-    else if (price >= 1) result = price.toFixed(1);
-    else result = price.toFixed(2);
+    else if (price >= 1000) result = `${TypeUtils.round(price, 0)}`;
+    else if (price >= 100) result = `${TypeUtils.round(price, 1)}`;
+    else if (price >= 1) result = `${TypeUtils.round(price, 3)}`;
+    else if (price >= 0) result = `${TypeUtils.round(price, 8)}`;
+    else result = `${TypeUtils.round(price, 4)}`;
 
     return Number(result);
   }
