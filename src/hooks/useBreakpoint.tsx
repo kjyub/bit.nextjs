@@ -25,7 +25,10 @@ type BreakpointState = {
 
 const getBreakpointState = (): BreakpointState => {
   return Object.fromEntries(
-    Object.entries(breakpoints).map(([key, breakpoint]) => [key, window.matchMedia(`(min-width: ${breakpoint}px)`).matches]),
+    Object.entries(breakpoints).map(([key, breakpoint]) => [
+      key,
+      window.matchMedia(`(min-width: ${breakpoint}px)`).matches,
+    ]),
   ) as BreakpointState;
 };
 

@@ -17,7 +17,7 @@ export default function CryptoLayout({ children }: Readonly<{ children: React.Re
           </Suspense>
 
           <div className="flex justify-center w-full">
-          {children}
+            {children}
 
             <CryptoMarketListWrapper>
               <S.MarketListLayout>

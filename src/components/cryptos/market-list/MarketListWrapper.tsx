@@ -21,9 +21,7 @@ export default function CryptoMarketListWrapper({ children }: { children: React.
 
   return (
     <>
-      <div className="max-full:hidden full:block">
-        {children}
-      </div>
+      <div className="max-full:hidden full:block">{children}</div>
       <Wrapper $is_open={isShowMarketList}>{children}</Wrapper>
     </>
   );

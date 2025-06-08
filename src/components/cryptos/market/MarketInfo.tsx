@@ -114,24 +114,24 @@ export default function CryptoMarketInfo({ marketCode, marketData, marketCurrent
         <div className="max-md:hidden md:flex flex-col pt-4 max-md:ml-auto">
           <S.MainPriceInfoGrid>
             <div>
-            <dl>
-              <dt className="label w-8">고가</dt>
-              <dd className="value w-24 rise">{CryptoUtils.getPriceText(marketCurrent.high_price)}</dd>
-            </dl>
-            <dl>
-              <dt className="label w-8">저가</dt>
-              <dd className="value w-24 fall">{CryptoUtils.getPriceText(marketCurrent.low_price)}</dd>
-            </dl>
-          </div>
-          <div>
-            <dl>
-              <dt className="label w-20">거래량(24h)</dt>
-              <dd className="value w-28 text-xs">{CryptoUtils.getPriceText(marketCurrent.acc_trade_volume_24h)}</dd>
-            </dl>
-            <dl>
-              <dt className="label w-20">거래대금(24h)</dt>
-              <dd className="value w-28 text-xs">{CryptoUtils.getPriceText(marketCurrent.acc_trade_price_24h)}</dd>
-            </dl>
+              <dl>
+                <dt className="label w-8">고가</dt>
+                <dd className="value w-24 rise">{CryptoUtils.getPriceText(marketCurrent.high_price)}</dd>
+              </dl>
+              <dl>
+                <dt className="label w-8">저가</dt>
+                <dd className="value w-24 fall">{CryptoUtils.getPriceText(marketCurrent.low_price)}</dd>
+              </dl>
+            </div>
+            <div>
+              <dl>
+                <dt className="label w-20">거래량(24h)</dt>
+                <dd className="value w-28 text-xs">{CryptoUtils.getPriceText(marketCurrent.acc_trade_volume_24h)}</dd>
+              </dl>
+              <dl>
+                <dt className="label w-20">거래대금(24h)</dt>
+                <dd className="value w-28 text-xs">{CryptoUtils.getPriceText(marketCurrent.acc_trade_price_24h)}</dd>
+              </dl>
             </div>
           </S.MainPriceInfoGrid>
         </div>

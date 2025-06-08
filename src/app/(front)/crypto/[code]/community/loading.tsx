@@ -1,6 +1,6 @@
+import CryptoMarketCommunity from '@/components/cryptos/community/Community';
 import * as S from '@/styles/CryptoMarketStyles';
 import CryptoMarketCommunityPage from '../community';
-import CryptoMarketCommunity from '@/components/cryptos/community/Community';
 
 export default async function Loading() {
   console.log('loading');
@@ -23,7 +23,12 @@ export default async function Loading() {
         </div>
       </S.TitleLayout>
 
-      <CryptoMarketCommunity marketCode={'KRW-BTC'} searchParams={{ search: '', page: 1 }} communityListData={{}} isLoading={true} />
+      <CryptoMarketCommunity
+        marketCode={'KRW-BTC'}
+        searchParams={{ search: '', page: 1 }}
+        communityListData={{}}
+        isLoading={true}
+      />
     </div>
   );
 }
