@@ -7,10 +7,8 @@ import CommonUtils from '@/utils/CommonUtils';
 import CryptoUtils from '@/utils/CryptoUtils';
 import { cn } from '@/utils/StyleUtils';
 import {
-  AreaData,
   AreaSeries,
   type AreaSeriesOptions,
-  type CandlestickData,
   CandlestickSeries,
   type CandlestickSeriesOptions,
   type ChartOptions,
@@ -25,7 +23,6 @@ import {
   type IPriceLine,
   type ISeriesApi,
   type MouseEventParams,
-  OhlcData,
   type Time,
   createChart,
 } from 'lightweight-charts';
@@ -82,6 +79,7 @@ const areaSeriesOptions: DeepPartial<AreaSeriesOptions> = {
   bottomColor: 'rgba(127, 34, 254, 0.1)',
   priceFormat: {
     type: 'custom',
+    minMove: 0.0000001,
     formatter: (price: number) => {
       return CommonUtils.textFormat(CryptoUtils.getPriceUnit(price), TextFormats.NUMBER);
     },
@@ -98,6 +96,7 @@ const candleSeriesOptions: DeepPartial<CandlestickSeriesOptions> = {
   wickDownColor: DOWN_COLOR,
   priceFormat: {
     type: 'custom',
+    minMove: 0.0000001,
     formatter: (price: number) => {
       return CommonUtils.textFormat(CryptoUtils.getPriceUnit(price), TextFormats.NUMBER);
     },

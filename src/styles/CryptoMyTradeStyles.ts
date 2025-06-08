@@ -31,7 +31,7 @@ export const ItemBox = tw.div`
 `;
 
 export const PositionBox = tw(ItemBox)`
-  p-3 space-y-3
+  p-3 space-y-3 
 
   [&>.header]:flex [&>.header]:justify-between [&>.header]:items-center [&>.header]:space-x-2
   [&>.header>.position]:w-16 [&>.header>.position]:px-2 [&>.header>.position]:py-1
@@ -67,7 +67,7 @@ export const PositionHeader = tw.div`
   [&_button.info]:hover:bg-slate-400/70 [&_button.info]:hover:text-slate-300
 `;
 export const PositionBody = tw.div`
-  grid max-sm:grid-cols-2 sm:grid-cols-4 gap-2 w-full
+  grid @max-xl:grid-cols-2 @xl:grid-cols-4 gap-2 w-full
 `;
 export const PositionItem = tw.dl`
   flex flex-col w-full space-y-1

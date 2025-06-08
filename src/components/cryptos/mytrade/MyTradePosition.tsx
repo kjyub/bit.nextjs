@@ -39,7 +39,7 @@ interface IPosition {
   position: TradePosition;
   userBudget: number;
 }
-const Position = ({ position, userBudget }: IPosition) => {
+export const Position = ({ position, userBudget }: IPosition) => {
   const socketData = useMarketPriceStore((state) => state.marketDic[position.market.code]);
   const marketPrice = socketData ? socketData.trade_price : 0;
 
@@ -122,7 +122,7 @@ const Position = ({ position, userBudget }: IPosition) => {
   );
 
   return (
-    <S.PositionBox>
+    <S.PositionBox className="@container">
       <S.PositionHeader>
         <div className="row">
           <div className="section">
@@ -155,8 +155,8 @@ const Position = ({ position, userBudget }: IPosition) => {
         </div>
       </S.PositionHeader>
 
-      <S.PositionBody>
-        <S.PositionItem className={''}>
+      <S.PositionBody className="info-box">
+        <S.PositionItem>
           <dt>
             진입가격 <span>Entry Price</span>
           </dt>
@@ -220,7 +220,7 @@ const Position = ({ position, userBudget }: IPosition) => {
         </S.PositionItem>
       </S.PositionBody>
 
-      <S.PositionClose>
+      <S.PositionClose className="close-box">
         <div className="flex items-center w-full max-sm:gap-1 sm:gap-3">
           <div className="title">포지션 종료</div>
           <div className="buttons">

@@ -272,4 +272,15 @@
       cursor: pointer;
     }
   }
+
+  .price-color {
+    @apply text-slate-400;
+
+    &.rise {
+      @apply text-position-long-3;
+    }
+    &.fall {
+      @apply text-position-short-3;
+    }
+  }
 }

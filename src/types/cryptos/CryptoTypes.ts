@@ -81,9 +81,9 @@ export const MarketTypeNames = {
 };
 
 export const PriceChangeTypes = {
-  EVEN: 'EVEN',
-  RISE: 'RISE',
-  FALL: 'FALL',
+  EVEN: 'even',
+  RISE: 'rise',
+  FALL: 'fall',
 } as const;
 export type PriceChangeType = (typeof PriceChangeTypes)[keyof typeof PriceChangeTypes];
 

@@ -22,7 +22,7 @@ export const InputColor = tw.div`
 
 export const InputContainer = tw.div`
   relative
-  flex items-center w-full h-12 space-x-2
+  flex items-center w-full h-12 gap-2
 `;
 export const InputBox = tw(InputColor)<StyleProps>`
   flex items-center justify-between w-full h-full p-4

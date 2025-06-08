@@ -6,8 +6,9 @@ import * as S from '@/styles/CryptoWalletStyles';
 import { TextFormats } from '@/types/CommonTypes';
 import { type TransferType, TransferTypes, WalletTransactionTypes } from '@/types/cryptos/CryptoTypes';
 import CommonUtils from '@/utils/CommonUtils';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import ModalLayout from '../atomics/ModalLayout';
+import { SlideInput } from '../inputs/TradeInputs';
 
 const TransferSuffix = {
   [TransferTypes.TO_ACCOUNT]: 'C',
@@ -29,6 +30,10 @@ export default function CryptoTransferModal({ defaultTransferType }: CryptoTrans
 
   // 이체 값
   const [value, setValue] = useState<number>(0);
+  const percentValue = useMemo(() => {
+    const max = transferType === TransferTypes.TO_ACCOUNT ? balance : cash;
+    return (value / max) * 100;
+  }, [value, transferType]);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [isValid, setValid] = useState<boolean>(false);
 
@@ -58,12 +63,22 @@ export default function CryptoTransferModal({ defaultTransferType }: CryptoTrans
     }
   }, [value]);
 
+  useEffect(() => {
+    setValue(0);
+  }, [transferType]);
+
   const handleValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const _value = Number(e.target.value.replaceAll(',', ''));
     if (Number.isNaN(_value)) return;
 
     if (_value < 0) return;
 
+    setValue(_value);
+  };
+
+  const handleSlideValue = (value: number) => {
+    const max = transferType === TransferTypes.TO_ACCOUNT ? balance : cash;
+    const _value = (value / 100) * max;
     setValue(_value);
   };
 
@@ -133,10 +148,11 @@ export default function CryptoTransferModal({ defaultTransferType }: CryptoTrans
           value={CommonUtils.textFormat(value, TextFormats.NUMBER)}
           onChange={handleValue}
           placeholder={'금액을 입력'}
-          className="h-10 px-4"
+          className="h-10 px-4 text-right"
           suffix={TransferSuffix[transferType]}
           errorMessage={errorMessage}
         />
+        <SlideInput value={percentValue} setValue={handleSlideValue} min={0} max={100} step={1} mark={25} />
 
         {transferType === TransferTypes.TO_ACCOUNT && (
           <S.TransferInfoList>

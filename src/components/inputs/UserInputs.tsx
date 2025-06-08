@@ -30,7 +30,9 @@ const InputContainer: React.FC<InputContainerProps> = ({ label, labelWidth = 'w-
   );
 };
 
-interface InputProps<T> extends Omit<InputBaseProps<T>, 'setValue'> {
+interface InputProps<T>
+  extends Omit<InputBaseProps<T>, 'value' | 'setValue'>,
+    React.InputHTMLAttributes<HTMLInputElement> {
   type?: string;
   setValue?: React.Dispatch<React.SetStateAction<T>>;
   placeholder?: string;
@@ -38,9 +40,7 @@ interface InputProps<T> extends Omit<InputBaseProps<T>, 'setValue'> {
   suffix?: string;
   setFocus?: React.Dispatch<React.SetStateAction<boolean>>;
   onEnter?: () => void;
-  inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  autoComplete?: boolean;
 }
 export const Input: React.FC<InputProps<string | number>> = ({
   type,
@@ -53,9 +53,9 @@ export const Input: React.FC<InputProps<string | number>> = ({
   errorMessage,
   suffix = '',
   onEnter,
-  inputProps,
   className,
   children,
+  ...props
 }) => {
   const [isInputFoucs, setInputFocus] = useState<boolean>(false);
 
@@ -78,20 +78,21 @@ export const Input: React.FC<InputProps<string | number>> = ({
             className={className}
             placeholder={placeholder}
             onChange={(e) => {
+              console.log(props);
               setValue?.(e.target.value);
-              inputProps?.onChange?.(e);
+              props?.onChange?.(e);
             }}
-            autoComplete={inputProps?.autoComplete ? undefined : 'new-password'}
+            autoComplete={props?.autoComplete ? undefined : 'new-password'}
             onKeyDown={handleEnter}
             onFocus={(e) => {
               setInputFocus(true);
-              inputProps?.onFocus?.(e);
+              props?.onFocus?.(e);
             }}
             onBlur={(e) => {
               setInputFocus(false);
-              inputProps?.onBlur?.(e);
+              props?.onBlur?.(e);
             }}
-            {...inputProps}
+            {...props}
           />
         </S.InputBox>
         {children}

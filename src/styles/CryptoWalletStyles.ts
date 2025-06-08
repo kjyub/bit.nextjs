@@ -1,21 +1,23 @@
 import tw from 'tailwind-styled-components';
 
 export const Layout = tw.div`
-  flex flex-col flex-1 max-w-[800px] py-12 space-y-4
+  flex flex-col max-md:w-full md:w-[768px] px-4 max-md:py-4 md:py-12 mb-36 max-md:space-y-4 md:space-y-8
 `;
 
 export const WalletLayout = tw.div`
-  flex flex-col w-full h-72 p-4 space-y-4
-  rounded-xl
-  border border-slate-500/70
+  flex flex-col w-full max-md:p-5 md:p-8 gap-6
+  rounded-xl bg-slate-800/40
+  border border-slate-600/30
+
+  max-md:[&>.title]:text-xl md:[&>.title]:text-2xl [&>.title]:text-slate-200 [&>.title]:font-bold [&>.title]:leading-[100%]
 `;
 
 export const WalletBox = tw.div`
-  flex flex-col w-full h-full p-4 space-y-2
+  flex flex-col w-full h-full space-y-2
   rounded-xl
 
   [&>.header]:flex [&>.header]:justify-between [&>.header]:items-center [&>.header]:w-full
-  [&>.header>.title]:text-lg [&>.header>.title]:text-slate-300
+  max-sm:[&>.header>.title]:text-lg sm:[&>.header>.title]:text-xl [&>.header>.title]:text-slate-300 [&>.header>.title]:font-medium
   [&>.content]:flex [&>.content]:justify-between [&>.content]:items-center [&>.content]:w-full
   [&>.content>.label]:text-sm [&>.content>.label]:text-slate-300/70
   [&>.content>.value]:text-base [&>.content>.value]:text-slate-100

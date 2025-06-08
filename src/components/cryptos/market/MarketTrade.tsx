@@ -207,7 +207,7 @@ export default function CryptoMarketTrade({
 
       <div className="flex flex-col w-full space-y-1 mt-auto!">
         <S.SummaryItem>
-          <span className="label">현재 잔액</span>
+          <span className="label">현재 지갑 잔액</span>
           <span className="value">{CommonUtils.textFormat(userBudget, TextFormats.NUMBER)}</span>
         </S.SummaryItem>
         <S.SummaryItem>

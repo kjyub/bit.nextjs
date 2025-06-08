@@ -9,7 +9,7 @@ import { useParams, usePathname } from 'next/navigation';
 import tw from 'tailwind-styled-components';
 
 const Layout = tw.div<StyleProps>`
-  max-md:top-0 md:top-14 z-40 max-md:hidden md:flex w-full max-md:px-4 border-b border-slate-600/50
+  max-md:top-0 md:top-14 z-40 max-md:hidden md:flex w-full max-md:px-4 max-xl:px-2 border-b border-slate-600/50
 `;
 
 const Section = tw(NS.Section)`

