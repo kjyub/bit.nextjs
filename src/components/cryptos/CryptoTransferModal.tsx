@@ -9,6 +9,7 @@ import CommonUtils from '@/utils/CommonUtils';
 import { useEffect, useMemo, useState } from 'react';
 import ModalLayout from '../atomics/ModalLayout';
 import { SlideInput } from '../inputs/TradeInputs';
+import TypeUtils from '@/utils/TypeUtils';
 
 const TransferSuffix = {
   [TransferTypes.TO_ACCOUNT]: 'C',
@@ -79,7 +80,7 @@ export default function CryptoTransferModal({ defaultTransferType }: CryptoTrans
   const handleSlideValue = (value: number) => {
     const max = transferType === TransferTypes.TO_ACCOUNT ? balance : cash;
     const _value = (value / 100) * max;
-    setValue(_value);
+    setValue(TypeUtils.round(_value, 0));
   };
 
   const handleTransfer = async () => {
@@ -88,7 +89,7 @@ export default function CryptoTransferModal({ defaultTransferType }: CryptoTrans
     const data = {
       transaction_type:
         transferType === TransferTypes.TO_ACCOUNT ? WalletTransactionTypes.WITHDRAW : WalletTransactionTypes.DEPOSIT,
-      amount: value,
+      amount: TypeUtils.round(value, 0),
     };
 
     const response = await CryptoApi.transactionWallet(data);
@@ -150,7 +151,7 @@ export default function CryptoTransferModal({ defaultTransferType }: CryptoTrans
             </S.TransferInfoBox>
             <S.TransferInfoBox>
               <span className="label">이체 후 통장 잔액</span>
-              <span className="value">{CommonUtils.textFormat(cash + value, TextFormats.NUMBER)}W</span>
+              <span className="value">{CommonUtils.textFormat(TypeUtils.round(cash + value, 0), TextFormats.NUMBER)}W</span>
             </S.TransferInfoBox>
           </S.TransferInfoList>
         )}
@@ -162,7 +163,7 @@ export default function CryptoTransferModal({ defaultTransferType }: CryptoTrans
             </S.TransferInfoBox>
             <S.TransferInfoBox>
               <span className="label">이체 후 지갑 잔액</span>
-              <span className="value">{CommonUtils.textFormat(balance + value, TextFormats.NUMBER)}W</span>
+              <span className="value">{CommonUtils.textFormat(TypeUtils.round(balance + value, 0), TextFormats.NUMBER)}W</span>
             </S.TransferInfoBox>
           </S.TransferInfoList>
         )}

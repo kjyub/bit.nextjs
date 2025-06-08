@@ -22,6 +22,7 @@ import {
 } from '@/types/cryptos/CryptoTypes';
 import type User from '@/types/users/User';
 import CommonUtils from '@/utils/CommonUtils';
+import CryptoUtils from '@/utils/CryptoUtils';
 import TypeUtils from '@/utils/TypeUtils';
 import { useEffect, useState } from 'react';
 
@@ -208,11 +209,11 @@ export default function CryptoMarketTrade({
       <div className="flex flex-col w-full space-y-1 mt-auto!">
         <S.SummaryItem>
           <span className="label">현재 지갑 잔액</span>
-          <span className="value">{CommonUtils.textFormat(userBudget, TextFormats.NUMBER)}</span>
+          <span className="value">{CryptoUtils.getPriceText(userBudget)}</span>
         </S.SummaryItem>
         <S.SummaryItem>
           <span className="label">구매 비용</span>
-          <span className="value">{CommonUtils.textFormat(cost, TextFormats.NUMBER)}</span>
+          <span className="value">{CryptoUtils.getPriceText(cost)}</span>
         </S.SummaryItem>
         {marginMode === MarginModeTypes.ISOLATED && (
           <>

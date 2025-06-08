@@ -29,12 +29,12 @@ namespace CryptoUtils {
       return decimalPlaces + 4;
     }
   }
-  export function getPriceRound(price: number): number {
+  export function getPriceRound(price: number, round = 0): number {
     if (price >= 1000) return TypeUtils.round(price, 0);
     else if (price >= 100) return TypeUtils.round(price, 1);
     else if (price >= 10) return TypeUtils.round(price, 2);
     else if (price >= 1) return TypeUtils.round(price, 3);
-    else if (price > 0) return TypeUtils.round(price, 8);
+    else if (price > 0) return TypeUtils.round(price, round ? round : 8);
     else if (price === 0) return 0;
     else return price;
   }
@@ -50,7 +50,7 @@ namespace CryptoUtils {
       return price.toString();
     }
   }
-  export function getPriceUnit(price: number): number {
+  export function getPriceUnit(price: number, round = 0): number {
     let result = '';
 
     if (price >= 100000) result = `${Math.round(price / 1000) * 1000}`;
@@ -58,7 +58,7 @@ namespace CryptoUtils {
     else if (price >= 1000) result = `${TypeUtils.round(price, 0)}`;
     else if (price >= 100) result = `${TypeUtils.round(price, 1)}`;
     else if (price >= 1) result = `${TypeUtils.round(price, 3)}`;
-    else if (price >= 0) result = `${TypeUtils.round(price, 8)}`;
+    else if (price >= 0) result = `${TypeUtils.round(price, round ? round : 8)}`;
     else result = `${TypeUtils.round(price, 4)}`;
 
     return Number(result);

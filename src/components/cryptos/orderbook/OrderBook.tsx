@@ -156,12 +156,12 @@ const Row = ({ unit, max, className }: { unit: Unit; max: number; className: str
         <span className="size font-light text-slate-200/90">
           {unit.size >= 1000
             ? CommonUtils.textFormat(CryptoUtils.getPriceRound(unit.size), TextFormats.KOREAN_PRICE_SIMPLE)
-            : CryptoUtils.getPriceRound(unit.size)}
+            : CryptoUtils.getPriceRound(unit.size, 4)}
         </span>
         <span className="price font-light text-slate-200/90 max-sm:hidden">
           {unit.size * unit.price >= 1000
             ? CommonUtils.textFormat(CryptoUtils.getPriceRound(unit.size * unit.price), TextFormats.KOREAN_PRICE_SIMPLE)
-            : CryptoUtils.getPriceRound(unit.size * unit.price)}
+            : CryptoUtils.getPriceRound(unit.size * unit.price, 4)}
         </span>
       </div>
 

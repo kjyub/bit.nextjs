@@ -5,6 +5,7 @@ import * as I from '@/components/inputs/TradeInputs';
 import useMarketPriceStore from '@/store/useMarketPriceStore';
 import useUserInfoStore from '@/store/useUserInfo';
 import * as S from '@/styles/CryptoMyTradeStyles';
+import { TextFormats } from '@/types/CommonTypes';
 import {
   MarginModeTypeNames,
   MarginModeTypes,
@@ -192,7 +193,7 @@ export const Position = ({ position, userBudget }: IPosition) => {
               {'TW'}
             </span>
             <span className="text-xs">
-              {position.quantity}
+              {CommonUtils.textFormat(TypeUtils.round(position.quantity, 8), TextFormats.NUMBER)}
               {position.market.unit}
             </span>
           </dd>
@@ -244,17 +245,17 @@ export const Position = ({ position, userBudget }: IPosition) => {
           <div className="inputs max-sm:!hidden">
             <I.NumberInput label={'가격'} value={closePrice} setValue={setClosePrice} />
             <I.PositionCloseSizeInput
-              label={'크기'}
+              label={'수량'}
               value={closeQuantity}
               setValue={setCloseQuantity}
               max={position.quantity}
             />
           </div>
         </div>
-        <div className="grid grid-cols-2 w-full gap-2">
+        <div className="max-sm:grid sm:hidden grid-cols-2 w-full gap-2">
           <I.NumberInput label={'가격'} value={closePrice} setValue={setClosePrice} />
           <I.PositionCloseSizeInput
-            label={'크기'}
+            label={'수량'}
             value={closeQuantity}
             setValue={setCloseQuantity}
             max={position.quantity}
