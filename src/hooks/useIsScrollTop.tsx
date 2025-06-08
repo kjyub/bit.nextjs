@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 export default function useIsScrollTop() {
-  const [isScrollTop, setIsScrollTop] = useState(false);
+  const [isScrollTop, setIsScrollTop] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {

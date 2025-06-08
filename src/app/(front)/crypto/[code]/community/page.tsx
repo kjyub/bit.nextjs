@@ -20,7 +20,7 @@ export default async function Page({ params, searchParams }: Props) {
 
   return (
     <div className="max-md:w-full md:w-156 p-4">
-      <CryptoMarketInfo marketCode={code} marketData={marketData} marketCurrent={marketCurrent} />
+      <CryptoMarketInfo marketCode={code} marketData={marketData} marketCurrent={marketCurrent} isShowPriceInfo={false} />
       <CryptoMarketCommunityPage params={awaitParams} searchParams={awaitSearchParams} />
     </div>
   );

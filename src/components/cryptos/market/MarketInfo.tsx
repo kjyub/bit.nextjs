@@ -14,8 +14,9 @@ interface Props {
   marketCode: string;
   marketData: object;
   marketCurrent: IUpbitMarketTicker;
+  isShowPriceInfo?: boolean;
 }
-export default function CryptoMarketInfo({ marketCode, marketData, marketCurrent }: Props) {
+export default function CryptoMarketInfo({ marketCode, marketData, marketCurrent, isShowPriceInfo = true }: Props) {
   // 현재 시장 정보
   const imageCode = marketCode.split('-')[1];
   const currency = marketCode.split('-')[0];
@@ -109,9 +110,10 @@ export default function CryptoMarketInfo({ marketCode, marketData, marketCurrent
         </S.MainPriceBox>
       </div>
 
-      <div className="max-md:hidden md:flex flex-col pt-4 max-md:ml-auto">
-        <S.MainPriceInfoGrid>
-          <div>
+      {isShowPriceInfo && (
+        <div className="max-md:hidden md:flex flex-col pt-4 max-md:ml-auto">
+          <S.MainPriceInfoGrid>
+            <div>
             <dl>
               <dt className="label w-8">고가</dt>
               <dd className="value w-24 rise">{CryptoUtils.getPriceText(marketCurrent.high_price)}</dd>
@@ -130,9 +132,10 @@ export default function CryptoMarketInfo({ marketCode, marketData, marketCurrent
               <dt className="label w-20">거래대금(24h)</dt>
               <dd className="value w-28 text-xs">{CryptoUtils.getPriceText(marketCurrent.acc_trade_price_24h)}</dd>
             </dl>
-          </div>
-        </S.MainPriceInfoGrid>
-      </div>
+            </div>
+          </S.MainPriceInfoGrid>
+        </div>
+      )}
     </S.TitleLayout>
   );
 }
