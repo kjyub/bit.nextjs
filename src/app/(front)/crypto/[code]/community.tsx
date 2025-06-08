@@ -1,5 +1,5 @@
 import CryptoServerApi from '@/apis/api/cryptos/CryptoServerApi';
-import CryptoMarketCommunity from '@/components/cryptos/community/CryptoMarketCommunity';
+import CryptoMarketCommunity from '@/components/cryptos/community/Community';
 import { MARKET_COMMUNITY_PAGE_SIZE } from '@/constants/CryptoConsts';
 import type { IMarketPageSearchParams } from './page';
 

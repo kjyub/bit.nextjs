@@ -7,7 +7,7 @@ import { useCryptoUi } from '@/hooks/useCryptoUi';
 import type { IUpbitMarketTicker, IUpbitOrderBook } from '@/types/cryptos/CryptoInterfaces';
 import { useCallback, useEffect, useState } from 'react';
 import OrderBook from '../orderbook/OrderBook';
-import CryptoMarketChart from './CryptoMarketChart';
+import CryptoMarketChart from './MarketChart';
 
 interface ICryptoMarketOrderBook {
   marketCode: string;

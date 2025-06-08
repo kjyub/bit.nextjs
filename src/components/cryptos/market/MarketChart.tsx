@@ -3,7 +3,7 @@
 import dynamic from 'next/dynamic';
 import CryptoMarketChartControlBar from '../chart/ControlBar';
 import TradingChart from '../chart/TradingChart';
-import CryptoMarketChartProvider from './CryptoMarketChartProvider';
+import CryptoMarketChartProvider from './MarketChartProvider';
 
 // const CryptoMarketFinancialChart = dynamic(() => import('../chart/Chart'), { ssr: false });
 

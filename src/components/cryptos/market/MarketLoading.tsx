@@ -8,12 +8,12 @@ import { type SizeUnitType, SizeUnitTypes } from '@/types/cryptos/CryptoTypes';
 import User from '@/types/users/User';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
-import CryptoMarketCommunity from '../community/CryptoMarketCommunity';
-import CryptoMyTrade from '../mytrade/CryptoMyTradeMain';
-import CryptoMarketChart from './CryptoMarketChart';
-import CryptoMarketInfo from './CryptoMarketInfo';
-import CryptoMarketOrderBook from './CryptoMarketOrderBook';
-import CryptoMarketTrade from './CryptoMarketTrade';
+import CryptoMarketCommunity from '../community/Community';
+import CryptoMyTrade from '../mytrade/MyTradeMain';
+import CryptoMarketChart from './MarketChart';
+import CryptoMarketInfo from './MarketInfo';
+import CryptoMarketOrderBook from './MarketOrderBook';
+import CryptoMarketTrade from './MarketTrade';
 
 export default function CryptoMarketLoading() {
   return (

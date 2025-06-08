@@ -7,7 +7,7 @@ import BrowserUtils from '@/utils/BrowserUtils';
 import { createPortal } from 'react-dom';
 import CryptoMarketChartControlBar from '../chart/ControlBar';
 import TradingChart from '../chart/TradingChart';
-import CryptoMarketChartProvider from './CryptoMarketChartProvider';
+import CryptoMarketChartProvider from './MarketChartProvider';
 
 interface Props {
   marketCode: string;

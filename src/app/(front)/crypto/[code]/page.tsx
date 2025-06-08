@@ -1,7 +1,7 @@
 import CryptoServerApi from '@/apis/api/cryptos/CryptoServerApi';
 import TradeGoServerApi from '@/apis/api/cryptos/TradeGoServerApi';
-import CryptoMarketCommunity from '@/components/cryptos/community/CryptoMarketCommunity';
-import CryptoMarketMain from '@/components/cryptos/market/CryptoMarketMain';
+import CryptoMarketCommunity from '@/components/cryptos/community/Community';
+import CryptoMarketMain from '@/components/cryptos/market/MarketMain';
 import { Suspense } from 'react';
 import CryptoMarketCommunityPage from './community';
 

@@ -30,7 +30,7 @@ import {
   createChart,
 } from 'lightweight-charts';
 import { type MutableRefObject, useCallback, useEffect, useRef } from 'react';
-import { useCryptoMarketChart } from '../market/CryptoMarketChartProvider';
+import { useCryptoMarketChart } from '../market/MarketChartProvider';
 import { CandleTimes, ChartTypes } from './Types';
 import { DOWN_COLOR, UP_COLOR, getTimeFormatter, parseAreaData, parseCandleData, parseVolumeData } from './utils';
 

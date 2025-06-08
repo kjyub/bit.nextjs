@@ -3,11 +3,11 @@
 import useUserInfoStore from '@/store/useUserInfo';
 import * as S from '@/styles/CryptoMyTradeStyles';
 import { useState } from 'react';
-import CryptoMyTradeHistory from './CryptoMyTradeHistory';
-import CryptoMyTradeOrder from './CryptoMyTradeOrder';
-import CryptoMyTradeOrderHistory from './CryptoMyTradeOrderHistory';
-import CryptoMyTradePosition from './CryptoMyTradePosition';
-import CryptoMyTradePositionHistory from './CryptoMyTradePositionHistory';
+import CryptoMyTradeHistory from './MyTradeHistory';
+import CryptoMyTradeOrder from './MyTradeOrder';
+import CryptoMyTradeOrderHistory from './MyTradeOrderHistory';
+import CryptoMyTradePosition from './MyTradePosition';
+import CryptoMyTradePositionHistory from './MyTradePositionHistory';
 
 export enum MyTradePage {
   POSITION = 0,

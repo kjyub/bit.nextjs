@@ -1,7 +1,7 @@
 import { HelpBox } from '@/components/inputs/TradeInputs';
 import * as CS from '@/styles/CryptoChartStyles';
 import { CrosshairMode } from 'lightweight-charts';
-import { useCryptoMarketChart } from '../market/CryptoMarketChartProvider';
+import { useCryptoMarketChart } from '../market/MarketChartProvider';
 import { CandleTimes, ChartTypes } from './Types';
 
 export default function CryptoMarketChartControlBar() {

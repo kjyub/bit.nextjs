@@ -28,7 +28,7 @@ import {
 import { CandleTimeType, CandleTimes, ChartType, ChartTypes } from './Types'
 import useBreakpoint from '@/hooks/useBreakpoint'
 import CryptoUtils from '@/utils/CryptoUtils'
-import { useCryptoMarketChart } from '../market/CryptoMarketChartProvider'
+import { useCryptoMarketChart } from '../market/MarketChartProvider'
 
 interface IElderRay {
   bearPower: number

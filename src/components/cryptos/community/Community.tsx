@@ -16,8 +16,8 @@ import { useState } from 'react';
 import ModalContainer from '../../ModalContainer';
 import CommunityPagination from '../../atomics/community/CommunityPagination';
 import CommunitySearch from '../../atomics/community/CommunitySearch';
-import CryptoMarketCommunityEditor from './CryptoMarketCommunityEditor';
-import CryptoMarketCommunityView from './CryptoMarketCommunityView';
+import CryptoMarketCommunityEditor from './CommunityEditor';
+import CryptoMarketCommunityView from './CommunityView';
 
 interface ICryptoMarketCommunity {
   marketCode: string;
