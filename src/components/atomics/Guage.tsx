@@ -1,3 +1,4 @@
+import { cn } from "@/utils/StyleUtils";
 import TypeUtils from "@/utils/TypeUtils";
 
 interface Props {
@@ -62,6 +63,7 @@ export default function Guage({ ratio, title, color, size = 120, isMaxLimit = tr
           cx={size / 2}
           cy={size / 2}
           style={rotationStyle}
+          className={cn(['duration-300', percentage !== '0' ? 'opacity-100' : 'opacity-0'])}
         />
       </svg>
       <div className="absolute flex flex-col items-center justify-center gap-1">

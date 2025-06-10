@@ -16,7 +16,7 @@ interface Props {
 }
 export default function StackHorizon({ className, items, others }: Props) {
   return (
-    <div className={cn(["flex w-full p-1 gap-1 rounded-full bg-slate-700/60 first:pl-1.875 last:pr-1.875", className])}>
+    <div className={cn(["flex w-full min-h-[34px] p-1 gap-1 rounded-full bg-slate-700/60 first:pl-1.875 last:pr-1.875", className])}>
       {items.map((item, index) => (
         <StackHorizonItem 
           key={index} 

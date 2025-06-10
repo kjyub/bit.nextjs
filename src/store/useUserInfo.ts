@@ -20,6 +20,7 @@ const getInitData = async () => {
 };
 
 interface IUserInfoStore {
+  isLoading: boolean;
   init: () => void;
   isAuth: boolean;
   cash: number;
@@ -30,10 +31,13 @@ interface IUserInfoStore {
   updateInfo: () => Promise<void>;
 }
 const useUserInfoStore = create<IUserInfoStore>((set, get) => ({
+  isLoading: true,
   init: () => {
     if (get().isAuth) {
+      set({ isLoading: true });
       getInitData().then((data) => {
         set(data);
+        set({ isLoading: false });
       });
     }
   },
@@ -51,7 +55,9 @@ const useUserInfoStore = create<IUserInfoStore>((set, get) => ({
   },
   updateInfo: async () => {
     if (get().isAuth) {
+      set({ isLoading: true });
       set(await getInitData());
+      set({ isLoading: false });
     }
   },
 }));

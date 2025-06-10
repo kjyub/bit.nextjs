@@ -60,8 +60,9 @@ interface Values {
 interface Props {
   positions: TradePosition[];
   balance: number;
+  isLoading: boolean;
 }
-export default function PositionStackContainer({ positions, balance }: Props) {
+export default function PositionStackContainer({ positions, balance, isLoading }: Props) {
   const { breakpointState } = useBreakpoint();
 
   const values = useMemo(() => {
@@ -104,7 +105,11 @@ export default function PositionStackContainer({ positions, balance }: Props) {
   return (
     <div className="flex flex-col w-full gap-2">
       <span className="text-slate-300">투자 비율</span>
-      <StackHorizon items={values.items} others={values.others} />
+      {isLoading ? (
+        <StackHorizon items={[]} others={[]} />
+      ) : (
+        <StackHorizon items={values.items} others={values.others} />
+      )}
     </div>
   );
 }
