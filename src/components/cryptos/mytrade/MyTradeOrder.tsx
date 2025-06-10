@@ -9,6 +9,7 @@ import { PositionTypes, TradeOrderTypeNames } from '@/types/cryptos/CryptoTypes'
 import type TradeOrder from '@/types/cryptos/TradeOrder';
 import CryptoUtils from '@/utils/CryptoUtils';
 import dayjs from 'dayjs';
+import HeaderLink from './HeaderLink';
 
 export default function CryptoMyTradeOrder() {
   const { myTrades, updateInfo } = useUserInfoStore();
@@ -102,10 +103,10 @@ const Order = ({ order, updateInfo }: IOrder) => {
               <span>{dayjs(order.createdDate).format('YYYY-MM-DD HH:mm:ss')}</span>
             </div>
 
-            <p className="title">
+            <HeaderLink href={`/crypto/${order.market.code}`} className="title">
               <span className="korean">{order.market.koreanName}</span>
               <span className="code">{order.market.code}</span>
-            </p>
+            </HeaderLink>
 
             <div className="info">{TradeOrderTypeNames[order.orderType]}</div>
           </div>

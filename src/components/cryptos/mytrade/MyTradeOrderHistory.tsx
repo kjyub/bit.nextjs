@@ -10,6 +10,7 @@ import dayjs from 'dayjs';
 import { useState } from 'react';
 import CryptoMyTradeFilter from './Filter';
 import CryptoMyTradeItemSkeleton from './ItemSkeleton';
+import HeaderLink from './HeaderLink';
 
 const PAGE_SIZE = 10;
 
@@ -95,10 +96,10 @@ const Order = ({ order }: IOrder) => {
               {order.positionType === PositionTypes.LONG ? 'LONG' : 'SHORT'}
             </div>
 
-            <p className="title">
+            <HeaderLink href={`/crypto/${order.market.code}`} className="title">
               <span className="korean">{order.market.koreanName}</span>
               <span className="code">{order.market.code}</span>
-            </p>
+            </HeaderLink>
           </div>
 
           <div className="section info">

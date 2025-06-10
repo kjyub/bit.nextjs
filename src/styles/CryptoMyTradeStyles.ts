@@ -65,8 +65,6 @@ export const PositionHeader = tw.div`
   [&_button.info]:rounded-md [&_button.info]:bg-slate-500/70
   [&_button.info]:text-xs [&_button.info]:text-slate-300 [&_button.info]:font-medium
   [&_button.info]:hover:bg-slate-400/70 [&_button.info]:hover:text-slate-300
-
-  hover:[&_a]:underline [&_a]:underline-offset-4
 `;
 export const PositionBody = tw.div`
   grid @max-xl:grid-cols-2 @xl:grid-cols-4 gap-2 w-full

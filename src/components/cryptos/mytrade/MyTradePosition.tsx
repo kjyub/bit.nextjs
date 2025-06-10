@@ -19,8 +19,8 @@ import type TradePosition from '@/types/cryptos/TradePosition';
 import CommonUtils from '@/utils/CommonUtils';
 import CryptoUtils from '@/utils/CryptoUtils';
 import TypeUtils from '@/utils/TypeUtils';
-import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
+import HeaderLink from './HeaderLink';
 
 export default function CryptoMyTradePosition() {
   const { balance, myTrades } = useUserInfoStore();
@@ -132,11 +132,11 @@ export const Position = ({ position, userBudget }: IPosition) => {
               {position.positionType === PositionTypes.LONG ? 'LONG' : 'SHORT'}
             </div>
 
-            <Link href={`/crypto/${position.market.code}`} className="title max-sm:!hidden">
+            <HeaderLink href={`/crypto/${position.market.code}`} className="title max-sm:!hidden">
               <span className="korean">{position.market.koreanName}</span>
               <span className="english">{position.market.englishName}</span>
               <span className="code">{position.market.code}</span>
-            </Link>
+            </HeaderLink>
           </div>
 
           <div className="section">
@@ -148,13 +148,13 @@ export const Position = ({ position, userBudget }: IPosition) => {
           </div>
         </div>
 
-        <Link href={`/crypto/${position.market.code}`} className="row sm:!hidden">
-          <p className="title">
+        <div className="row sm:!hidden">
+          <HeaderLink href={`/crypto/${position.market.code}`} className="title">
             <span className="korean">{position.market.koreanName}</span>
             <span className="english">{position.market.englishName}</span>
             <span className="code">{position.market.code}</span>
-          </p>
-        </Link>
+          </HeaderLink>
+        </div>
       </S.PositionHeader>
 
       <S.PositionBody className="info-box">

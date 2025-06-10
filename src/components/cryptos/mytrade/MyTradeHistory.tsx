@@ -10,6 +10,7 @@ import dayjs from 'dayjs';
 import { useState } from 'react';
 import CryptoMyTradeFilter from './Filter';
 import CryptoMyTradeItemSkeleton from './ItemSkeleton';
+import HeaderLink from './HeaderLink';
 
 const PAGE_SIZE = 10;
 
@@ -95,10 +96,10 @@ const History = ({ history }: IHistory) => {
               {history.positionType === PositionTypes.LONG ? 'LONG' : 'SHORT'}
             </div>
 
-            <p className="title">
+            <HeaderLink href={`/crypto/${history.order.market.code}`} className="title">
               <span className="korean">{history.order.market.koreanName}</span>
               <span className="code">{history.order.market.code}</span>
-            </p>
+            </HeaderLink>
           </div>
 
           <div className="section">
