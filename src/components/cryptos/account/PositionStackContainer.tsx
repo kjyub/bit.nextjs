@@ -91,6 +91,8 @@ export default function PositionStackContainer({ positions, balance, isLoading }
       ratio: 100 - items.reduce((acc, item) => acc + item.ratio, 0),
       color: "#90a1b955"
     })
+
+    items.sort((a, b) => b.ratio - a.ratio);
     
     if (items.length > visibleCount) {
       values.items = items.slice(0, visibleCount);
