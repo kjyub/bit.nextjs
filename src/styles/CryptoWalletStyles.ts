@@ -1,7 +1,7 @@
 import tw from 'tailwind-styled-components';
 
 export const Layout = tw.div`
-  flex flex-col max-md:w-full md:w-[768px] px-4 max-md:py-4 md:py-12 mb-36 max-md:space-y-4 md:space-y-8
+  flex flex-col max-md:w-full md:w-[768px] px-4 max-md:space-y-4 md:space-y-8
 `;
 
 export const WalletLayout = tw.div`

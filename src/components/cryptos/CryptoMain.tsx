@@ -4,7 +4,7 @@ import BalanceManager from './account/BalanceManager';
 
 export default function CryptoMain() {
   return (
-    <S.Layout>
+    <S.Layout className="pt-8">
       <AssetManager />
       <BalanceManager />
     </S.Layout>

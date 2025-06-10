@@ -1,10 +1,13 @@
+import TypeUtils from "@/utils/TypeUtils";
+
 interface Props {
   ratio: number;
   title: string;
   color: string;
   size: number;
+  isMaxLimit?: boolean;
 }
-export default function Guage({ ratio, title, color, size = 120 }: Props) {
+export default function Guage({ ratio, title, color, size = 120, isMaxLimit = true }: Props) {
   const clampedRatio = Math.min(Math.max(ratio, 0), 1);
   const percentage = (clampedRatio * 100).toFixed(0);
 
@@ -65,7 +68,7 @@ export default function Guage({ ratio, title, color, size = 120 }: Props) {
         <span
           className="font-bold text-gray-800 dark:text-white"
           style={{ fontSize: `${size / 5}px`, lineHeight: `${size / 5}px` }}
-        >{`${percentage}%`}</span>
+        >{`${isMaxLimit ? percentage : TypeUtils.round(ratio * 100)}%`}</span>
         <span
           className="font-medium text-gray-500 dark:text-gray-400"
           style={{ fontSize: `${size / 8}px`, lineHeight: `${size / 8}px` }}

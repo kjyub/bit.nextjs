@@ -19,6 +19,7 @@ import type TradePosition from '@/types/cryptos/TradePosition';
 import CommonUtils from '@/utils/CommonUtils';
 import CryptoUtils from '@/utils/CryptoUtils';
 import TypeUtils from '@/utils/TypeUtils';
+import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
 
 export default function CryptoMyTradePosition() {
@@ -131,11 +132,11 @@ export const Position = ({ position, userBudget }: IPosition) => {
               {position.positionType === PositionTypes.LONG ? 'LONG' : 'SHORT'}
             </div>
 
-            <p className="title max-sm:!hidden">
+            <Link href={`/crypto/${position.market.code}`} className="title max-sm:!hidden">
               <span className="korean">{position.market.koreanName}</span>
               <span className="english">{position.market.englishName}</span>
               <span className="code">{position.market.code}</span>
-            </p>
+            </Link>
           </div>
 
           <div className="section">
@@ -147,13 +148,13 @@ export const Position = ({ position, userBudget }: IPosition) => {
           </div>
         </div>
 
-        <div className="row sm:!hidden">
+        <Link href={`/crypto/${position.market.code}`} className="row sm:!hidden">
           <p className="title">
             <span className="korean">{position.market.koreanName}</span>
             <span className="english">{position.market.englishName}</span>
             <span className="code">{position.market.code}</span>
           </p>
-        </div>
+        </Link>
       </S.PositionHeader>
 
       <S.PositionBody className="info-box">

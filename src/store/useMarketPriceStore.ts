@@ -14,6 +14,7 @@ interface IMarketPriceStore {
   connectMarketPriceSocket: () => void;
   disconnectMarketPriceSocket: () => void;
 }
+
 const useMarketPriceStore = create<IMarketPriceStore>((set, get) => ({
   marketDic: {},
   initMarketPriceData: async () => {
@@ -34,8 +35,12 @@ const useMarketPriceStore = create<IMarketPriceStore>((set, get) => ({
           return;
         }
 
+        const currentMarketDic = get().marketDic;
+        if (currentMarketDic[marketTicker.code]?.trade_price === marketTicker.trade_price) {
+          return;
+        }
+
         set((state) => ({
-          ...state,
           marketDic: {
             ...state.marketDic,
             [marketTicker.code]: marketTicker,
@@ -51,7 +56,6 @@ const useMarketPriceStore = create<IMarketPriceStore>((set, get) => ({
 
     if (socket) {
       socket.close();
-
       set({ marketPriceSocket: null });
     }
   },
