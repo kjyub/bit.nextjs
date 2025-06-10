@@ -106,9 +106,14 @@ export const AuthProvider = ({
   );
 
   const signOut = useCallback(async () => {
-    setUser(new User());
-    setIsLoading(false);
-    removeAuthToken();
+    try {
+      await fetch('/api/auth/signout');
+      setUser(new User());
+      setIsLoading(false);
+      removeAuthToken();
+    } catch (error) {
+      console.error(error);
+    }
   }, [setUser, setIsLoading]);
 
   return (
