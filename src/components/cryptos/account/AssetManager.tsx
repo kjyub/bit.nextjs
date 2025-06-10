@@ -39,7 +39,10 @@ export default function AssetManager() {
       <div className="grid max-sm:grid-cols-1 sm:grid-cols-2 gap-8 w-full">
         <S.WalletBox>
           <div className="header">
-            <div className="title">내 통장</div>
+            <div className="title">
+              <i className="fa-solid fa-money-check"></i>
+              <span>내 통장</span>
+            </div>
             <CommonButton
               onClick={() => {
                 handleTransferModal(TransferTypes.TO_ACCOUNT);
@@ -58,7 +61,10 @@ export default function AssetManager() {
         </S.WalletBox>
         <S.WalletBox>
           <div className="header">
-            <div className="title">내 거래 지갑</div>
+            <div className="title">
+              <i className="fa-brands fa-bitcoin"></i>
+              <span>내 거래 지갑</span>
+            </div>
             <CommonButton
               onClick={() => {
                 handleTransferModal(TransferTypes.TO_WALLET);

@@ -10,7 +10,7 @@ export default function CryptoLayout({ children }: Readonly<{ children: React.Re
   return (
     <CryptoProvider>
       <MS.PageLayout>
-        <div className="relative flex flex-col justify-center max-xl:w-full">
+        <div className="relative flex flex-col justify-center max-sm:min-w-64 sm:min-w-128 max-xl:w-full">
           <Suspense>
             <CryptoNavigation />
             <CryptoMobileNavigation />

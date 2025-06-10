@@ -11,7 +11,7 @@ export default function Guage({ ratio, title, color, size = 120, isMaxLimit = tr
   const clampedRatio = Math.min(Math.max(ratio, 0), 1);
   const percentage = (clampedRatio * 100).toFixed(0);
 
-  const strokeWidth = size / 12;
+  const strokeWidth = size / 15;
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
 
@@ -29,7 +29,7 @@ export default function Guage({ ratio, title, color, size = 120, isMaxLimit = tr
   };
 
   return (
-    <div className="relative inline-flex items-center justify-center">
+    <div className="relative inline-flex items-center justify-center translate-y-2">
       <svg
         width={size}
         height={size}

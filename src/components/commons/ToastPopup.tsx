@@ -58,9 +58,9 @@ const Message = ({ message }: { message: ToastMessage }) => {
       <div
         className={cn([
           'flex flex-center h-9 px-4 space-x-3',
-          'rounded-full bg-slate-600/80 backdrop-blur-sm',
+          'rounded-full bg-slate-600/30 backdrop-blur-sm',
           'border border-slate-200/10',
-          'text-slate-100/90',
+          'text-slate-200/80',
         ])}
       >
         <div className="">{message.content}</div>

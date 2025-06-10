@@ -9,7 +9,7 @@ const Button = tw.button`
 
 interface CommonButtonProps {
   children?: React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   className?: string;
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';

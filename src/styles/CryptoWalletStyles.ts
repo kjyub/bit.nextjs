@@ -6,8 +6,8 @@ export const Layout = tw.div`
 
 export const WalletLayout = tw.div`
   flex flex-col w-full max-md:p-5 md:p-8 gap-6
-  rounded-xl bg-slate-800/40
-  border border-slate-600/30
+  rounded-xl bg-slate-800/30
+  border border-slate-600/40
 
   max-md:[&>.title]:text-xl md:[&>.title]:text-2xl [&>.title]:text-slate-200 [&>.title]:font-bold [&>.title]:leading-[100%]
 `;
@@ -17,6 +17,7 @@ export const WalletBox = tw.div`
   rounded-xl
 
   [&>.header]:flex [&>.header]:justify-between [&>.header]:items-center [&>.header]:w-full
+  [&>.header>.title]:space-x-2
   max-sm:[&>.header>.title]:text-lg sm:[&>.header>.title]:text-xl [&>.header>.title]:text-slate-300 [&>.header>.title]:font-medium
   [&>.content]:flex [&>.content]:justify-between [&>.content]:items-center [&>.content]:w-full
   [&>.content>.label]:text-sm [&>.content>.label]:text-slate-300/70

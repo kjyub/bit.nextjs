@@ -115,7 +115,7 @@ export default function CryptoTransferModal({ defaultTransferType }: CryptoTrans
           }}
         >
           <span>{'거래 지갑 > 통장'}</span>
-          <i className="fa-solid fa-building-columns"></i>
+          <i className="fa-solid fa-money-check"></i>
         </button>
         <button
           type="button"

@@ -219,11 +219,11 @@ export default function CryptoMarketTrade({
           <>
             <S.SummaryItem>
               <span className="label">청산가 (롱)</span>
-              <span className="value">{CommonUtils.textFormat(liqLongPrice, TextFormats.NUMBER)}</span>
+              <span className="value">{CryptoUtils.getPriceText(liqLongPrice)}</span>
             </S.SummaryItem>
             <S.SummaryItem>
               <span className="label">청산가 (숏)</span>
-              <span className="value">{CommonUtils.textFormat(liqShortPrice, TextFormats.NUMBER)}</span>
+              <span className="value">{CryptoUtils.getPriceText(liqShortPrice)}</span>
             </S.SummaryItem>
           </>
         )}
