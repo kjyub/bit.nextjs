@@ -68,7 +68,7 @@ const MobileLayout = tw.div<StyleProps>`
   max-md:flex md:hidden justify-center w-full
   duration-300
 
-  ${({ $is_active }: StyleProps) => ($is_active ? '' : 'translate-y-28')}
+  ${({ $is_active }: StyleProps) => ($is_active ? '' : 'translate-y-10')}
   will-change-transform
 `;
 

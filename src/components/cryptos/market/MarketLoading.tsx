@@ -73,7 +73,7 @@ export default function CryptoMarketLoading() {
             <S.TradeLayout>
               <CryptoMarketTrade
                 user={new User()}
-                marketCode={'KRW-BTC'}
+                marketCode={''}
                 unit={'BTC'}
                 sizeUnitType={SizeUnitTypes.PRICE}
                 setSizeUnitType={() => {}}
