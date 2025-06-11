@@ -48,10 +48,6 @@ export default function CryptoMarketOrderBook({ marketCode, marketCurrent }: ICr
     setIsLoading(false);
   }, [marketCode]);
 
-  const addOrderBook = useCallback((orderBook: IUpbitOrderBook) => {
-    setOrderBook(orderBook);
-  }, []);
-
   const handleShowChart = useCallback(() => {
     if (isTablet) {
       setIsShowChart(!isShowChart);
@@ -60,7 +56,7 @@ export default function CryptoMarketOrderBook({ marketCode, marketCurrent }: ICr
     }
   }, [isTablet, isShowChart, isShowMobileChart]);
 
-  const connectChart = useTradeMarketOrderBookSocket(marketCode, addOrderBook);
+  const connectChart = useTradeMarketOrderBookSocket(marketCode, setOrderBook);
 
   return (
     <div className="relative flex flex-col size-full">

@@ -2,6 +2,7 @@
 import TradeGoApi from '@/apis/api/cryptos/TradeGoApi';
 import type { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
 import { create } from 'zustand';
+import { debounce } from 'lodash';
 
 const getInitData = async () => {
   return await TradeGoApi.getMarketsCurrentDic();
@@ -26,7 +27,7 @@ const useMarketPriceStore = create<IMarketPriceStore>((set, get) => ({
     const socket = TradeGoApi.getMarketSocket();
     set({ marketPriceSocket: socket });
 
-    socket.onmessage = (event: MessageEvent) => {
+    const handleMessage = debounce((event: MessageEvent) => {
       try {
         const data = JSON.parse(event.data as string);
         const marketTicker = data as IUpbitMarketTicker;
@@ -46,10 +47,12 @@ const useMarketPriceStore = create<IMarketPriceStore>((set, get) => ({
             [marketTicker.code]: marketTicker,
           },
         }));
-      } catch {
-        // console.log('Failed to parse WebSocket message', error)
+      } catch (error) {
+        console.error('Failed to parse WebSocket message', error);
       }
-    };
+    }, 100); // 100ms 딜레이
+
+    socket.onmessage = handleMessage;
   },
   disconnectMarketPriceSocket: () => {
     const socket = get().marketPriceSocket;

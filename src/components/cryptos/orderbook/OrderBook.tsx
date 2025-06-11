@@ -171,5 +171,3 @@ const Row = ({ unit, max, className }: { unit: Unit; max: number; className: str
     </S.Row>
   );
 };
-
-// 55400 ~ 58850
