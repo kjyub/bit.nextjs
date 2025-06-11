@@ -25,6 +25,8 @@ export default function AppClientLayout({
   useAlarmSocket();
 
   useEffect(() => {
+    console.log('pathname', pathname, process.env.NEXT_PUBLIC_DJANGO_SERVER, process.env.NEXT_PUBLIC_API_SERVER);
+
     // 인앱 브라우저 인식 후 외부 브라우저로 이동
     const isRedirect = BrowserUtils.goExternalBrowser();
     setIsInAppBrowser(isRedirect);
