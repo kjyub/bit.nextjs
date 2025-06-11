@@ -23,3 +23,13 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/bit-nextjs:latest
+          build-args: |
+            NEXT_PUBLIC_KAKAO_CLIENT_ID=${{ secrets.NEXT_PUBLIC_KAKAO_CLIENT_ID }}
+            KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}
+            NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}
+            NEXT_PUBLIC_API_SERVER=${{ secrets.NEXT_PUBLIC_API_SERVER }}
+            NEXT_PUBLIC_DJANGO_SERVER=${{ secrets.NEXT_PUBLIC_DJANGO_SERVER }}
+            NEXT_PUBLIC_TRADE_SOCKET_SERVER=${{ secrets.NEXT_PUBLIC_TRADE_SOCKET_SERVER }}
+            NEXT_PUBLIC_USER_ALARM_SOCKET_SERVER=${{ secrets.NEXT_PUBLIC_USER_ALARM_SOCKET_SERVER }}
+            NEXT_PUBLIC_TRADE_SERVER=${{ secrets.NEXT_PUBLIC_TRADE_SERVER }}
+          
