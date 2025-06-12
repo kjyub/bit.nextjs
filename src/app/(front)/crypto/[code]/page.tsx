@@ -15,9 +15,12 @@ interface IMarketPage {
   searchParams: Promise<IMarketPageSearchParams>;
 }
 export default async function CryptoMarketPage({ params, searchParams }: IMarketPage) {
+  console.log('CryptoMarketPage');
   const awaitParams = await params;
   const { code } = awaitParams;
   const awaitSearchParams = await searchParams;
+
+  console.log('code', code);
 
   const marketData = await CryptoServerApi.getMarket(code);
   const marketCurrent = await TradeGoServerApi.getMarketCurrent(code);
