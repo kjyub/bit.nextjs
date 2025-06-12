@@ -1,12 +1,12 @@
-import Guage from "@/components/atomics/Guage";
-import useMarketPriceStore from "@/store/useMarketPriceStore";
-import { TextFormats } from "@/types/CommonTypes";
-import { type PriceChangeType, PriceChangeTypes } from "@/types/cryptos/CryptoTypes";
-import type TradePosition from "@/types/cryptos/TradePosition";
-import CommonUtils from "@/utils/CommonUtils";
-import CryptoUtils from "@/utils/CryptoUtils";
-import TypeUtils from "@/utils/TypeUtils";
-import { useMemo } from "react";
+import Guage from '@/components/atomics/Guage';
+import useMarketPriceStore from '@/store/useMarketPriceStore';
+import { TextFormats } from '@/types/CommonTypes';
+import { type PriceChangeType, PriceChangeTypes } from '@/types/cryptos/CryptoTypes';
+import type TradePosition from '@/types/cryptos/TradePosition';
+import CommonUtils from '@/utils/CommonUtils';
+import CryptoUtils from '@/utils/CryptoUtils';
+import TypeUtils from '@/utils/TypeUtils';
+import { useMemo } from 'react';
 
 interface Values {
   pnl: number;
@@ -21,7 +21,7 @@ interface Props {
 }
 export default function PositionAll({ positions, balance, isLoading }: Props) {
   const marketDic = useMarketPriceStore((state) => state.marketDic);
-  
+
   const marketPrices = useMemo(() => {
     const prices: Record<string, number> = {};
     for (const code of positions.map((position) => position.market.code)) {
@@ -52,7 +52,7 @@ export default function PositionAll({ positions, balance, isLoading }: Props) {
 
     return value;
   }, [positions, marketPrices]);
-  
+
   return (
     <div className="flex max-md:flex-col md:flex-row w-full gap-2">
       {/* 가격 정보 */}
@@ -79,7 +79,13 @@ export default function PositionAll({ positions, balance, isLoading }: Props) {
           <Guage ratio={isLoading ? 0 : (values.pnl * -1) / balance} title="청산 위험도" color="#ea7500" size={120} />
         </div>
         <div className="flex flex-col w-fit">
-          <Guage ratio={isLoading ? 0 : (values.pnl) / balance} title="수익률" color="#04c324" size={120} isMaxLimit={false} />
+          <Guage
+            ratio={isLoading ? 0 : values.pnl / balance}
+            title="수익률"
+            color="#04c324"
+            size={120}
+            isMaxLimit={false}
+          />
         </div>
       </div>
     </div>

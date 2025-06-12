@@ -6,10 +6,10 @@ import * as S from '@/styles/CryptoWalletStyles';
 import { TextFormats } from '@/types/CommonTypes';
 import { type TransferType, TransferTypes, WalletTransactionTypes } from '@/types/cryptos/CryptoTypes';
 import CommonUtils from '@/utils/CommonUtils';
+import TypeUtils from '@/utils/TypeUtils';
 import { useEffect, useMemo, useState } from 'react';
 import ModalLayout from '../atomics/ModalLayout';
 import { SlideInput } from '../inputs/TradeInputs';
-import TypeUtils from '@/utils/TypeUtils';
 
 const TransferSuffix = {
   [TransferTypes.TO_ACCOUNT]: 'C',
@@ -151,7 +151,9 @@ export default function CryptoTransferModal({ defaultTransferType }: CryptoTrans
             </S.TransferInfoBox>
             <S.TransferInfoBox>
               <span className="label">이체 후 통장 잔액</span>
-              <span className="value">{CommonUtils.textFormat(TypeUtils.round(cash + value, 0), TextFormats.NUMBER)}W</span>
+              <span className="value">
+                {CommonUtils.textFormat(TypeUtils.round(cash + value, 0), TextFormats.NUMBER)}W
+              </span>
             </S.TransferInfoBox>
           </S.TransferInfoList>
         )}
@@ -163,7 +165,9 @@ export default function CryptoTransferModal({ defaultTransferType }: CryptoTrans
             </S.TransferInfoBox>
             <S.TransferInfoBox>
               <span className="label">이체 후 지갑 잔액</span>
-              <span className="value">{CommonUtils.textFormat(TypeUtils.round(balance + value, 0), TextFormats.NUMBER)}W</span>
+              <span className="value">
+                {CommonUtils.textFormat(TypeUtils.round(balance + value, 0), TextFormats.NUMBER)}W
+              </span>
             </S.TransferInfoBox>
           </S.TransferInfoList>
         )}

@@ -1,5 +1,5 @@
-import { cn } from "@/utils/StyleUtils";
-import Link from "next/link";
+import { cn } from '@/utils/StyleUtils';
+import Link from 'next/link';
 
 interface Props {
   href: string;

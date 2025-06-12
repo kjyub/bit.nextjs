@@ -9,8 +9,8 @@ import CryptoUtils from '@/utils/CryptoUtils';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import CryptoMyTradeFilter from './Filter';
-import CryptoMyTradeItemSkeleton from './ItemSkeleton';
 import HeaderLink from './HeaderLink';
+import CryptoMyTradeItemSkeleton from './ItemSkeleton';
 
 const PAGE_SIZE = 10;
 

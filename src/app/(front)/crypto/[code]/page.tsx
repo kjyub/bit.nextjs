@@ -22,6 +22,9 @@ export default async function CryptoMarketPage({ params, searchParams }: IMarket
   const marketData = await CryptoServerApi.getMarket(code);
   const marketCurrent = await TradeGoServerApi.getMarketCurrent(code);
 
+  console.log('marketData', marketData);
+  console.log('marketCurrent', marketCurrent);
+
   return (
     <CryptoMarketMain
       marketCode={code}

@@ -56,7 +56,9 @@ export default function AssetManager() {
           </div>
           <div className="content">
             <div className="label">총 잔액</div>
-            <div className={`value ${isLoading ? 'skeleton w-24' : ''}`}>{CommonUtils.textFormat(cash, TextFormats.NUMBER)}W</div>
+            <div className={`value ${isLoading ? 'skeleton w-24' : ''}`}>
+              {CommonUtils.textFormat(cash, TextFormats.NUMBER)}W
+            </div>
           </div>
         </S.WalletBox>
         <S.WalletBox>
@@ -78,15 +80,21 @@ export default function AssetManager() {
           </div>
           <div className="content">
             <div className="label">지갑 총액</div>
-            <div className={`value ${isLoading ? 'skeleton w-24' : ''}`}>{CommonUtils.textFormat(Math.floor(balance), TextFormats.NUMBER)}C</div>
+            <div className={`value ${isLoading ? 'skeleton w-24' : ''}`}>
+              {CommonUtils.textFormat(Math.floor(balance), TextFormats.NUMBER)}C
+            </div>
           </div>
           <div className="content">
             <div className="label">사용 중</div>
-            <div className={`value ${isLoading ? 'skeleton w-24' : ''}`}>{CommonUtils.textFormat(Math.floor(locked), TextFormats.NUMBER)}C</div>
+            <div className={`value ${isLoading ? 'skeleton w-24' : ''}`}>
+              {CommonUtils.textFormat(Math.floor(locked), TextFormats.NUMBER)}C
+            </div>
           </div>
           <div className="content">
             <div className="label">사용 가능</div>
-            <div className={`value ${isLoading ? 'skeleton w-24' : ''}`}>{CommonUtils.textFormat(Math.floor(availableBalance), TextFormats.NUMBER)}C</div>
+            <div className={`value ${isLoading ? 'skeleton w-24' : ''}`}>
+              {CommonUtils.textFormat(Math.floor(availableBalance), TextFormats.NUMBER)}C
+            </div>
           </div>
         </S.WalletBox>
       </div>

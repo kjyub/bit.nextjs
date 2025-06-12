@@ -3,9 +3,8 @@
 import useUserInfoStore from '@/store/useUserInfo';
 import * as S from '@/styles/CryptoWalletStyles';
 import { Position } from '../mytrade/MyTradePosition';
-import PositionStackContainer from './PositionStackContainer';
 import PositionAll from './PositionAll';
-
+import PositionStackContainer from './PositionStackContainer';
 
 export default function BalanceManager() {
   const { balance, myTrades, isLoading } = useUserInfoStore();

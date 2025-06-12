@@ -1,9 +1,9 @@
-import type { StackHorizonItem } from "@/components/atomics/StackHorizon";
-import StackHorizon from "@/components/atomics/StackHorizon";
-import useBreakpoint from "@/hooks/useBreakpoint";
-import type TradePosition from "@/types/cryptos/TradePosition";
-import TypeUtils from "@/utils/TypeUtils";
-import { useMemo } from "react";
+import type { StackHorizonItem } from '@/components/atomics/StackHorizon';
+import StackHorizon from '@/components/atomics/StackHorizon';
+import useBreakpoint from '@/hooks/useBreakpoint';
+import type TradePosition from '@/types/cryptos/TradePosition';
+import TypeUtils from '@/utils/TypeUtils';
+import { useMemo } from 'react';
 
 const VISIBLE_STACK_COUNT = 4;
 
@@ -25,7 +25,7 @@ const COLORS = [
   '#e879f955',
   '#f472b655',
   '#fb718555',
-]
+];
 // key: 0 ~ 17 value: 0 ~ 17 random index
 const randomIndex: Record<number, number> = {
   0: 12,
@@ -44,13 +44,13 @@ const randomIndex: Record<number, number> = {
   13: 0,
   14: 13,
   15: 4,
-  16: 10
-}
+  16: 10,
+};
 const getColor = (index: number) => {
   const i = index % Object.keys(randomIndex).length;
   const ri = randomIndex[i];
   return COLORS[ri];
-}
+};
 
 interface Values {
   items: StackHorizonItem[];
@@ -76,24 +76,24 @@ export default function PositionStackContainer({ positions, balance, isLoading }
     }
     const values: Values = {
       items: [],
-      others: []
+      others: [],
     };
 
     const total = balance + positions.reduce((acc, position) => acc + position.marginPrice, 0);
     const items: StackHorizonItem[] = positions.map((position, index) => ({
-      content: `${position.market.code.split("-")[1]} ${TypeUtils.percent(position.marginPrice / total)}`,
-      ratio: position.marginPrice / total * 100,
-      color: getColor(index)
-    }))
+      content: `${position.market.code.split('-')[1]} ${TypeUtils.percent(position.marginPrice / total)}`,
+      ratio: (position.marginPrice / total) * 100,
+      color: getColor(index),
+    }));
 
     items.push({
       content: `내 지갑 ${TypeUtils.percent(balance / total)}`,
       ratio: 100 - items.reduce((acc, item) => acc + item.ratio, 0),
-      color: "#90a1b955"
-    })
+      color: '#90a1b955',
+    });
 
     items.sort((a, b) => b.ratio - a.ratio);
-    
+
     if (items.length > visibleCount) {
       values.items = items.slice(0, visibleCount);
       values.others = items.slice(visibleCount);

@@ -1,8 +1,8 @@
 // store.js
 import TradeGoApi from '@/apis/api/cryptos/TradeGoApi';
 import type { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
-import { create } from 'zustand';
 import { debounce } from 'lodash';
+import { create } from 'zustand';
 
 const getInitData = async () => {
   return await TradeGoApi.getMarketsCurrentDic();

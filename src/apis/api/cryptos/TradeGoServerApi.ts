@@ -12,11 +12,13 @@ namespace TradeGoServerApi {
           codes: [marketCode],
         },
       });
+      console.log('getMarketCurrent response', response.url);
       const data = (await response.json()) as any;
       if (Array.isArray(data) && data.length > 0) {
         result = data[0];
       }
     } catch (error) {
+      console.log('getMarketCurrent error');
       console.log(error);
     }
 

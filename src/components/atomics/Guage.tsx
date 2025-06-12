@@ -1,5 +1,5 @@
-import { cn } from "@/utils/StyleUtils";
-import TypeUtils from "@/utils/TypeUtils";
+import { cn } from '@/utils/StyleUtils';
+import TypeUtils from '@/utils/TypeUtils';
 
 interface Props {
   ratio: number;

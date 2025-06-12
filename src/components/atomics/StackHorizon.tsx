@@ -1,7 +1,7 @@
 'use client';
 
-import { useDetectClose } from "@/hooks/useDetectClose";
-import { cn } from "@/utils/StyleUtils";
+import { useDetectClose } from '@/hooks/useDetectClose';
+import { cn } from '@/utils/StyleUtils';
 
 export interface StackHorizonItem {
   content: string;
@@ -16,11 +16,16 @@ interface Props {
 }
 export default function StackHorizon({ className, items, others }: Props) {
   return (
-    <div className={cn(["flex w-full min-h-[34px] p-1 gap-1 rounded-full bg-slate-700/60 first:pl-1.875 last:pr-1.875", className])}>
+    <div
+      className={cn([
+        'flex w-full min-h-[34px] p-1 gap-1 rounded-full bg-slate-700/60 first:pl-1.875 last:pr-1.875',
+        className,
+      ])}
+    >
       {items.map((item, index) => (
-        <StackHorizonItem 
-          key={index} 
-          item={item} 
+        <StackHorizonItem
+          key={index}
+          item={item}
           tooltip={
             <Tooltip>
               <div className="flex items-center gap-1">
@@ -34,7 +39,7 @@ export default function StackHorizon({ className, items, others }: Props) {
         </StackHorizonItem>
       ))}
       {others.length > 0 && (
-        <StackHorizonItem 
+        <StackHorizonItem
           item={others[0]}
           tooltip={
             <Tooltip>
@@ -54,7 +59,11 @@ export default function StackHorizon({ className, items, others }: Props) {
   );
 }
 
-const StackHorizonItem = ({ item, tooltip, children }: { item: StackHorizonItem, tooltip: React.ReactNode, children: React.ReactNode }) => {
+const StackHorizonItem = ({
+  item,
+  tooltip,
+  children,
+}: { item: StackHorizonItem; tooltip: React.ReactNode; children: React.ReactNode }) => {
   const [ref, isOpen, setIsOpen] = useDetectClose<HTMLDivElement>();
 
   return (
@@ -70,10 +79,11 @@ const StackHorizonItem = ({ item, tooltip, children }: { item: StackHorizonItem,
       onMouseLeave={() => setIsOpen(false)}
     >
       {tooltip}
-      <div className="flex justify-center w-full px-2 py-1 text-xs text-slate-200/80 border border-slate-500/30 rounded-full" style={{ backgroundColor: item.color }}>
-        <div className="truncate">
-          {children}
-        </div>
+      <div
+        className="flex justify-center w-full px-2 py-1 text-xs text-slate-200/80 border border-slate-500/30 rounded-full"
+        style={{ backgroundColor: item.color }}
+      >
+        <div className="truncate">{children}</div>
       </div>
     </div>
   );
@@ -81,14 +91,8 @@ const StackHorizonItem = ({ item, tooltip, children }: { item: StackHorizonItem,
 
 const Tooltip = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div
-      className={cn([
-        'tooltip absolute z-10 bottom-8 right-0',
-        'flex justify-center w-full',
-        'duration-300'
-      ])}
-    >
-      <div 
+    <div className={cn(['tooltip absolute z-10 bottom-8 right-0', 'flex justify-center w-full', 'duration-300'])}>
+      <div
         className={cn([
           'flex flex-col items-center min-w-24 w-fit p-2 gap-2 rounded-xl bg-slate-400/30 backdrop-blur-md',
           'text-xs text-slate-200/80',
