@@ -13,16 +13,16 @@ import CryptoMarketInfo from './MarketInfo';
 import CryptoMarketOrderBook from './MarketOrderBook';
 import CryptoMarketTrade from './MarketTrade';
 import CryptoMarketMobileChart from './MarketMobileChart';
-import TradeGoServerApi from '@/apis/api/cryptos/TradeGoServerApi';
 
 // const CryptoMarketMobileChart = dynamic(() => import('./MarketMobileChart'), { ssr: false });
 
 interface ICryptoMarket {
   marketCode: string;
   marketData: object;
+  marketCurrent: IUpbitMarketTicker;
   communityNode: React.ReactNode;
 }
-export default function CryptoMarketMain({ marketCode, marketData, communityNode }: ICryptoMarket) {
+export default function CryptoMarketMain({ marketCode, marketData, marketCurrent, communityNode }: ICryptoMarket) {
   const { user } = useUser();
   const { updateInfo } = useUserInfoStore();
 
@@ -33,17 +33,6 @@ export default function CryptoMarketMain({ marketCode, marketData, communityNode
   // 설정 정보
   const [sizeUnitType, setSizeUnitType] = useState<SizeUnitType>(SizeUnitTypes.PRICE); // 단위 타입
   const imageCode = marketCode.split('-')[1];
-
-  const [marketCurrent, setMarketCurrent] = useState<IUpbitMarketTicker>({} as IUpbitMarketTicker);
-
-  useEffect(() => {
-    TradeGoServerApi.getMarketCurrent(marketCode).then((data) => {
-      setMarketCurrent(data);
-    }).catch((error) => {
-      console.log('getMarketCurrent error');
-      console.log(error);
-    });
-  }, [marketCode]);
 
   if (Object.keys(marketCurrent).length === 0) {
     return;
