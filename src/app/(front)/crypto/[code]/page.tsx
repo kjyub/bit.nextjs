@@ -21,12 +21,13 @@ export default async function CryptoMarketPage({ params, searchParams }: IMarket
   const awaitSearchParams = await searchParams;
 
   console.log('code', code);
+  console.log(process.env.NEXT_PUBLIC_DJANGO_SERVER, process.env.NEXT_PUBLIC_TRADE_SERVER);
 
   const marketData = await CryptoServerApi.getMarket(code);
-  const marketCurrent = await TradeGoServerApi.getMarketCurrent(code);
-
   console.log('marketData', marketData);
+  const marketCurrent = await TradeGoServerApi.getMarketCurrent(code);
   console.log('marketCurrent', marketCurrent);
+
 
   return (
     <CryptoMarketMain
