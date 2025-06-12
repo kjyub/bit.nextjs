@@ -12,6 +12,7 @@ import CryptoMarketChart from './MarketChart';
 import CryptoMarketInfo from './MarketInfo';
 import CryptoMarketOrderBook from './MarketOrderBook';
 import CryptoMarketTrade from './MarketTrade';
+import CryptoMarketMobileChart from './MarketMobileChart';
 
 // const CryptoMarketMobileChart = dynamic(() => import('./MarketMobileChart'), { ssr: false });
 
@@ -47,7 +48,7 @@ export default function CryptoMarketMain({ marketCode, marketData, marketCurrent
           <CryptoMarketTradeProvider>
             <S.ChartLayout>
               <CryptoMarketChart marketCode={marketCode} />
-              {/* <CryptoMarketMobileChart marketCode={marketCode} /> */}
+              <CryptoMarketMobileChart marketCode={marketCode} />
             </S.ChartLayout>
 
             <S.OrderBookLayout>
