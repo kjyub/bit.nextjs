@@ -29,7 +29,8 @@
       },
       "a11y": {
         "useKeyWithClickEvents": "off",
-        "useButtonType": "error"
+        "useButtonType": "error",
+        "noSvgWithoutTitle": "off"
       },
       "suspicious": {
         "noArrayIndexKey": "off",

@@ -1,12 +1,12 @@
 'use client';
 
 import KakaoContainer from '@/layouts/KakaoContainer';
-import KakaoLogo from '@/static/svgs/btn_kakao.svg';
 import * as SS from '@/styles/SignupStyles';
 import AuthUtils from '@/utils/AuthUtils';
 import { useState } from 'react';
 import ModalContainer from '../ModalContainer';
 import InfoModal from '../commons/InfoModal';
+import KakaoIcon from '@/components/svgs/auth/KakaoIcon';
 
 export default function SignupLobby() {
   const [isShowAgreement, setShowAgreement] = useState<boolean>(false);
@@ -34,7 +34,7 @@ export default function SignupLobby() {
                   handleKakao();
                 }}
               >
-                <KakaoLogo width={30} height={30} viewBox="0 0 20 20" />
+                <KakaoIcon width={30} height={30} viewBox="0 0 20 20" />
                 <span className="pr-1 text-kakao-text">카카오 로그인</span>
               </button>
             </KakaoContainer>
