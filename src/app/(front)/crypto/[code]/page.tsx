@@ -1,9 +1,7 @@
 import CryptoServerApi from '@/apis/api/cryptos/CryptoServerApi';
-import TradeGoServerApi from '@/apis/api/cryptos/TradeGoServerApi';
-import CryptoMarketCommunity from '@/components/cryptos/community/Community';
 import CryptoMarketMain from '@/components/cryptos/market/MarketMain';
-import { Suspense } from 'react';
 import CryptoMarketCommunityPage from './community';
+import TradeGoApi from '@/apis/api/cryptos/TradeGoApi';
 
 export interface IMarketPageSearchParams {
   search: string;
@@ -25,7 +23,7 @@ export default async function CryptoMarketPage({ params, searchParams }: IMarket
 
   const marketData = await CryptoServerApi.getMarket(code);
   console.log('marketData', marketData);
-  const marketCurrent = await TradeGoServerApi.getMarketCurrent(code);
+  const marketCurrent = await TradeGoApi.getMarketCurrent(code);
   console.log('marketCurrent', marketCurrent);
 
 

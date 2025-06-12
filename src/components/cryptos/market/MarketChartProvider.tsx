@@ -1,6 +1,6 @@
 'use client';
 
-import UpbitApi from '@/apis/api/cryptos/UpbitApi';
+import NextUpbitApi from '@/apis/api/cryptos/NextUpbitApi';
 import useTradeMarketChartSocket from '@/hooks/sockets/useTradeMarketChartSocket';
 import { useCryptoMarketTrade } from '@/hooks/useCryptoMarketTrade';
 import useToastMessageStore from '@/store/useToastMessageStore';
@@ -194,37 +194,37 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
 
     switch (timeTypeRef.current) {
       case CandleTimes.SECOND:
-        newData = await UpbitApi.getCandleSeconds(marketCode, CANDLE_SIZE, to);
+        newData = await NextUpbitApi.getCandleSeconds(marketCode, CANDLE_SIZE, to);
         break;
       case CandleTimes.MINUTE1:
-        newData = await UpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 1, to);
+        newData = await NextUpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 1, to);
         break;
       case CandleTimes.MINUTE3:
-        newData = await UpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 3, to);
+        newData = await NextUpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 3, to);
         break;
       case CandleTimes.MINUTE5:
-        newData = await UpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 5, to);
+        newData = await NextUpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 5, to);
         break;
       case CandleTimes.MINUTE10:
-        newData = await UpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 10, to);
+        newData = await NextUpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 10, to);
         break;
       case CandleTimes.MINUTE15:
-        newData = await UpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 15, to);
+        newData = await NextUpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 15, to);
         break;
       case CandleTimes.MINUTE60:
-        newData = await UpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 60, to);
+        newData = await NextUpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 60, to);
         break;
       case CandleTimes.MINUTE240:
-        newData = await UpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 240, to);
+        newData = await NextUpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 240, to);
         break;
       case CandleTimes.DAY:
-        newData = await UpbitApi.getCandleDays(marketCode, CANDLE_SIZE, to);
+        newData = await NextUpbitApi.getCandleDays(marketCode, CANDLE_SIZE, to);
         break;
       case CandleTimes.WEEK:
-        newData = await UpbitApi.getCandleWeeks(marketCode, CANDLE_SIZE, to);
+        newData = await NextUpbitApi.getCandleWeeks(marketCode, CANDLE_SIZE, to);
         break;
       case CandleTimes.MONTH:
-        newData = await UpbitApi.getCandleMonths(marketCode, CANDLE_SIZE, to);
+        newData = await NextUpbitApi.getCandleMonths(marketCode, CANDLE_SIZE, to);
         break;
       default:
         break;
@@ -249,39 +249,39 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
 
       switch (timeType) {
         case CandleTimes.SECOND:
-          data = await UpbitApi.getCandleSeconds(marketCode, CANDLE_SIZE);
+          data = await NextUpbitApi.getCandleSeconds(marketCode, CANDLE_SIZE);
           chartType = ChartTypes.AREA;
           break;
         case CandleTimes.MINUTE1:
-          data = await UpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 1);
+          data = await NextUpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 1);
           chartType = ChartTypes.AREA;
           break;
         case CandleTimes.MINUTE3:
-          data = await UpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 3);
+          data = await NextUpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 3);
           break;
         case CandleTimes.MINUTE5:
-          data = await UpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 5);
+          data = await NextUpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 5);
           break;
         case CandleTimes.MINUTE10:
-          data = await UpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 10);
+          data = await NextUpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 10);
           break;
         case CandleTimes.MINUTE15:
-          data = await UpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 15);
+          data = await NextUpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 15);
           break;
         case CandleTimes.MINUTE60:
-          data = await UpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 60);
+          data = await NextUpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 60);
           break;
         case CandleTimes.MINUTE240:
-          data = await UpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 240);
+          data = await NextUpbitApi.getCandleMinutes(marketCode, CANDLE_SIZE, 240);
           break;
         case CandleTimes.DAY:
-          data = await UpbitApi.getCandleDays(marketCode, CANDLE_SIZE);
+          data = await NextUpbitApi.getCandleDays(marketCode, CANDLE_SIZE);
           break;
         case CandleTimes.WEEK:
-          data = await UpbitApi.getCandleWeeks(marketCode, CANDLE_SIZE);
+          data = await NextUpbitApi.getCandleWeeks(marketCode, CANDLE_SIZE);
           break;
         case CandleTimes.MONTH:
-          data = await UpbitApi.getCandleMonths(marketCode, CANDLE_SIZE);
+          data = await NextUpbitApi.getCandleMonths(marketCode, CANDLE_SIZE);
           break;
         default:
           break;

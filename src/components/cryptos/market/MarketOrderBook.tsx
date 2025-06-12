@@ -1,6 +1,6 @@
 'use client';
 
-import UpbitApi from '@/apis/api/cryptos/UpbitApi';
+import NextUpbitApi from '@/apis/api/cryptos/NextUpbitApi';
 import useTradeMarketOrderBookSocket from '@/hooks/sockets/useTradeMarketOrderBookSocket';
 import useBreakpoint from '@/hooks/useBreakpoint';
 import { useCryptoUi } from '@/hooks/useCryptoUi';
@@ -43,7 +43,7 @@ export default function CryptoMarketOrderBook({ marketCode, marketCurrent }: ICr
     }
 
     setIsLoading(true);
-    const orderBook = await UpbitApi.getOrderBook(marketCode);
+    const orderBook = await NextUpbitApi.getOrderBook(marketCode);
     setOrderBook(orderBook);
     setIsLoading(false);
   }, [marketCode]);

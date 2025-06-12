@@ -4,59 +4,59 @@ import type { CandleMinuteUnits } from '@/types/cryptos/CryptoTypes';
 
 namespace UpbitApi {
   // region Market
-  export async function getMarketsAll(): Promise<Array<IUpbitMarket>> {
-    let result: Array<IUpbitMarket> = [];
+  // export async function getMarketsAll(): Promise<Array<IUpbitMarket>> {
+  //   let result: Array<IUpbitMarket> = [];
 
-    try {
-      const response = await upbitInstance.get('market/all');
-      const data = (await response.json()) as any;
-      if (Array.isArray(data)) {
-        result = data;
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  //   try {
+  //     const response = await upbitInstance.get('market/all');
+  //     const data = (await response.json()) as any;
+  //     if (Array.isArray(data)) {
+  //       result = data;
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
 
-    return result;
-  }
-  export async function getMarketsCurrent(marketCodes: Array<string>): Promise<Array<IUpbitMarketTicker>> {
-    let result: Array<IUpbitMarketTicker> = [];
+  //   return result;
+  // }
+  // export async function getMarketsCurrent(marketCodes: Array<string>): Promise<Array<IUpbitMarketTicker>> {
+  //   let result: Array<IUpbitMarketTicker> = [];
 
-    try {
-      const response = await upbitInstance.get('ticker', {
-        searchParams: {
-          markets: marketCodes.join(','),
-        },
-      });
-      const data = (await response.json()) as any;
-      if (Array.isArray(data)) {
-        result = data;
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  //   try {
+  //     const response = await upbitInstance.get('ticker', {
+  //       searchParams: {
+  //         markets: marketCodes.join(','),
+  //       },
+  //     });
+  //     const data = (await response.json()) as any;
+  //     if (Array.isArray(data)) {
+  //       result = data;
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
 
-    return result;
-  }
-  export async function getMarketCurrent(marketCode: string): Promise<IUpbitMarketTicker> {
-    let result = {} as IUpbitMarketTicker;
+  //   return result;
+  // }
+  // export async function getMarketCurrent(marketCode: string): Promise<IUpbitMarketTicker> {
+  //   let result = {} as IUpbitMarketTicker;
 
-    try {
-      const response = await upbitInstance.get('ticker', {
-        searchParams: {
-          markets: marketCode,
-        },
-      });
-      const data = (await response.json()) as any;
-      if (Array.isArray(data) && data.length > 0) {
-        result = data[0];
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  //   try {
+  //     const response = await upbitInstance.get('ticker', {
+  //       searchParams: {
+  //         markets: marketCode,
+  //       },
+  //     });
+  //     const data = (await response.json()) as any;
+  //     if (Array.isArray(data) && data.length > 0) {
+  //       result = data[0];
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
 
-    return result;
-  }
+  //   return result;
+  // }
   // endregion
 
   // region Candle
