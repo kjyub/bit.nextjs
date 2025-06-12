@@ -56,7 +56,7 @@ namespace TradeGoApi {
   // endregion
 
   export function getMarketSocket(): WebSocket {
-    return new WebSocket(`${process.env.NEXT_PUBLIC_TRADE_SOCKET_SERVER}/market`);
+    return new WebSocket(`${process.env.NEXT_PUBLIC_TRADE_SOCKET_SERVER}/ws/market`);
   }
 
   export function getAlarmSocket(userId?: number): WebSocket | null {
@@ -64,7 +64,7 @@ namespace TradeGoApi {
       return null;
     }
 
-    const socket = new WebSocket(`${process.env.NEXT_PUBLIC_USER_ALARM_SOCKET_SERVER}/user?user_id=${userId}`);
+    const socket = new WebSocket(`${process.env.NEXT_PUBLIC_USER_ALARM_SOCKET_SERVER}/ws/user?user_id=${userId}`);
     return socket;
   }
 }
