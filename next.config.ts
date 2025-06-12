@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['kr.cafe24obs.com'],
     remotePatterns: [
       {
         protocol: 'http',
@@ -13,6 +12,11 @@ const nextConfig = {
         protocol: 'http',
         hostname: '192.0.0.2',
         port: '8000', // 포트가 명시되지 않은 경우 비워둡니다.
+        pathname: '/**', // 모든 경로 허용
+      },
+      {
+        protocol: 'https',
+        hostname: 'kurrito.kr',
         pathname: '/**', // 모든 경로 허용
       },
       {
