@@ -1,4 +1,3 @@
-import NextUpbitApi from '@/apis/api/cryptos/NextUpbitApi';
 import TradeGoApi from '@/apis/api/cryptos/TradeGoApi';
 
 export default async function TestPage() {
