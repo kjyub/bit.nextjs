@@ -3,6 +3,29 @@ import type { IUpbitCandle, IUpbitMarket, IUpbitMarketTicker, IUpbitOrderBook } 
 import type { CandleMinuteUnits } from '@/types/cryptos/CryptoTypes';
 
 namespace NextUpbitApi {
+  // region Market
+  export async function getMarketsCurrent(marketCodes: Array<string>): Promise<Array<IUpbitMarketTicker>> {
+    let result: Array<IUpbitMarketTicker> = [];
+
+    try {
+      const url = new URL(`${process.env.NEXT_PUBLIC_API_SERVER}/api/upbit/markets`);
+      const response = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify({ markets: marketCodes }),
+      });
+      result = (await response.json()) as any;
+    } catch (error) {
+      console.log(error);
+    }
+
+    return result;
+  }
+  export async function getMarketCurrent(marketCode: string): Promise<IUpbitMarketTicker> {
+    const result = await NextUpbitApi.getMarketsCurrent([marketCode]);
+    return result[0];
+  }
+  // endregion
+
   // region Candle
   function isBeforeServiceStart(to: string): boolean {
     // 업비트 서비스 시작일인 2017년 10월 이전을 조회할려는지 확인

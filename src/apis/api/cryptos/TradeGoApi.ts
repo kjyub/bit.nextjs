@@ -1,5 +1,6 @@
 import { tradeInstance } from '@/apis/utils/tradeInstances';
 import type { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
+import NextUpbitApi from './NextUpbitApi';
 
 namespace TradeGoApi {
   // region Market
@@ -25,7 +26,7 @@ namespace TradeGoApi {
   export async function getMarketsCurrentDic(
     marketCodes: Array<string> = [],
   ): Promise<{ [key: string]: IUpbitMarketTicker }> {
-    const markets = await TradeGoApi.getMarketsCurrent(marketCodes);
+    const markets = await NextUpbitApi.getMarketsCurrent(marketCodes);
 
     const result: { [key: string]: IUpbitMarketTicker } = {};
     markets.forEach((market: IUpbitMarketTicker) => {

@@ -10,6 +10,7 @@ import type TradeOrder from '@/types/cryptos/TradeOrder';
 import CryptoUtils from '@/utils/CryptoUtils';
 import dayjs from 'dayjs';
 import HeaderLink from './HeaderLink';
+import NextUpbitApi from '@/apis/api/cryptos/NextUpbitApi';
 
 export default function CryptoMyTradeOrder() {
   const { myTrades, updateInfo } = useUserInfoStore();
@@ -51,7 +52,7 @@ const Order = ({ order, updateInfo }: IOrder) => {
       return;
     }
 
-    const market: IUpbitMarketTicker = await TradeGoApi.getMarketCurrent(order.market.code);
+    const market: IUpbitMarketTicker = await NextUpbitApi.getMarketCurrent(order.market.code);
     if (!market || !String(market.trade_price)) {
       alert('마켓 정보를 가져오는데 실패했습니다.');
       return;
