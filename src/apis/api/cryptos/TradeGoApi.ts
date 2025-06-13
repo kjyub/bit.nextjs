@@ -10,7 +10,7 @@ namespace TradeGoApi {
     try {
       const response = await tradeInstance.post('markets', {
         json: {
-          markets: marketCodes,
+          codes: marketCodes,
         },
       });
       const data = (await response.json()) as any;
