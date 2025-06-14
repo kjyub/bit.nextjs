@@ -8,7 +8,7 @@ namespace TradeGoApi {
     let result: Array<IUpbitMarketTicker> = [];
 
     try {
-      console.log(marketCodes);
+      console.log(JSON.stringify({ codes: marketCodes }));
       // const response = await tradeInstance.post('markets', {
       //   json: {
       //     codes: marketCodes,
@@ -17,8 +17,15 @@ namespace TradeGoApi {
       // const data = (await response.json()) as any;
       const response = await fetch(`${process.env.NEXT_PUBLIC_TRADE_SERVER}/api/markets`, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({ codes: marketCodes }),
       });
+      console.log(response);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const data = (await response.json()) as any;
       console.log(data);
       if (Array.isArray(data)) {
