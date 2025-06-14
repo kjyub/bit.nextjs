@@ -9,10 +9,15 @@ namespace TradeGoApi {
 
     try {
       console.log(marketCodes);
-      const response = await tradeInstance.post('markets', {
-        json: {
-          codes: marketCodes,
-        },
+      // const response = await tradeInstance.post('markets', {
+      //   json: {
+      //     codes: marketCodes,
+      //   },
+      // });
+      // const data = (await response.json()) as any;
+      const response = await fetch(`${process.env.NEXT_PUBLIC_TRADE_SERVER}/api/markets`, {
+        method: 'POST',
+        body: JSON.stringify({ codes: marketCodes }),
       });
       const data = (await response.json()) as any;
       console.log(data);
@@ -41,14 +46,9 @@ namespace TradeGoApi {
     let result = {} as IUpbitMarketTicker;
 
     try {
-      const response = await tradeInstance.post('markets', {
-        json: {
-          codes: [marketCode],
-        },
-      });
-      const data = (await response.json()) as any;
-      if (Array.isArray(data) && data.length > 0) {
-        result = data[0];
+      const response = await TradeGoApi.getMarketsCurrent([marketCode]);
+      if (Array.isArray(response) && response.length > 0) {
+        result = response[0];
       }
     } catch (error) {
       console.log(error);
