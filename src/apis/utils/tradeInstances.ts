@@ -7,7 +7,7 @@ const createKyInstance = (options?: Options): typeof ky => {
     prefixUrl: URL,
     headers: {
       'Content-Type': 'application/json',
-    }
+    },
     ...options,
   });
 };
