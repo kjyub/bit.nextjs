@@ -10,7 +10,9 @@ export default function useTradeMarketOrderBookSocket(marketCode: string, receiv
 
   useSocketManager(
     () => {
-      connectChart(marketCode);
+      setTimeout(() => {
+        connectChart(marketCode);
+      }, 1000);
     },
     () => {
       if (socketRef.current) {
