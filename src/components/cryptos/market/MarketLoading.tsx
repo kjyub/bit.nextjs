@@ -60,7 +60,7 @@ export default function CryptoMarketLoading() {
       {/* 코인 정보 */}
       <S.MainLayout>
         <S.ChartAndTradeLayout>
-          <CryptoMarketTradeProvider>
+          <CryptoMarketTradeProvider marketCode={''}>
             <S.ChartLayout className="skeleton bg-transparent">
               {/* <CryptoMarketChart marketCode={marketCode} />
               <CryptoMarketMobileChart marketCode={marketCode} /> */}
