@@ -15,7 +15,7 @@ namespace TradeGoApi {
       //   },
       // });
       // const data = (await response.json()) as any;
-      const response = await fetch(`${process.env.NEXT_PUBLIC_TRADE_SERVER}/api/markets`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_TRADE_SERVER}/markets`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
