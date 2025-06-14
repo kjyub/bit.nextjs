@@ -8,7 +8,6 @@ namespace TradeGoApi {
     let result: Array<IUpbitMarketTicker> = [];
 
     try {
-      console.log(JSON.stringify({ codes: marketCodes }));
       // const response = await tradeInstance.post('markets', {
       //   json: {
       //     codes: marketCodes,
@@ -26,7 +25,6 @@ namespace TradeGoApi {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = (await response.json()) as any;
-      console.log(data);
       if (Array.isArray(data)) {
         result = data;
       }
