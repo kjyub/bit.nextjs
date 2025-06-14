@@ -9,23 +9,23 @@ namespace TradeGoApi {
 
     try {
       console.log(JSON.stringify({ codes: marketCodes }));
-      const response = await tradeInstance.post('markets', {
-        json: {
-          codes: marketCodes,
-        },
-      });
-      const data = (await response.json()) as any;
-      // const response = await fetch(`${process.env.NEXT_PUBLIC_TRADE_SERVER}/markets`, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
+      // const response = await tradeInstance.post('markets', {
+      //   json: {
+      //     codes: marketCodes,
       //   },
-      //   body: JSON.stringify({ codes: marketCodes }),
       // });
-      // if (!response.ok) {
-      //   throw new Error(`HTTP error! status: ${response.status}`);
-      // }
       // const data = (await response.json()) as any;
+      const response = await fetch(`${process.env.NEXT_PUBLIC_TRADE_SERVER}/markets`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ codes: marketCodes }),
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = (await response.json()) as any;
       console.log(data);
       if (Array.isArray(data)) {
         result = data;

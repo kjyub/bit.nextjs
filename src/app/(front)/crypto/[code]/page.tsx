@@ -2,7 +2,6 @@ import CryptoServerApi from '@/apis/api/cryptos/CryptoServerApi';
 import CryptoMarketMain from '@/components/cryptos/market/MarketMain';
 import CryptoMarketCommunityPage from './community';
 import TradeGoApi from '@/apis/api/cryptos/TradeGoApi';
-import NextUpbitApi from '@/apis/api/cryptos/NextUpbitApi';
 
 export interface IMarketPageSearchParams {
   search: string;
@@ -14,19 +13,12 @@ interface IMarketPage {
   searchParams: Promise<IMarketPageSearchParams>;
 }
 export default async function CryptoMarketPage({ params, searchParams }: IMarketPage) {
-  console.log('CryptoMarketPage');
   const awaitParams = await params;
   const { code } = awaitParams;
   const awaitSearchParams = await searchParams;
 
-  console.log('code', code);
-  console.log(process.env.NEXT_PUBLIC_DJANGO_SERVER, process.env.NEXT_PUBLIC_TRADE_SERVER);
-
   const marketData = await CryptoServerApi.getMarket(code);
-  console.log('marketData', marketData);
-  const marketCurrent = await NextUpbitApi.getMarketCurrent(code);
-  console.log('marketCurrent', marketCurrent);
-
+  const marketCurrent = await TradeGoApi.getMarketCurrent(code);
 
   return (
     <CryptoMarketMain
