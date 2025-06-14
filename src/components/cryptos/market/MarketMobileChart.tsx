@@ -8,6 +8,7 @@ import { createPortal } from 'react-dom';
 import CryptoMarketChartControlBar from '../chart/ControlBar';
 import TradingChart from '../chart/TradingChart';
 import CryptoMarketChartProvider from './MarketChartProvider';
+import useIsClient from '@/hooks/useIsClient';
 
 interface Props {
   marketCode: string;
@@ -44,8 +45,9 @@ export default function CryptoMarketMobileChart({ marketCode }: Props) {
 const Wrapper = ({ children }: { children: React.ReactNode }) => {
   const { isShowMobileChart, setIsShowMobileChart } = useCryptoUi();
   const { breakpointState } = useBreakpoint();
+  const isClient = useIsClient();
 
-  if (!BrowserUtils.isClient() || breakpointState.md) return null;
+  if (!isClient || breakpointState.md) return null;
 
   return createPortal(
     <ModalDimmer

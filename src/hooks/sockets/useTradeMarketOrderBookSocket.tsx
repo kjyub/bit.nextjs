@@ -17,7 +17,6 @@ export default function useTradeMarketOrderBookSocket(marketCode: string, receiv
         socketRef.current.close();
       }
     },
-    marketCode,
   );
 
   const connectChart = async (marketCode: string) => {

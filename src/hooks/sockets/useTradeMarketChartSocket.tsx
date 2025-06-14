@@ -32,6 +32,7 @@ export default function useTradeMarketChartSocket(
 
     const newSocket = new WebSocket('wss://api.upbit.com/websocket/v1');
     newSocket.binaryType = 'arraybuffer';
+    console.log('[차트] 연결 시작');
     newSocket.onmessage = (event: MessageEvent) => {
       try {
         const dataString = new TextDecoder('utf-8').decode(event.data as any);

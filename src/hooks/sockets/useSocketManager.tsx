@@ -19,8 +19,6 @@ export default function useSocketManager(connect: () => void, disconnect: () => 
     } catch {
       //
     }
-
-    connect();
   }, [updateFlag]);
 
   useEffect(() => {
