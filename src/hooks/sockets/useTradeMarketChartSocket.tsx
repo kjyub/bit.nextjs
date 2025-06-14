@@ -51,7 +51,16 @@ export default function useTradeMarketChartSocket(
     newSocket.onopen = () => {
       const ticket = String(uuid());
       const requestData = [{ ticket: ticket }, { type: 'candle.1s', codes: [marketCode] }];
+      console.log(requestData);
       newSocket.send(JSON.stringify(requestData));
+    };
+
+    newSocket.onclose = () => {
+      console.log('연결 종료');
+    };
+
+    newSocket.onerror = (event) => {
+      console.error('WebSocket error:', event);
     };
   };
 

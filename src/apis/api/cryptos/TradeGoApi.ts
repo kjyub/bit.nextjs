@@ -8,12 +8,14 @@ namespace TradeGoApi {
     let result: Array<IUpbitMarketTicker> = [];
 
     try {
+      console.log(marketCodes);
       const response = await tradeInstance.post('markets', {
         json: {
           codes: marketCodes,
         },
       });
       const data = (await response.json()) as any;
+      console.log(data);
       if (Array.isArray(data)) {
         result = data;
       }
@@ -26,7 +28,7 @@ namespace TradeGoApi {
   export async function getMarketsCurrentDic(
     marketCodes: Array<string> = [],
   ): Promise<{ [key: string]: IUpbitMarketTicker }> {
-    const markets = await NextUpbitApi.getMarketsCurrent(marketCodes);
+    const markets = await TradeGoApi.getMarketsCurrent(marketCodes);
 
     const result: { [key: string]: IUpbitMarketTicker } = {};
     markets.forEach((market: IUpbitMarketTicker) => {
