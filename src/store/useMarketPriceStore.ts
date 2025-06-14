@@ -48,11 +48,22 @@ const useMarketPriceStore = create<IMarketPriceStore>((set, get) => ({
           },
         }));
       } catch (error) {
-        console.error('Failed to parse WebSocket message', error);
+        console.error('[거래:마켓] Failed to parse WebSocket message', error);
       }
     }, 100); // 100ms 딜레이
 
     socket.onmessage = handleMessage;
+    socket.onopen = () => {
+      console.log('[거래:마켓] 연결 시작');
+    };
+
+    socket.onclose = () => {
+      console.log('[거래:마켓] 연결 종료');
+    };
+
+    socket.onerror = (event) => {
+      console.error('[거래:마켓] WebSocket error:', event);
+    };
   },
   disconnectMarketPriceSocket: () => {
     const socket = get().marketPriceSocket;

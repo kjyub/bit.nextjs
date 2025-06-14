@@ -23,6 +23,18 @@ export default function useAlarmSocket() {
           console.log('Failed to parse WebSocket message', error);
         }
       };
+
+      userAlarmSocket.onopen = () => {
+        console.log('[알람] 연결 시작');
+      };
+
+      userAlarmSocket.onclose = () => {
+        console.log('[알람] 연결 종료');
+      };
+
+      userAlarmSocket.onerror = (event) => {
+        console.error('[알람] WebSocket error:', event);
+      };
     }
 
     return () => {

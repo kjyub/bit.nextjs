@@ -27,6 +27,7 @@ export default function useTradeMarketOrderBookSocket(marketCode: string, receiv
 
     const newSocket = new WebSocket('wss://api.upbit.com/websocket/v1');
     newSocket.binaryType = 'arraybuffer';
+    console.log('[호가] 연결 시작');
     newSocket.onmessage = (event: MessageEvent) => {
       try {
         const dataString = new TextDecoder('utf-8').decode(event.data as any);
@@ -47,6 +48,14 @@ export default function useTradeMarketOrderBookSocket(marketCode: string, receiv
       const ticket = String(uuid());
       const requestData = [{ ticket: ticket }, { type: 'orderbook', codes: [marketCode] }];
       newSocket.send(JSON.stringify(requestData));
+    };
+
+    newSocket.onclose = () => {
+      console.log('[호가] 연결 종료');
+    };
+
+    newSocket.onerror = (event) => {
+      console.error('[호가] WebSocket error:', event);
     };
   };
 
