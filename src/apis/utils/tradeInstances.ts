@@ -5,15 +5,10 @@ const URL = process.env.NEXT_PUBLIC_TRADE_SERVER;
 const createKyInstance = (options?: Options): typeof ky => {
   return ky.create({
     prefixUrl: URL,
+    headers: {
+      'Content-Type': 'application/json',
+    }
     ...options,
-    timeout: 5000,
-    hooks: {
-      beforeRequest: [
-        (request) => {
-          request.headers.set('Connection', 'close');
-        },
-      ],
-    },
   });
 };
 
