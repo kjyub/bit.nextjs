@@ -12,7 +12,7 @@ interface ICryptoMarketChart {
 }
 export default function CryptoMarketChart({ marketCode }: ICryptoMarketChart) {
   return (
-    <CryptoMarketChartProvider marketCode={marketCode}>
+    // <CryptoMarketChartProvider marketCode={marketCode}>
       <div className="flex flex-col h-full gap-2">
         <CryptoMarketChartControlBar />
 
@@ -21,6 +21,6 @@ export default function CryptoMarketChart({ marketCode }: ICryptoMarketChart) {
           <TradingChart marketCode={marketCode} />
         </div>
       </div>
-    </CryptoMarketChartProvider>
+    // </CryptoMarketChartProvider>
   );
 }

@@ -2,6 +2,7 @@
 
 'use client';
 
+import CryptoMarketChartProvider from '@/components/cryptos/market/MarketChartProvider';
 import { type Dispatch, type SetStateAction, createContext, useState } from 'react';
 
 interface CryptoState {
@@ -17,15 +18,19 @@ const initCryptoState: CryptoState = {
 export const CryptoMarketTradeContext = createContext<CryptoState>(initCryptoState);
 
 export const CryptoMarketTradeProvider = ({
+  marketCode,
   children,
 }: {
+  marketCode: string;
   children: React.ReactNode;
 }) => {
   const [tradePrice, setTradePrice] = useState<number>(0);
 
   return (
     <CryptoMarketTradeContext.Provider value={{ tradePrice, setTradePrice }}>
-      {children}
+      <CryptoMarketChartProvider marketCode={marketCode}>
+        {children}
+      </CryptoMarketChartProvider>
     </CryptoMarketTradeContext.Provider>
   );
 };

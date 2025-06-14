@@ -45,7 +45,7 @@ export default function CryptoMarketMain({ marketCode, marketData, marketCurrent
       {/* 코인 정보 */}
       <S.MainLayout>
         <S.ChartAndTradeLayout>
-          <CryptoMarketTradeProvider>
+          <CryptoMarketTradeProvider marketCode={marketCode}>
             <S.ChartLayout>
               <CryptoMarketChart marketCode={marketCode} />
               <CryptoMarketMobileChart marketCode={marketCode} />

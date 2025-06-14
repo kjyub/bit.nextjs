@@ -18,7 +18,7 @@ export default function CryptoMarketMobileChart({ marketCode }: Props) {
 
   return (
     <Wrapper>
-      <CryptoMarketChartProvider marketCode={marketCode}>
+      {/* <CryptoMarketChartProvider marketCode={marketCode}> */}
         <div className="flex flex-col w-[95vw] p-1.5 rounded-lg bg-slate-800" onClick={(e) => e.stopPropagation()}>
           <div className="flex justify-between items-center h-10 px-2">
             <span className="text-base font-semibold text-slate-100">차트</span>
@@ -37,7 +37,7 @@ export default function CryptoMarketMobileChart({ marketCode }: Props) {
             <TradingChart marketCode={marketCode} />
           </div>
         </div>
-      </CryptoMarketChartProvider>
+      {/* </CryptoMarketChartProvider> */}
     </Wrapper>
   );
 }

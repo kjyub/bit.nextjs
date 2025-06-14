@@ -8,23 +8,25 @@ import type { IUpbitMarketTicker, IUpbitOrderBook } from '@/types/cryptos/Crypto
 import { useCallback, useEffect, useState } from 'react';
 import OrderBook from '../orderbook/OrderBook';
 import CryptoMarketChart from './MarketChart';
+import { useCryptoMarketChart } from './MarketChartProvider';
 
 interface ICryptoMarketOrderBook {
   marketCode: string;
   marketCurrent: IUpbitMarketTicker;
 }
 export default function CryptoMarketOrderBook({ marketCode, marketCurrent }: ICryptoMarketOrderBook) {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [orderBook, setOrderBook] = useState<IUpbitOrderBook>({} as IUpbitOrderBook);
+  const { isOrderBookLoading: isLoading, orderBook } = useCryptoMarketChart();
+  // const [isLoading, setIsLoading] = useState<boolean>(true);
+  // const [orderBook, setOrderBook] = useState<IUpbitOrderBook>({} as IUpbitOrderBook);
 
   const { isShowMobileChart, setIsShowMobileChart } = useCryptoUi();
   const [isShowChart, setIsShowChart] = useState<boolean>(false);
   const { breakpointState } = useBreakpoint();
   const isTablet = breakpointState.md && !breakpointState.lg;
 
-  useEffect(() => {
-    initChart();
-  }, [marketCode]);
+  // useEffect(() => {
+  //   initChart();
+  // }, [marketCode]);
 
   useEffect(() => {
     if (!isTablet) {
@@ -32,21 +34,21 @@ export default function CryptoMarketOrderBook({ marketCode, marketCurrent }: ICr
     }
   }, [isTablet]);
 
-  const initChart = useCallback(async () => {
-    await getOrderBook();
-    connectChart(marketCode);
-  }, [marketCode]);
+  // const initChart = useCallback(async () => {
+  //   await getOrderBook();
+  //   connectChart(marketCode);
+  // }, [marketCode]);
 
-  const getOrderBook = useCallback(async () => {
-    if (isLoading) {
-      return;
-    }
+  // const getOrderBook = useCallback(async () => {
+  //   if (isLoading) {
+  //     return;
+  //   }
 
-    setIsLoading(true);
-    const orderBook = await NextUpbitApi.getOrderBook(marketCode);
-    setOrderBook(orderBook);
-    setIsLoading(false);
-  }, [marketCode]);
+  //   setIsLoading(true);
+  //   const orderBook = await NextUpbitApi.getOrderBook(marketCode);
+  //   setOrderBook(orderBook);
+  //   setIsLoading(false);
+  // }, [marketCode]);
 
   const handleShowChart = useCallback(() => {
     if (isTablet) {
@@ -56,7 +58,7 @@ export default function CryptoMarketOrderBook({ marketCode, marketCurrent }: ICr
     }
   }, [isTablet, isShowChart, isShowMobileChart]);
 
-  const connectChart = useTradeMarketOrderBookSocket(marketCode, setOrderBook);
+  // const connectChart = useTradeMarketOrderBookSocket(marketCode, setOrderBook);
 
   return (
     <div className="relative flex flex-col size-full">

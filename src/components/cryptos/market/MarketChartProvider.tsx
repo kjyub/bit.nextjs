@@ -4,7 +4,7 @@ import NextUpbitApi from '@/apis/api/cryptos/NextUpbitApi';
 import useTradeMarketChartSocket from '@/hooks/sockets/useTradeMarketChartSocket';
 import { useCryptoMarketTrade } from '@/hooks/useCryptoMarketTrade';
 import useToastMessageStore from '@/store/useToastMessageStore';
-import type { IUpbitCandle } from '@/types/cryptos/CryptoInterfaces';
+import type { IUpbitCandle, IUpbitOrderBook } from '@/types/cryptos/CryptoInterfaces';
 import CryptoUtils from '@/utils/CryptoUtils';
 import { CrosshairMode } from 'lightweight-charts';
 import {
@@ -19,6 +19,7 @@ import {
   useState,
 } from 'react';
 import { CANDLE_SIZE, type CandleTimeType, CandleTimes, type ChartType, ChartTypes } from '../chart/Types';
+import useTradeMarketUpbitSocket from '@/hooks/sockets/useTradeMarketUpbitSocket';
 
 const MAX_CANDLES = 100000;
 const REMOVE_CANDLES = 1000;
@@ -36,6 +37,10 @@ interface CryptoMarketChartState {
   isCandleLoading: boolean;
   selectedPriceRef: MutableRefObject<number | null>;
   updateTradePrice: () => void;
+
+  // 호가
+  isOrderBookLoading: boolean;
+  orderBook: IUpbitOrderBook;
 }
 
 const initCryptoMarketChartState: CryptoMarketChartState = {
@@ -51,6 +56,10 @@ const initCryptoMarketChartState: CryptoMarketChartState = {
   isCandleLoading: false,
   selectedPriceRef: { current: null },
   updateTradePrice: () => {},
+
+  // 호가
+  isOrderBookLoading: false,
+  orderBook: {} as IUpbitOrderBook,
 };
 
 const CryptoMarketChartContext = createContext<CryptoMarketChartState>(initCryptoMarketChartState);
@@ -136,6 +145,9 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
   const { setTradePrice } = useCryptoMarketTrade();
   const { createMessage } = useToastMessageStore();
 
+  const [isOrderBookLoading, setIsOrderBookLoading] = useState<boolean>(false);
+  const [orderBook, setOrderBook] = useState<IUpbitOrderBook>({} as IUpbitOrderBook);
+
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isCandleLoading, setCandleLoading] = useState<boolean>(false);
   const [candles, setCandles] = useState<IUpbitCandle[]>([]);
@@ -152,6 +164,7 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
 
   useEffect(() => {
     initChart(CandleTimes.MINUTE1);
+    getOrderBook();
   }, [marketCode]);
 
   useEffect(() => {
@@ -298,13 +311,25 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
     [isCandleLoading, marketCode],
   );
 
+  const getOrderBook = useCallback(async () => {
+    if (isLoading) {
+      return;
+    }
+
+    setIsLoading(true);
+    const orderBook = await NextUpbitApi.getOrderBook(marketCode);
+    setOrderBook(orderBook);
+    setIsLoading(false);
+  }, [marketCode]);
+
   const addCandle = useCallback((candle: IUpbitCandle, timeType: CandleTimeType) => {
     setCandles((candles) => {
       return mergeCandle(candles, candle, timeType);
     });
   }, []);
 
-  const connectChart = useTradeMarketChartSocket(marketCode, addCandle);
+  // const connectChart = useTradeMarketChartSocket(marketCode, addCandle);
+  const connectChart = useTradeMarketUpbitSocket(marketCode, addCandle, setOrderBook);
 
   const updateTradePrice = useCallback(() => {
     if (selectedPriceRef.current === null) return;
@@ -328,6 +353,10 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
         isCandleLoading,
         selectedPriceRef,
         updateTradePrice,
+
+        // 호가
+        isOrderBookLoading,
+        orderBook,
       }}
     >
       {children}
