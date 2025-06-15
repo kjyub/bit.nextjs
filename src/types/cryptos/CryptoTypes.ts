@@ -115,6 +115,6 @@ export interface TradeSocketRequestTicket {
 export interface TradeSocketRequestData {
   type: 'ticker' | 'orderbook' | 'candle.1s';
   codes: string[];
-  actions: 'subscribe' | 'unsubscribe';
+  action: 'subscribe' | 'unsubscribe';
 }
 export type TradeSocketRequest = TradeSocketRequestTicket | TradeSocketRequestData;

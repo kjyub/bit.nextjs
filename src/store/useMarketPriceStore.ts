@@ -41,7 +41,6 @@ const useMarketPriceStore = create<IMarketPriceStore>((set, get) => ({
         if (data.type === 'ticker') {
           get().receiveMarketData(data as IUpbitMarketTicker);
         } else if (data.type === 'orderbook') {
-          console.log('[거래:마켓] 오더북 데이터 수신', data);
           get().receiveOrderBook(data as IUpbitOrderBook);
         } else if (data.type === 'candle.1s') {
           get().receiveCandle(data as IUpbitCandle);
@@ -62,7 +61,7 @@ const useMarketPriceStore = create<IMarketPriceStore>((set, get) => ({
         {
           type: 'ticker',
           codes: [],
-          actions: 'subscribe',
+          action: 'subscribe',
         },
       ];
       socket.send(JSON.stringify(request));
@@ -87,17 +86,18 @@ const useMarketPriceStore = create<IMarketPriceStore>((set, get) => ({
   subscribeMarket: (marketCode: string) => {
     const socket = get().socket;
     if (!socket) return;
+    if (!marketCode) return;
 
     const request: TradeSocketRequest[] = [
       {
         type: 'candle.1s',
         codes: [marketCode],
-        actions: 'subscribe',
+        action: 'subscribe',
       },
       {
         type: 'orderbook',
         codes: [marketCode],
-        actions: 'subscribe',
+        action: 'subscribe',
       },
     ];
     console.log('[거래:마켓] 시세 구독 요청', request);
@@ -106,17 +106,18 @@ const useMarketPriceStore = create<IMarketPriceStore>((set, get) => ({
   unsubscribeMarket: (marketCode: string) => {
     const socket = get().socket;
     if (!socket) return;
+    if (!marketCode) return;
 
     const request: TradeSocketRequest[] = [
       {
         type: 'candle.1s',
         codes: [marketCode],
-        actions: 'unsubscribe',
+        action: 'unsubscribe',
       },
       {
         type: 'orderbook',
         codes: [marketCode],
-        actions: 'unsubscribe',
+        action: 'unsubscribe',
       },
     ];
     console.log('[거래:마켓] 시세 구독 해지 요청', request);
@@ -124,11 +125,6 @@ const useMarketPriceStore = create<IMarketPriceStore>((set, get) => ({
   },
   receiveMarketData: (marketTicker: IUpbitMarketTicker) => {
     if (!marketTicker.code) {
-      return;
-    }
-
-    const currentMarketDic = get().marketDic;
-    if (currentMarketDic[marketTicker.code]?.trade_price === marketTicker.trade_price) {
       return;
     }
 
