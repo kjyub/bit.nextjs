@@ -182,7 +182,7 @@ namespace UpbitApi {
 
     try {
       const response = await upbitInstance.get('orderbook', {
-        searchParams: { market: marketCode, level: level.toString() },
+        searchParams: { markets: marketCode, level: level.toString() },
       });
       const data = (await response.json()) as any;
       if (Array.isArray(data) && data.length > 0) {

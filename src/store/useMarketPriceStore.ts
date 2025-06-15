@@ -1,8 +1,9 @@
 // store.js
 import TradeGoApi from '@/apis/api/cryptos/TradeGoApi';
-import type { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
-import { debounce } from 'lodash';
+import type { IUpbitCandle, IUpbitMarketTicker, IUpbitOrderBook } from '@/types/cryptos/CryptoInterfaces';
+import type { TradeSocketRequest } from '@/types/cryptos/CryptoTypes';
 import { create } from 'zustand';
+import { v4 as uuid } from 'uuid';
 
 const getInitData = async () => {
   return await TradeGoApi.getMarketsCurrentDic();
@@ -11,9 +12,16 @@ const getInitData = async () => {
 interface IMarketPriceStore {
   marketDic: Record<string, IUpbitMarketTicker>;
   initMarketPriceData: () => Promise<void>;
-  marketPriceSocket: WebSocket | null;
-  connectMarketPriceSocket: () => void;
-  disconnectMarketPriceSocket: () => void;
+  socket: WebSocket | null;
+  connectSocket: () => void;
+  disconnectSocket: () => void;
+  subscribeMarket: (marketCode: string) => void;
+  unsubscribeMarket: (marketCode: string) => void;
+  receiveMarketData: (marketTicker: IUpbitMarketTicker) => void;
+  receiveCandle: (data: IUpbitCandle) => void;
+  setReceiveCandle: (receiveCandle: (data: IUpbitCandle) => void) => void;
+  receiveOrderBook: (data: IUpbitOrderBook) => void;
+  setReceiveOrderBook: (receiveOrderBook: (data: IUpbitOrderBook) => void) => void;
 }
 
 const useMarketPriceStore = create<IMarketPriceStore>((set, get) => ({
@@ -22,39 +30,42 @@ const useMarketPriceStore = create<IMarketPriceStore>((set, get) => ({
     const data = await getInitData();
     set({ marketDic: data });
   },
-  marketPriceSocket: null,
-  connectMarketPriceSocket: () => {
+  socket: null,
+  connectSocket: () => {
     const socket = TradeGoApi.getMarketSocket();
-    set({ marketPriceSocket: socket });
+    set({ socket: socket });
 
-    const handleMessage = debounce((event: MessageEvent) => {
+    const handleMessage = (event: MessageEvent) => {
       try {
         const data = JSON.parse(event.data as string);
-        const marketTicker = data as IUpbitMarketTicker;
-
-        if (!marketTicker.code) {
-          return;
+        if (data.type === 'ticker') {
+          get().receiveMarketData(data as IUpbitMarketTicker);
+        } else if (data.type === 'orderbook') {
+          console.log('[거래:마켓] 오더북 데이터 수신', data);
+          get().receiveOrderBook(data as IUpbitOrderBook);
+        } else if (data.type === 'candle.1s') {
+          get().receiveCandle(data as IUpbitCandle);
         }
-
-        const currentMarketDic = get().marketDic;
-        if (currentMarketDic[marketTicker.code]?.trade_price === marketTicker.trade_price) {
-          return;
-        }
-
-        set((state) => ({
-          marketDic: {
-            ...state.marketDic,
-            [marketTicker.code]: marketTicker,
-          },
-        }));
       } catch (error) {
         console.error('[거래:마켓] Failed to parse WebSocket message', error);
       }
-    }, 100); // 100ms 딜레이
+    };
 
     socket.onmessage = handleMessage;
     socket.onopen = () => {
       console.log('[거래:마켓] 연결 시작');
+      const ticket = String(uuid());
+      const request: TradeSocketRequest[] = [
+        {
+          ticket: ticket,
+        },
+        {
+          type: 'ticker',
+          codes: [],
+          actions: 'subscribe',
+        },
+      ];
+      socket.send(JSON.stringify(request));
     };
 
     socket.onclose = () => {
@@ -65,13 +76,76 @@ const useMarketPriceStore = create<IMarketPriceStore>((set, get) => ({
       console.error('[거래:마켓] WebSocket error:', event);
     };
   },
-  disconnectMarketPriceSocket: () => {
-    const socket = get().marketPriceSocket;
+  disconnectSocket: () => {
+    const socket = get().socket;
 
     if (socket) {
       socket.close();
-      set({ marketPriceSocket: null });
+      set({ socket: null });
     }
+  },
+  subscribeMarket: (marketCode: string) => {
+    const socket = get().socket;
+    if (!socket) return;
+
+    const request: TradeSocketRequest[] = [
+      {
+        type: 'candle.1s',
+        codes: [marketCode],
+        actions: 'subscribe',
+      },
+      {
+        type: 'orderbook',
+        codes: [marketCode],
+        actions: 'subscribe',
+      },
+    ];
+    console.log('[거래:마켓] 시세 구독 요청', request);
+    socket.send(JSON.stringify(request));
+  },
+  unsubscribeMarket: (marketCode: string) => {
+    const socket = get().socket;
+    if (!socket) return;
+
+    const request: TradeSocketRequest[] = [
+      {
+        type: 'candle.1s',
+        codes: [marketCode],
+        actions: 'unsubscribe',
+      },
+      {
+        type: 'orderbook',
+        codes: [marketCode],
+        actions: 'unsubscribe',
+      },
+    ];
+    console.log('[거래:마켓] 시세 구독 해지 요청', request);
+    socket.send(JSON.stringify(request));
+  },
+  receiveMarketData: (marketTicker: IUpbitMarketTicker) => {
+    if (!marketTicker.code) {
+      return;
+    }
+
+    const currentMarketDic = get().marketDic;
+    if (currentMarketDic[marketTicker.code]?.trade_price === marketTicker.trade_price) {
+      return;
+    }
+
+    set((state) => ({
+      marketDic: {
+        ...state.marketDic,
+        [marketTicker.code]: marketTicker,
+      },
+    }));
+  },
+  receiveCandle: (data: IUpbitCandle) => {},
+  setReceiveCandle: (receiveCandle: (data: IUpbitCandle) => void) => {
+    set({ receiveCandle: receiveCandle });
+  },
+  receiveOrderBook: (data: IUpbitOrderBook) => {},
+  setReceiveOrderBook: (receiveOrderBook: (data: IUpbitOrderBook) => void) => {
+    set({ receiveOrderBook: receiveOrderBook });
   },
 }));
 

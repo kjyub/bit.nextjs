@@ -108,3 +108,13 @@ export const SizeUnitTypes = {
 export type SizeUnitType = (typeof SizeUnitTypes)[keyof typeof SizeUnitTypes];
 
 export type CandleMinuteUnits = 1 | 3 | 5 | 10 | 15 | 30 | 60 | 240;
+
+export interface TradeSocketRequestTicket {
+  ticket: string;
+}
+export interface TradeSocketRequestData {
+  type: 'ticker' | 'orderbook' | 'candle.1s';
+  codes: string[];
+  actions: 'subscribe' | 'unsubscribe';
+}
+export type TradeSocketRequest = TradeSocketRequestTicket | TradeSocketRequestData;

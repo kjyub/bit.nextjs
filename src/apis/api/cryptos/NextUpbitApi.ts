@@ -149,9 +149,7 @@ namespace NextUpbitApi {
 
       const response = await fetch(url);
       const data = (await response.json()) as any;
-      if (Array.isArray(data) && data.length > 0) {
-        result = data[0];
-      }
+      result = data;
     } catch (error) {
       console.log(error);
     }

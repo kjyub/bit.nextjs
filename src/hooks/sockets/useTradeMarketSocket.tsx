@@ -5,12 +5,11 @@ import { useShallow } from 'zustand/shallow';
 import useVisibility from '../useVisibility';
 
 export default function useTradeMarketSocket() {
-  const { initMarketPriceData, connectMarketPriceSocket, disconnectMarketPriceSocket } = useMarketPriceStore(
+  const { initMarketPriceData, connectSocket, disconnectSocket } = useMarketPriceStore(
     useShallow((state) => ({
       initMarketPriceData: state.initMarketPriceData,
-      marketPriceSocket: state.marketPriceSocket,
-      connectMarketPriceSocket: state.connectMarketPriceSocket,
-      disconnectMarketPriceSocket: state.disconnectMarketPriceSocket,
+      connectSocket: state.connectSocket,
+      disconnectSocket: state.disconnectSocket,
     })),
   );
   const createToastMessage = useToastMessageStore((state) => state.createMessage);
@@ -22,20 +21,20 @@ export default function useTradeMarketSocket() {
   useEffect(() => {
     setIsInitialized(true);
     return () => {
-      disconnectMarketPriceSocket();
+      disconnectSocket();
     };
   }, []);
 
   useEffect(() => {
     if (isVisible) {
       initMarketPriceData();
-      connectMarketPriceSocket();
+      connectSocket();
 
       if (isInitialized) {
         createToastMessage('시세 데이터 연결 완료');
       }
     } else {
-      disconnectMarketPriceSocket();
+      disconnectSocket();
     }
   }, [isVisible]);
 }
