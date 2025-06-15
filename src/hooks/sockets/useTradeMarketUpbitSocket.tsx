@@ -68,8 +68,8 @@ export default function useTradeMarketUpbitSocket(
       newSocket.send(JSON.stringify(requestData));
     };
 
-    newSocket.onclose = () => {
-      console.log('[업비트] 연결 종료');
+    newSocket.onclose = (event) => {
+      console.log('[업비트] 연결 종료', event, event.reason);
     };
 
     newSocket.onerror = (event) => {
