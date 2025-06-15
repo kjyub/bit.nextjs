@@ -38,7 +38,6 @@ export default function useTradeMarketUpbitSocket(
       try {
         const dataString = new TextDecoder('utf-8').decode(event.data as any);
         const data = JSON.parse(dataString as string);
-        console.log('[업비트] data', data);
         if (data.error) {
           console.error('[업비트] WebSocket error:', data);
           return;
@@ -69,7 +68,7 @@ export default function useTradeMarketUpbitSocket(
     };
 
     newSocket.onclose = (event) => {
-      console.log('[업비트] 연결 종료', event, event.reason);
+      console.log('[업비트] 연결 종료', event, marketCode);
     };
 
     newSocket.onerror = (event) => {
