@@ -1,7 +1,8 @@
-import { upbitInstance } from '@/apis/utils/upbitInstances';
-import type { IUpbitCandle, IUpbitMarket, IUpbitMarketTicker, IUpbitOrderBook } from '@/types/cryptos/CryptoInterfaces';
+import type { IUpbitCandle, IUpbitMarketTicker, IUpbitOrderBook } from '@/types/cryptos/CryptoInterfaces';
 import type { CandleMinuteUnits } from '@/types/cryptos/CryptoTypes';
 
+// 업비트 요청은 클라이언트에서 바로 못보내서 api단을 거쳐서 요청
+// [nextjs -> nextjs api]
 namespace NextUpbitApi {
   // region Market
   export async function getMarketsCurrent(marketCodes: Array<string>): Promise<Array<IUpbitMarketTicker>> {

@@ -1,7 +1,6 @@
 'use client';
 
 import NextUpbitApi from '@/apis/api/cryptos/NextUpbitApi';
-import useTradeMarketChartSocket from '@/hooks/sockets/useTradeMarketChartSocket';
 import { useCryptoMarketTrade } from '@/hooks/useCryptoMarketTrade';
 import useToastMessageStore from '@/store/useToastMessageStore';
 import type { IUpbitCandle, IUpbitOrderBook } from '@/types/cryptos/CryptoInterfaces';
@@ -39,7 +38,6 @@ interface CryptoMarketChartState {
   updateTradePrice: () => void;
 
   // 호가
-  isOrderBookLoading: boolean;
   orderBook: IUpbitOrderBook;
 }
 
@@ -58,7 +56,6 @@ const initCryptoMarketChartState: CryptoMarketChartState = {
   updateTradePrice: () => {},
 
   // 호가
-  isOrderBookLoading: false,
   orderBook: {} as IUpbitOrderBook,
 };
 
@@ -145,7 +142,6 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
   const { setTradePrice } = useCryptoMarketTrade();
   const { createMessage } = useToastMessageStore();
 
-  const [isOrderBookLoading, setIsOrderBookLoading] = useState<boolean>(false);
   const [orderBook, setOrderBook] = useState<IUpbitOrderBook>({} as IUpbitOrderBook);
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -256,6 +252,8 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
   const getCandleData = useCallback(
     async (timeType: CandleTimeType) => {
       if (isCandleLoadingRef.current) return;
+      if (!marketCode) return;
+
       setCandleLoading(true);
       isCandleLoadingRef.current = true;
       setIsLoading(true);
@@ -314,14 +312,10 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
   );
 
   const getOrderBook = useCallback(async () => {
-    if (isLoading) {
-      return;
-    }
+    if (!marketCode) return;
 
-    setIsLoading(true);
     const orderBook = await NextUpbitApi.getOrderBook(marketCode);
     setOrderBook(orderBook);
-    setIsLoading(false);
   }, [marketCode]);
 
   const addCandle = useCallback((candle: IUpbitCandle, timeType: CandleTimeType) => {
@@ -330,7 +324,6 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
     });
   }, []);
 
-  // const connectChart = useTradeMarketChartSocket(marketCode, addCandle);
   const connectChart = useTradeMarketUpbitSocket(marketCode, addCandle, setOrderBook);
 
   const updateTradePrice = useCallback(() => {
@@ -357,7 +350,6 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
         updateTradePrice,
 
         // 호가
-        isOrderBookLoading,
         orderBook,
       }}
     >

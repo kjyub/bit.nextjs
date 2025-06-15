@@ -2,18 +2,13 @@ import { tradeInstance } from '@/apis/utils/tradeInstances';
 import type { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
 import NextUpbitApi from './NextUpbitApi';
 
+// [nextjs -> trade]
 namespace TradeGoApi {
   // region Market
   export async function getMarketsCurrent(marketCodes: Array<string> = []): Promise<Array<IUpbitMarketTicker>> {
     let result: Array<IUpbitMarketTicker> = [];
 
     try {
-      // const response = await tradeInstance.post('markets', {
-      //   json: {
-      //     codes: marketCodes,
-      //   },
-      // });
-      // const data = (await response.json()) as any;
       const response = await fetch(`${process.env.NEXT_PUBLIC_TRADE_SERVER}/markets`, {
         method: 'POST',
         headers: {

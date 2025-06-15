@@ -1,7 +1,5 @@
 'use client';
 
-import NextUpbitApi from '@/apis/api/cryptos/NextUpbitApi';
-import useTradeMarketOrderBookSocket from '@/hooks/sockets/useTradeMarketOrderBookSocket';
 import useBreakpoint from '@/hooks/useBreakpoint';
 import { useCryptoUi } from '@/hooks/useCryptoUi';
 import type { IUpbitMarketTicker, IUpbitOrderBook } from '@/types/cryptos/CryptoInterfaces';
@@ -15,40 +13,18 @@ interface ICryptoMarketOrderBook {
   marketCurrent: IUpbitMarketTicker;
 }
 export default function CryptoMarketOrderBook({ marketCode, marketCurrent }: ICryptoMarketOrderBook) {
-  const { isOrderBookLoading: isLoading, orderBook } = useCryptoMarketChart();
-  // const [isLoading, setIsLoading] = useState<boolean>(true);
-  // const [orderBook, setOrderBook] = useState<IUpbitOrderBook>({} as IUpbitOrderBook);
+  const { orderBook } = useCryptoMarketChart();
 
   const { isShowMobileChart, setIsShowMobileChart } = useCryptoUi();
   const [isShowChart, setIsShowChart] = useState<boolean>(false);
   const { breakpointState } = useBreakpoint();
   const isTablet = breakpointState.md && !breakpointState.lg;
 
-  // useEffect(() => {
-  //   initChart();
-  // }, [marketCode]);
-
   useEffect(() => {
     if (!isTablet) {
       setIsShowChart(false);
     }
   }, [isTablet]);
-
-  // const initChart = useCallback(async () => {
-  //   await getOrderBook();
-  //   connectChart(marketCode);
-  // }, [marketCode]);
-
-  // const getOrderBook = useCallback(async () => {
-  //   if (isLoading) {
-  //     return;
-  //   }
-
-  //   setIsLoading(true);
-  //   const orderBook = await NextUpbitApi.getOrderBook(marketCode);
-  //   setOrderBook(orderBook);
-  //   setIsLoading(false);
-  // }, [marketCode]);
 
   const handleShowChart = useCallback(() => {
     if (isTablet) {
@@ -57,8 +33,6 @@ export default function CryptoMarketOrderBook({ marketCode, marketCurrent }: ICr
       setIsShowMobileChart(!isShowMobileChart);
     }
   }, [isTablet, isShowChart, isShowMobileChart]);
-
-  // const connectChart = useTradeMarketOrderBookSocket(marketCode, setOrderBook);
 
   return (
     <div className="relative flex flex-col size-full">

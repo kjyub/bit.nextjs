@@ -1,9 +1,7 @@
 import CryptoMarketCommunity from '@/components/cryptos/community/Community';
 import * as S from '@/styles/CryptoMarketStyles';
-import CryptoMarketCommunityPage from '../community';
 
 export default async function Loading() {
-  console.log('loading');
   return (
     <div className="max-md:w-full md:w-156 p-4">
       <S.TitleLayout>

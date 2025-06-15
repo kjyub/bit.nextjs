@@ -2,6 +2,7 @@ import { upbitInstance } from '@/apis/utils/upbitInstances';
 import type { IUpbitCandle, IUpbitMarket, IUpbitMarketTicker, IUpbitOrderBook } from '@/types/cryptos/CryptoInterfaces';
 import type { CandleMinuteUnits } from '@/types/cryptos/CryptoTypes';
 
+// [nextjs api -> upbit]
 namespace UpbitApi {
   // region Market
   export async function getMarketsAll(): Promise<Array<IUpbitMarket>> {
