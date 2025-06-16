@@ -18,8 +18,7 @@ import {
   useState,
 } from 'react';
 import { CANDLE_SIZE, type CandleTimeType, CandleTimes, type ChartType, ChartTypes } from '../chart/Types';
-import useTradeMarketUpbitSocket from '@/hooks/sockets/useTradeMarketUpbitSocket';
-import useMarketPriceStore from '@/store/useMarketPriceStore';
+import useTradeMarketChartSocket from '@/hooks/sockets/useTradeMarketChartSocket';
 
 const MAX_CANDLES = 100000;
 const REMOVE_CANDLES = 1000;
@@ -142,7 +141,6 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
   const createToastMessage = useToastMessageStore((state) => state.createMessage);
   const { setTradePrice } = useCryptoMarketTrade();
   const { createMessage } = useToastMessageStore();
-  const { subscribeMarket, unsubscribeMarket, setReceiveCandle, setReceiveOrderBook } = useMarketPriceStore();
 
   const [orderBook, setOrderBook] = useState<IUpbitOrderBook>({} as IUpbitOrderBook);
 
@@ -165,13 +163,6 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
 
 
     getOrderBook(marketCode);
-    setReceiveOrderBook((data: IUpbitOrderBook) => {
-      setOrderBook(data);
-    });
-
-    return () => {
-      unsubscribeMarket(marketCode);
-    };
   }, [marketCode]);
 
   useEffect(() => {
@@ -180,10 +171,6 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
 
   useEffect(() => {
     timeTypeRef.current = timeType;
-
-    setReceiveCandle((data: IUpbitCandle) => {
-      addCandle(data, timeType);
-    });
   }, [timeType]);
 
   const initChart = useCallback(
@@ -192,9 +179,7 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
       
       await getCandleData(timeType);
       console.log('[차트] 초기화', marketCode, timeType);
-      // connectChart(marketCode, timeType);
-      unsubscribeMarket(marketCode);
-      subscribeMarket(marketCode);
+      connectChart(marketCode, timeType);
     },
     [marketCode],
   );
@@ -341,7 +326,7 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
     });
   }, []);
 
-  // const connectChart = useTradeMarketUpbitSocket(marketCode, addCandle, setOrderBook);
+  const connectChart = useTradeMarketChartSocket(marketCode, addCandle, setOrderBook);
 
   const updateTradePrice = useCallback(() => {
     if (selectedPriceRef.current === null) return;

@@ -58,7 +58,11 @@ namespace TradeGoApi {
   // endregion
 
   export function getMarketSocket(): WebSocket {
-    return new WebSocket(`${process.env.NEXT_PUBLIC_TRADE_SOCKET_SERVER}/ws/market`);
+    return new WebSocket(`${process.env.NEXT_PUBLIC_TRADE_SOCKET_SERVER}/ws/ticker`);
+  }
+
+  export function getChartSocket(marketCode: string): WebSocket {
+    return new WebSocket(`${process.env.NEXT_PUBLIC_TRADE_SOCKET_SERVER}/ws/market?code=${marketCode}`);
   }
 
   export function getAlarmSocket(userId?: number): WebSocket | null {

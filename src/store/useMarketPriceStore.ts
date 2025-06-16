@@ -17,11 +17,6 @@ interface IMarketPriceStore {
   disconnectSocket: () => void;
   subscribeMarket: (marketCode: string) => void;
   unsubscribeMarket: (marketCode: string) => void;
-  receiveMarketData: (marketTicker: IUpbitMarketTicker) => void;
-  receiveCandle: (data: IUpbitCandle) => void;
-  setReceiveCandle: (receiveCandle: (data: IUpbitCandle) => void) => void;
-  receiveOrderBook: (data: IUpbitOrderBook) => void;
-  setReceiveOrderBook: (receiveOrderBook: (data: IUpbitOrderBook) => void) => void;
 }
 
 const useMarketPriceStore = create<IMarketPriceStore>((set, get) => ({
@@ -38,13 +33,16 @@ const useMarketPriceStore = create<IMarketPriceStore>((set, get) => ({
     const handleMessage = (event: MessageEvent) => {
       try {
         const data = JSON.parse(event.data as string);
+        if (!data.code) return;
+
         if (data.type === 'ticker') {
-          get().receiveMarketData(data as IUpbitMarketTicker);
-        } else if (data.type === 'orderbook') {
-          console.log('[거래:마켓] 오더북 데이터 수신', data);
-          get().receiveOrderBook(data as IUpbitOrderBook);
-        } else if (data.type === 'candle.1s') {
-          get().receiveCandle(data as IUpbitCandle);
+          const marketTicker = data as IUpbitMarketTicker;
+          set((state) => ({
+            marketDic: {
+              ...state.marketDic,
+              [marketTicker.code]: marketTicker,
+            },
+          }));
         }
       } catch (error) {
         console.error('[거래:마켓] Failed to parse WebSocket message', error);
@@ -54,18 +52,6 @@ const useMarketPriceStore = create<IMarketPriceStore>((set, get) => ({
     socket.onmessage = handleMessage;
     socket.onopen = () => {
       console.log('[거래:마켓] 연결 시작');
-      const ticket = String(uuid());
-      const request: TradeSocketRequest[] = [
-        {
-          ticket: ticket,
-        },
-        {
-          type: 'ticker',
-          codes: [],
-          actions: 'subscribe',
-        },
-      ];
-      socket.send(JSON.stringify(request));
     };
 
     socket.onclose = () => {
@@ -121,31 +107,6 @@ const useMarketPriceStore = create<IMarketPriceStore>((set, get) => ({
     ];
     console.log('[거래:마켓] 시세 구독 해지 요청', request);
     socket.send(JSON.stringify(request));
-  },
-  receiveMarketData: (marketTicker: IUpbitMarketTicker) => {
-    if (!marketTicker.code) {
-      return;
-    }
-
-    const currentMarketDic = get().marketDic;
-    if (currentMarketDic[marketTicker.code]?.trade_price === marketTicker.trade_price) {
-      return;
-    }
-
-    set((state) => ({
-      marketDic: {
-        ...state.marketDic,
-        [marketTicker.code]: marketTicker,
-      },
-    }));
-  },
-  receiveCandle: (data: IUpbitCandle) => {},
-  setReceiveCandle: (receiveCandle: (data: IUpbitCandle) => void) => {
-    set({ receiveCandle: receiveCandle });
-  },
-  receiveOrderBook: (data: IUpbitOrderBook) => {},
-  setReceiveOrderBook: (receiveOrderBook: (data: IUpbitOrderBook) => void) => {
-    set({ receiveOrderBook: receiveOrderBook });
   },
 }));
 
