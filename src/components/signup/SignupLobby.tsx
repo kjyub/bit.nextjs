@@ -7,9 +7,12 @@ import { useState } from 'react';
 import ModalContainer from '../ModalContainer';
 import InfoModal from '../commons/InfoModal';
 import KakaoIcon from '@/components/svgs/auth/KakaoIcon';
+import TermsOfService from './agreements/TermsOfService';
+import PrivacyPolicy from './agreements/PrivacyPolicy';
 
 export default function SignupLobby() {
   const [isShowAgreement, setShowAgreement] = useState<boolean>(false);
+  const [isShowPrivacy, setShowPrivacy] = useState<boolean>(false);
 
   const handleKakao = () => {
     AuthUtils.authKakao();
@@ -50,6 +53,15 @@ export default function SignupLobby() {
             >
               서비스 이용약관
             </button>
+            {'및'}
+            <button
+              type="button"
+              onClick={() => {
+                setShowPrivacy(true);
+              }}
+            >
+              개인정보 수집 및 이용 동의
+            </button>
             {'에 동의하게 됩니다.'}
           </div>
         </SS.AuthTypeSection>
@@ -57,10 +69,15 @@ export default function SignupLobby() {
 
       <ModalContainer isOpen={isShowAgreement} setIsOpen={setShowAgreement}>
         <InfoModal
+          title="서비스 이용약관"
+          content={<TermsOfService />}
+        />
+      </ModalContainer>
+
+      <ModalContainer isOpen={isShowPrivacy} setIsOpen={setShowPrivacy}>
+        <InfoModal
           title="개인정보 수집 및 이용 동의"
-          content={
-            '개인정보 수집 및 이용에 대한 동의 내용입니다.\n로그인 및 회원 기능 목적으로 탈퇴 후 1년까지 사용됩니다.'
-          }
+          content={<PrivacyPolicy />}
         />
       </ModalContainer>
     </SS.Layout>
