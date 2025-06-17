@@ -283,4 +283,29 @@
       @apply text-position-short-3;
     }
   }
+
+  .common-panel {
+    @apply rounded-xl bg-slate-800/20 border border-slate-600/50;
+    &.padding {
+      @apply max-md:p-5 md:p-8;
+    }
+  }
+  .modal-panel {
+    @apply bg-slate-800/20 backdrop-blur-xl rounded-xl;
+    &.padding {
+      @apply max-md:p-5 md:p-6;
+    }
+  }
+  .layer1 {
+    @apply bg-slate-500/20 rounded-lg;
+  }
+  .layer1-1 {
+    @apply bg-slate-700/30;
+  }
+  .layer2 {
+    @apply bg-slate-500/50 rounded-lg;
+    &:hover {
+      @apply bg-slate-500/70;
+    }
+  }
 }

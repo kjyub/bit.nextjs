@@ -31,7 +31,7 @@ export default function SignupLobby() {
           <div className="types animate-fade-in">
             <KakaoContainer>
               <button
-                className="bg-kakao-container rounded-xl px-5 py-1"
+                className="bg-kakao-container rounded-xl px-5 py-1 hover:shadow shadow-kakao-container duration-300"
                 type="button"
                 onClick={() => {
                   handleKakao();

@@ -68,8 +68,9 @@ export const MarketListBox = tw.div`
 
   [&>input]:px-3 [&>input]:py-2 [&>input]:w-full 
   [&>input]:rounded-lg
-  [&>input]:bg-slate-500/50
+  [&>input]:bg-slate-500/40 [&>input]:focus:bg-slate-500/50
   [&>input]:text-slate-300
+  [&>input]:transition-colors
 
   [&>.market-type]:grid [&>.market-type]:grid-cols-4 [&>.market-type]:gap-2 [&>.market-type]:w-full [&>.market-type]:min-h-[2rem]
   [&>.market-type>button]:w-full [&>.market-type>button]:h-full

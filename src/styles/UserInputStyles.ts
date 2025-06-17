@@ -12,8 +12,8 @@ export const HelpText = tw.label`
 `;
 
 export const InputColor = tw.div`
-  border-slate-200 dark:border-slate-600
-  bg-slate-100 dark:bg-slate-700
+  border-slate-600
+  bg-slate-600/30
   text-slate-800 dark:text-slate-100
   [&>.value]:text-slate-800 dark:[&>.value]:text-slate-100
   disabled:bg-slate-200 dark:disabled:bg-slate-600
@@ -28,7 +28,7 @@ export const InputBox = tw(InputColor)<StyleProps>`
   flex items-center justify-between w-full h-full p-4
   rounded-lg 
 
-  ${({ $is_active }) => ($is_active ? 'border-2 border-indigo-500!' : 'border')}
+  ${({ $is_active }) => ($is_active ? 'ring-2 ring-indigo-600/80' : 'border')}
   ${({ $is_error }) => ($is_error ? 'border-red-500' : '')}
   duration-200
 `;

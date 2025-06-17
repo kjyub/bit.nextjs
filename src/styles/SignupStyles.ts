@@ -8,9 +8,7 @@ export const Layout = tw.div`
 
 export const BoxContainer = tw.div`
   flex flex-col items-center p-6
-  rounded-sm drop-shadow
-  bg-white dark:bg-slate-600/30
-  border border-slate-500/20
+  common-panel padding
 `;
 
 export const Title = tw.span`
@@ -53,6 +51,6 @@ export const SignupButton = tw.button`
   w-full h-12
   rounded-lg
   ${({ $is_active }: StyleProps) =>
-    $is_active ? 'bg-blue-500/60 hover:bg-blue-500/80 text-white' : 'bg-slate-500/60 text-slate-300'}
+    $is_active ? 'bg-violet-500/50 hover:bg-violet-500/60 text-white' : 'bg-slate-500/60 text-slate-300'}
   duration-200
 `;

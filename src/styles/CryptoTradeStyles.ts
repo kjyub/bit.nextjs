@@ -33,7 +33,7 @@ export const Title2 = tw.span`
 
 export const InputBox = tw.div<StyleProps>`
   flex items-center w-full h-7 p-2
-  rounded-lg bg-slate-500/20
+  layer1
   hover:ring-1 hover:ring-violet-700
   focus-within:ring-1 focus-within:ring-violet-500
   [&>.input]:text-sm [&>.input]:text-slate-300 [&>.input]:bg-transparent

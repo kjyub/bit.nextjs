@@ -10,7 +10,7 @@ export default function ModalLayout({ title, layoutClassName = 'w-96', contentCl
   return (
     <div
       className={cn(
-        'flex flex-col [&>div]:w-full [&>div]:p-6 [&>div]:bg-slate-800/50 backdrop-blur-xl',
+        'flex flex-col [&>div]:w-full [&>div]:p-6 modal-panel overflow-hidden',
         layoutClassName,
       )}
     >
