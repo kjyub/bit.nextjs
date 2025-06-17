@@ -1,5 +1,6 @@
 import { useDetectClose } from '@/hooks/useDetectClose';
 import { useMouseHover } from '@/hooks/useMouseHover';
+import useToastMessageStore from '@/store/useToastMessageStore';
 import * as S from '@/styles/CryptoTradeStyles';
 import { TextFormats } from '@/types/CommonTypes';
 import {
@@ -91,22 +92,29 @@ interface MarginModeInputProps {
 export const MarginModeInput = ({ marginMode, setMarginMode, disabled = false }: MarginModeInputProps) => {
   const [isBgActive, setBgActive] = useState<boolean>(false);
 
+  const { createMessage } = useToastMessageStore();
+
+  const handleClick = (mode: MarginModeType) => {
+    if (disabled) {
+      createMessage('진입 상태에서는 변경할 수 없습니다.');
+      return;
+    }
+    setMarginMode(mode);
+  };
+
   return (
     <div className="flex items-center w-full h-7 max-sm:gap-1 sm:gap-4">
       <S.MarginModeBox>
         <button
           className={marginMode === MarginModeTypes.CROSSED ? 'active' : ''}
           type="button"
-          onClick={() => {
-            setMarginMode(MarginModeTypes.CROSSED);
-          }}
+          onClick={() => handleClick(MarginModeTypes.CROSSED)}
           onMouseEnter={() => {
             if (marginMode === MarginModeTypes.ISOLATED) setBgActive(true);
           }}
           onMouseLeave={() => {
             setBgActive(false);
           }}
-          disabled={disabled}
         >
           <i className="fa-solid fa-shuffle"></i>
           <span>교차</span>
@@ -114,16 +122,13 @@ export const MarginModeInput = ({ marginMode, setMarginMode, disabled = false }:
         <button
           className={marginMode === MarginModeTypes.ISOLATED ? 'active' : ''}
           type="button"
-          onClick={() => {
-            setMarginMode(MarginModeTypes.ISOLATED);
-          }}
+          onClick={() => handleClick(MarginModeTypes.ISOLATED)}
           onMouseEnter={() => {
             if (marginMode === MarginModeTypes.CROSSED) setBgActive(true);
           }}
           onMouseLeave={() => {
             setBgActive(false);
           }}
-          disabled={disabled}
         >
           <i className="fa-solid fa-right-left"></i>
           <span>격리</span>
