@@ -17,13 +17,37 @@ export default function Header() {
     await signOut();
   };
 
+  const Auth = () => {
+    return (
+      <>
+        <Link href="/mypage" className={`btn ${CommonUtils.isPathActive(pathname, '/mypage') ? 'active' : ''}`}>
+          <i className="fa-solid fa-user"></i>
+          <span>{user.nickname}님</span>
+        </Link>
+        <button className="btn" onClick={handleLogout} type="button">
+          <span>로그아웃</span>
+        </button>
+      </>
+    )
+  }
+
+  const UnAuth = () => {
+    return (
+      <>
+        <Link href="/auth" className={`btn ${CommonUtils.isPathActive(pathname, '/auth') ? 'active' : ''} bg-slate-100/10 hover:!bg-slate-100/20 !text-slate-300/80`}>
+          <span>로그인</span>
+        </Link>
+      </>
+    )
+  }
+
   return (
     <NS.Layout>
       <div className="content">
         {/* 왼쪽 */}
         <NS.Section>
-          <Link href="/" className={`btn w-16 ${CommonUtils.isPathActive(pathname, '/') ? 'active' : ''}`}>
-            <span>홈</span>
+          <Link href="/" className="flex flex-center w-24 font-sinchon-rhapsody text-lg translate-y-0.5">
+            KURRITO
           </Link>
           <Link
             href={isAuth ? '/crypto' : `/crypto/${DEFAULT_MARKET_CODE}`}
@@ -36,25 +60,7 @@ export default function Header() {
         <NS.Section>
           {isUserLoading ? (
             <div className="skeleton w-24 h-full rounded-lg"></div>
-          ) : isAuth ? (
-            // 회원
-            <>
-              <span>{user.nickname}님</span>
-              <button className="btn" onClick={handleLogout} type="button">
-                <span>로그아웃</span>
-              </button>
-            </>
-          ) : (
-            // 비회원
-            <>
-              <Link
-                href="/auth"
-                className={`btn ${CommonUtils.isPathActive(pathname, '/auth') ? 'active' : ''} bg-slate-100/10 hover:!bg-slate-100/20 !text-slate-300/80`}
-              >
-                <span>로그인</span>
-              </Link>
-            </>
-          )}
+          ) : isAuth ? <Auth /> : <UnAuth />}
         </NS.Section>
       </div>
     </NS.Layout>

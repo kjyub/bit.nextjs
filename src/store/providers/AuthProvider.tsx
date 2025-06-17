@@ -14,6 +14,7 @@ interface AuthState {
   isAuth: boolean;
   kakaoAuth: (code: string) => Promise<User>;
   signOut: () => Promise<void>;
+  reloadUser: () => Promise<void>;
 }
 
 const initAuthState: AuthState = {
@@ -23,6 +24,7 @@ const initAuthState: AuthState = {
   isAuth: false,
   kakaoAuth: async () => new User(),
   signOut: async () => {},
+  reloadUser: async () => {},
 };
 
 export const AuthContext = createContext<AuthState>(initAuthState);
@@ -117,7 +119,7 @@ export const AuthProvider = ({
   }, [setUser, setIsLoading]);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, isLoading, isAuth, kakaoAuth, signOut }}>
+    <AuthContext.Provider value={{ user, setUser, isLoading, isAuth, kakaoAuth, signOut, reloadUser: getUser }}>
       {children}
     </AuthContext.Provider>
   );

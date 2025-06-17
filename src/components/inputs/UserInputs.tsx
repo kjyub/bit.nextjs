@@ -71,14 +71,13 @@ export const Input: React.FC<InputProps<string | number>> = ({
   return (
     <InputContainer label={label} labelWidth={labelWidth} helpText={helpText}>
       <S.InputContainer>
-        <S.InputBox $is_active={isInputFoucs} $is_error={!!isError}>
+        <S.InputBox $is_active={isInputFoucs} $is_error={!!isError} $disabled={props?.disabled}>
           <S.Input
             type={type}
             value={value}
             className={className}
             placeholder={placeholder}
             onChange={(e) => {
-              console.log(props);
               setValue?.(e.target.value);
               props?.onChange?.(e);
             }}

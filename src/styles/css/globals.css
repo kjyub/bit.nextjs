@@ -2,6 +2,7 @@
 
 @theme {
   --font-pretendard: var(--font-pretendard);
+  --font-sinchon-rhapsody: var(--font-sinchon-rhapsody);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);

@@ -12,12 +12,12 @@ export const HelpText = tw.label`
 `;
 
 export const InputColor = tw.div`
-  border-slate-600
+  border-slate-600/50
   bg-slate-600/30
   text-slate-800 dark:text-slate-100
-  [&>.value]:text-slate-800 dark:[&>.value]:text-slate-100
-  disabled:bg-slate-200 dark:disabled:bg-slate-600
-  disabled:[&>.value]:text-slate-600 dark:disabled:[&>.value]:text-slate-300
+  [&>.value]:text-slate-100
+  disabled:bg-slate-600
+  disabled:[&>.value]:text-slate-300
 `;
 
 export const InputContainer = tw.div`
@@ -30,6 +30,7 @@ export const InputBox = tw(InputColor)<StyleProps>`
 
   ${({ $is_active }) => ($is_active ? 'border-indigo-500' : '')}
   ${({ $is_error }) => ($is_error ? 'border-red-500' : '')}
+  ${({ $disabled }) => ($disabled ? 'bg-slate-600/10 text-slate-400!' : '')}
   duration-200
 `;
 export const Input = tw.input`

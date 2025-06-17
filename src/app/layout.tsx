@@ -7,13 +7,7 @@ import AppClientLayout from '@/layouts/AppClientLayout';
 import { AuthProvider } from '@/store/providers/AuthProvider';
 import AuthServerUtils from '@/utils/AuthUtils.server';
 import Script from 'next/script';
-
-const pretendard = localFont({
-  src: '../static/fonts/PretendardVariable.woff2',
-  variable: '--font-pretendard',
-  weight: '45 920',
-  display: 'swap',
-});
+import { pretendard, sinchonRhapsody } from './fonts';
 
 export const metadata: Metadata = {
   title: 'Bits',
@@ -35,7 +29,7 @@ export default async function RootLayout({
       <head>
         <FrontHead />
       </head>
-      <body className={`${pretendard.variable}`}>
+      <body className={`${pretendard.variable} ${sinchonRhapsody.variable}`}>
         <AuthProvider authToken={authToken} userData={userData}>
           <AppClientLayout />
           {children}

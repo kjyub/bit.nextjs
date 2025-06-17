@@ -270,6 +270,31 @@ namespace UserApi {
 
     return userData;
   }
+  export async function updateUser(requestData: any): Promise<User> {
+    const responseData = new User();
+
+    try {
+      const response = await authInstance.put('api/users/detail_info_auth/', { json: requestData });
+      const data = (await response.json()) as any;
+      responseData.parseResponse(data as any);
+    } catch (error) {
+      console.log(error);
+    }
+
+    return responseData;
+  }
+  export async function deleteUser(): Promise<boolean> {
+    let result = false;
+
+    try {
+      const response = await authInstance.delete('api/users/detail_info_auth/');
+      result = response.ok;
+    } catch (error) {
+      console.log(error);
+    }
+
+    return result;
+  }
 }
 
 export default UserApi;
