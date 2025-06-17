@@ -119,11 +119,13 @@ export default function PositionStackContainer({ positions, balance, isLoading }
     }
 
     // 20% 이상인 항목이 있으면 비율 조정
-    const hasSmallItem = mainItems.some(item => item.ratio <= 20);
-    if (hasSmallItem) {
+    if (otherItems.length > 0) {
       // items의 비율이 80%를 넘어가면 80%로 제한
       const totalMainRatio = mainItems.reduce((acc, item) => acc + item.ratio, 0);
-      const ratio = 80 / totalMainRatio;
+      let ratio = 1
+      if (totalMainRatio > 80) {
+        ratio = 80 / totalMainRatio;
+      }
       mainItems.forEach(item => {
         item.widthRatio = item.ratio * ratio;
       });

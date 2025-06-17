@@ -20,7 +20,7 @@ export default function StackHorizon({ className, items, others }: Props) {
   return (
     <div
       className={cn([
-        'relative flex items-center w-full min-h-[34px] p-1 gap-1 rounded-full bg-slate-700/60 first:pl-1.875 last:pr-1.875',
+        'relative flex items-center w-full min-h-[34px] px-1 py-1.25 gap-1 rounded-full bg-slate-700/60',
         className,
       ])}
     >
