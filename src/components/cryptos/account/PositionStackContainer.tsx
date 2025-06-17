@@ -87,8 +87,9 @@ export default function PositionStackContainer({ positions, balance, isLoading }
       color: getColor(index),
     }));
 
+    const walletRatio = balance === 0 || total === 0 ? 1 : balance / total;
     items.push({
-      content: `내 지갑 ${TypeUtils.percent(balance / total)}`,
+      content: `내 지갑 ${TypeUtils.percent(walletRatio)}`,
       ratio: 100 - items.reduce((acc, item) => acc + item.ratio, 0),
       widthRatio: 100 - items.reduce((acc, item) => acc + item.ratio, 0),
       color: '#90a1b955',
@@ -107,6 +108,14 @@ export default function PositionStackContainer({ positions, balance, isLoading }
       } else {
         otherItems.push(item);
       }
+    }
+
+    // items가 1개일 때는 widthRatio를 100%로 설정
+    if (mainItems.length === 1) {
+      mainItems[0].widthRatio = 100;
+      values.items = mainItems;
+      values.others = [];
+      return values;
     }
 
     // items의 비율이 80%를 넘어가면 80%로 제한

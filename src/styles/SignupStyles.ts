@@ -51,6 +51,6 @@ export const SignupButton = tw.button`
   w-full h-12
   rounded-lg
   ${({ $is_active }: StyleProps) =>
-    $is_active ? 'bg-violet-500/50 hover:bg-violet-500/60 text-white' : 'bg-slate-500/60 text-slate-300'}
+    $is_active ? 'bg-indigo-500/60 hover:bg-indigo-500/70 text-white' : 'bg-slate-500/60 text-slate-300'}
   duration-200
 `;

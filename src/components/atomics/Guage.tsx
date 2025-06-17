@@ -10,6 +10,7 @@ interface Props {
   isMaxLimit?: boolean;
 }
 export default function Guage({ ratio, title, helpText, color, size = 120, isMaxLimit = true }: Props) {
+  ratio = Number.isNaN(ratio) ? 0 : ratio;
   const clampedRatio = Math.min(Math.max(ratio, 0), 1);
   const percentage = (clampedRatio * 100).toFixed(0);
 
