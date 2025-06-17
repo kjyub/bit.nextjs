@@ -83,23 +83,56 @@ export default function PositionStackContainer({ positions, balance, isLoading }
     const items: StackHorizonItem[] = positions.map((position, index) => ({
       content: `${position.market.code.split('-')[1]} ${TypeUtils.percent(position.marginPrice / total)}`,
       ratio: (position.marginPrice / total) * 100,
+      widthRatio: (position.marginPrice / total) * 100,
       color: getColor(index),
     }));
 
     items.push({
       content: `내 지갑 ${TypeUtils.percent(balance / total)}`,
       ratio: 100 - items.reduce((acc, item) => acc + item.ratio, 0),
+      widthRatio: 100 - items.reduce((acc, item) => acc + item.ratio, 0),
       color: '#90a1b955',
     });
 
     items.sort((a, b) => b.ratio - a.ratio);
 
-    if (items.length > visibleCount) {
-      values.items = items.slice(0, visibleCount);
-      values.others = items.slice(visibleCount);
-    } else {
-      values.items = items;
+    // widthRatio가 20% 미만인 항목들을 others로 분류
+    const threshold = 20; // 20% 기준
+    const mainItems: StackHorizonItem[] = [];
+    const otherItems: StackHorizonItem[] = [];
+
+    for (const item of items) {
+      if (item.widthRatio >= threshold) {
+        mainItems.push(item);
+      } else {
+        otherItems.push(item);
+      }
     }
+
+    // items의 비율이 80%를 넘어가면 80%로 제한
+    const totalMainRatio = mainItems.reduce((acc, item) => acc + item.ratio, 0);
+    if (totalMainRatio > 80) {
+      const ratio = 80 / totalMainRatio;
+      mainItems.forEach(item => {
+        item.widthRatio = item.ratio * ratio;
+      });
+    } else {
+      mainItems.forEach(item => {
+        item.widthRatio = item.ratio;
+      });
+    }
+
+    // others의 widthRatio를 items를 제외한 나머지로 설정
+    if (otherItems.length > 0) {
+      const totalMainWidthRatio = mainItems.reduce((acc, item) => acc + item.widthRatio, 0);
+      const remainingWidthRatio = 100 - totalMainWidthRatio;
+      otherItems.forEach(item => {
+        item.widthRatio = remainingWidthRatio;
+      });
+    }
+
+    values.items = mainItems;
+    values.others = otherItems;
 
     return values;
   }, [positions, balance, breakpointState]);

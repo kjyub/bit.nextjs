@@ -1,7 +1,7 @@
 import Guage from '@/components/atomics/Guage';
 import useMarketPriceStore from '@/store/useMarketPriceStore';
 import { TextFormats } from '@/types/CommonTypes';
-import { type PriceChangeType, PriceChangeTypes } from '@/types/cryptos/CryptoTypes';
+import { MarginModeTypes, PositionTypes, type PriceChangeType, PriceChangeTypes } from '@/types/cryptos/CryptoTypes';
 import type TradePosition from '@/types/cryptos/TradePosition';
 import CommonUtils from '@/utils/CommonUtils';
 import CryptoUtils from '@/utils/CryptoUtils';
@@ -12,6 +12,9 @@ interface Values {
   pnl: number;
   pnlRatio: number;
   priceChange: PriceChangeType;
+  totalMarginPrice: number;
+  isCrossMode: boolean;
+  liqRatio: number;
 }
 
 interface Props {
@@ -35,6 +38,9 @@ export default function PositionAll({ positions, balance, isLoading }: Props) {
       pnl: 0,
       pnlRatio: 0,
       priceChange: PriceChangeTypes.EVEN,
+      totalMarginPrice: 0,
+      isCrossMode: false,
+      liqRatio: 0,
     };
 
     for (const position of positions) {
@@ -42,6 +48,11 @@ export default function PositionAll({ positions, balance, isLoading }: Props) {
       const pnl = CryptoUtils.getPnl(marketPrice, position.quantity, position.averagePrice, position.positionType);
       value.pnl += pnl;
       value.pnlRatio += pnl / position.marginPrice;
+      value.totalMarginPrice += position.marginPrice;
+
+      if (position.marginMode === MarginModeTypes.CROSSED) {
+        value.isCrossMode = true;
+      }
     }
 
     if (value.pnl > 0) {
@@ -50,8 +61,14 @@ export default function PositionAll({ positions, balance, isLoading }: Props) {
       value.priceChange = PriceChangeTypes.FALL;
     }
 
+    if (value.isCrossMode) {
+      value.liqRatio = (value.pnl * -1) / (balance + value.totalMarginPrice);
+    } else {
+      value.liqRatio = (value.pnl * -1) / value.totalMarginPrice;
+    }
+
     return value;
-  }, [positions, marketPrices]);
+  }, [positions, marketPrices, balance]);
 
   return (
     <div className="flex max-md:flex-col md:flex-row w-full gap-2">
@@ -76,11 +93,17 @@ export default function PositionAll({ positions, balance, isLoading }: Props) {
       {/* 게이지 청산 위험도, 수익률 */}
       <div className="flex justify-evenly items-center flex-1 max-sm:gap-6 sm:gap-8">
         <div className="flex flex-col w-fit">
-          <Guage ratio={isLoading ? 0 : (values.pnl * -1) / balance} title="청산 위험도" color="#ea7500" size={120} />
+          <Guage
+            ratio={isLoading ? 0 : values.liqRatio}
+            title="청산 위험도"
+            helpText={values.isCrossMode ? '교차' : '격리'}
+            color="#ea7500"
+            size={120}
+          />
         </div>
         <div className="flex flex-col w-fit">
           <Guage
-            ratio={isLoading ? 0 : values.pnl / balance}
+            ratio={isLoading ? 0 : values.pnl / values.totalMarginPrice}
             title="수익률"
             color="#04c324"
             size={120}

@@ -28,7 +28,7 @@ interface IUserInfoStore {
   locked: number;
   myTrades: IMyTradeData;
   updateAuth: (isAuth: boolean) => void;
-  updateInfo: () => Promise<void>;
+  updateInfo: (loading?: boolean) => Promise<void>;
 }
 const useUserInfoStore = create<IUserInfoStore>((set, get) => ({
   isLoading: true,
@@ -53,11 +53,15 @@ const useUserInfoStore = create<IUserInfoStore>((set, get) => ({
   updateAuth: (isAuth: boolean) => {
     set({ isAuth });
   },
-  updateInfo: async () => {
-    if (get().isAuth) {
+  updateInfo: async (loading = true) => {
+    if (!get().isAuth) return;
+
+    if (loading) {
       set({ isLoading: true });
       set(await getInitData());
       set({ isLoading: false });
+    } else {
+      set(await getInitData());
     }
   },
 }));

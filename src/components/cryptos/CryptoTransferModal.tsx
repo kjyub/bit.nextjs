@@ -40,7 +40,7 @@ export default function CryptoTransferModal({ defaultTransferType }: CryptoTrans
 
   // 잔액 정보 불러오기
   useEffect(() => {
-    updateInfo();
+    updateInfo(false);
   }, []);
 
   // 이체 값 검증
