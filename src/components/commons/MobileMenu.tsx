@@ -1,10 +1,10 @@
 import useSwipeDown from '@/hooks/useSwipeDown';
 import { useUser } from '@/hooks/useUser';
 import { cn } from '@/utils/StyleUtils';
-import { usePathname } from 'next/navigation';
+
+// 추후에 로그 메세지 같은거 넣기
 
 export default function MobileMenu({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (isOpen: boolean) => void }) {
-  const pathname = usePathname();
   const ref = useSwipeDown(() => setIsOpen(false));
   const { isAuth, signOut } = useUser();
 
