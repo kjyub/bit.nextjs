@@ -1,17 +1,29 @@
 import useSwipeDown from '@/hooks/useSwipeDown';
 import { useUser } from '@/hooks/useUser';
 import { cn } from '@/utils/StyleUtils';
+import { useLayoutEffect } from 'react';
+
+const TRANSITION_DURATION = 200;
 
 // 추후에 로그 메세지 같은거 넣기
 
 export default function MobileMenu({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (isOpen: boolean) => void }) {
-  const ref = useSwipeDown(() => setIsOpen(false));
+  const ref = useSwipeDown(() => setTimeout(() => setIsOpen(false), TRANSITION_DURATION));
   const { isAuth, signOut } = useUser();
 
   const handleLogout = async () => {
     await signOut();
     setIsOpen(false);
   }
+
+  // 브라우저 스크롤 막기
+  useLayoutEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'visible';
+    }
+  }, [isOpen]);
 
   return (
     <div 
