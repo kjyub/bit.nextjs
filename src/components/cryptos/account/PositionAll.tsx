@@ -6,7 +6,7 @@ import type TradePosition from '@/types/cryptos/TradePosition';
 import CommonUtils from '@/utils/CommonUtils';
 import CryptoUtils from '@/utils/CryptoUtils';
 import TypeUtils from '@/utils/TypeUtils';
-import { useMemo } from 'react';
+import { type Dispatch, type SetStateAction, useEffect, useMemo, useState } from 'react';
 
 interface Values {
   pnl: number;
@@ -23,15 +23,7 @@ interface Props {
   isLoading: boolean;
 }
 export default function PositionAll({ positions, balance, isLoading }: Props) {
-  const marketDic = useMarketPriceStore((state) => state.marketDic);
-
-  const marketPrices = useMemo(() => {
-    const prices: Record<string, number> = {};
-    for (const code of positions.map((position) => position.market.code)) {
-      prices[code] = marketDic[code]?.trade_price ?? 0;
-    }
-    return prices;
-  }, [positions, marketDic]);
+  const [marketPrices, setMarketPrices] = useState<Record<string, number>>({});
 
   const values = useMemo(() => {
     const value: Values = {
@@ -111,6 +103,20 @@ export default function PositionAll({ positions, balance, isLoading }: Props) {
           />
         </div>
       </div>
+
+      {positions.map((position) => (
+        <PriceCode key={position.market.code} code={position.market.code} setMarketPrices={setMarketPrices} />
+      ))}
     </div>
   );
 }
+
+const PriceCode = ({ code, setMarketPrices }: { code: string, setMarketPrices: Dispatch<SetStateAction<Record<string, number>>>}) => {
+  const price = useMarketPriceStore((state) => state.marketDic[code]?.trade_price ?? 0);
+
+  useEffect(() => {
+    setMarketPrices((prev) => ({ ...prev, [code]: price }));
+  }, [price]);
+
+  return null;
+};
