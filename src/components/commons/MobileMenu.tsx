@@ -16,7 +16,7 @@ export default function MobileMenu({ isOpen, setIsOpen }: { isOpen: boolean, set
   return (
     <div 
       className={cn([
-        'mouse:hidden touch:fixed inset-0 z-50 size-full bg-slate-900/40 backdrop-blur-md',
+        'mouse:hidden touch:fixed inset-0 z-50 size-full bg-slate-900/40 backdrop-blur-lg',
         'p-8 pb-24',
         'transition-all duration-300',
         isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
@@ -30,7 +30,7 @@ export default function MobileMenu({ isOpen, setIsOpen }: { isOpen: boolean, set
           'duration-200'
         ])}
       >
-        <h1 className="text-2xl font-light text-transparent">메뉴</h1>
+        <h1 className="text-2xl font-light text-slate-200/80 font-sinchon-rhapsody">KURRITO</h1>
 
         {!isAuth && (
           <span className="w-full text-center font-light text-slate-300/80">사용할 수 있는 메뉴가 없습니다.</span>
