@@ -19,7 +19,6 @@ export const UiContext = createContext<UiContextType>({
 
 export const UiProvider = ({ children }: { children: React.ReactNode }) => {
   const [chartColor, setChartColor] = useState<ChartColorType>('red-blue');
-  const defaultChartColorRef = useRef<ChartColorType>('red-blue');
   const chartColorRef = useRef<ChartColorType>('red-blue');
   const { user, isAuth } = useUser();
 
@@ -28,27 +27,21 @@ export const UiProvider = ({ children }: { children: React.ReactNode }) => {
     if (chartColor) {
       setChartColor(chartColor as ChartColorType);
     }
-
-    // 사이트 이동 시 차트 색상 저장
-    window.addEventListener('beforeunload', () => {
-      if (chartColorRef.current !== defaultChartColorRef.current) {
-        UserApi.updateUser({
-          chart_color: chartColorRef.current,
-        });
-      }
-    });
   }, []);
 
   useEffect(() => {
     if (isAuth) {
       setChartColor(user.chartColor);
     }
-    defaultChartColorRef.current = user.chartColor;
   }, [isAuth, user.chartColor]);
 
   useEffect(() => {
     chartColorRef.current = chartColor;
     updateChartColor(chartColor);
+
+    UserApi.updateUser({
+      chart_color: chartColorRef.current,
+    });
   }, [chartColor])
 
   return <UiContext.Provider value={{ chartColor, setChartColor }}>{children}</UiContext.Provider>;
