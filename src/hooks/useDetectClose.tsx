@@ -11,7 +11,6 @@ export const useDetectClose = <T extends HTMLElement>(): [
 
   useEffect(() => {
     const pageClickEvent = (e: MouseEvent) => {
-      console.log(ref.current, e.target)
       if (ref.current && !ref.current.contains(e.target as Node)) {
         setIsOpen(!isOpen);
       }

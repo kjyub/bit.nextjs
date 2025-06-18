@@ -29,7 +29,7 @@ import {
 import { type MutableRefObject, useCallback, useEffect, useRef } from 'react';
 import { useCryptoMarketChart } from '../market/MarketChartProvider';
 import { CandleTimes, ChartTypes } from './Types';
-import { DOWN_COLOR, UP_COLOR, getTimeFormatter, parseAreaData, parseCandleData, parseVolumeData } from './utils';
+import { getTimeFormatter, parseAreaData, parseCandleData, parseVolumeData, getUpColor, getDownColor } from './utils';
 
 const chartOptions: DeepPartial<ChartOptions> = {
   layout: {
@@ -88,20 +88,20 @@ const areaSeriesOptions: DeepPartial<AreaSeriesOptions> = {
   // crosshairMarkerBackgroundColor: '#2afd38',
 } as const;
 
-const candleSeriesOptions: DeepPartial<CandlestickSeriesOptions> = {
-  upColor: UP_COLOR,
-  downColor: DOWN_COLOR,
+const candleSeriesOptions = () => ({
+  upColor: getUpColor(),
+  downColor: getDownColor(),
   borderVisible: false,
-  wickUpColor: UP_COLOR,
-  wickDownColor: DOWN_COLOR,
+  wickUpColor: getUpColor(),
+  wickDownColor: getDownColor(),
   priceFormat: {
-    type: 'custom',
+    type: 'custom' as const,
     minMove: 0.0000001,
     formatter: (price: number) => {
       return CommonUtils.textFormat(CryptoUtils.getPriceUnit(price), TextFormats.NUMBER);
     },
   },
-} as const;
+});
 
 const volumeSeriesOptions: DeepPartial<HistogramSeriesOptions> = {
   color: '#6408e4',
@@ -221,6 +221,20 @@ export default function TradingChart({ marketCode }: Props) {
     });
 
     chartRef.current = chart;
+
+    // 차트 색상 css 변화 감지
+    const target = document.documentElement;
+
+    const observer = new MutationObserver(() => {
+      updateChartColor();
+    });
+
+    observer.observe(target, {
+      attributes: true,
+      attributeFilter: ['style'],
+    });
+
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -268,7 +282,7 @@ export default function TradingChart({ marketCode }: Props) {
         }
       }
 
-      const candleSeries = chart.addSeries(CandlestickSeries, candleSeriesOptions);
+      const candleSeries = chart.addSeries(CandlestickSeries, candleSeriesOptions());
       candleSeries.priceScale().applyOptions({
         scaleMargins: {
           top: 0.2,
@@ -396,6 +410,22 @@ export default function TradingChart({ marketCode }: Props) {
       liqPriceLineRef.current = seriesRef.current.createPriceLine(liqPriceLine);
     }
   }, [myTrades.positions, marketCode, chartType]);
+
+  const updateChartColor = useCallback(() => {
+    if (candleSeriesRef.current) {
+      candleSeriesRef.current.applyOptions({
+        upColor: getUpColor(),
+        downColor: getDownColor(),
+        wickUpColor: getUpColor(),
+        wickDownColor: getDownColor(),
+      });
+      candleSeriesRef.current.setData(parseCandleData(candles));
+    }
+
+    if (volumeSeriesRef.current) {
+      volumeSeriesRef.current.setData(parseVolumeData(candles));
+    }
+  }, [candles]);
 
   return (
     <div className="relative flex flex-col w-full h-full">

@@ -3,11 +3,11 @@ import type { AreaData, CandlestickData, HistogramData, UTCTimestamp } from 'lig
 import type { IUpbitCandle } from '../../../types/cryptos/CryptoInterfaces';
 import { type CandleTimeType, CandleTimes } from './Types';
 
-export const UP_COLOR = '#c43a3a';
-export const DOWN_COLOR = '#3b69cb';
+export const getUpColor = () => document.documentElement.style.getPropertyValue('--color-position-long-1');
+export const getDownColor = () => document.documentElement.style.getPropertyValue('--color-position-short-1');
 
-const UP_COLOR_RGBA = `${UP_COLOR}cc`;
-const DOWN_COLOR_RGBA = `${DOWN_COLOR}cc`;
+export const getUpColorRgba = () => `${getUpColor()}cc`;
+export const getDownColorRgba = () => `${getDownColor()}cc`;
 
 export const getTimeFormatter = (timeType: CandleTimeType) => {
   if (timeType === CandleTimes.SECOND) {
@@ -101,24 +101,24 @@ export const parseAreaData = (candles: IUpbitCandle[]): AreaData[] => {
 const parseDataWithColor = (transform: (candle: IUpbitCandle, color: string) => HistogramData | CandlestickData) => {
   return function* (iter: Iterable<IUpbitCandle>) {
     const candles = toArray(iter);
-    let lastColor = DOWN_COLOR_RGBA;
+    let lastColor = getDownColorRgba();
 
     for (let i = 0; i < candles.length; i++) {
       const current = candles[i];
       const prev = candles[i - 1];
-      let color = DOWN_COLOR_RGBA;
+      let color = getDownColorRgba();
 
       if (current.trade_price > current.opening_price) {
-        color = UP_COLOR_RGBA;
+        color = getUpColorRgba();
       } else if (current.trade_price < current.opening_price) {
-        color = DOWN_COLOR_RGBA;
+        color = getDownColorRgba();
       } else {
         // 보합일 때 이전 종가 기준
         if (prev) {
           if (current.trade_price > prev.trade_price) {
-            color = UP_COLOR_RGBA;
+            color = getUpColorRgba();
           } else if (current.trade_price < prev.trade_price) {
-            color = DOWN_COLOR_RGBA;
+            color = getDownColorRgba();
           } else {
             color = lastColor;
           }
