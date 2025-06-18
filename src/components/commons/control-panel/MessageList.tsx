@@ -2,6 +2,7 @@
 
 import UserApi from "@/apis/api/users/UserApi";
 import usePageScroll from "@/hooks/usePageScroll";
+import { useUser } from "@/hooks/useUser";
 import UserMessage from "@/types/users/UserMessage";
 import CommonUtils from "@/utils/CommonUtils";
 import { cn } from "@/utils/StyleUtils";
@@ -17,12 +18,19 @@ interface Props {
   onClose: () => void;
 }
 export default function MessageList({ ref, className, isOpen, onClose }: Props) {
+  const { isAuth } = useUser();
   const [messages, setMessages] = useState<Array<UserMessage>>([]);
   const [pageIndex, setPageIndex] = useState<number>(1);
   const [itemCount, setItemCount] = useState<number>(0);
-  const [isLoading, setLoading] = useState<boolean>(true);
+  const [isLoading, setLoading] = useState<boolean>(isAuth);
 
   useEffect(() => {
+    if (!isAuth) {
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+
     if (isOpen) {
       getMessages(1);
     } else {
@@ -31,7 +39,7 @@ export default function MessageList({ ref, className, isOpen, onClose }: Props) 
       setItemCount(1);
       setLoading(true);
     }
-  }, [isOpen]);
+  }, [isAuth, isOpen]);
 
   const getMessages = async (_pageIndex: number) => {
     setLoading(true);

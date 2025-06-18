@@ -63,7 +63,7 @@ const Layout = ({ isOpen, setIsOpen, children }: { isOpen: boolean, setIsOpen: (
   return (
     <div 
       className={cn([
-        'mouse:hidden touch:fixed inset-0 z-50 size-full bg-slate-900/40 backdrop-blur-lg',
+        'mouse:hidden touch:fixed inset-0 z-50 size-full bg-slate-900/40 backdrop-blur-xl',
         'p-8 pb-16',
         'transition-all duration-300',
         isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
