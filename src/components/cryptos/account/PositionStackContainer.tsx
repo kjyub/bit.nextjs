@@ -111,7 +111,7 @@ export default function PositionStackContainer({ positions, balance, isLoading }
     }
 
     // items가 1개일 때는 widthRatio를 100%로 설정
-    if (mainItems.length === 1) {
+    if (items.length === 1) {
       mainItems[0].widthRatio = 100;
       values.items = mainItems;
       values.others = [];
@@ -146,6 +146,8 @@ export default function PositionStackContainer({ positions, balance, isLoading }
 
     values.items = mainItems;
     values.others = otherItems;
+
+    console.log(values);
 
     return values;
   }, [positions, balance, breakpointState]);
