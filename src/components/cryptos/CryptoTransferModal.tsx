@@ -20,8 +20,9 @@ interface CryptoTransferModalProps {
   defaultTransferType: TransferType;
   cash: number;
   balance: number;
+  close: () => void;
 }
-export default function CryptoTransferModal({ defaultTransferType }: CryptoTransferModalProps) {
+export default function CryptoTransferModal({ defaultTransferType, close }: CryptoTransferModalProps) {
   // 타입 및 스타일
   const [transferType, setTransferType] = useState<TransferType>(defaultTransferType);
   const [isBgActive, setBgActive] = useState<boolean>(false);
@@ -97,6 +98,7 @@ export default function CryptoTransferModal({ defaultTransferType }: CryptoTrans
       setValue(0);
       updateInfo();
       alert('이체가 완료되었습니다.');
+      close();
       return;
     } else {
       alert('이체에 실패하였습니다.');

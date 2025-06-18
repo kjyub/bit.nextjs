@@ -100,7 +100,7 @@ export default function AssetManager() {
       </div>
 
       <ModalContainer isOpen={isTransferModalOpen} setIsOpen={setTransferModalOpen} isBlur={false}>
-        <CryptoTransferModal defaultTransferType={transferType} cash={cash} balance={balance} />
+        <CryptoTransferModal defaultTransferType={transferType} cash={cash} balance={balance} close={() => {setTransferModalOpen(false);}} />
       </ModalContainer>
     </S.WalletLayout>
   );
