@@ -8,7 +8,7 @@ const ToastPopup = () => {
   const messages = useToastMessageStore((state) => state.messages);
 
   return (
-    <div className="fixed top-14 left-0 z-100 flex justify-center w-screen pt-3 pointer-events-none">
+    <div className="fixed top-14 left-0 z-100 flex justify-center w-full pt-3 pointer-events-none">
       <div className="relative flex flex-col items-center max-w-[70vw] w-full duration-300">
         {messages.map((message: ToastMessage) => (
           <Message key={message.key} message={message} />

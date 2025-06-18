@@ -3,7 +3,7 @@ import tw from 'tailwind-styled-components';
 
 export const Layout = tw.div`
   absolute top-0 left-0 z-0
-  flex flex-center w-screen h-screen
+  flex flex-center w-full h-screen
 `;
 
 export const BoxContainer = tw.div`
