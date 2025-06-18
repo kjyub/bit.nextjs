@@ -85,7 +85,7 @@ export default function MessageList({ ref, className, isOpen, onClose }: Props) 
 
 
       {messages.length === 0 && !isLoading && (
-        <span className="m-auto">메세지가 없습니다.</span>
+        <span className="m-auto text-slate-200/70">메세지가 없습니다.</span>
       )}
 
       {messages.length === 0 && isLoading && (

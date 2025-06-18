@@ -10,6 +10,7 @@ const SWIPE_DOWN_THRESHOLD = 75;
 
 const Layout = ({ isOpen, setIsOpen, children }: { isOpen: boolean, setIsOpen: (isOpen: boolean) => void, children: React.ReactNode }) => {
   const [translateY, setTranslateY] = useState<number>(0);
+  const [opacity, setOpacity] = useState<number>(100);
   const [isSwiping, setIsSwiping] = useState<boolean>(false);
 
   const startY = useRef<number>(0);
@@ -18,6 +19,7 @@ const Layout = ({ isOpen, setIsOpen, children }: { isOpen: boolean, setIsOpen: (
   useLayoutEffect(() => {
     if (isOpen) {
       setTranslateY(0);
+      setOpacity(100);
       startY.current = 0;
       document.body.style.overflow = 'hidden';
     } else {
@@ -31,14 +33,17 @@ const Layout = ({ isOpen, setIsOpen, children }: { isOpen: boolean, setIsOpen: (
   }
 
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    const currentY = e.touches[0].clientY;
-    let deltaY = currentY - startY.current;
-    if (deltaY > SWIPE_DOWN_THRESHOLD) {
-      deltaY = SWIPE_DOWN_THRESHOLD;
-    } else if (deltaY < 0) {
-      deltaY = 0;
-    }
-    setTranslateY(deltaY);
+    requestAnimationFrame(() => {
+      const currentY = e.touches[0].clientY;
+      let deltaY = currentY - startY.current;
+      if (deltaY > SWIPE_DOWN_THRESHOLD) {
+        deltaY = SWIPE_DOWN_THRESHOLD;
+      } else if (deltaY < 0) {
+        deltaY = 0;
+      }
+      setTranslateY(deltaY);
+      setOpacity(100 - (deltaY / SWIPE_DOWN_THRESHOLD) * 90);
+    })
   }
 
   const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
@@ -48,6 +53,7 @@ const Layout = ({ isOpen, setIsOpen, children }: { isOpen: boolean, setIsOpen: (
       setIsOpen(false);
     } else {
       setTranslateY(0);
+      setOpacity(100);
     }
     setIsSwiping(false);
   }
@@ -66,9 +72,9 @@ const Layout = ({ isOpen, setIsOpen, children }: { isOpen: boolean, setIsOpen: (
           'flex flex-col justify-between size-full gap-4',
           isOpen ? 'translate-y-0' : 'translate-y-24',
           isSwiping ? 'duration-0' : 'duration-300',
-          'will-change-transform'
+          'will-change-transform will-change-opacity'
         ])}
-        style={{ transform: `translateY(${translateY}px)` }}
+        style={{ transform: `translateY(${translateY}px)`, opacity: `${opacity}%` }}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}

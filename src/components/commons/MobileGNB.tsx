@@ -33,7 +33,7 @@ export default function MobileGNB() {
           <span>거래소</span>
         </NS.LinkButton>
         <NS.LinkButton href="#" onClick={handleMenu}>
-          <i className="fa-solid fa-bars"></i>
+          <i className="fa-solid fa-sliders"></i>
           <span>메뉴</span>
         </NS.LinkButton>
         <div className="flex gap-2">
