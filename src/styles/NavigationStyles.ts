@@ -4,7 +4,7 @@ export const Layout = tw.div`
   sticky top-0 z-50
   max-md:hidden md:flex justify-center items-center w-full h-14 p-4
   border-b border-slate-800
-  bg-slate-900/80
+  bg-slate-950
   duration-300
 
   [&>.content]:flex [&>.content]:justify-between [&>.content]:items-center [&>.content]:w-full
@@ -19,7 +19,7 @@ export const Section = tw.div`
   [&_.btn]:rounded-lg [&_.btn]:hover:bg-white/10
   max-md:[&_.btn]:text-sm
   [&_.btn]:text-slate-300/70 [&_.btn]:hover:text-slate-100 [&_.btn]:font-semibold
-  [&_.btn.active]:text-slate-100
+  [&_.btn.active]:text-slate-200
   [&_.btn]:transition-colors [&_.btn]:select-none
   [&_.btn>i]:text-xs
 `;

@@ -29,6 +29,7 @@ export default function Header() {
         <div ref={ref} className="relative">
           <button className="btn" onClick={() => setIsControlPanelOpen(!isControlPanelOpen)} type="button">
             <i className="fa-solid fa-sliders text-sm!"></i>
+            <span>메뉴</span>
           </button>
           <ControlPanel isOpen={isControlPanelOpen} onClose={() => {setIsControlPanelOpen(false);}} />
         </div>
