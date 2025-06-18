@@ -1,7 +1,9 @@
 'use client';
 
+import UserApi from "@/apis/api/users/UserApi";
+import { useUser } from "@/hooks/useUser";
 import { LocalStorageConsts } from "@/types/ApiTypes";
-import { createContext, useEffect, useLayoutEffect, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 
 export type ChartColorType = 'red-blue' | 'green-red';
 
@@ -17,15 +19,35 @@ export const UiContext = createContext<UiContextType>({
 
 export const UiProvider = ({ children }: { children: React.ReactNode }) => {
   const [chartColor, setChartColor] = useState<ChartColorType>('red-blue');
+  const defaultChartColorRef = useRef<ChartColorType>('red-blue');
+  const chartColorRef = useRef<ChartColorType>('red-blue');
+  const { user, isAuth } = useUser();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const chartColor = localStorage.getItem(LocalStorageConsts.CHART_COLOR);
     if (chartColor) {
       setChartColor(chartColor as ChartColorType);
     }
+
+    // 사이트 이동 시 차트 색상 저장
+    window.addEventListener('beforeunload', () => {
+      if (chartColorRef.current !== defaultChartColorRef.current) {
+        UserApi.updateUser({
+          chart_color: chartColorRef.current,
+        });
+      }
+    });
   }, []);
 
   useEffect(() => {
+    if (isAuth) {
+      setChartColor(user.chartColor);
+    }
+    defaultChartColorRef.current = user.chartColor;
+  }, [isAuth, user.chartColor]);
+
+  useEffect(() => {
+    chartColorRef.current = chartColor;
     updateChartColor(chartColor);
   }, [chartColor])
 

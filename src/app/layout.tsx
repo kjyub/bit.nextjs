@@ -31,12 +31,12 @@ export default async function RootLayout({
         <FrontHead />
       </head>
       <body className={`${pretendard.variable} ${sinchonRhapsody.variable}`}>
-        <UiProvider>
-          <AuthProvider authToken={authToken} userData={userData}>
-            <AppClientLayout />
-            {children}
-          </AuthProvider>
-        </UiProvider>
+        <AuthProvider authToken={authToken} userData={userData}>
+          <UiProvider>
+              <AppClientLayout />
+              {children}
+          </UiProvider>
+        </AuthProvider>
       </body>
     </html>
   );
