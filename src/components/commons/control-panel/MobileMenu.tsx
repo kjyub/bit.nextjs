@@ -16,6 +16,7 @@ const Layout = ({ isOpen, setIsOpen, children }: { isOpen: boolean, setIsOpen: (
   const [isSwiping, setIsSwiping] = useState<boolean>(false);
 
   const startY = useRef<number>(0);
+  const isSwipingRef = useRef<boolean>(false);
 
   // 브라우저 스크롤 막기
   useLayoutEffect(() => {
@@ -24,18 +25,23 @@ const Layout = ({ isOpen, setIsOpen, children }: { isOpen: boolean, setIsOpen: (
       setOpacity(100);
       startY.current = 0;
       document.body.style.overflow = 'hidden';
+      document.body.style.userSelect = 'none';
     } else {
       document.body.style.overflow = 'visible';
+      document.body.style.userSelect = 'auto';
     }
   }, [isOpen]);
 
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     startY.current = e.touches[0].clientY;
     setIsSwiping(true);
+    isSwipingRef.current = true;
   }
 
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
     requestAnimationFrame(() => {
+      if (!isSwipingRef.current) return;
+
       const currentY = e.touches[0].clientY;
       let deltaY = currentY - startY.current;
       if (deltaY > SWIPE_DOWN_THRESHOLD) {
@@ -51,6 +57,7 @@ const Layout = ({ isOpen, setIsOpen, children }: { isOpen: boolean, setIsOpen: (
   const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
     const currentY = e.changedTouches[0].clientY;
     const deltaY = currentY - startY.current;
+    console.log(deltaY);
     if (deltaY > SWIPE_DOWN_THRESHOLD) {
       setIsOpen(false);
     } else {
@@ -58,6 +65,7 @@ const Layout = ({ isOpen, setIsOpen, children }: { isOpen: boolean, setIsOpen: (
       setOpacity(100);
     }
     setIsSwiping(false);
+    isSwipingRef.current = false;
   }
   
   return (
@@ -74,7 +82,7 @@ const Layout = ({ isOpen, setIsOpen, children }: { isOpen: boolean, setIsOpen: (
           'flex flex-col justify-between size-full gap-4',
           isOpen ? 'translate-y-0' : 'translate-y-24',
           isSwiping ? 'duration-0' : 'duration-300',
-          'will-change-transform will-change-opacity'
+          'will-change-transform will-change-opacity select-none'
         ])}
         style={{ transform: `translateY(${translateY}px)`, opacity: `${opacity}%` }}
         onTouchStart={handleTouchStart}
@@ -98,16 +106,16 @@ const usePreventSwipe = () => {
       ref.current.addEventListener('touchmove', (e) => {
         e.stopPropagation();
       });
-      ref.current.addEventListener('touchend', (e) => {
-        e.stopPropagation();
-      });
+      // ref.current.addEventListener('touchend', (e) => {
+      //   e.stopPropagation();
+      // });
     }
 
     return () => {
       if (ref.current) {
         ref.current.removeEventListener('touchstart', (e) => {e.stopPropagation();});
         ref.current.removeEventListener('touchmove', (e) => {e.stopPropagation();});
-        ref.current.removeEventListener('touchend', (e) => {e.stopPropagation();});
+        // ref.current.removeEventListener('touchend', (e) => {e.stopPropagation();});
       }
     }
   }, [ref])

@@ -84,6 +84,7 @@ export default function MessageList({ ref, className, isOpen, onClose }: Props) 
       ref={ref}
       className={cn([
         'flex flex-col overflow-y-auto gap-2 rounded-lg',
+        { 'pointer-events-none': messages.length === 0 },
         className
       ])}
     >
