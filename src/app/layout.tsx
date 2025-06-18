@@ -8,6 +8,7 @@ import { AuthProvider } from '@/store/providers/AuthProvider';
 import AuthServerUtils from '@/utils/AuthUtils.server';
 import Script from 'next/script';
 import { pretendard, sinchonRhapsody } from './fonts';
+import { UiProvider } from '@/store/providers/UiProvider';
 
 export const metadata: Metadata = {
   title: 'Bits',
@@ -30,10 +31,12 @@ export default async function RootLayout({
         <FrontHead />
       </head>
       <body className={`${pretendard.variable} ${sinchonRhapsody.variable}`}>
-        <AuthProvider authToken={authToken} userData={userData}>
-          <AppClientLayout />
-          {children}
-        </AuthProvider>
+        <UiProvider>
+          <AuthProvider authToken={authToken} userData={userData}>
+            <AppClientLayout />
+            {children}
+          </AuthProvider>
+        </UiProvider>
       </body>
     </html>
   );

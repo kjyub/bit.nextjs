@@ -20,6 +20,21 @@
   --color-position-short-3: #4978dd;
   --color-position-short-strong: oklch(0.623 0.214 259.815);
 
+  --color-position-red-1: #ad2c2c;
+  --color-position-red-2: #c43a3a;
+  --color-position-red-3: #d74848;
+  --color-position-red-strong: oklch(0.637 0.237 25.331);
+
+  --color-position-blue-1: #2d5ab9;
+  --color-position-blue-2: #3b69cb;
+  --color-position-blue-3: #4978dd;
+  --color-position-blue-strong: oklch(0.623 0.214 259.815);
+
+  --color-position-green-1: #2db95a;
+  --color-position-green-2: #3bcb69;
+  --color-position-green-3: #49dd78;
+  --color-position-green-strong: oklch(0.623 0.214 145);
+
   --color-gray-75: #f6f7f8;
   --color-gray-150: #eceef1;
   --color-gray-250: #c7ccd4;

@@ -1,8 +1,10 @@
 import { useUser } from '@/hooks/useUser';
 import { cn } from '@/utils/StyleUtils';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { use, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import ControlButton from './ControlButton';
 import MessageList from './MessageList';
+import ChartColorButton from './ChartColorButton';
+import { UiContext } from '@/store/providers/UiProvider';
 
 const SWIPE_DOWN_THRESHOLD = 75;
 
@@ -115,6 +117,7 @@ const usePreventSwipe = () => {
 
 export default function MobileMenu({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (isOpen: boolean) => void }) {
   const { isAuth, signOut } = useUser();
+  const { chartColor, setChartColor } = use(UiContext);
 
   const handleLogout = async () => {
     await signOut();
@@ -127,9 +130,28 @@ export default function MobileMenu({ isOpen, setIsOpen }: { isOpen: boolean, set
 
       <MessageList ref={usePreventSwipe()} isOpen={isOpen} onClose={() => setIsOpen(false)} />
 
-      <div className="flex flex-col w-full">
+      <div className="flex justify-between items-end">
+        <div className="flex flex-col justify-end gap-1">
+          <span className="text-xs text-slate-200/80">차트 색상</span>
+          <div className="flex flex-1 gap-1">
+            <ChartColorButton
+              riseColor="red"
+              fallColor="blue"
+              className="h-9"
+              isActive={chartColor === "red-blue"}
+              onClick={() => setChartColor("red-blue")}
+            />
+            <ChartColorButton
+              riseColor="green"
+              fallColor="red"
+              className="h-9"
+              isActive={chartColor === "green-red"}
+              onClick={() => setChartColor("green-red")}
+            />
+          </div>
+        </div>
         {isAuth && (
-          <ControlButton onClick={handleLogout} className="px-6 py-3">
+          <ControlButton onClick={handleLogout} className="px-6 h-10">
             로그아웃
           </ControlButton>
         )}

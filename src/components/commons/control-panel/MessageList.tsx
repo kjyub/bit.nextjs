@@ -110,7 +110,7 @@ export default function MessageList({ ref, className, isOpen, onClose }: Props) 
 const MessageItem = ({ message, onClose, handleRead }: { message: UserMessage, onClose?: () => void, handleRead?: (e: React.MouseEvent<HTMLButtonElement>, messageId: number) => void }) => {
   return (
     <Link 
-      className="flex flex-col w-full p-4 gap-0.5 rounded-lg bg-slate-700/40 hover:bg-slate-700/60 transition-colors"
+      className="flex flex-col w-full p-4 gap-0.5 rounded-2xl bg-slate-700/40 hover:bg-slate-700/60 transition-colors"
       href={message.link}
       onClick={onClose}
     >

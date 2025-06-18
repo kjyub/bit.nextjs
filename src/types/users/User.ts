@@ -1,5 +1,6 @@
 import { type AccountStatusType, AccountStatusTypes, type UserType, UserTypes } from '@/types/users/UserTypes';
 import { AbsApiObject } from '../ApiTypes';
+import type { ChartColorType } from '@/store/providers/UiProvider';
 
 export default class User extends AbsApiObject {
   protected _id: number;
@@ -12,6 +13,7 @@ export default class User extends AbsApiObject {
   private _profileImageUrl: string;
   private _cash: number;
   private _rep: number;
+  private _chartColor: ChartColorType;
 
   constructor() {
     super();
@@ -24,6 +26,7 @@ export default class User extends AbsApiObject {
     this._profileImageUrl = '';
     this._cash = 0;
     this._rep = 0;
+    this._chartColor = 'red-blue';
   }
 
   parseResponse(json: any): void {
@@ -38,6 +41,7 @@ export default class User extends AbsApiObject {
     this._profileImageUrl = json.profile_image_url;
     this._cash = json.cash;
     this._rep = json.rep;
+    this._chartColor = json.chart_color;
   }
 
   public get id(): number {
@@ -70,5 +74,8 @@ export default class User extends AbsApiObject {
   }
   public get rep(): number {
     return this._rep;
+  }
+  public get chartColor(): ChartColorType {
+    return this._chartColor;
   }
 }
