@@ -99,7 +99,7 @@ export const MarketListItem = tw(Link)`
   transition-colors
 
   [&>.change-color]:text-slate-200
-  [&.rise>.change-color]:text-red-500 [&.fall>.change-color]:text-blue-500
+  [&.rise>.change-color]:text-position-long-strong [&.fall>.change-color]:text-position-short-strong
 
   [&>.name]:flex [&>.name]:flex-col [&>.name]:flex-1 [&>.name]:min-w-0 [&>.name]:pr-1
   [&>.name>span]:truncate
@@ -130,7 +130,7 @@ export const MainTitleBox = tw.div`
 export const MainPriceBox = tw.div`
   flex items-baseline gap-1
   text-slate-200
-  [&.rise]:text-red-500 [&.fall]:text-blue-500
+  [&.rise]:text-position-long-strong [&.fall]:text-position-short-strong
 
   max-md:[&>.price]:text-xl md:[&>.price]:text-2xl [&>.price>.currency]:text-sm
   [&>.price]:font-semibold
@@ -146,5 +146,5 @@ export const MainPriceInfoGrid = tw.div`
   [&_dl]:flex [&_dl]:justify-between [&_dl]:items-center [&_dl]:w-full
   [&_dt]:text-sm [&_dt]:text-slate-400 [&_dt]:font-light
   [&_dd]:text-slate-300 [&_dd]:text-right
-  [&_dd.rise]:text-red-500 [&_dd.fall]:text-blue-500
+  [&_dd.rise]:text-position-long-strong [&_dd.fall]:text-position-short-strong
 `;

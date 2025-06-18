@@ -55,7 +55,7 @@ export const PositionHeader = tw.div`
   [&_.title>.code]:text-xs [&_.title>.code]:text-slate-500
 
   [&_.price]:text-sm [&_.price]:text-slate-400
-  [&_.price.rise]:text-red-500 [&_.price.fall]:text-blue-500
+  [&_.price.rise]:text-position-long-strong [&_.price.fall]:text-position-short-strong
 
   [&_.info]:px-1 [&_.info]:py-0.5
   [&_.info]:rounded-xs [&_.info]:bg-slate-600/50
@@ -124,7 +124,7 @@ export const OrderHeader = tw.div`
   [&_.position.long]:bg-position-long-1 [&_.position.short]:bg-position-short-1
 
   [&_.price]:text-sm [&_.price]:text-slate-400
-  [&_.price.rise]:text-red-500 [&_.price.fall]:text-blue-500
+  [&_.price.rise]:text-position-long-strong [&_.price.fall]:text-position-short-strong
 
   [&_.info]:px-1 [&_.info]:py-0.5
   [&_.info]:rounded-xs [&_.info]:bg-slate-600/50

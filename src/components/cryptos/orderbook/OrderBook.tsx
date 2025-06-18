@@ -64,7 +64,7 @@ export default function OrderBook({ orderBook, marketCode, marketCurrent }: IOrd
             key={index}
             unit={unit}
             max={orderBook.total_ask_size}
-            className="[&_.trade-price]:text-red-500 [&_.percent]:bg-red-500/50"
+            className="[&_.trade-price]:text-position-long-strong [&_.percent]:bg-position-long-strong/50"
           />
         ))}
 
@@ -75,7 +75,7 @@ export default function OrderBook({ orderBook, marketCode, marketCurrent }: IOrd
             key={index}
             unit={unit}
             max={orderBook.total_bid_size}
-            className="[&_.trade-price]:text-blue-500 [&_.percent]:bg-blue-500/50"
+            className="[&_.trade-price]:text-position-short-strong [&_.percent]:bg-position-short-strong/50"
           />
         ))}
       </List>
@@ -124,16 +124,16 @@ const Price = ({ price }: { price: number }) => {
           changeType === PriceChangeTypes.EVEN
             ? 'text-slate-300'
             : changeType === PriceChangeTypes.RISE
-              ? 'text-red-500'
-              : 'text-blue-500',
+              ? 'text-position-long-strong'
+              : 'text-position-short-strong',
         ])}
       >
         {CryptoUtils.getPriceText(price)}
       </span>
 
       <div className="text-sm">
-        {changeType === PriceChangeTypes.RISE && <i className="fa-solid fa-arrow-up text-red-500"></i>}
-        {changeType === PriceChangeTypes.FALL && <i className="fa-solid fa-arrow-down text-blue-500"></i>}
+        {changeType === PriceChangeTypes.RISE && <i className="fa-solid fa-arrow-up text-position-long-strong"></i>}
+        {changeType === PriceChangeTypes.FALL && <i className="fa-solid fa-arrow-down text-position-short-strong"></i>}
       </div>
     </div>
   );
