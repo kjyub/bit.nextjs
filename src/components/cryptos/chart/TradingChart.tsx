@@ -345,8 +345,26 @@ export default function TradingChart({ marketCode }: Props) {
 
   // 현재 내 포지션 정보
   useEffect(() => {
+    let seriesRef: MutableRefObject<ISeriesApi<'Area' | 'Candlestick'> | null> | null = null;
+
+    if (chartType === ChartTypes.AREA && areaSeriesRef.current) {
+      seriesRef = areaSeriesRef;
+    } else if (chartType === ChartTypes.CANDLE && candleSeriesRef.current) {
+      seriesRef = candleSeriesRef;
+    }
+
     const positon = myTrades.positions.find((position) => position.market.code === marketCode);
-    if (!positon) return;
+    if (!positon) {
+      if (entryPriceLineRef.current) {
+        seriesRef?.current?.removePriceLine(entryPriceLineRef.current);
+        entryPriceLineRef.current = null;
+      }
+      if (liqPriceLineRef.current) {
+        seriesRef?.current?.removePriceLine(liqPriceLineRef.current);
+        liqPriceLineRef.current = null;
+      }
+      return;
+    };
 
     const entryPrice = Number(positon.entryPrice);
     const liqPrice = Number(positon.liquidatePrice);
@@ -365,14 +383,6 @@ export default function TradingChart({ marketCode }: Props) {
       axisLabelVisible: true,
       title: '청산 가격',
     };
-
-    let seriesRef: MutableRefObject<ISeriesApi<'Area' | 'Candlestick'> | null> | null = null;
-
-    if (chartType === ChartTypes.AREA && areaSeriesRef.current) {
-      seriesRef = areaSeriesRef;
-    } else if (chartType === ChartTypes.CANDLE && candleSeriesRef.current) {
-      seriesRef = candleSeriesRef;
-    }
 
     if (seriesRef?.current) {
       if (entryPriceLineRef.current) {
