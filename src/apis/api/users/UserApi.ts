@@ -1,5 +1,7 @@
 import { authInstance, credentialInstance, defaultInstance } from '@/apis/utils/instances';
+import Pagination from '@/types/api/pagination';
 import User from '@/types/users/User';
+import UserMessage from '@/types/users/UserMessage';
 import type { UserType } from '@/types/users/UserTypes';
 import type { LoginResponse } from '@/types/users/UserTypes';
 
@@ -288,6 +290,36 @@ namespace UserApi {
 
     try {
       const response = await authInstance.delete('api/users/detail_info_auth/');
+      result = response.ok;
+    } catch (error) {
+      console.log(error);
+    }
+
+    return result;
+  }
+
+  export async function getMessages(pageIndex: number, pageSize: number): Promise<Pagination<UserMessage>> {
+    const result: Pagination<UserMessage> = new Pagination<UserMessage>();
+
+    try {
+      const searchParams = {
+        page: pageIndex,
+        page_size: pageSize,
+      };
+      const response = await authInstance.get('api/users/messages/', { searchParams });
+      const data = (await response.json()) as any;
+      result.parseResponse(data as any, UserMessage);
+    } catch (error) {
+      console.log(error);
+    }
+
+    return result;
+  }
+  export async function readMessages(messageIds: Array<number>): Promise<boolean> {
+    let result = false;
+
+    try {
+      const response = await authInstance.post('api/users/messages/read/', { json: { message_ids: messageIds } });
       result = response.ok;
     } catch (error) {
       console.log(error);

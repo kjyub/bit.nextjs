@@ -6,16 +6,16 @@ import * as NS from '@/styles/NavigationStyles';
 import CommonUtils from '@/utils/CommonUtils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
+import ControlPanel from './control-panel/ControlPanel';
 
 export default function Header() {
   const pathname = usePathname();
 
   // 회원 관련
-  const { user, isLoading: isUserLoading, signOut, isAuth } = useUser();
+  const { user, isLoading: isUserLoading, isAuth } = useUser();
 
-  const handleLogout = async () => {
-    await signOut();
-  };
+  const [isControlPanelOpen, setIsControlPanelOpen] = useState(false);
 
   const Auth = () => {
     return (
@@ -24,8 +24,8 @@ export default function Header() {
           <i className="fa-solid fa-user"></i>
           <span>{user.nickname}님</span>
         </Link>
-        <button className="btn" onClick={handleLogout} type="button">
-          <span>로그아웃</span>
+        <button className="btn" onClick={() => setIsControlPanelOpen(!isControlPanelOpen)} type="button">
+          <i className="fa-solid fa-sliders text-sm!"></i>
         </button>
       </>
     )
@@ -61,6 +61,10 @@ export default function Header() {
           {isUserLoading ? (
             <div className="skeleton w-24 h-full rounded-lg"></div>
           ) : isAuth ? <Auth /> : <UnAuth />}
+
+          <div className="relative">
+            <ControlPanel isOpen={isControlPanelOpen} onClose={() => {setIsControlPanelOpen(false);}} />
+          </div>
         </NS.Section>
       </div>
     </NS.Layout>

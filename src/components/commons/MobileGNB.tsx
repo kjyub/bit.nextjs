@@ -6,7 +6,7 @@ import * as NS from '@/styles/MobileGNBStyles';
 import CommonUtils from '@/utils/CommonUtils';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import MobileMenu from './MobileMenu';
+import MobileMenu from './control-panel/MobileMenu';
 
 export default function MobileGNB() {
   // 회원 관련

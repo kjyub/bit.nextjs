@@ -1,6 +1,8 @@
 import { useUser } from '@/hooks/useUser';
 import { cn } from '@/utils/StyleUtils';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import ControlButton from './ControlButton';
+import MessageList from './MessageList';
 
 const SWIPE_DOWN_THRESHOLD = 75;
 
@@ -115,25 +117,15 @@ export default function MobileMenu({ isOpen, setIsOpen }: { isOpen: boolean, set
 
   return (
     <Layout isOpen={isOpen} setIsOpen={setIsOpen}>
-      <h1 className="mb-16 text-2xl font-light text-slate-200/80 font-sinchon-rhapsody">KURRITO</h1>
+      <h1 className="mb-8 text-2xl font-light text-slate-200/80 font-sinchon-rhapsody">KURRITO</h1>
 
-      {!isAuth && (
-        <span className="w-full text-center font-light text-slate-300/80">사용할 수 있는 메뉴가 없습니다.</span>
-      )}
-
-      <div ref={usePreventSwipe()} className="flex flex-col w-full flex-1 overflow-y-auto gap-2">
-        <div className="w-full rounded-xl bg-slate-500/20 text-slate-200/80 p-4">테스트</div>
-      </div>
+      <MessageList ref={usePreventSwipe()} isOpen={isOpen} onClose={() => setIsOpen(false)} />
 
       <div className="flex flex-col w-full">
         {isAuth && (
-          <button
-            type="button"
-            className="w-fit px-12 py-4 ml-auto rounded-full bg-slate-300/10 active:bg-slate-400/20 text-slate-200/80 border border-slate-500/50 transition-colors"
-            onClick={handleLogout}
-          >
+          <ControlButton onClick={handleLogout} className="px-6 py-3">
             로그아웃
-          </button>
+          </ControlButton>
         )}
       </div>
     </Layout>
