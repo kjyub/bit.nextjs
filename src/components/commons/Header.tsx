@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import ControlPanel from './control-panel/ControlPanel';
+import { useDetectClose } from '@/hooks/useDetectClose';
 
 export default function Header() {
   const pathname = usePathname();
@@ -15,18 +16,22 @@ export default function Header() {
   // 회원 관련
   const { user, isLoading: isUserLoading, isAuth } = useUser();
 
-  const [isControlPanelOpen, setIsControlPanelOpen] = useState(false);
-
   const Auth = () => {
+    const [ref, isControlPanelOpen, setIsControlPanelOpen] = useDetectClose<HTMLDivElement>();
+
     return (
       <>
         <Link href="/mypage" className={`btn ${CommonUtils.isPathActive(pathname, '/mypage') ? 'active' : ''}`}>
           <i className="fa-solid fa-user"></i>
           <span>{user.nickname}님</span>
         </Link>
-        <button className="btn" onClick={() => setIsControlPanelOpen(!isControlPanelOpen)} type="button">
-          <i className="fa-solid fa-sliders text-sm!"></i>
-        </button>
+
+        <div ref={ref} className="relative">
+          <button className="btn" onClick={() => setIsControlPanelOpen(!isControlPanelOpen)} type="button">
+            <i className="fa-solid fa-sliders text-sm!"></i>
+          </button>
+          <ControlPanel isOpen={isControlPanelOpen} onClose={() => {setIsControlPanelOpen(false);}} />
+        </div>
       </>
     )
   }
@@ -61,10 +66,6 @@ export default function Header() {
           {isUserLoading ? (
             <div className="skeleton w-24 h-full rounded-lg"></div>
           ) : isAuth ? <Auth /> : <UnAuth />}
-
-          <div className="relative">
-            <ControlPanel isOpen={isControlPanelOpen} onClose={() => {setIsControlPanelOpen(false);}} />
-          </div>
         </NS.Section>
       </div>
     </NS.Layout>

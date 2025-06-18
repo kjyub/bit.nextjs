@@ -15,7 +15,7 @@ export default function ControlPanel({ isOpen, onClose }: { isOpen: boolean, onC
   return (
     <div
       className={cn([
-        'absolute z-60 top-10 right-0 common-panel backdrop-blur-xl',
+        'absolute z-60 top-14 right-0 common-panel backdrop-blur-xl rounded-3xl',
         'flex flex-col w-96 h-128 p-5 gap-4',
         { 'opacity-100 translate-y-0': isOpen },
         { 'opacity-0 -translate-y-4 pointer-events-none': !isOpen },

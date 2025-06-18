@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <div className="flex flex-col w-full space-y-4 [&>span]:text-slate-100">
+    <div className="flex flex-col w-full space-y-4 [&>span]:text-position-short-strong">
       <span>test</span>
       <span>test23</span>
       <span>test</span>

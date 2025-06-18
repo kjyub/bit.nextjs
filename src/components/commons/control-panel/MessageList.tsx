@@ -155,7 +155,7 @@ const Skeletons = ({ ref, pageIndex, itemCount, pageSize }: SkeletonProps) => {
   return (
     <div
       ref={ref}
-      className="flex flex-col w-full gap-2 [&>a]:animate-pulse [&_*]:text-transparent"
+      className="flex flex-col w-full gap-2 [&>a]:animate-pulse [&_*]:text-transparent [&_*]:skeleton"
     >
       {isShow && (
         <>

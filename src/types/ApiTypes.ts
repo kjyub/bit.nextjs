@@ -45,6 +45,7 @@ export const LocalStorageConsts = {
   EMAIL_BRAND_REMEMBER: 'email_brand_remember',
   EMAIL_STAFF_REMEMBER: 'email_staff_remember',
   WORK_SPACE_ID_RECENT: 'work_space_id_recent',
+  CHART_COLOR: 'chart_color',
 };
 export const SessionStorageConsts = {
   USER_DATA: 'user_data',

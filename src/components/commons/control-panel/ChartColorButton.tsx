@@ -17,7 +17,7 @@ export default function ChartColorButton({ className, isActive, riseColor, fallC
       className={cn([
         'flex items-center px-3 gap-2',
         'rounded-2xl bg-slate-500/10 active:bg-slate-400/20 hover:bg-slate-400/20',
-        'text-sm text-slate-200/80 border border-slate-500/50 transition-colors',
+        'text-sm text-slate-200/80 border border-slate-500/30 transition-colors',
         { 'bg-slate-400/20 border-violet-500': isActive },
         className
       ])}
@@ -30,7 +30,7 @@ export default function ChartColorButton({ className, isActive, riseColor, fallC
           { 'text-position-green-strong': fallColor === 'green' },
         ])}
       >
-        <i className="fa-solid fa-arrow-down"></i>
+        <i className="fa-solid fa-arrow-trend-down"></i>
       </div>
       <div
         className={cn([
@@ -40,7 +40,7 @@ export default function ChartColorButton({ className, isActive, riseColor, fallC
           { 'text-position-green-strong': riseColor === 'green' },
         ])}
       >
-        <i className="fa-solid fa-arrow-up"></i>
+        <i className="fa-solid fa-arrow-trend-up"></i>
       </div>
     </button>
   )
