@@ -8,6 +8,14 @@ export interface IMarketPageSearchParams {
   page: number;
 }
 
+export async function generateMetadata({ params }: IMarketPage) {
+  const awaitParams = await params;
+  const { code } = awaitParams;
+  return {
+    title: `${code}`,
+  };
+}
+
 interface IMarketPage {
   params: Promise<{ code: string }>;
   searchParams: Promise<IMarketPageSearchParams>;

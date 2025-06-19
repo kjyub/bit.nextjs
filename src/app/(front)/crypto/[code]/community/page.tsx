@@ -4,6 +4,14 @@ import CryptoMarketCommunityPage from '../community';
 import type { IMarketPageSearchParams } from '../page';
 import TradeGoApi from '@/apis/api/cryptos/TradeGoApi';
 
+export async function generateMetadata({ params }: Props) {
+  const awaitParams = await params;
+  const { code } = awaitParams;
+  return {
+    title: `${code} 토론방`,
+  };
+}
+
 interface Props {
   params: Promise<{ code: string }>;
   searchParams: Promise<IMarketPageSearchParams>;

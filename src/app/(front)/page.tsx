@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 export default function Home() {
   return (
     <div className="flex flex-col w-full space-y-4 [&>span]:text-position-short-strong">

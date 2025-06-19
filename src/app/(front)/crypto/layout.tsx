@@ -6,6 +6,12 @@ import * as S from '@/styles/CryptoMarketStyles';
 import * as MS from '@/styles/MainStyles';
 import { Suspense } from 'react';
 
+export async function generateMetadata() {
+  return {
+    title: '암호화폐 내역',
+  };
+}
+
 export default function CryptoLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <CryptoProvider>

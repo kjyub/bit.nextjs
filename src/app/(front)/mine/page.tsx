@@ -1,6 +1,11 @@
-import MineApi from '@/apis/api/mines/MineApi';
 import MineMain from '@/components/mines/MineMain';
 import * as MS from '@/styles/MainStyles';
+
+export async function generateMetadata() {
+  return {
+    title: '지하노역장',
+  };
+}
 
 export default function MinePage() {
   return (

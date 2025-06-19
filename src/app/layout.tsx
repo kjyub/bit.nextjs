@@ -11,10 +11,24 @@ import { pretendard, sinchonRhapsody } from './fonts';
 import { UiProvider } from '@/store/providers/UiProvider';
 
 export const metadata: Metadata = {
-  title: 'Bits',
-  description: '빗스',
+  title: {
+    default: 'Kurrito | 가상화폐 모의투자',
+    template: '%s | Kurrito',
+  },
+  description: 'Kurrito는 가상화폐 모의투자 게임입니다. 가상화폐 시장을 모의로 투자해보세요!',
+  openGraph: {
+    type: 'website',
+    title: 'Kurrito | 가상화폐 모의투자',
+    siteName: 'Kurrito',
+    description: 'Kurrito는 가상화폐 모의투자 게임입니다. 가상화폐 시장을 모의로 투자해보세요!',
+    url: 'https://kurrito.kr/',
+  },
+  twitter: {
+    title: 'Kurrito | 가상화폐 모의투자',
+    card: 'summary_large_image',
+    description: 'Kurrito는 가상화폐 모의투자 게임입니다. 가상화폐 시장을 모의로 투자해보세요!',
+  },
 };
-
 export default async function RootLayout({
   children,
 }: Readonly<{
