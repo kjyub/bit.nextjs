@@ -61,6 +61,12 @@ export default function Header() {
           >
             <span>암호화폐 거래</span>
           </Link>
+          <Link
+            href={isAuth ? '/mine' : `/mine/${DEFAULT_MARKET_CODE}`}
+            className={`btn ${CommonUtils.isPathActive(pathname, '/mine') ? 'active' : ''}`}
+          >
+            <span>지하 노역장</span>
+          </Link>
         </NS.Section>
         {/* 오른쪽 */}
         <NS.Section>

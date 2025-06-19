@@ -4,4 +4,6 @@ declare global {
   }
 }
 
+declare module 'seedrandom';
+
 export {};

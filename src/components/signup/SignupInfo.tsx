@@ -125,7 +125,7 @@ export default function SignupInfo() {
                     start={0}
                     end={10000000}
                     duration={2}
-                    suffix=" C"
+                    suffix=" W"
                     onEnd={() => {
                       if (isValidNicknameRef.current) {
                         setActiveSave(true);
