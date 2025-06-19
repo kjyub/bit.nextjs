@@ -23,7 +23,7 @@ export default function MobileGNB() {
 
   return (
     <NS.Layout $is_show={!isHide}>
-      <div className="grid grid-cols-4 w-full h-full">
+      <div className="grid grid-cols-5 w-full h-full">
         <NS.LinkButton href="/" className={CommonUtils.isPathActive(pathname, '/') ? 'active' : ''}>
           <i className="fa-solid fa-house"></i>
           <span>홈</span>
@@ -31,6 +31,10 @@ export default function MobileGNB() {
         <NS.LinkButton href="/crypto" className={CommonUtils.isPathActive(pathname, '/crypto') ? 'active' : ''}>
           <i className="fa-solid fa-coins"></i>
           <span>거래소</span>
+        </NS.LinkButton>
+        <NS.LinkButton href="/mine" className={CommonUtils.isPathActive(pathname, '/mine') ? 'active' : ''}>
+          <i className="fa-solid fa-hammer"></i>
+          <span>지하노역장</span>
         </NS.LinkButton>
         <NS.LinkButton href="#" onClick={handleMenu}>
           <i className="fa-solid fa-sliders"></i>

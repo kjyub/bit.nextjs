@@ -98,6 +98,11 @@
     transition: opacity 0.5s ease-in-out;
     pointer-events: none;
   }
+  @supports (-webkit-appearance: none) {
+    body::before {
+      transition: none;
+    }
+  }
 
   body.mine::before {
     opacity: 1;
