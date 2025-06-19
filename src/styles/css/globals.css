@@ -308,8 +308,8 @@
       transform: scale(0.5);
       opacity: 0;
     }
-    80% {
-      transform: scale(1.2);
+    75% {
+      transform: scale(1.01);
       opacity: 1;
     }
     100% {
@@ -413,7 +413,7 @@
   }
 
   .common-panel {
-    @apply rounded-xl bg-slate-800/20 border border-slate-600/50;
+    @apply rounded-2xl bg-slate-800/20 border border-slate-600/50;
     &.padding {
       @apply max-md:p-5 md:p-8;
     }
