@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@fxts/core": "1.11.0",
+    "@hcaptcha/react-hcaptcha": "1.12.0",
     "@tailwindcss/postcss": "4.0.0",
     "cheerio": "1.0.0",
     "clsx": "2.1.1",

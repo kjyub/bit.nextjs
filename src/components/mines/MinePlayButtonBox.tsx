@@ -1,9 +1,12 @@
+'use client';
+
 import MineApi from "@/apis/api/mines/MineApi";
 import { useUser } from "@/hooks/useUser"
 import useToastMessageStore from "@/store/useToastMessageStore";
 import type MineRoom from "@/types/mines/MineRoom";
 import { cn } from "@/utils/StyleUtils";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 interface Props {
   setRoom: (room: MineRoom) => void;
@@ -12,6 +15,9 @@ export default function MinePlayButtonBox({ setRoom }: Props) {
   const { user, isAuth } = useUser();
   const { createMessage } = useToastMessageStore();
   const [isLoading, setIsLoading] = useState(false);
+
+  const verifyRef = useRef<HCaptcha>(null);
+  const verifiedRef = useRef<boolean>(false);
 
   const handlePlay = async () => {
     if (isLoading) return;
@@ -31,6 +37,13 @@ export default function MinePlayButtonBox({ setRoom }: Props) {
     const mineRoom = await MineApi.createMineRoom({
       user_id: user.id,
     });
+
+    if (!verifiedRef.current) {
+      createMessage('자동 로봇 방지 체크를 통과해주세요');
+      setIsLoading(false);
+      return;
+    }
+
     setIsLoading(false);
 
     if (mineRoom) {
@@ -58,6 +71,13 @@ export default function MinePlayButtonBox({ setRoom }: Props) {
       >
         입장하기
       </button>
+      <HCaptcha
+        
+        sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY ? process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY : ""}
+        onVerify={(token) => {
+          verifiedRef.current = true;
+        }}
+      />
     </div>
   )
 }
