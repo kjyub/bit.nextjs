@@ -6,7 +6,7 @@ import useToastMessageStore from "@/store/useToastMessageStore";
 import type MineRoom from "@/types/mines/MineRoom";
 import { cn } from "@/utils/StyleUtils";
 import { useRef, useState } from "react";
-import HCaptcha from "@hcaptcha/react-hcaptcha";
+// import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 interface Props {
   setRoom: (room: MineRoom) => void;
@@ -16,7 +16,6 @@ export default function MinePlayButtonBox({ setRoom }: Props) {
   const { createMessage } = useToastMessageStore();
   const [isLoading, setIsLoading] = useState(false);
 
-  const verifyRef = useRef<HCaptcha>(null);
   const verifiedRef = useRef<boolean>(false);
 
   const handlePlay = async () => {
@@ -71,13 +70,12 @@ export default function MinePlayButtonBox({ setRoom }: Props) {
       >
         입장하기
       </button>
-      <HCaptcha
-        
+      {/* <HCaptcha
         sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY ? process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY : ""}
         onVerify={(token) => {
           verifiedRef.current = true;
         }}
-      />
+      /> */}
     </div>
   )
 }
