@@ -38,7 +38,6 @@ export const Input = tw.input`
 `;
 
 export const Suffix = tw.span`
-  absolute right-3
   text-slate-400
 `;
 export const FeatureButton = tw.button`

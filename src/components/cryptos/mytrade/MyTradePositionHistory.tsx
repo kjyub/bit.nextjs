@@ -11,6 +11,7 @@ import { useState } from 'react';
 import CryptoMyTradeFilter from './Filter';
 import HeaderLink from './HeaderLink';
 import CryptoMyTradeItemSkeleton from './ItemSkeleton';
+import { CRYPTO_WALLET_UNIT } from '@/constants/CryptoConsts';
 
 const PAGE_SIZE = 10;
 
@@ -125,7 +126,7 @@ const Position = ({ position }: IPosition) => {
           <dt>
             손익 <span>Closing PNL</span>
           </dt>
-          <dd className="!font-medium">{CryptoUtils.getPriceText(position.pnl)}TW</dd>
+          <dd className="!font-medium">{CryptoUtils.getPriceText(position.pnl)}{CRYPTO_WALLET_UNIT}</dd>
         </S.OrderItem>
         <S.OrderItem className={''}>
           <dt>
@@ -143,7 +144,7 @@ const Position = ({ position }: IPosition) => {
           <dt>
             손익 <span>Closing PNL</span>
           </dt>
-          <dd className="!font-medium">{CryptoUtils.getPriceText(position.pnl)}TW</dd>
+          <dd className="!font-medium">{CryptoUtils.getPriceText(position.pnl)}{CRYPTO_WALLET_UNIT}</dd>
         </S.OrderItem>
       </S.OrderBody>
     </S.OrderBox>

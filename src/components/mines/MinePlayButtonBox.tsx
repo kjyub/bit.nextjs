@@ -38,11 +38,11 @@ export default function MinePlayButtonBox({ setRoom }: Props) {
       user_id: user.id,
     });
 
-    if (!verifiedRef.current) {
-      createMessage('자동 로봇 방지 체크를 통과해주세요');
-      setIsLoading(false);
-      return;
-    }
+    // if (!verifiedRef.current) {
+    //   createMessage('자동 로봇 방지 체크를 통과해주세요');
+    //   setIsLoading(false);
+    //   return;
+    // }
 
     setIsLoading(false);
 

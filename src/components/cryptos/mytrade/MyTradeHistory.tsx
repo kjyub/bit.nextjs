@@ -11,6 +11,7 @@ import { useState } from 'react';
 import CryptoMyTradeFilter from './Filter';
 import HeaderLink from './HeaderLink';
 import CryptoMyTradeItemSkeleton from './ItemSkeleton';
+import { CRYPTO_WALLET_UNIT } from '@/constants/CryptoConsts';
 
 const PAGE_SIZE = 10;
 
@@ -119,19 +120,19 @@ const History = ({ history }: IHistory) => {
           <dt>
             수량 <span>Quantity</span>
           </dt>
-          <dd>{CryptoUtils.getPriceText(history.price * history.quantity)}TW</dd>
+          <dd>{CryptoUtils.getPriceText(history.price * history.quantity)}{CRYPTO_WALLET_UNIT}</dd>
         </S.OrderItem>
         <S.OrderItem className={''}>
           <dt>
             수수료 <span>Fee</span>
           </dt>
-          <dd>{CryptoUtils.getPriceText(history.fee)}TW</dd>
+          <dd>{CryptoUtils.getPriceText(history.fee)}{CRYPTO_WALLET_UNIT}</dd>
         </S.OrderItem>
         <S.OrderItem className={''}>
           <dt>
             실현손익 <span>Realized Profit</span>
           </dt>
-          <dd>{CryptoUtils.getPriceText(history.pnl)}TW</dd>
+          <dd>{CryptoUtils.getPriceText(history.pnl)}{CRYPTO_WALLET_UNIT}</dd>
         </S.OrderItem>
       </S.OrderBody>
     </S.OrderBox>

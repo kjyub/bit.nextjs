@@ -110,6 +110,11 @@ export default function CryptoMarketTrade({
       return;
     }
 
+    if (userBudget <= 0) {
+      createToastMessage('잔액이 부족합니다.');
+      return;
+    }
+
     const errorMessages: Array<string> = [];
     if (cost <= 0) {
       errorMessages.push('거래수량을 입력해주세요.');

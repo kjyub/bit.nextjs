@@ -10,6 +10,7 @@ import type TradeOrder from '@/types/cryptos/TradeOrder';
 import CryptoUtils from '@/utils/CryptoUtils';
 import dayjs from 'dayjs';
 import HeaderLink from './HeaderLink';
+import { CRYPTO_WALLET_UNIT } from '@/constants/CryptoConsts';
 
 export default function CryptoMyTradeOrder() {
   const { myTrades, updateInfo } = useUserInfoStore();
@@ -145,7 +146,7 @@ const Order = ({ order, updateInfo }: IOrder) => {
           <dt>
             수량 <span>Amount</span>
           </dt>
-          <dd>{CryptoUtils.getPriceText(order.size)}TW</dd>
+          <dd>{CryptoUtils.getPriceText(order.size)}{CRYPTO_WALLET_UNIT}</dd>
         </S.OrderItem>
         <S.OrderItem className={`${order.positionType === PositionTypes.LONG ? 'long' : 'short'}`}>
           <dt>

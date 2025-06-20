@@ -9,6 +9,7 @@ import { type TransferType, TransferTypes } from '@/types/cryptos/CryptoTypes';
 import CommonUtils from '@/utils/CommonUtils';
 import { useEffect, useMemo, useState } from 'react';
 import CryptoTransferModal from '../CryptoTransferModal';
+import { CASH_UNIT, CRYPTO_WALLET_UNIT } from '@/constants/CryptoConsts';
 
 export default function AssetManager() {
   const [isTransferModalOpen, setTransferModalOpen] = useState<boolean>(false);
@@ -57,7 +58,7 @@ export default function AssetManager() {
           <div className="content">
             <div className="label">총 잔액</div>
             <div className={`value ${isLoading ? 'skeleton w-24' : ''}`}>
-              {CommonUtils.textFormat(cash, TextFormats.NUMBER)}W
+              {CommonUtils.textFormat(cash, TextFormats.NUMBER)}{CASH_UNIT}
             </div>
           </div>
         </S.WalletBox>
@@ -81,19 +82,19 @@ export default function AssetManager() {
           <div className="content">
             <div className="label">지갑 총액</div>
             <div className={`value ${isLoading ? 'skeleton w-24' : ''}`}>
-              {CommonUtils.textFormat(Math.floor(balance), TextFormats.NUMBER)}C
+              {CommonUtils.textFormat(Math.floor(balance), TextFormats.NUMBER)}{CRYPTO_WALLET_UNIT}
             </div>
           </div>
           <div className="content">
             <div className="label">사용 중</div>
             <div className={`value ${isLoading ? 'skeleton w-24' : ''}`}>
-              {CommonUtils.textFormat(Math.floor(locked), TextFormats.NUMBER)}C
+              {CommonUtils.textFormat(Math.floor(locked), TextFormats.NUMBER)}{CRYPTO_WALLET_UNIT}
             </div>
           </div>
           <div className="content">
             <div className="label">사용 가능</div>
             <div className={`value ${isLoading ? 'skeleton w-24' : ''}`}>
-              {CommonUtils.textFormat(Math.floor(availableBalance), TextFormats.NUMBER)}C
+              {CommonUtils.textFormat(Math.floor(availableBalance), TextFormats.NUMBER)}{CRYPTO_WALLET_UNIT}
             </div>
           </div>
         </S.WalletBox>

@@ -93,9 +93,9 @@ export const Input: React.FC<InputProps<string | number>> = ({
             }}
             {...props}
           />
+          {suffix && <S.Suffix>{suffix}</S.Suffix>}
         </S.InputBox>
         {children}
-        {suffix && <S.Suffix>{suffix}</S.Suffix>}
         {isError && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
       </S.InputContainer>
     </InputContainer>

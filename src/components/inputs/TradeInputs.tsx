@@ -1,3 +1,4 @@
+import { CRYPTO_WALLET_UNIT } from '@/constants/CryptoConsts';
 import { useDetectClose } from '@/hooks/useDetectClose';
 import { useMouseHover } from '@/hooks/useMouseHover';
 import useToastMessageStore from '@/store/useToastMessageStore';
@@ -540,7 +541,7 @@ export const TradeSizeInput = ({
       >
         {!isPercent ? (
           sizeUnitType === SizeUnitTypes.PRICE ? (
-            <NumberInput label={'크기'} value={sizeValue} setValue={handleSize} max={maxSize} suffix={'TW'} />
+            <NumberInput label={'크기'} value={sizeValue} setValue={handleSize} max={maxSize} suffix={CRYPTO_WALLET_UNIT} />
           ) : (
             <NumberInput
               label={'크기'}
@@ -583,10 +584,10 @@ export const TradeSizeInput = ({
         {sizeUnitType === SizeUnitTypes.PRICE && (
           <>
             <span className="border-l-2 border-position-long-3" title="롱 포지션 크기">
-              {`${CommonUtils.textFormat(TypeUtils.round(size * (1 - fee), 4), TextFormats.KOREAN_PRICE)}TW`}
+              {`${CommonUtils.textFormat(TypeUtils.round(size * (1 - fee), 4), TextFormats.KOREAN_PRICE)}${CRYPTO_WALLET_UNIT}`}
             </span>
             <span className="border-r-2 border-position-short-3" title="숏 포지션 크기">
-              {`${CommonUtils.textFormat(TypeUtils.round(size * (1 - fee), 4), TextFormats.KOREAN_PRICE)}TW`}
+              {`${CommonUtils.textFormat(TypeUtils.round(size * (1 - fee), 4), TextFormats.KOREAN_PRICE)}${CRYPTO_WALLET_UNIT}`}
             </span>
           </>
         )}

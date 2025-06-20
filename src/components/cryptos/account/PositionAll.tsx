@@ -1,4 +1,5 @@
 import Guage from '@/components/atomics/Guage';
+import { CRYPTO_WALLET_UNIT } from '@/constants/CryptoConsts';
 import useMarketPriceStore from '@/store/useMarketPriceStore';
 import { TextFormats } from '@/types/CommonTypes';
 import { MarginModeTypes, PositionTypes, type PriceChangeType, PriceChangeTypes } from '@/types/cryptos/CryptoTypes';
@@ -70,7 +71,7 @@ export default function PositionAll({ positions, balance, isLoading }: Props) {
         <div className="flex flex-col max-sm:w-full sm:gap-1">
           <span className="text-slate-300">전체 손익</span>
           <span className={`text-2xl font-bold price-color ${values.priceChange} ${isLoading ? 'skeleton w-24' : ''}`}>
-            {CommonUtils.textFormat(TypeUtils.round(values.pnl, 0), TextFormats.NUMBER)}W
+            {CommonUtils.textFormat(TypeUtils.round(values.pnl, 0), TextFormats.NUMBER)}{CRYPTO_WALLET_UNIT}
           </span>
         </div>
         {/* 전체 손익률 */}

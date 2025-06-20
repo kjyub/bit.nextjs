@@ -21,6 +21,7 @@ import CryptoUtils from '@/utils/CryptoUtils';
 import TypeUtils from '@/utils/TypeUtils';
 import { useCallback, useEffect, useState } from 'react';
 import HeaderLink from './HeaderLink';
+import { CRYPTO_WALLET_UNIT } from '@/constants/CryptoConsts';
 
 export default function CryptoMyTradePosition() {
   const { balance, myTrades } = useUserInfoStore();
@@ -191,7 +192,7 @@ export const Position = ({ position, userBudget }: IPosition) => {
             <span className="font-medium">
               {position.positionType === PositionTypes.SHORT && '-'}
               {CryptoUtils.getPriceText(size)}
-              {'TW'}
+              {CRYPTO_WALLET_UNIT}
             </span>
             <span className="text-xs">
               {CommonUtils.textFormat(TypeUtils.round(position.quantity, 8), TextFormats.NUMBER)}
