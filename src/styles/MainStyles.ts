@@ -6,7 +6,7 @@ export const PageWidth = tw.div`
 `;
 
 export const PageLayout = tw.div`
-  flex flex-col items-center w-full
+  flex flex-col items-center w-full pb-24
 `;
 
 export const PageContent = tw(PageWidth)`

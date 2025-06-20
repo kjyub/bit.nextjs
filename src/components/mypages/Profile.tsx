@@ -5,6 +5,7 @@ import * as I from '@/components/inputs/UserInputs';
 import { useUser } from '@/hooks/useUser';
 import useToastMessageStore from '@/store/useToastMessageStore';
 import { cn } from '@/utils/StyleUtils';
+import { useRouter } from 'next/navigation';
 import { useActionState, useEffect } from 'react';
 
 interface ProfileState {
@@ -12,8 +13,15 @@ interface ProfileState {
 }
 
 export default function Profile() {
-  const { user, setUser, reloadUser } = useUser();
+  const router = useRouter();
+  const { user, setUser, reloadUser, isAuth } = useUser();
   const { createMessage } = useToastMessageStore();
+
+  useEffect(() => {
+    if (!isAuth) {
+      router.push('/');
+    }
+  }, [isAuth, router]);
 
   useEffect(() => {
     reloadUser();
