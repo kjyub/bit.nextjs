@@ -30,6 +30,7 @@ export default function MinePlayButtonBox({ setRoom }: Props) {
     const errorMessage = await MineApi.validateMineRoom();
     if (errorMessage) {
       createMessage(errorMessage);
+      setIsLoading(false);
       return;
     }
 
