@@ -354,7 +354,7 @@ namespace CryptoApi {
     const result: MarketCommunity = new MarketCommunity();
 
     try {
-      const response = await defaultInstance.get(`api/cryptos/community/${nanoId}/`);
+      const response = await authInstance.get(`api/cryptos/community/${nanoId}/`);
       const data = (await response.json()) as any;
       result.parseResponse(data as any);
     } catch (error) {

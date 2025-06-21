@@ -1,0 +1,11 @@
+.grid-box {
+  animation: scrollDiagonal 60s linear infinite;
+}
+@keyframes scrollDiagonal {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(0, -100%);
+  }
+}

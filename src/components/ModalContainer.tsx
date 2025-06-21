@@ -3,6 +3,7 @@ import { cn } from '@/utils/StyleUtils';
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import tw from 'tailwind-styled-components';
+import useIsClient from '@/hooks/useIsClient';
 
 const Dimmer = tw.div<StyleProps>`
   absolute inset-0 z-0
@@ -12,6 +13,12 @@ const Dimmer = tw.div<StyleProps>`
 `;
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
+  const isClient = useIsClient();
+  
+  if (!isClient) {
+    return null;
+  }
+  
   return createPortal(children, document.body);
 };
 
