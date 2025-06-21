@@ -5,10 +5,10 @@ import UserApi from '@/apis/api/users/UserApi';
 import { setAuthToken } from '@/apis/utils/instances';
 import AppClientLayout from '@/layouts/AppClientLayout';
 import { AuthProvider } from '@/store/providers/AuthProvider';
+import { UiProvider } from '@/store/providers/UiProvider';
 import AuthServerUtils from '@/utils/AuthUtils.server';
 import Script from 'next/script';
 import { pretendard, sinchonRhapsody } from './fonts';
-import { UiProvider } from '@/store/providers/UiProvider';
 
 export const metadata: Metadata = {
   title: {
@@ -47,8 +47,8 @@ export default async function RootLayout({
       <body className={`${pretendard.variable} ${sinchonRhapsody.variable}`}>
         <AuthProvider authToken={authToken} userData={userData}>
           <UiProvider>
-              <AppClientLayout />
-              {children}
+            <AppClientLayout />
+            {children}
           </UiProvider>
         </AuthProvider>
       </body>
@@ -69,8 +69,9 @@ const FrontHead = () => {
         crossOrigin="anonymous"
       />
 
-      <script dangerouslySetInnerHTML={{
-        __html: `
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
           (function () {
             const chartColor = localStorage.getItem('chart_color');
             if (chartColor === 'red-blue') {
@@ -95,8 +96,9 @@ const FrontHead = () => {
               document.documentElement.style.setProperty('--color-position-short-strong', 'oklch(0.637 0.237 25.331)');
             }
           })();
-        `
-      }} />
+        `,
+        }}
+      />
     </>
   );
 };

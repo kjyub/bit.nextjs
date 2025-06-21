@@ -19,7 +19,12 @@ export default function CommunitySearch({ onSearch, defaultValue = '', placehold
   }, [defaultValue]);
 
   return (
-    <div className={cn(['flex items-center flex-1 h-10 px-3 space-x-2 rounded-lg bg-slate-500/30 backdrop-blur-sm transition-colors', isFocused && 'bg-slate-500/40'])}>
+    <div
+      className={cn([
+        'flex items-center flex-1 h-10 px-3 space-x-2 rounded-lg bg-slate-500/30 backdrop-blur-sm transition-colors',
+        isFocused && 'bg-slate-500/40',
+      ])}
+    >
       <input
         className={'w-full bg-transparent text-sm text-slate-300 placeholder:text-slate-500'}
         value={value}

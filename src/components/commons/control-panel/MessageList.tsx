@@ -1,13 +1,13 @@
 'use client';
 
-import UserApi from "@/apis/api/users/UserApi";
-import usePageScroll from "@/hooks/usePageScroll";
-import { useUser } from "@/hooks/useUser";
-import UserMessage from "@/types/users/UserMessage";
-import CommonUtils from "@/utils/CommonUtils";
-import { cn } from "@/utils/StyleUtils";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import UserApi from '@/apis/api/users/UserApi';
+import usePageScroll from '@/hooks/usePageScroll';
+import { useUser } from '@/hooks/useUser';
+import UserMessage from '@/types/users/UserMessage';
+import CommonUtils from '@/utils/CommonUtils';
+import { cn } from '@/utils/StyleUtils';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 const PAGE_SIZE = 10;
 
@@ -80,22 +80,19 @@ export default function MessageList({ ref, className, isOpen, onClose }: Props) 
   };
 
   return (
-    <div 
+    <div
       ref={ref}
       className={cn([
         'flex flex-col overflow-y-auto gap-2 rounded-lg',
         { 'pointer-events-none': messages.length === 0 },
-        className
+        className,
       ])}
     >
       {messages.map((message) => (
         <MessageItem key={message.id} message={message} onClose={onClose} handleRead={handleRead} />
       ))}
 
-
-      {messages.length === 0 && !isLoading && (
-        <span className="m-auto text-slate-200/70">메세지가 없습니다.</span>
-      )}
+      {messages.length === 0 && !isLoading && <span className="m-auto text-slate-200/70">메세지가 없습니다.</span>}
 
       {messages.length === 0 && isLoading && (
         <div className="flex flex-col w-full gap-2 [&>a]:animate-pulse [&_*]:text-transparent">
@@ -113,19 +110,31 @@ export default function MessageList({ ref, className, isOpen, onClose }: Props) 
 
       <Skeletons ref={scrollRef} pageIndex={pageIndex} itemCount={itemCount} pageSize={PAGE_SIZE} />
     </div>
-  )
+  );
 }
 
-const MessageItem = ({ message, onClose, handleRead }: { message: UserMessage, onClose?: () => void, handleRead?: (e: React.MouseEvent<HTMLButtonElement>, messageId: number) => void }) => {
+const MessageItem = ({
+  message,
+  onClose,
+  handleRead,
+}: {
+  message: UserMessage;
+  onClose?: () => void;
+  handleRead?: (e: React.MouseEvent<HTMLButtonElement>, messageId: number) => void;
+}) => {
   return (
-    <Link 
+    <Link
       className="flex flex-col w-full p-4 gap-0.5 rounded-2xl bg-slate-700/40 hover:bg-slate-700/60 transition-colors"
       href={message.link}
       onClick={onClose}
     >
       <div className="flex justify-between w-full">
         <span className="text-xs text-slate-400">{CommonUtils.getDateShorten(message.createdDate)}</span>
-        <button className="text-sm text-slate-400 hover:text-slate-300" type="button" onClick={(e) => handleRead?.(e, message.id)}>
+        <button
+          className="text-sm text-slate-400 hover:text-slate-300"
+          type="button"
+          onClick={(e) => handleRead?.(e, message.id)}
+        >
           <i className="fa-solid fa-xmark"></i>
         </button>
       </div>
@@ -133,8 +142,8 @@ const MessageItem = ({ message, onClose, handleRead }: { message: UserMessage, o
         <span className="text-sm text-slate-300">{message.message}</span>
       </div>
     </Link>
-  )
-}
+  );
+};
 
 const dummyMessage = new UserMessage();
 dummyMessage.parseResponse({
@@ -154,10 +163,7 @@ const Skeletons = ({ ref, pageIndex, itemCount, pageSize }: SkeletonProps) => {
   const isShow = pageIndex * pageSize < itemCount;
 
   return (
-    <div
-      ref={ref}
-      className="flex flex-col w-full gap-2 [&>a]:animate-pulse [&_*]:text-transparent [&_*]:skeleton"
-    >
+    <div ref={ref} className="flex flex-col w-full gap-2 [&>a]:animate-pulse [&_*]:text-transparent [&_*]:skeleton">
       {isShow && (
         <>
           <MessageItem message={dummyMessage} />
@@ -166,5 +172,5 @@ const Skeletons = ({ ref, pageIndex, itemCount, pageSize }: SkeletonProps) => {
         </>
       )}
     </div>
-  )
-}
+  );
+};

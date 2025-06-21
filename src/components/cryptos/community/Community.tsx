@@ -1,8 +1,11 @@
 'use client';
 import CryptoApi from '@/apis/api/cryptos/CryptoApi';
 import type { IMarketPageSearchParams } from '@/app/(front)/crypto/[code]/page';
+import ModalContainer from '@/components/ModalContainer';
 import { MARKET_COMMUNITY_PAGE_SIZE } from '@/constants/CryptoConsts';
 import { useUser } from '@/hooks/useUser';
+import useSystemMessageStore from '@/store/useSystemMessageStore';
+import useToastMessageStore from '@/store/useToastMessageStore';
 import * as CS from '@/styles/CryptoMarketCommunityStyles';
 import { TextFormats } from '@/types/CommonTypes';
 import Pagination from '@/types/api/pagination';
@@ -17,9 +20,6 @@ import CommunityPagination from '../../atomics/community/CommunityPagination';
 import CommunitySearch from '../../atomics/community/CommunitySearch';
 import CryptoMarketCommunityEditor from './CommunityEditor';
 import CryptoMarketCommunityView from './CommunityView';
-import ModalContainer from '@/components/ModalContainer';
-import useToastMessageStore from '@/store/useToastMessageStore';
-import useSystemMessageStore from '@/store/useSystemMessageStore';
 
 interface ICryptoMarketCommunity {
   marketCode: string;

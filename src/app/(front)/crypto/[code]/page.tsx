@@ -1,7 +1,7 @@
 import CryptoServerApi from '@/apis/api/cryptos/CryptoServerApi';
+import TradeGoApi from '@/apis/api/cryptos/TradeGoApi';
 import CryptoMarketMain from '@/components/cryptos/market/MarketMain';
 import CryptoMarketCommunityPage from './community';
-import TradeGoApi from '@/apis/api/cryptos/TradeGoApi';
 
 export interface IMarketPageSearchParams {
   search: string;

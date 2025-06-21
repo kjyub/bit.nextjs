@@ -13,14 +13,14 @@ interface ICryptoMarketChart {
 export default function CryptoMarketChart({ marketCode }: ICryptoMarketChart) {
   return (
     // <CryptoMarketChartProvider marketCode={marketCode}>
-      <div className="flex flex-col h-full gap-2">
-        <CryptoMarketChartControlBar />
+    <div className="flex flex-col h-full gap-2">
+      <CryptoMarketChartControlBar />
 
-        <div className="relative h-full select-none touch-none">
-          {/* <CryptoMarketFinancialChart /> */}
-          <TradingChart marketCode={marketCode} />
-        </div>
+      <div className="relative h-full select-none touch-none">
+        {/* <CryptoMarketFinancialChart /> */}
+        <TradingChart marketCode={marketCode} />
       </div>
+    </div>
     // </CryptoMarketChartProvider>
   );
 }

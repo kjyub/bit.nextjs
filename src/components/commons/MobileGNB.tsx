@@ -1,5 +1,6 @@
 'use client';
 
+import { DEFAULT_MARKET_CODE } from '@/constants/CryptoConsts';
 import { useIsScrollUp } from '@/hooks/useIsScrollUp';
 import { useUser } from '@/hooks/useUser';
 import * as NS from '@/styles/MobileGNBStyles';
@@ -7,7 +8,6 @@ import CommonUtils from '@/utils/CommonUtils';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import MobileMenu from './control-panel/MobileMenu';
-import { DEFAULT_MARKET_CODE } from '@/constants/CryptoConsts';
 
 export default function MobileGNB() {
   // 회원 관련
@@ -20,7 +20,7 @@ export default function MobileGNB() {
   const handleMenu = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     setIsMenuOpen(!isMenuOpen);
-  }
+  };
 
   return (
     <NS.Layout $is_show={!isHide}>
@@ -29,7 +29,10 @@ export default function MobileGNB() {
           <i className="fa-solid fa-house"></i>
           <span>홈</span>
         </NS.LinkButton>
-        <NS.LinkButton href={isAuth ? '/crypto' : `/crypto/${DEFAULT_MARKET_CODE}`} className={CommonUtils.isPathActive(pathname, '/crypto') ? 'active' : ''}>
+        <NS.LinkButton
+          href={isAuth ? '/crypto' : `/crypto/${DEFAULT_MARKET_CODE}`}
+          className={CommonUtils.isPathActive(pathname, '/crypto') ? 'active' : ''}
+        >
           <i className="fa-solid fa-coins"></i>
           <span>거래소</span>
         </NS.LinkButton>

@@ -1,8 +1,8 @@
 'use client';
 import useSystemMessageStore, { type SystemMessage } from '@/store/useSystemMessageStore';
-import ModalContainer from '../ModalContainer';
-import tw from 'tailwind-styled-components';
 import { useEffect, useRef, useState } from 'react';
+import tw from 'tailwind-styled-components';
+import ModalContainer from '../ModalContainer';
 
 const SystemMessagePopup = () => {
   const messages = useSystemMessageStore((state) => state.messages);
@@ -24,7 +24,7 @@ const SystemMessagePopup = () => {
 
   return (
     // ModalContainer의 isOpen엔 message값으로 넣어서 미리 isOpen을 끈다. (애니메이션)
-    <ModalContainer isOpen={messages.length > 0} setIsOpen={() => {}}> 
+    <ModalContainer isOpen={messages.length > 0} setIsOpen={() => {}}>
       {message && <Wrapper message={message} />}
     </ModalContainer>
   );
@@ -46,7 +46,7 @@ const Wrapper = ({ message }: { message: SystemMessage }) => {
       document.removeEventListener('keydown', handleKey);
     };
   }, []);
-  
+
   const handleConfirm = () => {
     message.onConfirm?.();
     message.resolve(true);
@@ -95,7 +95,7 @@ const Layout = tw.div`
   [&>.control>button]:transition-colors
 `;
 
-const Alert = ({ message, onConfirm }: { message: SystemMessage, onConfirm: () => void }) => {
+const Alert = ({ message, onConfirm }: { message: SystemMessage; onConfirm: () => void }) => {
   const confirmButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -106,9 +106,7 @@ const Alert = ({ message, onConfirm }: { message: SystemMessage, onConfirm: () =
 
   return (
     <Layout>
-      <div className="content">
-        {message.content}
-      </div>
+      <div className="content">{message.content}</div>
       <div className="control">
         <button type="button" className="confirm" ref={confirmButtonRef} onClick={onConfirm}>
           확인
@@ -118,7 +116,11 @@ const Alert = ({ message, onConfirm }: { message: SystemMessage, onConfirm: () =
   );
 };
 
-const Confirm = ({ message, onConfirm, onCancel }: { message: SystemMessage, onConfirm: () => void, onCancel: () => void }) => {
+const Confirm = ({
+  message,
+  onConfirm,
+  onCancel,
+}: { message: SystemMessage; onConfirm: () => void; onCancel: () => void }) => {
   const confirmButtonRef = useRef<HTMLButtonElement>(null);
   const cancelButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -130,11 +132,9 @@ const Confirm = ({ message, onConfirm, onCancel }: { message: SystemMessage, onC
 
   return (
     <Layout>
-      <div className="content">
-        {message.content}
-      </div>
+      <div className="content">{message.content}</div>
       {/* 포커스 처리를 위한 flex-row-reverse */}
-      <div className="control flex-row-reverse"> 
+      <div className="control flex-row-reverse">
         <button type="button" className="confirm" ref={confirmButtonRef} onClick={onConfirm}>
           확인
         </button>

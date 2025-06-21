@@ -29,7 +29,7 @@ import {
 import { type MutableRefObject, useCallback, useEffect, useRef } from 'react';
 import { useCryptoMarketChart } from '../market/MarketChartProvider';
 import { CandleTimes, ChartTypes } from './Types';
-import { getTimeFormatter, parseAreaData, parseCandleData, parseVolumeData, getUpColor, getDownColor } from './utils';
+import { getDownColor, getTimeFormatter, getUpColor, parseAreaData, parseCandleData, parseVolumeData } from './utils';
 
 const chartOptions: DeepPartial<ChartOptions> = {
   layout: {
@@ -378,7 +378,7 @@ export default function TradingChart({ marketCode }: Props) {
         liqPriceLineRef.current = null;
       }
       return;
-    };
+    }
 
     const entryPrice = Number(positon.entryPrice);
     const liqPrice = Number(positon.liquidatePrice);

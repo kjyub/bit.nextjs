@@ -45,27 +45,13 @@ export default function ExitButton({ action, className, ...props }: Props) {
       onTouchEnd={handleStopHolding}
       onTouchCancel={handleStopHolding}
     >
-      <span className="absolute left-4 whitespace-nowrap font-medium">
-        나가기
-      </span>
+      <span className="absolute left-4 whitespace-nowrap font-medium">나가기</span>
 
       {isHolding && (
         <div className="relative w-6 h-6 mr-2.5">
           <svg viewBox="0 0 36 36" className="absolute top-0 left-0 w-full h-full">
-          <circle
-            className="stroke-bg"
-            cx="18"
-            cy="18"
-            r="16"
-            fill="none"
-          />
-          <circle
-            className="stroke-ring"
-            cx="18"
-            cy="18"
-            r="16"
-            fill="none"
-            />
+            <circle className="stroke-bg" cx="18" cy="18" r="16" fill="none" />
+            <circle className="stroke-ring" cx="18" cy="18" r="16" fill="none" />
           </svg>
         </div>
       )}

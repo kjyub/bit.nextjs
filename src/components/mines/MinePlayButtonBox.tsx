@@ -1,11 +1,11 @@
 'use client';
 
-import MineApi from "@/apis/api/mines/MineApi";
-import { useUser } from "@/hooks/useUser"
-import useToastMessageStore from "@/store/useToastMessageStore";
-import type MineRoom from "@/types/mines/MineRoom";
-import { cn } from "@/utils/StyleUtils";
-import { useRef, useState } from "react";
+import MineApi from '@/apis/api/mines/MineApi';
+import { useUser } from '@/hooks/useUser';
+import useToastMessageStore from '@/store/useToastMessageStore';
+import type MineRoom from '@/types/mines/MineRoom';
+import { cn } from '@/utils/StyleUtils';
+import { useRef, useState } from 'react';
 // import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 interface Props {
@@ -52,7 +52,7 @@ export default function MinePlayButtonBox({ setRoom }: Props) {
     }
 
     createMessage('방 생성 실패');
-  }
+  };
 
   return (
     <div className="flex flex-col flex-center w-full gap-4">
@@ -78,5 +78,5 @@ export default function MinePlayButtonBox({ setRoom }: Props) {
         }}
       /> */}
     </div>
-  )
+  );
 }

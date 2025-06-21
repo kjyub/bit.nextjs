@@ -73,7 +73,11 @@ export default function CryptoMarketInfo({ marketCode, marketData, marketCurrent
         <S.MainTitleBox>
           <div className="p-1 bg-slate-200 rounded-lg">
             <div className="relative flex flex-cetner max-md:w-6 md:w-7 aspect-square">
-              <img src={`https://static.upbit.com/logos/${imageCode}.png`} alt="coin" className="w-full h-full object-contain" />
+              <img
+                src={`https://static.upbit.com/logos/${imageCode}.png`}
+                alt="coin"
+                className="w-full h-full object-contain"
+              />
             </div>
           </div>
           <h1 className="max-md:text-xl md:text-3xl text-slate-50 font-semibold">{market.koreanName}</h1>

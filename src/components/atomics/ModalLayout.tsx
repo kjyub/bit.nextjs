@@ -8,12 +8,7 @@ interface IModalLayout {
 }
 export default function ModalLayout({ title, layoutClassName = 'w-96', contentClassName, children }: IModalLayout) {
   return (
-    <div
-      className={cn(
-        'flex flex-col [&>div]:w-full [&>div]:p-6 modal-panel overflow-hidden',
-        layoutClassName,
-      )}
-    >
+    <div className={cn('flex flex-col [&>div]:w-full [&>div]:p-6 modal-panel overflow-hidden', layoutClassName)}>
       {/* 헤더 */}
       <div className="flex items-center h-16 rounded-t-xl border-x border-t border-slate-700/50">
         <span className="text-xl font-medium text-slate-200">{title}</span>

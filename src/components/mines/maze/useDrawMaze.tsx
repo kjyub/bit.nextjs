@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
 export default function useDrawMaze(maze: number[][]) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -12,7 +12,7 @@ export default function useDrawMaze(maze: number[][]) {
     const cellSize = 1;
     canvas.width = maze[0].length * cellSize;
     canvas.height = maze.length * cellSize;
-    
+
     ctx.imageSmoothingEnabled = false;
 
     // 미로 그리기
@@ -22,7 +22,7 @@ export default function useDrawMaze(maze: number[][]) {
         ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
       });
     });
-  }, [maze]); 
+  }, [maze]);
 
   return canvasRef;
 }

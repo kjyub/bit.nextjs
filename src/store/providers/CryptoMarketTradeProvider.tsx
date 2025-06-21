@@ -28,9 +28,7 @@ export const CryptoMarketTradeProvider = ({
 
   return (
     <CryptoMarketTradeContext.Provider value={{ tradePrice, setTradePrice }}>
-      <CryptoMarketChartProvider marketCode={marketCode}>
-        {children}
-      </CryptoMarketChartProvider>
+      <CryptoMarketChartProvider marketCode={marketCode}>{children}</CryptoMarketChartProvider>
     </CryptoMarketTradeContext.Provider>
   );
 };

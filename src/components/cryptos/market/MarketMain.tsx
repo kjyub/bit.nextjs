@@ -10,9 +10,9 @@ import { useEffect, useState } from 'react';
 import CryptoMyTrade from '../mytrade/MyTradeMain';
 import CryptoMarketChart from './MarketChart';
 import CryptoMarketInfo from './MarketInfo';
+import CryptoMarketMobileChart from './MarketMobileChart';
 import CryptoMarketOrderBook from './MarketOrderBook';
 import CryptoMarketTrade from './MarketTrade';
-import CryptoMarketMobileChart from './MarketMobileChart';
 
 // const CryptoMarketMobileChart = dynamic(() => import('./MarketMobileChart'), { ssr: false });
 

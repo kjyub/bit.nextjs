@@ -1,7 +1,7 @@
-import MineRoom from "@/types/mines/MineRoom";
-import Link from "next/link";
-import { useState } from "react";
-import CountUp from "react-countup";
+import MineRoom from '@/types/mines/MineRoom';
+import Link from 'next/link';
+import { useState } from 'react';
+import CountUp from 'react-countup';
 
 interface Props {
   room: MineRoom;
@@ -17,19 +17,13 @@ export default function MineComplete({ room, setRoom }: Props) {
           <span className="text-4xl font-sinchon-rhapsody">완료!</span>
           <span className="text-stone-700">노역을 완료했습니다!</span>
         </div>
-        
+
         <span className="text-stone-100 text-lg">
-          +<CountUp
-            start={0}
-            end={room.reward}
-            duration={2}
-            suffix=" W"
-            onEnd={() => setIsActive(true)}
-          />
+          +<CountUp start={0} end={room.reward} duration={2} suffix=" W" onEnd={() => setIsActive(true)} />
         </span>
 
         {isActive && (
-          <button 
+          <button
             type="button"
             className="px-6 h-10 rounded-xl bg-orange-700/70 text-stone-100 font-medium mouse:hover:scale-105 active:scale-95 duration-200"
             onClick={() => setRoom(new MineRoom())}
@@ -39,5 +33,5 @@ export default function MineComplete({ room, setRoom }: Props) {
         )}
       </div>
     </div>
-  )
+  );
 }

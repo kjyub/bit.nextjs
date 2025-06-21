@@ -1,6 +1,7 @@
 'use client';
 
 import CryptoApi from '@/apis/api/cryptos/CryptoApi';
+import { CRYPTO_WALLET_UNIT } from '@/constants/CryptoConsts';
 import usePageScroll from '@/hooks/usePageScroll';
 import * as S from '@/styles/CryptoMyTradeStyles';
 import { PositionTypes, TradeOrderTypeNames } from '@/types/cryptos/CryptoTypes';
@@ -11,7 +12,6 @@ import { useState } from 'react';
 import CryptoMyTradeFilter from './Filter';
 import HeaderLink from './HeaderLink';
 import CryptoMyTradeItemSkeleton from './ItemSkeleton';
-import { CRYPTO_WALLET_UNIT } from '@/constants/CryptoConsts';
 
 const PAGE_SIZE = 10;
 
@@ -122,7 +122,10 @@ const Order = ({ order }: IOrder) => {
           <dt>
             수량 <span>Amount</span>
           </dt>
-          <dd>{CryptoUtils.getPriceText(order.size)}{CRYPTO_WALLET_UNIT}</dd>
+          <dd>
+            {CryptoUtils.getPriceText(order.size)}
+            {CRYPTO_WALLET_UNIT}
+          </dd>
         </S.OrderItem>
         <S.OrderItem className={''}>
           <dt>

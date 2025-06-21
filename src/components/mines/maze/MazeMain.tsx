@@ -1,8 +1,8 @@
 import { use, useState } from 'react';
 
+import { MineContext } from '../MinePlay';
 import MazeCanvas from './MazeCanvas';
 import { generateMaze } from './utils';
-import { MineContext } from '../MinePlay';
 
 const SIZE = 13;
 const ROUND = 3;

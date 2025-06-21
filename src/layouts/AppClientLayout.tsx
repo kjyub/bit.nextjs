@@ -24,7 +24,7 @@ export default function AppClientLayout({
 
   const { setUser } = useUser();
   const createToastMessage = useToastMessageStore((state) => state.createMessage);
-  
+
   useAlarmSocket();
 
   useEffect(() => {

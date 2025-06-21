@@ -2,7 +2,9 @@
 
 import CryptoApi from '@/apis/api/cryptos/CryptoApi';
 import * as I from '@/components/inputs/TradeInputs';
+import { CRYPTO_WALLET_UNIT } from '@/constants/CryptoConsts';
 import useMarketPriceStore from '@/store/useMarketPriceStore';
+import useToastMessageStore from '@/store/useToastMessageStore';
 import useUserInfoStore from '@/store/useUserInfo';
 import * as S from '@/styles/CryptoMyTradeStyles';
 import { TextFormats } from '@/types/CommonTypes';
@@ -21,8 +23,6 @@ import CryptoUtils from '@/utils/CryptoUtils';
 import TypeUtils from '@/utils/TypeUtils';
 import { useCallback, useEffect, useState } from 'react';
 import HeaderLink from './HeaderLink';
-import { CRYPTO_WALLET_UNIT } from '@/constants/CryptoConsts';
-import useToastMessageStore from '@/store/useToastMessageStore';
 
 export default function CryptoMyTradePosition() {
   const { balance, myTrades } = useUserInfoStore();

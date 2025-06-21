@@ -21,4 +21,4 @@ export const useInView = (options: IntersectionObserverInit = {}) => {
   }, [options]);
 
   return { ref, inView };
-}
+};

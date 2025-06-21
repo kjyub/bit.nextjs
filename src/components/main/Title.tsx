@@ -1,12 +1,11 @@
-import { Suspense } from "react";
-import type { IUpbitMarketTicker } from "@/types/cryptos/CryptoInterfaces";
-import MarketGrid from "./MarketGrid";
+import type { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
+import { Suspense } from 'react';
+import MarketGrid from './MarketGrid';
 
 interface Props {
   getMarketsPromise: Promise<IUpbitMarketTicker[]>;
 }
 export default function Title({ getMarketsPromise }: Props) {
-
   return (
     <div className="relative flex flex-col w-full max-md:aspect-square md:aspect-video rounded-4xl overflow-hidden">
       <div className="absolute-center z-10 flex flex-col items-center">

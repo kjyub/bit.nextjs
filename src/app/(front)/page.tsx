@@ -1,7 +1,7 @@
-import CryptoServerApi from "@/apis/api/cryptos/CryptoServerApi";
-import TradeGoApi from "@/apis/api/cryptos/TradeGoApi";
-import Title from "@/components/main/Title";
-import TodayMarkets from "@/components/main/TodayMarkets";
+import CryptoServerApi from '@/apis/api/cryptos/CryptoServerApi';
+import TradeGoApi from '@/apis/api/cryptos/TradeGoApi';
+import Title from '@/components/main/Title';
+import TodayMarkets from '@/components/main/TodayMarkets';
 
 export default async function Home() {
   const getMarketsPromise = TradeGoApi.getMarketsCurrent();

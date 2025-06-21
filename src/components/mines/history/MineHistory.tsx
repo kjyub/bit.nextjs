@@ -1,16 +1,16 @@
 'use client';
 
-import type Pagination from "@/types/api/pagination";
-import { TextFormats } from "@/types/CommonTypes";
-import type MineRoom from "@/types/mines/MineRoom";
-import type { StyleProps } from "@/types/StyleTypes";
-import CommonUtils from "@/utils/CommonUtils";
-import { useEffect, useRef, useState } from "react";
+import MineApi from '@/apis/api/mines/MineApi';
+import usePageScroll from '@/hooks/usePageScroll';
+import { TextFormats } from '@/types/CommonTypes';
+import type { StyleProps } from '@/types/StyleTypes';
+import type Pagination from '@/types/api/pagination';
+import type MineRoom from '@/types/mines/MineRoom';
+import CommonUtils from '@/utils/CommonUtils';
+import { cn } from '@/utils/StyleUtils';
+import { useEffect, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
-import { secondsToTime } from "../maze/utils";
-import MineApi from "@/apis/api/mines/MineApi";
-import usePageScroll from "@/hooks/usePageScroll";
-import { cn } from "@/utils/StyleUtils";
+import { secondsToTime } from '../maze/utils';
 
 const PAGE_SIZE = 10;
 
@@ -70,13 +70,9 @@ export default function MineHistory() {
     pageSize: PAGE_SIZE,
   });
 
-
   return (
-    <div 
-      className={cn([
-        'flex flex-col max-sm:w-full sm:w-108 mt-16 mb-24 gap-2 duration-200',
-        { 'opacity-0': !isShow }
-      ])}
+    <div
+      className={cn(['flex flex-col max-sm:w-full sm:w-108 mt-16 mb-24 gap-2 duration-200', { 'opacity-0': !isShow }])}
     >
       <div className="flex justify-between items-center w-full">
         <span className="font-semibold text-stone-300">노역록</span>
@@ -92,7 +88,7 @@ export default function MineHistory() {
       </div>
 
       <div className="flex flex-col w-full min-h-24 max-h-[90dvh] gap-1 divide-y divide-stone-800 overflow-y-auto scroll-transparent">
-        {mineHistory.map(room => (
+        {mineHistory.map((room) => (
           <div key={room.id} className="flex flex-col justify-center w-full px-2 py-4 gap-2">
             <div className="flex justify-between items-baseline w-full">
               <span className="text-[13px] text-stone-400">{room.user.nickname}</span>
@@ -111,5 +107,5 @@ export default function MineHistory() {
         <div ref={scrollRef} className="h-1" />
       </div>
     </div>
-  )
+  );
 }

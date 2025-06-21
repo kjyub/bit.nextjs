@@ -1,9 +1,9 @@
+import useIsClient from '@/hooks/useIsClient';
 import type { StyleProps } from '@/types/StyleTypes';
 import { cn } from '@/utils/StyleUtils';
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import tw from 'tailwind-styled-components';
-import useIsClient from '@/hooks/useIsClient';
 
 const Dimmer = tw.div<StyleProps>`
   absolute inset-0 z-0
@@ -14,11 +14,11 @@ const Dimmer = tw.div<StyleProps>`
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const isClient = useIsClient();
-  
+
   if (!isClient) {
     return null;
   }
-  
+
   return createPortal(children, document.body);
 };
 
@@ -66,16 +66,9 @@ export default function ModalContainer({ isOpen, setIsOpen, isEscClose = true, c
 
   return (
     <Layout>
-      <div 
-        className={cn([
-          'fixed inset-0 z-100 flex flex-center w-screen h-dvh',
-          { 'pointer-events-none': !isOpen },
-        ])}
-      >
+      <div className={cn(['fixed inset-0 z-100 flex flex-center w-screen h-dvh', { 'pointer-events-none': !isOpen }])}>
         <Dimmer onClick={() => setIsOpen(false)} $is_active={isOpen} />
-        <Wrapper isOpen={isOpen}>
-          {children}
-        </Wrapper>
+        <Wrapper isOpen={isOpen}>{children}</Wrapper>
       </div>
     </Layout>
   );

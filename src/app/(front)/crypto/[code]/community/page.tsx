@@ -1,8 +1,8 @@
 import CryptoServerApi from '@/apis/api/cryptos/CryptoServerApi';
+import TradeGoApi from '@/apis/api/cryptos/TradeGoApi';
 import CryptoMarketInfo from '@/components/cryptos/market/MarketInfo';
 import CryptoMarketCommunityPage from '../community';
 import type { IMarketPageSearchParams } from '../page';
-import TradeGoApi from '@/apis/api/cryptos/TradeGoApi';
 
 export async function generateMetadata({ params }: Props) {
   const awaitParams = await params;

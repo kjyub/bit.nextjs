@@ -1,6 +1,7 @@
 'use client';
 
 import NextUpbitApi from '@/apis/api/cryptos/NextUpbitApi';
+import useTradeMarketChartSocket from '@/hooks/sockets/useTradeMarketChartSocket';
 import { useCryptoMarketTrade } from '@/hooks/useCryptoMarketTrade';
 import useToastMessageStore from '@/store/useToastMessageStore';
 import type { IUpbitCandle, IUpbitOrderBook } from '@/types/cryptos/CryptoInterfaces';
@@ -18,7 +19,6 @@ import {
   useState,
 } from 'react';
 import { CANDLE_SIZE, type CandleTimeType, CandleTimes, type ChartType, ChartTypes } from '../chart/Types';
-import useTradeMarketChartSocket from '@/hooks/sockets/useTradeMarketChartSocket';
 
 const MAX_CANDLES = 100000;
 const REMOVE_CANDLES = 1000;
@@ -161,7 +161,6 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
   useEffect(() => {
     initChart(CandleTimes.MINUTE1);
 
-
     getOrderBook(marketCode);
   }, [marketCode]);
 
@@ -176,7 +175,7 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
   const initChart = useCallback(
     async (timeType: CandleTimeType) => {
       if (!marketCode) return;
-      
+
       await getCandleData(timeType);
       console.log('[차트] 초기화', marketCode, timeType);
       connectChart(marketCode, timeType);

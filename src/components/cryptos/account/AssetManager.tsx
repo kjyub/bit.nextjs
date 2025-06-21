@@ -2,6 +2,8 @@
 
 import ModalContainer from '@/components/ModalContainer';
 import CommonButton from '@/components/atomics/buttons/CommonButton';
+import { CASH_UNIT, CRYPTO_WALLET_UNIT } from '@/constants/CryptoConsts';
+import useSystemMessageStore from '@/store/useSystemMessageStore';
 import useUserInfoStore from '@/store/useUserInfo';
 import * as S from '@/styles/CryptoWalletStyles';
 import { TextFormats } from '@/types/CommonTypes';
@@ -9,8 +11,6 @@ import { type TransferType, TransferTypes } from '@/types/cryptos/CryptoTypes';
 import CommonUtils from '@/utils/CommonUtils';
 import { useEffect, useMemo, useState } from 'react';
 import CryptoTransferModal from '../CryptoTransferModal';
-import { CASH_UNIT, CRYPTO_WALLET_UNIT } from '@/constants/CryptoConsts';
-import useSystemMessageStore from '@/store/useSystemMessageStore';
 
 export default function AssetManager() {
   const [isTransferModalOpen, setTransferModalOpen] = useState<boolean>(false);
@@ -38,20 +38,25 @@ export default function AssetManager() {
 
   return (
     <S.WalletLayout>
-      <span className="title" onClick={async () => {
-        createSystemMessage({
-          type: 'confirm',
-          content: '자산',
-          onConfirm: () => {
-            console.log('confirm');
-          },
-          onCancel: () => {
-            console.log('cancel');
-          },
-        }).then((result) => {
-          console.log('result', result);
-        });
-      }}>자산</span>
+      <span
+        className="title"
+        onClick={async () => {
+          createSystemMessage({
+            type: 'confirm',
+            content: '자산',
+            onConfirm: () => {
+              console.log('confirm');
+            },
+            onCancel: () => {
+              console.log('cancel');
+            },
+          }).then((result) => {
+            console.log('result', result);
+          });
+        }}
+      >
+        자산
+      </span>
       <div className="grid max-sm:grid-cols-1 sm:grid-cols-2 gap-8 w-full">
         <S.WalletBox>
           <div className="header">
@@ -73,7 +78,8 @@ export default function AssetManager() {
           <div className="content">
             <div className="label">총 잔액</div>
             <div className={`value ${isLoading ? 'skeleton w-24' : ''}`}>
-              {CommonUtils.textFormat(cash, TextFormats.NUMBER)}{CASH_UNIT}
+              {CommonUtils.textFormat(cash, TextFormats.NUMBER)}
+              {CASH_UNIT}
             </div>
           </div>
         </S.WalletBox>
@@ -97,26 +103,36 @@ export default function AssetManager() {
           <div className="content">
             <div className="label">지갑 총액</div>
             <div className={`value ${isLoading ? 'skeleton w-24' : ''}`}>
-              {CommonUtils.textFormat(Math.floor(balance), TextFormats.NUMBER)}{CRYPTO_WALLET_UNIT}
+              {CommonUtils.textFormat(Math.floor(balance), TextFormats.NUMBER)}
+              {CRYPTO_WALLET_UNIT}
             </div>
           </div>
           <div className="content">
             <div className="label">사용 중</div>
             <div className={`value ${isLoading ? 'skeleton w-24' : ''}`}>
-              {CommonUtils.textFormat(Math.floor(locked), TextFormats.NUMBER)}{CRYPTO_WALLET_UNIT}
+              {CommonUtils.textFormat(Math.floor(locked), TextFormats.NUMBER)}
+              {CRYPTO_WALLET_UNIT}
             </div>
           </div>
           <div className="content">
             <div className="label">사용 가능</div>
             <div className={`value ${isLoading ? 'skeleton w-24' : ''}`}>
-              {CommonUtils.textFormat(Math.floor(availableBalance), TextFormats.NUMBER)}{CRYPTO_WALLET_UNIT}
+              {CommonUtils.textFormat(Math.floor(availableBalance), TextFormats.NUMBER)}
+              {CRYPTO_WALLET_UNIT}
             </div>
           </div>
         </S.WalletBox>
       </div>
 
       <ModalContainer isOpen={isTransferModalOpen} setIsOpen={setTransferModalOpen}>
-        <CryptoTransferModal defaultTransferType={transferType} cash={cash} balance={balance} close={() => {setTransferModalOpen(false);}} />
+        <CryptoTransferModal
+          defaultTransferType={transferType}
+          cash={cash}
+          balance={balance}
+          close={() => {
+            setTransferModalOpen(false);
+          }}
+        />
       </ModalContainer>
     </S.WalletLayout>
   );

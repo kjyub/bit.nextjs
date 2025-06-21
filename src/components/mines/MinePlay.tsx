@@ -1,14 +1,14 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import ExitButton from "./ExitButton";
-import MineRoom from "@/types/mines/MineRoom";
-import MazeMain from "./maze/MazeMain";
-import { createContext } from "react";
-import MineApi from "@/apis/api/mines/MineApi";
-import MineComplete from "./MineComplete";
-import { secondsToTime } from "./maze/utils";
-import useToastMessageStore from "@/store/useToastMessageStore";
+import MineApi from '@/apis/api/mines/MineApi';
+import useToastMessageStore from '@/store/useToastMessageStore';
+import MineRoom from '@/types/mines/MineRoom';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { createContext } from 'react';
+import ExitButton from './ExitButton';
+import MineComplete from './MineComplete';
+import MazeMain from './maze/MazeMain';
+import { secondsToTime } from './maze/utils';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -17,8 +17,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         {children}
       </div>
     </div>
-  )
-}
+  );
+};
 
 interface MineContextType {
   round: number;
@@ -52,7 +52,7 @@ export default function MinePlay({ room, setRoom }: Props) {
 
     timerRef.current = null;
     timerRef.current = setInterval(() => {
-      setTime(prev => prev + 1);
+      setTime((prev) => prev + 1);
     }, 1000);
 
     document.body.style.overflow = 'hidden';
@@ -64,8 +64,8 @@ export default function MinePlay({ room, setRoom }: Props) {
       }
 
       document.body.style.overflow = 'auto';
-    }
-  }, [room])
+    };
+  }, [room]);
 
   const handleComplete = useCallback(async () => {
     if (!timerRef.current) return;
@@ -76,12 +76,12 @@ export default function MinePlay({ room, setRoom }: Props) {
     const response = await MineApi.updateMineRoom(room.id, time);
     if (response.id) {
       setIsComplete(true);
-      setRoom(response)
+      setRoom(response);
     } else {
       createToastMessage('오류가 발생했습니다. 다시 시도해주세요.');
       setRoom(new MineRoom());
     }
-  }, [time])
+  }, [time]);
 
   return (
     <MineContext.Provider value={{ round, setRound, time, setTime, onComplete: handleComplete }}>
@@ -105,5 +105,5 @@ export default function MinePlay({ room, setRoom }: Props) {
         </div>
       </Layout>
     </MineContext.Provider>
-  )
+  );
 }

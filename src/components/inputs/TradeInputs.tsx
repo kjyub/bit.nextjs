@@ -541,7 +541,13 @@ export const TradeSizeInput = ({
       >
         {!isPercent ? (
           sizeUnitType === SizeUnitTypes.PRICE ? (
-            <NumberInput label={'크기'} value={sizeValue} setValue={handleSize} max={maxSize} suffix={CRYPTO_WALLET_UNIT} />
+            <NumberInput
+              label={'크기'}
+              value={sizeValue}
+              setValue={handleSize}
+              max={maxSize}
+              suffix={CRYPTO_WALLET_UNIT}
+            />
           ) : (
             <NumberInput
               label={'크기'}

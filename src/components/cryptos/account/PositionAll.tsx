@@ -71,7 +71,8 @@ export default function PositionAll({ positions, balance, isLoading }: Props) {
         <div className="flex flex-col max-sm:w-full sm:gap-1">
           <span className="text-slate-300">전체 손익</span>
           <span className={`text-2xl font-bold price-color ${values.priceChange} ${isLoading ? 'skeleton w-24' : ''}`}>
-            {CommonUtils.textFormat(TypeUtils.round(values.pnl, 0), TextFormats.NUMBER)}{CRYPTO_WALLET_UNIT}
+            {CommonUtils.textFormat(TypeUtils.round(values.pnl, 0), TextFormats.NUMBER)}
+            {CRYPTO_WALLET_UNIT}
           </span>
         </div>
         {/* 전체 손익률 */}
@@ -112,7 +113,10 @@ export default function PositionAll({ positions, balance, isLoading }: Props) {
   );
 }
 
-const PriceCode = ({ code, setMarketPrices }: { code: string, setMarketPrices: Dispatch<SetStateAction<Record<string, number>>>}) => {
+const PriceCode = ({
+  code,
+  setMarketPrices,
+}: { code: string; setMarketPrices: Dispatch<SetStateAction<Record<string, number>>> }) => {
   const price = useMarketPriceStore((state) => state.marketDic[code]?.trade_price ?? 0);
 
   useEffect(() => {

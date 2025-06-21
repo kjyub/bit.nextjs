@@ -2,8 +2,8 @@
 import TradeGoApi from '@/apis/api/cryptos/TradeGoApi';
 import type { IUpbitCandle, IUpbitMarketTicker, IUpbitOrderBook } from '@/types/cryptos/CryptoInterfaces';
 import type { TradeSocketRequest } from '@/types/cryptos/CryptoTypes';
-import { create } from 'zustand';
 import { v4 as uuid } from 'uuid';
+import { create } from 'zustand';
 
 const getInitData = async () => {
   return await TradeGoApi.getMarketsCurrentDic();

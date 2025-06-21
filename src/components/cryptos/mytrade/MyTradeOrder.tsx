@@ -2,6 +2,9 @@
 
 import CryptoApi from '@/apis/api/cryptos/CryptoApi';
 import TradeGoApi from '@/apis/api/cryptos/TradeGoApi';
+import { CRYPTO_WALLET_UNIT } from '@/constants/CryptoConsts';
+import useSystemMessageStore from '@/store/useSystemMessageStore';
+import useToastMessageStore from '@/store/useToastMessageStore';
 import useUserInfoStore from '@/store/useUserInfo';
 import * as S from '@/styles/CryptoMyTradeStyles';
 import type { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
@@ -10,9 +13,6 @@ import type TradeOrder from '@/types/cryptos/TradeOrder';
 import CryptoUtils from '@/utils/CryptoUtils';
 import dayjs from 'dayjs';
 import HeaderLink from './HeaderLink';
-import { CRYPTO_WALLET_UNIT } from '@/constants/CryptoConsts';
-import useToastMessageStore from '@/store/useToastMessageStore';
-import useSystemMessageStore from '@/store/useSystemMessageStore';
 
 export default function CryptoMyTradeOrder() {
   const { myTrades, updateInfo } = useUserInfoStore();
@@ -161,7 +161,10 @@ const Order = ({ order, updateInfo }: IOrder) => {
           <dt>
             수량 <span>Amount</span>
           </dt>
-          <dd>{CryptoUtils.getPriceText(order.size)}{CRYPTO_WALLET_UNIT}</dd>
+          <dd>
+            {CryptoUtils.getPriceText(order.size)}
+            {CRYPTO_WALLET_UNIT}
+          </dd>
         </S.OrderItem>
         <S.OrderItem className={`${order.positionType === PositionTypes.LONG ? 'long' : 'short'}`}>
           <dt>

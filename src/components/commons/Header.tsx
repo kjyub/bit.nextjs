@@ -1,6 +1,7 @@
 'use client';
 
 import { DEFAULT_MARKET_CODE } from '@/constants/CryptoConsts';
+import { useDetectClose } from '@/hooks/useDetectClose';
 import { useUser } from '@/hooks/useUser';
 import * as NS from '@/styles/NavigationStyles';
 import CommonUtils from '@/utils/CommonUtils';
@@ -8,7 +9,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import ControlPanel from './control-panel/ControlPanel';
-import { useDetectClose } from '@/hooks/useDetectClose';
 
 export default function Header() {
   const pathname = usePathname();
@@ -31,21 +31,29 @@ export default function Header() {
             <i className="fa-solid fa-sliders text-sm!"></i>
             <span>메뉴</span>
           </button>
-          <ControlPanel isOpen={isControlPanelOpen} onClose={() => {setIsControlPanelOpen(false);}} />
+          <ControlPanel
+            isOpen={isControlPanelOpen}
+            onClose={() => {
+              setIsControlPanelOpen(false);
+            }}
+          />
         </div>
       </>
-    )
-  }
+    );
+  };
 
   const UnAuth = () => {
     return (
       <>
-        <Link href="/auth" className={`btn ${CommonUtils.isPathActive(pathname, '/auth') ? 'active' : ''} bg-slate-100/10 hover:!bg-slate-100/20 !text-slate-300/80`}>
+        <Link
+          href="/auth"
+          className={`btn ${CommonUtils.isPathActive(pathname, '/auth') ? 'active' : ''} bg-slate-100/10 hover:!bg-slate-100/20 !text-slate-300/80`}
+        >
           <span>로그인</span>
         </Link>
       </>
-    )
-  }
+    );
+  };
 
   return (
     <NS.Layout>
@@ -61,18 +69,13 @@ export default function Header() {
           >
             <span>암호화폐 거래</span>
           </Link>
-          <Link
-            href="/mine"
-            className={`btn ${CommonUtils.isPathActive(pathname, '/mine') ? 'active' : ''}`}
-          >
+          <Link href="/mine" className={`btn ${CommonUtils.isPathActive(pathname, '/mine') ? 'active' : ''}`}>
             <span>지하 노역장</span>
           </Link>
         </NS.Section>
         {/* 오른쪽 */}
         <NS.Section>
-          {isUserLoading ? (
-            <div className="skeleton w-24 h-full rounded-lg"></div>
-          ) : isAuth ? <Auth /> : <UnAuth />}
+          {isUserLoading ? <div className="skeleton w-24 h-full rounded-lg"></div> : isAuth ? <Auth /> : <UnAuth />}
         </NS.Section>
       </div>
     </NS.Layout>

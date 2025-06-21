@@ -86,7 +86,7 @@ const StackHorizonItem = ({
       <div className="@max-[26px]:hidden @min-[27px]:flex justify-center w-full h-full">
         <div
           className="flex justify-center items-center h-full text-xs text-slate-200/80 border border-slate-500/30 rounded-full"
-          style={{ width: "calc(100% - 0.25rem)", backgroundColor: item.color }}
+          style={{ width: 'calc(100% - 0.25rem)', backgroundColor: item.color }}
         >
           <div className="truncate">{children}</div>
         </div>
@@ -94,8 +94,11 @@ const StackHorizonItem = ({
       <div className="@max-[26px]:flex @min-[27px]:hidden flex-center w-full h-full">
         <div className="w-1 h-1 rounded-full" style={{ backgroundColor: item.color }} />
       </div>
-      
-      <div ref={constrainedRef} className={cn(['tooltip absolute z-10 bottom-8 inset-x-0', 'flex justify-center', 'duration-300'])}>
+
+      <div
+        ref={constrainedRef}
+        className={cn(['tooltip absolute z-10 bottom-8 inset-x-0', 'flex justify-center', 'duration-300'])}
+      >
         {tooltip}
       </div>
     </div>

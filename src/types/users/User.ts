@@ -1,6 +1,6 @@
+import type { ChartColorType } from '@/store/providers/UiProvider';
 import { type AccountStatusType, AccountStatusTypes, type UserType, UserTypes } from '@/types/users/UserTypes';
 import { AbsApiObject } from '../ApiTypes';
-import type { ChartColorType } from '@/store/providers/UiProvider';
 
 export default class User extends AbsApiObject {
   protected _id: number;

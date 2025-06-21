@@ -1,16 +1,20 @@
 import { useUser } from '@/hooks/useUser';
+import { UiContext } from '@/store/providers/UiProvider';
 import { cn } from '@/utils/StyleUtils';
 import { use, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import ChartColorButton from './ChartColorButton';
 import ControlButton from './ControlButton';
 import MessageList from './MessageList';
-import ChartColorButton from './ChartColorButton';
-import { UiContext } from '@/store/providers/UiProvider';
 
 const SWIPE_DOWN_THRESHOLD = 75;
 
 // 추후에 로그 메세지 같은거 넣기
 
-const Layout = ({ isOpen, setIsOpen, children }: { isOpen: boolean, setIsOpen: (isOpen: boolean) => void, children: React.ReactNode }) => {
+const Layout = ({
+  isOpen,
+  setIsOpen,
+  children,
+}: { isOpen: boolean; setIsOpen: (isOpen: boolean) => void; children: React.ReactNode }) => {
   const [translateY, setTranslateY] = useState<number>(0);
   const [opacity, setOpacity] = useState<number>(100);
   const [isSwiping, setIsSwiping] = useState<boolean>(false);
@@ -36,7 +40,7 @@ const Layout = ({ isOpen, setIsOpen, children }: { isOpen: boolean, setIsOpen: (
     startY.current = e.touches[0].clientY;
     setIsSwiping(true);
     isSwipingRef.current = true;
-  }
+  };
 
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
     requestAnimationFrame(() => {
@@ -51,8 +55,8 @@ const Layout = ({ isOpen, setIsOpen, children }: { isOpen: boolean, setIsOpen: (
       }
       setTranslateY(deltaY);
       setOpacity(100 - (deltaY / SWIPE_DOWN_THRESHOLD) * 90);
-    })
-  }
+    });
+  };
 
   const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
     const currentY = e.changedTouches[0].clientY;
@@ -66,23 +70,23 @@ const Layout = ({ isOpen, setIsOpen, children }: { isOpen: boolean, setIsOpen: (
     }
     setIsSwiping(false);
     isSwipingRef.current = false;
-  }
-  
+  };
+
   return (
-    <div 
+    <div
       className={cn([
         'mouse:hidden touch:fixed inset-0 z-50 size-full bg-slate-900/40 backdrop-blur-xl',
         'p-8 pb-16',
         'transition-all duration-300',
-        isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none',
       ])}
     >
-      <div 
+      <div
         className={cn([
           'flex flex-col justify-between size-full gap-4',
           isOpen ? 'translate-y-0' : 'translate-y-24',
           isSwiping ? 'duration-0' : 'duration-300',
-          'will-change-transform will-change-opacity select-none'
+          'will-change-transform will-change-opacity select-none',
         ])}
         style={{ transform: `translateY(${translateY}px)`, opacity: `${opacity}%` }}
         onTouchStart={handleTouchStart}
@@ -92,12 +96,12 @@ const Layout = ({ isOpen, setIsOpen, children }: { isOpen: boolean, setIsOpen: (
         {children}
       </div>
     </div>
-  )
-}
+  );
+};
 
 const usePreventSwipe = () => {
   const ref = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
     if (ref.current) {
       ref.current.addEventListener('touchstart', (e) => {
@@ -113,24 +117,28 @@ const usePreventSwipe = () => {
 
     return () => {
       if (ref.current) {
-        ref.current.removeEventListener('touchstart', (e) => {e.stopPropagation();});
-        ref.current.removeEventListener('touchmove', (e) => {e.stopPropagation();});
+        ref.current.removeEventListener('touchstart', (e) => {
+          e.stopPropagation();
+        });
+        ref.current.removeEventListener('touchmove', (e) => {
+          e.stopPropagation();
+        });
         // ref.current.removeEventListener('touchend', (e) => {e.stopPropagation();});
       }
-    }
-  }, [ref])
-  
-  return ref
-}
+    };
+  }, [ref]);
 
-export default function MobileMenu({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (isOpen: boolean) => void }) {
+  return ref;
+};
+
+export default function MobileMenu({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (isOpen: boolean) => void }) {
   const { isAuth, signOut } = useUser();
   const { chartColor, setChartColor } = use(UiContext);
 
   const handleLogout = async () => {
     await signOut();
     setIsOpen(false);
-  }
+  };
 
   return (
     <Layout isOpen={isOpen} setIsOpen={setIsOpen}>
@@ -146,15 +154,15 @@ export default function MobileMenu({ isOpen, setIsOpen }: { isOpen: boolean, set
               riseColor="red"
               fallColor="blue"
               className="h-9"
-              isActive={chartColor === "red-blue"}
-              onClick={() => setChartColor("red-blue")}
+              isActive={chartColor === 'red-blue'}
+              onClick={() => setChartColor('red-blue')}
             />
             <ChartColorButton
               riseColor="green"
               fallColor="red"
               className="h-9"
-              isActive={chartColor === "green-red"}
-              onClick={() => setChartColor("green-red")}
+              isActive={chartColor === 'green-red'}
+              onClick={() => setChartColor('green-red')}
             />
           </div>
         </div>
@@ -165,5 +173,5 @@ export default function MobileMenu({ isOpen, setIsOpen }: { isOpen: boolean, set
         )}
       </div>
     </Layout>
-  )
+  );
 }

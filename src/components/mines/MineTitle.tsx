@@ -33,22 +33,24 @@ export default function MineTitle() {
             'text-stone-200 max-md:text-5xl md:text-6xl font-bold',
             { 'opacity-100 animate-fade-blur-down': inView },
             { 'opacity-0': !inView },
-            'transition-all duration-1000'
+            'transition-all duration-1000',
           ])}
         >
-          <i className={cn([
-            'fa-solid fa-hammer mr-4',
-            { 'animate-hammer-motion': isHammerMotion },
-            { 'animate-none': !isHammerMotion },
-          ])}></i>
+          <i
+            className={cn([
+              'fa-solid fa-hammer mr-4',
+              { 'animate-hammer-motion': isHammerMotion },
+              { 'animate-none': !isHammerMotion },
+            ])}
+          ></i>
           지하 노역장
         </h1>
-        <h2 
+        <h2
           className={cn([
             'flex flex-wrap justify-center text-stone-400 max-md:text-sm md:text-lg gap-1',
             { 'opacity-100': inView },
             { 'opacity-30': !inView },
-            'transition-all duration-1000'
+            'transition-all duration-1000',
           ])}
         >
           <span>여기서 다시 희망을 향해 나아가세요.</span>
@@ -56,5 +58,5 @@ export default function MineTitle() {
         </h2>
       </div>
     </div>
-  )
+  );
 }

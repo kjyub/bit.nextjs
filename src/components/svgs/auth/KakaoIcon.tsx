@@ -1,8 +1,15 @@
-import type { SvgProps } from "@/types/SvgTypes";
+import type { SvgProps } from '@/types/SvgTypes';
 
-export default function KakaoIcon({ width = 20, height = 20, viewBox = "0 0 20 20", className }: SvgProps) {
+export default function KakaoIcon({ width = 20, height = 20, viewBox = '0 0 20 20', className }: SvgProps) {
   return (
-    <svg width={width} height={height} viewBox={viewBox} fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+    <svg
+      width={width}
+      height={height}
+      viewBox={viewBox}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
       <circle cx="10" cy="10" r="10" fill="#FEE500" />
       <path
         d="M10.0289 4.82629C6.91773 4.82629 4.40869 6.8335 4.40869 9.27028C4.40869 10.852 5.45245 12.237 7.01809 13.0278L6.48818 15.007C6.47819 15.0366 6.47666 15.0685 6.48375 15.0989C6.49084 15.1294 6.50627 15.1574 6.52833 15.1796C6.56049 15.2079 6.60187 15.2236 6.64475 15.2237C6.6803 15.2209 6.71403 15.2068 6.74109 15.1836L9.02131 13.6461C9.3579 13.6925 9.69719 13.7166 10.037 13.7183C13.1442 13.7183 15.6572 11.7111 15.6572 9.27028C15.6572 6.82949 13.1361 4.82629 10.0289 4.82629Z"

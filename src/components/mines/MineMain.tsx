@@ -1,11 +1,11 @@
 'use client';
 
-import MineTitle from './MineTitle';
-import MinePlayButtonBox from './MinePlayButtonBox';
+import type Pagination from '@/types/api/pagination';
+import MineRoom from '@/types/mines/MineRoom';
 import { useEffect, useState } from 'react';
 import MinePlay from './MinePlay';
-import MineRoom from '@/types/mines/MineRoom';
-import type Pagination from '@/types/api/pagination';
+import MinePlayButtonBox from './MinePlayButtonBox';
+import MineTitle from './MineTitle';
 import MineHistory from './history/MineHistory';
 
 export type PageType = 'lobby' | 'room';
@@ -16,20 +16,18 @@ export default function MineMain() {
 
   useEffect(() => {
     setPageType(room.id ? 'room' : 'lobby');
-  }, [room.id])
+  }, [room.id]);
 
   return (
     <div className="flex flex-col items-center w-full gap-4">
-      {pageType === "lobby" && (
+      {pageType === 'lobby' && (
         <>
           <MineTitle />
           <MinePlayButtonBox setRoom={setRoom} />
           <MineHistory />
         </>
       )}
-      {pageType === "room" && (
-        <MinePlay room={room} setRoom={setRoom} />
-      )}
+      {pageType === 'room' && <MinePlay room={room} setRoom={setRoom} />}
     </div>
-  )
+  );
 }

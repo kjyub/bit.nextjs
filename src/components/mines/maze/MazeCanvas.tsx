@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import MazePerson from "./MazePerson";
-import useDrawMaze from "./useDrawMaze";
-import { isCollide, isEscape } from "./utils";
+import { useEffect, useRef, useState } from 'react';
+import MazePerson from './MazePerson';
+import useDrawMaze from './useDrawMaze';
+import { isCollide, isEscape } from './utils';
 
 export interface Coord {
   x: number;
@@ -34,7 +34,7 @@ export default function MazeCanvas({ maze, size, onEscape }: Props) {
     setPosition(INITIAL_POSITION);
     setIsHolding(false);
     isEscapedRef.current = false;
-  }, [maze])
+  }, [maze]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -56,23 +56,23 @@ export default function MazeCanvas({ maze, size, onEscape }: Props) {
     if (!rect) return;
 
     // 포인터 위치에 따라 움직이기 위한 오프셋 적용
-    const offsetPointer = { 
-      x: (clientCoord.x - rect.left - (scale / 2)) / scale, 
-      y: (clientCoord.y - rect.top - (scale / 2)) / scale
+    const offsetPointer = {
+      x: (clientCoord.x - rect.left - scale / 2) / scale,
+      y: (clientCoord.y - rect.top - scale / 2) / scale,
     };
     setPosition(offsetPointer);
 
     // 벽에 충돌하는 등 정확한 좌표를 찾기 위한 오프셋 적용
     const offsetCoord = {
-      x: (clientCoord.x - rect.left) / scale, 
-      y: (clientCoord.y - rect.top) / scale
-    }
+      x: (clientCoord.x - rect.left) / scale,
+      y: (clientCoord.y - rect.top) / scale,
+    };
     const personColliderOffset = 0.12;
-    const personRect: Rect = { 
-      left: offsetCoord.x - personColliderOffset, 
-      right: offsetCoord.x + personColliderOffset, 
-      top: offsetCoord.y - personColliderOffset, 
-      bottom: offsetCoord.y + personColliderOffset 
+    const personRect: Rect = {
+      left: offsetCoord.x - personColliderOffset,
+      right: offsetCoord.x + personColliderOffset,
+      top: offsetCoord.y - personColliderOffset,
+      bottom: offsetCoord.y + personColliderOffset,
     };
     const isCollided = isCollide(maze, personRect);
     if (isCollided) {
@@ -83,12 +83,12 @@ export default function MazeCanvas({ maze, size, onEscape }: Props) {
     if (isEscaped) {
       handleEscape();
     }
-  }
+  };
 
   const handleFail = () => {
     setIsHolding(false);
     setPosition(INITIAL_POSITION);
-  }
+  };
 
   const handleEscape = () => {
     if (isEscapedRef.current) return;
@@ -97,19 +97,23 @@ export default function MazeCanvas({ maze, size, onEscape }: Props) {
     setIsHolding(false);
     setPosition(ESCAPE_POSITION);
     onEscape();
-  }
+  };
 
   return (
     <div ref={containerRef} className="flex flex-center w-full aspect-square rounded-2xl overflow-hidden">
-      <div 
+      <div
         className="relative"
         style={{ zoom: scale }}
         onMouseMove={(e) => handlePositionMove({ x: e.clientX, y: e.clientY })}
         onTouchMove={(e) => handlePositionMove({ x: e.touches[0].clientX, y: e.touches[0].clientY })}
       >
         <canvas ref={canvasRef} style={{ imageRendering: 'pixelated' }} width={size} height={size} />
-        <MazePerson coord={{ x: position?.x ?? 0, y: position?.y ?? 0 }} isHolding={isHolding} setHolding={setIsHolding} />
+        <MazePerson
+          coord={{ x: position?.x ?? 0, y: position?.y ?? 0 }}
+          isHolding={isHolding}
+          setHolding={setIsHolding}
+        />
       </div>
     </div>
-  )
-};
+  );
+}

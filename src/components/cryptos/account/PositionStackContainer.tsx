@@ -122,15 +122,15 @@ export default function PositionStackContainer({ positions, balance, isLoading }
     if (otherItems.length > 0) {
       // items의 비율이 80%를 넘어가면 80%로 제한
       const totalMainRatio = mainItems.reduce((acc, item) => acc + item.ratio, 0);
-      let ratio = 1
+      let ratio = 1;
       if (totalMainRatio > 80) {
         ratio = 80 / totalMainRatio;
       }
-      mainItems.forEach(item => {
+      mainItems.forEach((item) => {
         item.widthRatio = item.ratio * ratio;
       });
     } else {
-      mainItems.forEach(item => {
+      mainItems.forEach((item) => {
         item.widthRatio = item.ratio;
       });
     }
@@ -139,7 +139,7 @@ export default function PositionStackContainer({ positions, balance, isLoading }
     if (otherItems.length > 0) {
       const totalMainWidthRatio = mainItems.reduce((acc, item) => acc + item.widthRatio, 0);
       const remainingWidthRatio = 100 - totalMainWidthRatio;
-      otherItems.forEach(item => {
+      otherItems.forEach((item) => {
         item.widthRatio = remainingWidthRatio;
       });
     }

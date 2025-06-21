@@ -1,9 +1,9 @@
-import { CRYPTO_WALLET_UNIT } from "@/constants/CryptoConsts";
-import type { IUpbitMarketTicker } from "@/types/cryptos/CryptoInterfaces";
-import CryptoMarket from "@/types/cryptos/CryptoMarket";
-import { type PriceChangeType, PriceChangeTypes } from "@/types/cryptos/CryptoTypes";
-import CryptoUtils from "@/utils/CryptoUtils";
-import { cn } from "@/utils/StyleUtils";
+import { CRYPTO_WALLET_UNIT } from '@/constants/CryptoConsts';
+import type { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
+import CryptoMarket from '@/types/cryptos/CryptoMarket';
+import { type PriceChangeType, PriceChangeTypes } from '@/types/cryptos/CryptoTypes';
+import CryptoUtils from '@/utils/CryptoUtils';
+import { cn } from '@/utils/StyleUtils';
 
 interface Props {
   getMarketsPromise: Promise<IUpbitMarketTicker[]>;
@@ -18,7 +18,7 @@ export default async function TodayMarkets({ getMarketsPromise, getMarketAllProm
     _market.parseResponse(market as any);
     marketDic[_market.code] = _market;
   }
-  
+
   // 거래대금 기준 정렬 내림차순
   const volumeOrderd = markets.sort((a, b) => b.acc_trade_price_24h - a.acc_trade_price_24h);
   const volumeOrderedTop5 = volumeOrderd.slice(0, 5);
@@ -53,14 +53,14 @@ export default async function TodayMarkets({ getMarketsPromise, getMarketAllProm
   );
 }
 
-const MarketItem = ({ market, marketDic }: { market: IUpbitMarketTicker, marketDic: Record<string, CryptoMarket> }) => {
+const MarketItem = ({ market, marketDic }: { market: IUpbitMarketTicker; marketDic: Record<string, CryptoMarket> }) => {
   const priceChangeType: PriceChangeType = CryptoUtils.getPriceChangeType(market.trade_price, market.opening_price);
   const priceChangePercent = market.signed_change_rate;
 
   return (
     <div key={market.code} className="flex justify-between items-center px-2 py-3">
       <div className="flex flex-col">
-        <h4 
+        <h4
           className={cn([
             'text-base md:text-lg font-semibold',
             {
@@ -74,7 +74,7 @@ const MarketItem = ({ market, marketDic }: { market: IUpbitMarketTicker, marketD
         <p className="text-xs md:text-sm text-slate-500">{market.code}</p>
       </div>
       <div className="flex flex-col items-end w-32">
-        <p 
+        <p
           className={cn([
             'text-xs md:text-sm text-slate-500',
             {
@@ -83,9 +83,13 @@ const MarketItem = ({ market, marketDic }: { market: IUpbitMarketTicker, marketD
             },
           ])}
         >
-          {CryptoUtils.getPriceText(market.trade_price)}{CRYPTO_WALLET_UNIT}
+          {CryptoUtils.getPriceText(market.trade_price)}
+          {CRYPTO_WALLET_UNIT}
         </p>
-        <p className="text-xs md:text-sm text-slate-500">{priceChangeType === PriceChangeTypes.RISE ? '+' : ''}{priceChangePercent.toFixed(2)}%</p>
+        <p className="text-xs md:text-sm text-slate-500">
+          {priceChangeType === PriceChangeTypes.RISE ? '+' : ''}
+          {priceChangePercent.toFixed(2)}%
+        </p>
       </div>
     </div>
   );

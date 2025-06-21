@@ -14,5 +14,5 @@ export default function MinePage() {
         <MineMain />
       </div>
     </MS.PageLayout>
-  )
+  );
 }

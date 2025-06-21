@@ -1,14 +1,14 @@
 'use client';
 
-import { cn } from "@/utils/StyleUtils";
-import MessageList from "./MessageList";
-import ControlButton from "./ControlButton";
-import { useUser } from "@/hooks/useUser";
-import ChartColorButton from "./ChartColorButton";
-import { use } from "react";
-import { UiContext } from "@/store/providers/UiProvider";
+import { useUser } from '@/hooks/useUser';
+import { UiContext } from '@/store/providers/UiProvider';
+import { cn } from '@/utils/StyleUtils';
+import { use } from 'react';
+import ChartColorButton from './ChartColorButton';
+import ControlButton from './ControlButton';
+import MessageList from './MessageList';
 
-export default function ControlPanel({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
+export default function ControlPanel({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const { signOut } = useUser();
   const { chartColor, setChartColor } = use(UiContext);
 
@@ -19,14 +19,10 @@ export default function ControlPanel({ isOpen, onClose }: { isOpen: boolean, onC
         'flex flex-col w-96 h-128 p-5 gap-4',
         { 'opacity-100 translate-y-0': isOpen },
         { 'opacity-0 -translate-y-4 pointer-events-none': !isOpen },
-        'transition-all duration-300'
+        'transition-all duration-300',
       ])}
     >
-      <MessageList
-        className="w-full flex-1"
-        isOpen={isOpen}
-        onClose={onClose}
-      />
+      <MessageList className="w-full flex-1" isOpen={isOpen} onClose={onClose} />
 
       <div className="flex justify-between items-end">
         <div className="flex flex-col justify-end gap-1">
@@ -36,15 +32,15 @@ export default function ControlPanel({ isOpen, onClose }: { isOpen: boolean, onC
               riseColor="red"
               fallColor="blue"
               className="h-9"
-              isActive={chartColor === "red-blue"}
-              onClick={() => setChartColor("red-blue")}
+              isActive={chartColor === 'red-blue'}
+              onClick={() => setChartColor('red-blue')}
             />
             <ChartColorButton
               riseColor="green"
               fallColor="red"
               className="h-9"
-              isActive={chartColor === "green-red"}
-              onClick={() => setChartColor("green-red")}
+              isActive={chartColor === 'green-red'}
+              onClick={() => setChartColor('green-red')}
             />
           </div>
         </div>
@@ -53,5 +49,5 @@ export default function ControlPanel({ isOpen, onClose }: { isOpen: boolean, onC
         </ControlButton>
       </div>
     </div>
-  )
+  );
 }

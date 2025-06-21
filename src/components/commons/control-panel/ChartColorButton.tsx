@@ -1,4 +1,4 @@
-import { cn } from "@/utils/StyleUtils";
+import { cn } from '@/utils/StyleUtils';
 
 type ColorType = 'red' | 'blue' | 'green';
 
@@ -19,7 +19,7 @@ export default function ChartColorButton({ className, isActive, riseColor, fallC
         'rounded-2xl bg-slate-500/10 active:bg-slate-400/20 hover:bg-slate-400/20',
         'text-sm text-slate-200/80 border border-slate-500/30 transition-colors',
         { 'bg-slate-400/20 border-violet-500': isActive },
-        className
+        className,
       ])}
     >
       <div
@@ -43,5 +43,5 @@ export default function ChartColorButton({ className, isActive, riseColor, fallC
         <i className="fa-solid fa-arrow-trend-up"></i>
       </div>
     </button>
-  )
+  );
 }

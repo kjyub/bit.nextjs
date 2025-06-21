@@ -1,9 +1,9 @@
 'use client';
 
-import UserApi from "@/apis/api/users/UserApi";
-import { useUser } from "@/hooks/useUser";
-import { LocalStorageConsts } from "@/types/ApiTypes";
-import { createContext, useEffect, useRef, useState } from "react";
+import UserApi from '@/apis/api/users/UserApi';
+import { useUser } from '@/hooks/useUser';
+import { LocalStorageConsts } from '@/types/ApiTypes';
+import { createContext, useEffect, useRef, useState } from 'react';
 
 export type ChartColorType = 'red-blue' | 'green-red';
 
@@ -42,7 +42,7 @@ export const UiProvider = ({ children }: { children: React.ReactNode }) => {
     UserApi.updateUser({
       chart_color: chartColorRef.current,
     });
-  }, [chartColor])
+  }, [chartColor]);
 
   return <UiContext.Provider value={{ chartColor, setChartColor }}>{children}</UiContext.Provider>;
 };
@@ -71,4 +71,4 @@ const updateChartColor = (chartColor: ChartColorType) => {
   }
 
   localStorage.setItem(LocalStorageConsts.CHART_COLOR, chartColor);
-}
+};

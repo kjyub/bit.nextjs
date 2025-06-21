@@ -47,7 +47,9 @@ const SignupPage = () => {
     <SS.Layout>
       <SS.BoxContainer className="space-y-2 max-sm:w-[80vw]">
         <div className="flex flex-col items-center md:w-128">
-          <SS.Title><Text /></SS.Title>
+          <SS.Title>
+            <Text />
+          </SS.Title>
         </div>
       </SS.BoxContainer>
     </SS.Layout>
@@ -61,7 +63,8 @@ const Text = () => {
     <div
       className="text-[#b5b5b5a4] bg-clip-text inline-block animate-shine"
       style={{
-        backgroundImage: 'linear-gradient(120deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 60%)',
+        backgroundImage:
+          'linear-gradient(120deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 60%)',
         backgroundSize: '200% 100%',
         WebkitBackgroundClip: 'text',
         animationDuration: '1s',
@@ -69,5 +72,5 @@ const Text = () => {
     >
       카카오 로그인 중...
     </div>
-  )
-}
+  );
+};

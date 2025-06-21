@@ -1,6 +1,8 @@
 'use client';
 import CryptoApi from '@/apis/api/cryptos/CryptoApi';
 import * as I from '@/components/inputs/UserInputs';
+import { CASH_UNIT, CRYPTO_WALLET_UNIT } from '@/constants/CryptoConsts';
+import useSystemMessageStore from '@/store/useSystemMessageStore';
 import useUserInfoStore from '@/store/useUserInfo';
 import * as S from '@/styles/CryptoWalletStyles';
 import { TextFormats } from '@/types/CommonTypes';
@@ -10,8 +12,6 @@ import TypeUtils from '@/utils/TypeUtils';
 import { useEffect, useMemo, useState } from 'react';
 import ModalLayout from '../atomics/ModalLayout';
 import { SlideInput } from '../inputs/TradeInputs';
-import { CASH_UNIT, CRYPTO_WALLET_UNIT } from '@/constants/CryptoConsts';
-import useSystemMessageStore from '@/store/useSystemMessageStore';
 
 const TransferSuffix = {
   [TransferTypes.TO_ACCOUNT]: CASH_UNIT,
@@ -159,12 +159,16 @@ export default function CryptoTransferModal({ defaultTransferType, close }: Cryp
           <S.TransferInfoList>
             <S.TransferInfoBox>
               <span className="label">지갑 잔액</span>
-              <span className="value">{CommonUtils.textFormat(balance, TextFormats.NUMBER)}{CRYPTO_WALLET_UNIT}</span>
+              <span className="value">
+                {CommonUtils.textFormat(balance, TextFormats.NUMBER)}
+                {CRYPTO_WALLET_UNIT}
+              </span>
             </S.TransferInfoBox>
             <S.TransferInfoBox>
               <span className="label">이체 후 통장 잔액</span>
               <span className="value">
-                {CommonUtils.textFormat(TypeUtils.round(cash + value, 0), TextFormats.NUMBER)}{CASH_UNIT}
+                {CommonUtils.textFormat(TypeUtils.round(cash + value, 0), TextFormats.NUMBER)}
+                {CASH_UNIT}
               </span>
             </S.TransferInfoBox>
           </S.TransferInfoList>
@@ -173,12 +177,16 @@ export default function CryptoTransferModal({ defaultTransferType, close }: Cryp
           <S.TransferInfoList>
             <S.TransferInfoBox>
               <span className="label">통장 잔액</span>
-              <span className="value">{CommonUtils.textFormat(cash, TextFormats.NUMBER)}{CASH_UNIT}</span>
+              <span className="value">
+                {CommonUtils.textFormat(cash, TextFormats.NUMBER)}
+                {CASH_UNIT}
+              </span>
             </S.TransferInfoBox>
             <S.TransferInfoBox>
               <span className="label">이체 후 지갑 잔액</span>
               <span className="value">
-                {CommonUtils.textFormat(TypeUtils.round(balance + value, 0), TextFormats.NUMBER)}{CRYPTO_WALLET_UNIT}
+                {CommonUtils.textFormat(TypeUtils.round(balance + value, 0), TextFormats.NUMBER)}
+                {CRYPTO_WALLET_UNIT}
               </span>
             </S.TransferInfoBox>
           </S.TransferInfoList>
