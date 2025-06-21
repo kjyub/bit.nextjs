@@ -13,7 +13,7 @@ import CommonUtils from '@/utils/CommonUtils';
 import FrontUtils from '@/utils/FrontUtils';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
-import ModalContainer from '../../ModalContainer';
+import ModalContainerPortal from '../../ModalContainerPortal';
 import CommunityPagination from '../../atomics/community/CommunityPagination';
 import CommunitySearch from '../../atomics/community/CommunitySearch';
 import CryptoMarketCommunityEditor from './CommunityEditor';
@@ -129,7 +129,7 @@ export default function CryptoMarketCommunity({
         </div>
       </CS.ListLayout>
 
-      <ModalContainer isOpen={isShowEditor} setIsOpen={setShowEditor} isCloseByBackground={false} isBlur={false}>
+      <ModalContainerPortal isOpen={isShowEditor} setIsOpen={setShowEditor} isCloseByBackground={false} isBlur={false}>
         <CryptoMarketCommunityEditor
           marketCode={marketCode}
           community={selectedCommunity}
@@ -137,7 +137,7 @@ export default function CryptoMarketCommunity({
             setShowEditor(false);
           }}
         />
-      </ModalContainer>
+      </ModalContainerPortal>
     </CS.Layout>
   );
 }

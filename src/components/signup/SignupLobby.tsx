@@ -4,7 +4,7 @@ import KakaoContainer from '@/layouts/KakaoContainer';
 import * as SS from '@/styles/SignupStyles';
 import AuthUtils from '@/utils/AuthUtils';
 import { useState } from 'react';
-import ModalContainer from '../ModalContainer';
+import ModalContainerPortal from '../ModalContainerPortal';
 import InfoModal from '../commons/InfoModal';
 import KakaoIcon from '@/components/svgs/auth/KakaoIcon';
 import TermsOfService from './agreements/TermsOfService';
@@ -67,19 +67,19 @@ export default function SignupLobby() {
         </SS.AuthTypeSection>
       </SS.BoxContainer>
 
-      <ModalContainer isOpen={isShowAgreement} setIsOpen={setShowAgreement}>
+      <ModalContainerPortal isOpen={isShowAgreement} setIsOpen={setShowAgreement}>
         <InfoModal
           title="서비스 이용약관"
           content={<TermsOfService />}
         />
-      </ModalContainer>
+      </ModalContainerPortal>
 
-      <ModalContainer isOpen={isShowPrivacy} setIsOpen={setShowPrivacy}>
+      <ModalContainerPortal isOpen={isShowPrivacy} setIsOpen={setShowPrivacy}>
         <InfoModal
           title="개인정보 수집 및 이용 동의"
           content={<PrivacyPolicy />}
         />
-      </ModalContainer>
+      </ModalContainerPortal>
     </SS.Layout>
   );
 }

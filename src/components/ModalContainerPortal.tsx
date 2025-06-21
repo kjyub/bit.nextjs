@@ -7,7 +7,7 @@ const Background = tw.div`
     flex flex-center w-full h-full
 `;
 
-export interface IModalContainer {
+export interface IModalContainerPortal {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   isBlur?: boolean;
@@ -15,14 +15,14 @@ export interface IModalContainer {
   isCloseButtonShow?: boolean;
   children: React.ReactNode;
 }
-const ModalContainer = ({
+const ModalContainerPortal = ({
   isOpen,
   setIsOpen,
   isBlur = true,
   isCloseByBackground = true,
   isCloseButtonShow = false,
   children,
-}: IModalContainer) => {
+}: IModalContainerPortal) => {
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     if (isCloseByBackground) {
@@ -63,4 +63,4 @@ const ModalContainer = ({
   );
 };
 
-export default ModalContainer;
+export default ModalContainerPortal;

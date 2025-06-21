@@ -1,6 +1,6 @@
 'use client';
 
-import ModalContainer from '@/components/ModalContainer';
+import ModalContainerPortal from '@/components/ModalContainerPortal';
 import CommonButton from '@/components/atomics/buttons/CommonButton';
 import useUserInfoStore from '@/store/useUserInfo';
 import * as S from '@/styles/CryptoWalletStyles';
@@ -100,9 +100,9 @@ export default function AssetManager() {
         </S.WalletBox>
       </div>
 
-      <ModalContainer isOpen={isTransferModalOpen} setIsOpen={setTransferModalOpen} isBlur={false}>
+      <ModalContainerPortal isOpen={isTransferModalOpen} setIsOpen={setTransferModalOpen} isBlur={false}>
         <CryptoTransferModal defaultTransferType={transferType} cash={cash} balance={balance} close={() => {setTransferModalOpen(false);}} />
-      </ModalContainer>
+      </ModalContainerPortal>
     </S.WalletLayout>
   );
 }
