@@ -60,7 +60,7 @@ export const CommunityLayout = tw.div`
 
 export const MarketListLayout = tw.div`
   sticky top-14 z-0
-  flex flex-col max-sm:w-full sm:w-96 h-[calc(100dvh-8rem)] max-md:p-2 max-full:p-3 full:p-4 full:pt-8 space-y-4
+  flex flex-col max-sm:w-full sm:w-96 h-[calc(100dvh-144px)] max-md:p-2 max-full:p-3 full:p-4 full:pt-8 space-y-4
 `;
 
 export const MarketListBox = tw.div`

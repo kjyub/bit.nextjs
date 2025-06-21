@@ -25,7 +25,7 @@ export default async function Page({ params, searchParams }: Props) {
   const marketCurrent = await TradeGoApi.getMarketCurrent(code);
 
   return (
-    <div className="max-md:w-full md:w-156 p-4">
+    <div className="max-md:w-full md:w-156 md:p-4 [&>div]:p-4">
       <CryptoMarketInfo
         marketCode={code}
         marketData={marketData}

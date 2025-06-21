@@ -5,7 +5,7 @@ export const Layout = tw.div`
   flex flex-col w-full space-y-5
   pb-[360px]
 
-  [&>.title]:flex [&>.title]:items-center
+  [&>.title]:flex [&>.title]:items-center [&>.title]:px-1
   [&>.title]:text-2xl [&>.title]:text-slate-100 [&.title]:font-semibold
   [&>.title>i]:mr-2 [&>.title>i]:text-lg
 `;
@@ -14,7 +14,7 @@ export const ListLayout = tw.div`
   flex flex-col w-full space-y-5
 
   [&>.header]:flex [&>.header]:justify-between [&>.header]:items-center [&>.header]:w-full
-  [&>.header]:px-1 [&>.header]:gap-2
+  [&>.header]:gap-2
 
   [&>.list]:flex [&>.list]:flex-col [&>.list]:w-full
   [&>.list]:divide-y [&>.list]:divide-slate-500/30
@@ -38,14 +38,14 @@ export const SaveButton = tw.button`
 
 export const ItemLayout = tw.div`
   ${({ $is_deleted }: StyleProps) => ($is_deleted ? 'hidden' : 'flex')}
-  flex-col items-center w-full p-2 space-y-2
+  flex-col items-center w-full px-1 py-2 space-y-2
 
 `;
 export const ItemRow = tw.div<StyleProps>`
   flex flex-col w-full px-3 py-2 space-y-2
-  rounded-lg hover:bg-slate-500/30 
+  rounded-lg mouse:hover:bg-slate-700/30 active:bg-slate-700/30
   transition-colors cursor-pointer
-  ${({ $is_active }: StyleProps) => ($is_active ? 'bg-slate-500/20' : '')}
+  ${({ $is_active }: StyleProps) => ($is_active ? 'ring-1 ring-blue-500' : '')}
 
   [&>.row]:flex [&>.row]:justify-between [&>.row]:items-center [&>.row]:w-full
   [&>.row>.infos]:flex [&>.row>.infos]:items-center [&>.row>.infos]:space-x-2
