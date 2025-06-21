@@ -6,17 +6,6 @@ import type { UserType } from '@/types/users/UserTypes';
 import type { LoginResponse } from '@/types/users/UserTypes';
 
 namespace UserApi {
-  // export async function getAccessToken() {
-  //     let notes = []
-
-  //     await defaultInstance.post("/api/users/login/").then(({data}) => {
-  //         console.log(data)
-  //     }).catch(error => {
-  //         console.log(error)
-  //     })
-
-  //     return result
-  // }
   export async function refreshToken(refreshToken?: string): Promise<LoginResponse> {
     const result: LoginResponse = {
       user: {},

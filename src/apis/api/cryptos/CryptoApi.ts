@@ -393,7 +393,7 @@ namespace CryptoApi {
     let result = false;
 
     try {
-      await authInstance.delete(`/api/cryptos/community_update/${nanoId}/`);
+      await authInstance.delete(`api/cryptos/community_update/${nanoId}/`);
       result = true;
     } catch (error) {
       console.log(error);
@@ -468,7 +468,7 @@ namespace CryptoApi {
     let result = false;
 
     try {
-      await authInstance.delete(`/api/cryptos/community_comment_update/${id}/`);
+      await authInstance.delete(`api/cryptos/community_comment_update/${id}/`);
       result = true;
     } catch (error) {
       console.log(error);
