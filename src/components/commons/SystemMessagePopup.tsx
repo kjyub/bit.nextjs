@@ -9,8 +9,6 @@ const SystemMessagePopup = () => {
   const [message, setMessage] = useState<SystemMessage | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  console.log(messages);
-
   useEffect(() => {
     if (messages.length > 0) {
       setMessage(messages[0]);
@@ -51,12 +49,14 @@ const Wrapper = ({ message }: { message: SystemMessage }) => {
   
   const handleConfirm = () => {
     message.onConfirm?.();
+    message.resolve(true);
     deleteMessage(message.key);
   };
   const handleCancel = () => {
     if (message.type === 'alert') return;
 
     message.onCancel?.();
+    message.resolve(false);
     deleteMessage(message.key);
   };
 
