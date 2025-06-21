@@ -1,0 +1,131 @@
+'use client';
+import useSystemMessageStore, { type SystemMessage } from '@/store/useSystemMessageStore';
+import ModalContainer from '../ModalContainer';
+import tw from 'tailwind-styled-components';
+import { useEffect, useRef, useState } from 'react';
+
+const SystemMessagePopup = () => {
+  const messages = useSystemMessageStore((state) => state.messages);
+  const [message, setMessage] = useState<SystemMessage | null>(null);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    if (messages.length > 0) {
+      setMessage(messages[0]);
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    } else {
+      timerRef.current = setTimeout(() => {
+        setMessage(null);
+      }, 200);
+    }
+  }, [messages]);
+
+  return (
+    // ModalContainer의 isOpen엔 message값으로 넣어서 미리 isOpen을 끈다. (애니메이션)
+    <ModalContainer isOpen={messages.length > 0} setIsOpen={() => {}}> 
+      {message && <Wrapper message={message} />}
+    </ModalContainer>
+  );
+};
+export default SystemMessagePopup;
+
+const Wrapper = ({ message }: { message: SystemMessage }) => {
+  const deleteMessage = useSystemMessageStore((state) => state.deleteMessage);
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        handleConfirm();
+      } else if (e.key === 'Escape') {
+        handleCancel();
+      }
+    };
+
+    document.addEventListener('keydown', handleKey);
+    return () => {
+      document.removeEventListener('keydown', handleKey);
+    };
+  }, []);
+
+  const handleConfirm = () => {
+    message.onConfirm?.();
+    deleteMessage(message.key);
+  };
+  const handleCancel = () => {
+    if (message.type === 'alert') return;
+
+    message.onCancel?.();
+    deleteMessage(message.key);
+  };
+
+  if (message.type === 'alert') {
+    return <Alert message={message} onConfirm={handleConfirm} />;
+  } else if (message.type === 'confirm') {
+    return <Confirm message={message} onConfirm={handleConfirm} onCancel={handleCancel} />;
+  } else {
+    return null;
+  }
+};
+
+const Layout = tw.div`
+  flex flex-col p-6 gap-6
+  border border-slate-200/10 rounded-2xl bg-slate-600/30 backdrop-blur-sm
+
+  [&>.content]:flex [&>.content]:flex-col [&>.content]:items-center [&>.content]:pt-1 [&>.content]:gap-2
+  [&>.content]:text-slate-200/90 [&>.content]:font-medium 
+
+  [&>.control]:flex [&>.control]:justify-center [&>.control]:w-full [&>.control]:h-10 [&>.control]:px-4 [&>.control]:gap-2
+  [&>.control>button]:w-24 [&>.control>button]:rounded-2xl [&>.control>button]:bg-slate-600/30
+  [&>.control>button]:border [&>.control>button]:border-slate-200/10 [&>.control>button]:text-slate-200/80
+  [&>.control>button]:hover:bg-slate-600/40  [&>.control>button]:hover:border-slate-200/20 [&>.control>button]:hover:text-slate-200/90
+  [&>.control>button]:active:bg-slate-600/50 [&>.control>button]:active:border-slate-200/30 [&>.control>button]:active:text-slate-200/95
+  [&>.control>button]:focus:bg-slate-600/40 [&>.control>button]:focus:border-slate-200/20 [&>.control>button]:focus:text-slate-200/90
+  [&>.control>button]:focus-visible:bg-slate-600/40 [&>.control>button [&>.control>button]:focus-visible:border-slate-200/20 [&>.control>button]:focus-visible:text-slate-200/90
+
+  [&>.control>button.confirm]:bg-indigo-600/30 [&>.control>button.confirm]:border [&>.control>button.confirm]:border-indigo-200/10 [&>.control>button.confirm]:text-indigo-200/80
+  [&>.control>button.confirm]:hover:bg-indigo-600/40 [&>.control>button.confirm]:hover:border-indigo-200/20 [&>.control>button.confirm]:hover:text-indigo-200/90
+  [&>.control>button.confirm]:active:bg-indigo-600/50 [&>.control>button.confirm]:active:border-indigo-200/30 [&>.control>button.confirm]:active:text-indigo-200/95
+  [&>.control>button.confirm]:focus:bg-indigo-600/40 [&>.control>button.confirm]:focus:border-indigo-200/20 [&>.control>button.confirm]:focus:text-indigo-200/90
+  [&>.control>button.confirm]:focus-visible:bg-indigo-600/40 [&>.control>button.confirm]:focus-visible:border-indigo-200/20 [&>.control>button.confirm]:focus-visible:text-indigo-200/90
+
+  [&>.control>button]:focus-visible:ring-2 [&>.control>button]:focus-visible:ring-slate-400
+  [&>.control>button.confirm]:focus-visible:ring-indigo-400
+  [&>.control>button]:transition-colors
+`;
+
+const Alert = ({ message, onConfirm }: { message: SystemMessage, onConfirm: () => void }) => {
+  return (
+    <Layout>
+      <div className="content">
+        {message.content}
+      </div>
+      <div className="control">
+        <button type="button" className="confirm" onClick={onConfirm}>
+          확인
+        </button>
+      </div>
+    </Layout>
+  );
+};
+
+const Confirm = ({ message, onConfirm, onCancel }: { message: SystemMessage, onConfirm: () => void, onCancel: () => void }) => {
+  const deleteMessage = useSystemMessageStore((state) => state.deleteMessage);
+
+  return (
+    <Layout>
+      <div className="content">
+        {message.content}
+      </div>
+      <div className="control">
+        <button type="button" onClick={onCancel}>
+          취소
+        </button>
+        <button type="button" className="confirm" onClick={onConfirm}>
+          확인
+        </button>
+      </div>
+    </Layout>
+  );
+};

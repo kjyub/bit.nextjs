@@ -2,6 +2,7 @@
 
 import UserApi from '@/apis/api/users/UserApi';
 import { setAuthToken } from '@/apis/utils/instances';
+import SystemMessagePopup from '@/components/commons/SystemMessagePopup';
 import ToastPopup from '@/components/commons/ToastPopup';
 import useAlarmSocket from '@/hooks/sockets/useAlarmSocket';
 import { useUser } from '@/hooks/useUser';
@@ -51,6 +52,7 @@ export default function AppClientLayout({
   return (
     <>
       <ToastPopup />
+      <SystemMessagePopup />
       {children}
     </>
   );
