@@ -68,9 +68,9 @@ export default function Guage({ ratio, title, helpText, color, size = 120, isMax
           className={cn(['duration-300', percentage !== '0' ? 'opacity-100' : 'opacity-0'])}
         />
       </svg>
-      <div className="absolute flex flex-col items-center justify-center gap-1">
+      <div className="absolute z-0 flex flex-col items-center justify-center gap-1">
         <span
-          className="font-bold text-gray-800 dark:text-white"
+          className="font-bold text-white"
           style={{ fontSize: `${size / 5}px`, lineHeight: `${size / 5}px` }}
         >{`${isMaxLimit ? percentage : TypeUtils.round(ratio * 100)}%`}</span>
         <span
