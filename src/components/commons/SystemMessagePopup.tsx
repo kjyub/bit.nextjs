@@ -9,6 +9,8 @@ const SystemMessagePopup = () => {
   const [message, setMessage] = useState<SystemMessage | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
+  console.log(messages);
+
   useEffect(() => {
     if (messages.length > 0) {
       setMessage(messages[0]);
@@ -36,9 +38,7 @@ const Wrapper = ({ message }: { message: SystemMessage }) => {
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Enter') {
-        handleConfirm();
-      } else if (e.key === 'Escape') {
+      if (e.key === 'Escape') {
         handleCancel();
       }
     };
@@ -48,7 +48,7 @@ const Wrapper = ({ message }: { message: SystemMessage }) => {
       document.removeEventListener('keydown', handleKey);
     };
   }, []);
-
+  
   const handleConfirm = () => {
     message.onConfirm?.();
     deleteMessage(message.key);
@@ -96,13 +96,21 @@ const Layout = tw.div`
 `;
 
 const Alert = ({ message, onConfirm }: { message: SystemMessage, onConfirm: () => void }) => {
+  const confirmButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (confirmButtonRef.current) {
+      confirmButtonRef.current.focus();
+    }
+  }, []);
+
   return (
     <Layout>
       <div className="content">
         {message.content}
       </div>
       <div className="control">
-        <button type="button" className="confirm" onClick={onConfirm}>
+        <button type="button" className="confirm" ref={confirmButtonRef} onClick={onConfirm}>
           확인
         </button>
       </div>
@@ -111,21 +119,39 @@ const Alert = ({ message, onConfirm }: { message: SystemMessage, onConfirm: () =
 };
 
 const Confirm = ({ message, onConfirm, onCancel }: { message: SystemMessage, onConfirm: () => void, onCancel: () => void }) => {
-  const deleteMessage = useSystemMessageStore((state) => state.deleteMessage);
+  const confirmButtonRef = useRef<HTMLButtonElement>(null);
+  const cancelButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (confirmButtonRef.current) {
+      confirmButtonRef.current.focus();
+    }
+  }, []);
 
   return (
     <Layout>
       <div className="content">
         {message.content}
       </div>
-      <div className="control">
-        <button type="button" onClick={onCancel}>
-          취소
-        </button>
-        <button type="button" className="confirm" onClick={onConfirm}>
+      {/* 포커스 처리를 위한 flex-row-reverse */}
+      <div className="control flex-row-reverse"> 
+        <button type="button" className="confirm" ref={confirmButtonRef} onClick={onConfirm}>
           확인
+        </button>
+        <button type="button" ref={cancelButtonRef} onClick={onCancel}>
+          취소
         </button>
       </div>
     </Layout>
+  );
+};
+
+export const ErrorMessageForm = (messages: string[]) => {
+  return (
+    <ul className="flex flex-col gap-2 list-disc list-inside">
+      {messages.map((message, index) => (
+        <li key={index}>{message}</li>
+      ))}
+    </ul>
   );
 };
