@@ -11,6 +11,7 @@ import { useEffect, useMemo, useState } from 'react';
 import ModalLayout from '../atomics/ModalLayout';
 import { SlideInput } from '../inputs/TradeInputs';
 import { CASH_UNIT, CRYPTO_WALLET_UNIT } from '@/constants/CryptoConsts';
+import useSystemMessageStore from '@/store/useSystemMessageStore';
 
 const TransferSuffix = {
   [TransferTypes.TO_ACCOUNT]: CASH_UNIT,
@@ -24,6 +25,8 @@ interface CryptoTransferModalProps {
   close: () => void;
 }
 export default function CryptoTransferModal({ defaultTransferType, close }: CryptoTransferModalProps) {
+  const createMessage = useSystemMessageStore((state) => state.createMessage);
+
   // 타입 및 스타일
   const [transferType, setTransferType] = useState<TransferType>(defaultTransferType);
   const [isBgActive, setBgActive] = useState<boolean>(false);
@@ -98,11 +101,17 @@ export default function CryptoTransferModal({ defaultTransferType, close }: Cryp
     if (response) {
       setValue(0);
       updateInfo();
-      alert('이체가 완료되었습니다.');
+      createMessage({
+        type: 'alert',
+        content: '이체가 완료되었습니다.',
+      });
       close();
       return;
     } else {
-      alert('이체에 실패하였습니다.');
+      createMessage({
+        type: 'alert',
+        content: '이체에 실패하였습니다.',
+      });
       return;
     }
   };

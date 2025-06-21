@@ -18,6 +18,8 @@ import CommunitySearch from '../../atomics/community/CommunitySearch';
 import CryptoMarketCommunityEditor from './CommunityEditor';
 import CryptoMarketCommunityView from './CommunityView';
 import ModalContainer from '@/components/ModalContainer';
+import useToastMessageStore from '@/store/useToastMessageStore';
+import useSystemMessageStore from '@/store/useSystemMessageStore';
 
 interface ICryptoMarketCommunity {
   marketCode: string;
@@ -155,6 +157,9 @@ const Community = ({ user, community, selectedCommunity, setSelectedCommunity, h
 
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
 
+  const createToastMessage = useToastMessageStore((state) => state.createMessage);
+  const createSystemMessage = useSystemMessageStore((state) => state.createMessage);
+
   const handleClick = () => {
     if (isSelected) {
       setSelectedCommunity(new MarketCommunity());
@@ -171,15 +176,22 @@ const Community = ({ user, community, selectedCommunity, setSelectedCommunity, h
   const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
-    if (!confirm('정말 삭제하시겠습니까?')) return;
+    const isConfirmed = await createSystemMessage({
+      type: 'confirm',
+      content: '정말 삭제하시겠습니까?',
+    });
 
-    const response = await CryptoApi.deleteCommunity(community.nanoId);
-    if (!response) {
-      alert('삭제에 실패했습니다.');
+    if (!isConfirmed) {
       return;
     }
 
-    alert('삭제되었습니다.');
+    const response = await CryptoApi.deleteCommunity(community.nanoId);
+    if (!response) {
+      createToastMessage('삭제에 실패했습니다.');
+      return;
+    }
+
+    createToastMessage('삭제되었습니다.');
     setIsDeleted(true);
   };
 

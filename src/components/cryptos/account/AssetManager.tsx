@@ -10,12 +10,14 @@ import CommonUtils from '@/utils/CommonUtils';
 import { useEffect, useMemo, useState } from 'react';
 import CryptoTransferModal from '../CryptoTransferModal';
 import { CASH_UNIT, CRYPTO_WALLET_UNIT } from '@/constants/CryptoConsts';
+import useSystemMessageStore from '@/store/useSystemMessageStore';
 
 export default function AssetManager() {
   const [isTransferModalOpen, setTransferModalOpen] = useState<boolean>(false);
   const [transferType, setTransferType] = useState<TransferType>(TransferTypes.TO_WALLET);
 
   const { cash, balance, locked, updateInfo, isAuth, isLoading } = useUserInfoStore();
+  const createSystemMessage = useSystemMessageStore((state) => state.createMessage);
 
   useEffect(() => {
     if (isAuth) {
@@ -36,7 +38,20 @@ export default function AssetManager() {
 
   return (
     <S.WalletLayout>
-      <span className="title">자산</span>
+      <span className="title" onClick={async () => {
+        createSystemMessage({
+          type: 'confirm',
+          content: '자산',
+          onConfirm: () => {
+            console.log('confirm');
+          },
+          onCancel: () => {
+            console.log('cancel');
+          },
+        }).then((result) => {
+          console.log('result', result);
+        });
+      }}>자산</span>
       <div className="grid max-sm:grid-cols-1 sm:grid-cols-2 gap-8 w-full">
         <S.WalletBox>
           <div className="header">

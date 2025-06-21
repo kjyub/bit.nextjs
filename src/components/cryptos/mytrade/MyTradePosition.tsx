@@ -22,6 +22,7 @@ import TypeUtils from '@/utils/TypeUtils';
 import { useCallback, useEffect, useState } from 'react';
 import HeaderLink from './HeaderLink';
 import { CRYPTO_WALLET_UNIT } from '@/constants/CryptoConsts';
+import useToastMessageStore from '@/store/useToastMessageStore';
 
 export default function CryptoMyTradePosition() {
   const { balance, myTrades } = useUserInfoStore();
@@ -45,6 +46,7 @@ interface IPosition {
 export const Position = ({ position, userBudget }: IPosition) => {
   const socketData = useMarketPriceStore((state) => state.marketDic[position.market.code]);
   const marketPrice = socketData ? socketData.trade_price : 0;
+  const createToastMessage = useToastMessageStore((state) => state.createMessage);
 
   const [bep, setBep] = useState<number>(0);
   const [size, setSize] = useState<number>(0);
@@ -115,10 +117,10 @@ export const Position = ({ position, userBudget }: IPosition) => {
       }
 
       if (result) {
-        alert('거래가 성공적으로 완료되었습니다.');
+        createToastMessage('거래가 성공적으로 완료되었습니다.');
         // updateInfo()
       } else {
-        alert('거래에 실패하였습니다.');
+        createToastMessage('거래에 실패하였습니다.');
       }
     },
     [position, marketPrice, closePrice, closeQuantity],

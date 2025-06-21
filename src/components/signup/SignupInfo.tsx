@@ -1,9 +1,9 @@
 'use client';
 
 import UserApi from '@/apis/api/users/UserApi';
-import Alerts from '@/components/Alerts';
 import * as I from '@/components/inputs/UserInputs';
 import { useUser } from '@/hooks/useUser';
+import useToastMessageStore from '@/store/useToastMessageStore';
 import * as SS from '@/styles/SignupStyles';
 import User from '@/types/users/User';
 import { debounce } from 'lodash';
@@ -14,6 +14,7 @@ import CountUp from 'react-countup';
 export default function SignupInfo() {
   const router = useRouter();
 
+  const createToastMessage = useToastMessageStore((state) => state.createMessage);
   const { setUser } = useUser();
   const [nickname, setNickname] = useState<string>('');
 
@@ -81,7 +82,7 @@ export default function SignupInfo() {
       router.push('/');
       return;
     } else {
-      Alerts.alert('회원가입 실패', '회원가입에 실패했습니다. 다시 시도해주세요.', 'error');
+      createToastMessage('회원가입에 실패했습니다. 다시 시도해주세요.');
     }
   };
 

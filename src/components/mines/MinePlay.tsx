@@ -8,6 +8,7 @@ import { createContext } from "react";
 import MineApi from "@/apis/api/mines/MineApi";
 import MineComplete from "./MineComplete";
 import { secondsToTime } from "./maze/utils";
+import useToastMessageStore from "@/store/useToastMessageStore";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -42,6 +43,7 @@ export default function MinePlay({ room, setRoom }: Props) {
   const [round, setRound] = useState<number>(1);
   const [time, setTime] = useState<number>(0);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const createToastMessage = useToastMessageStore((state) => state.createMessage);
 
   const [isComplete, setIsComplete] = useState<boolean>(false);
 
@@ -76,7 +78,7 @@ export default function MinePlay({ room, setRoom }: Props) {
       setIsComplete(true);
       setRoom(response)
     } else {
-      alert('오류가 발생했습니다. 다시 시도해주세요.');
+      createToastMessage('오류가 발생했습니다. 다시 시도해주세요.');
       setRoom(new MineRoom());
     }
   }, [time])

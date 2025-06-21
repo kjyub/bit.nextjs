@@ -11,6 +11,8 @@ import CryptoUtils from '@/utils/CryptoUtils';
 import dayjs from 'dayjs';
 import HeaderLink from './HeaderLink';
 import { CRYPTO_WALLET_UNIT } from '@/constants/CryptoConsts';
+import useToastMessageStore from '@/store/useToastMessageStore';
+import useSystemMessageStore from '@/store/useSystemMessageStore';
 
 export default function CryptoMyTradeOrder() {
   const { myTrades, updateInfo } = useUserInfoStore();
@@ -32,8 +34,16 @@ interface IOrder {
   updateInfo: () => Promise<void>;
 }
 const Order = ({ order, updateInfo }: IOrder) => {
+  const createToastMessage = useToastMessageStore((state) => state.createMessage);
+  const createSystemMessage = useSystemMessageStore((state) => state.createMessage);
+
   const handleCancel = async () => {
-    if (!confirm('주문을 취소하시겠습니까?')) {
+    const isConfirmed = await createSystemMessage({
+      type: 'confirm',
+      content: '주문을 취소하시겠습니까?',
+    });
+
+    if (!isConfirmed) {
       return;
     }
 
@@ -41,27 +51,32 @@ const Order = ({ order, updateInfo }: IOrder) => {
 
     if (response) {
       updateInfo();
-      alert('주문이 취소되었습니다.');
+      createToastMessage('주문이 취소되었습니다.');
     } else {
-      alert('주문 취소에 실패했습니다.');
+      createToastMessage('주문 취소에 실패했습니다.');
     }
   };
 
   const handleChase = async () => {
-    if (!confirm('주문을 추격하시겠습니까?')) {
+    const isConfirmed = await createSystemMessage({
+      type: 'confirm',
+      content: '주문을 추격하시겠습니까?',
+    });
+
+    if (!isConfirmed) {
       return;
     }
 
     const market: IUpbitMarketTicker = await TradeGoApi.getMarketCurrent(order.market.code);
     if (!market || !String(market.trade_price)) {
-      alert('마켓 정보를 가져오는데 실패했습니다.');
+      createToastMessage('마켓 정보를 가져오는데 실패했습니다.');
       return;
     }
 
     const response = await CryptoApi.orderLimitChase(order.id, market.trade_price);
 
     if (!response) {
-      alert('주문 추격에 실패했습니다.');
+      createToastMessage('주문 추격에 실패했습니다.');
     }
     updateInfo();
   };

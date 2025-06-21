@@ -1,6 +1,7 @@
 import CryptoApi from '@/apis/api/cryptos/CryptoApi';
 import ModalLayout from '@/components/atomics/ModalLayout';
 import { ContentInput, TitleInput } from '@/components/inputs/CommunityInputs';
+import useToastMessageStore from '@/store/useToastMessageStore';
 import * as CS from '@/styles/CryptoMarketCommunityStyles';
 import type MarketCommunity from '@/types/cryptos/MarketCommunity';
 import { cn } from '@/utils/StyleUtils';
@@ -20,6 +21,8 @@ export default function CryptoMarketCommunityEditor({ marketCode, community, onC
   const [title, setTitle] = useState<string>(community.title);
   const [content, setContent] = useState<string>(community.content);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const createMessage = useToastMessageStore((state) => state.createMessage);
 
   useEffect(() => {
     if (community.nanoId) {
@@ -56,11 +59,11 @@ export default function CryptoMarketCommunityEditor({ marketCode, community, onC
     const response = await CryptoApi.createCommunity(data);
 
     if (response.nanoId) {
-      alert('저장되었습니다.');
+      createMessage('저장되었습니다.');
       router.replace(`/crypto/${marketCode}`);
       onClose();
     } else {
-      alert('저장에 실패했습니다.');
+      createMessage('저장에 실패했습니다.');
     }
   };
 
@@ -68,11 +71,11 @@ export default function CryptoMarketCommunityEditor({ marketCode, community, onC
     const response = await CryptoApi.updateCommunity(community.nanoId, data);
 
     if (response.nanoId) {
-      alert('수정되었습니다.');
+      createMessage('수정되었습니다.');
       router.refresh();
       onClose();
     } else {
-      alert('수정에 실패했습니다.');
+      createMessage('수정에 실패했습니다.');
     }
   };
 

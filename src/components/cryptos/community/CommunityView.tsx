@@ -1,6 +1,7 @@
 import CryptoApi from '@/apis/api/cryptos/CryptoApi';
 import CommunityPagination from '@/components/atomics/community/CommunityPagination';
 import { MARKET_COMMUNITY_COMMENT_PAGE_SIZE } from '@/constants/CryptoConsts';
+import useSystemMessageStore from '@/store/useSystemMessageStore';
 import useToastMessageStore from '@/store/useToastMessageStore';
 import * as CS from '@/styles/CryptoMarketCommunityStyles';
 import { TextFormats } from '@/types/CommonTypes';
@@ -274,7 +275,8 @@ interface IComment {
   handleComment: (value: string, parentId: number) => void;
 }
 const Comment = ({ user, comment, handleComment }: IComment) => {
-  const { createMessage } = useToastMessageStore();
+  const createToastMessage = useToastMessageStore((state) => state.createMessage);
+  const createSystemMessage = useSystemMessageStore((state) => state.createMessage);
 
   const [content, setContent] = useState<string>(comment.content);
 
@@ -303,7 +305,7 @@ const Comment = ({ user, comment, handleComment }: IComment) => {
       return;
     }
     if (!user.uuid) {
-      createMessage('회원 정보를 찾을 수 없습니다.');
+      createToastMessage('회원 정보를 찾을 수 없습니다.');
       return;
     }
 
@@ -317,7 +319,7 @@ const Comment = ({ user, comment, handleComment }: IComment) => {
 
     if (result.id < 0) {
       setEditLoading(false);
-      createMessage('수정 실패했습니다.');
+      createToastMessage('수정 실패했습니다.');
       return;
     }
     setContent(result.content);
@@ -343,7 +345,12 @@ const Comment = ({ user, comment, handleComment }: IComment) => {
 
   // 댓글 삭제
   const handleCommentDelete = async () => {
-    if (!confirm('정말 삭제하시겠습니까?')) {
+    const isConfirmed = await createSystemMessage({
+      type: 'confirm',
+      content: '정말 삭제하시겠습니까?',
+    });
+
+    if (!isConfirmed) {
       return;
     }
 
@@ -351,9 +358,9 @@ const Comment = ({ user, comment, handleComment }: IComment) => {
 
     if (response) {
       setDeleted(true);
-      createMessage('삭제되었습니다');
+      createToastMessage('삭제되었습니다');
     } else {
-      createMessage('삭제에 실패했습니다.');
+      createToastMessage('삭제에 실패했습니다.');
     }
   };
 

@@ -1,10 +1,12 @@
 'use client';
 
 import CryptoApi from '@/apis/api/cryptos/CryptoApi';
+import { ErrorMessageForm } from '@/components/commons/SystemMessagePopup';
 import * as I from '@/components/inputs/TradeInputs';
 import { useCryptoMarketTrade } from '@/hooks/useCryptoMarketTrade';
 import { useUser } from '@/hooks/useUser';
 import useMarketPriceStore from '@/store/useMarketPriceStore';
+import useSystemMessageStore from '@/store/useSystemMessageStore';
 import useToastMessageStore from '@/store/useToastMessageStore';
 import useUserInfoStore from '@/store/useUserInfo';
 import * as S from '@/styles/CryptoTradeStyles';
@@ -43,6 +45,7 @@ export default function CryptoMarketTrade({
   setSizeUnitType,
 }: ICryptoMarketTrade) {
   const createToastMessage = useToastMessageStore((state) => state.createMessage);
+  const createSystemMessage = useSystemMessageStore((state) => state.createMessage);
 
   const { isAuth } = useUser();
   const { balance, locked, updateInfo, myTrades } = useUserInfoStore();
@@ -129,7 +132,10 @@ export default function CryptoMarketTrade({
       errorMessages.push('잔액이 부족합니다.');
     }
     if (errorMessages.length > 0) {
-      alert(errorMessages.join('\n'));
+      createSystemMessage({
+        type: 'alert',
+        content: ErrorMessageForm(errorMessages),
+      });
       return;
     }
 

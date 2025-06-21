@@ -2,6 +2,7 @@
 
 import UserApi from '@/apis/api/users/UserApi';
 import { useUser } from '@/hooks/useUser';
+import useSystemMessageStore from '@/store/useSystemMessageStore';
 import useToastMessageStore from '@/store/useToastMessageStore';
 import { cn } from '@/utils/StyleUtils';
 import { useRouter } from 'next/navigation';
@@ -9,20 +10,28 @@ import { useActionState } from 'react';
 
 export default function UserDelete() {
   const { signOut } = useUser();
-  const { createMessage } = useToastMessageStore();
+  const createToastMessage = useToastMessageStore((state) => state.createMessage);
+  const createSystemMessage = useSystemMessageStore((state) => state.createMessage);
   const router = useRouter();
 
   const submitData = async (prevState: null, formData: FormData): Promise<null> => {
-    if (!confirm('정말 탈퇴하시겠습니까?')) {
+    const isConfirmed = await createSystemMessage({
+      type: 'confirm',
+      content: '정말 탈퇴하시겠습니까?',
+    });
+
+    if (!isConfirmed) {
       return null;
     }
 
     const response = await UserApi.deleteUser();
 
     if (response) {
-      createMessage('회원 탈퇴가 완료되었습니다.');
+      createToastMessage('회원 탈퇴가 완료되었습니다.');
       signOut();
       router.push('/');
+    } else {
+      createToastMessage('회원 탈퇴에 실패했습니다.');
     }
 
     return null;

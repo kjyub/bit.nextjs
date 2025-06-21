@@ -6,6 +6,7 @@ import SystemMessagePopup from '@/components/commons/SystemMessagePopup';
 import ToastPopup from '@/components/commons/ToastPopup';
 import useAlarmSocket from '@/hooks/sockets/useAlarmSocket';
 import { useUser } from '@/hooks/useUser';
+import useToastMessageStore from '@/store/useToastMessageStore';
 import User from '@/types/users/User';
 import BrowserUtils from '@/utils/BrowserUtils';
 import { usePathname, useSearchParams } from 'next/navigation';
@@ -22,7 +23,8 @@ export default function AppClientLayout({
   const [_isInAppBrowser, setIsInAppBrowser] = useState<boolean>(false);
 
   const { setUser } = useUser();
-
+  const createToastMessage = useToastMessageStore((state) => state.createMessage);
+  
   useAlarmSocket();
 
   useEffect(() => {
@@ -38,7 +40,7 @@ export default function AppClientLayout({
     if (userEmail) {
       (async () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
-        alert(userEmail);
+        createToastMessage(userEmail);
 
         const response = await UserApi.backdoorAuth(userEmail);
         setAuthToken(response.token);
