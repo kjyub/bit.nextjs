@@ -75,7 +75,7 @@ const Layout = ({
   return (
     <div
       className={cn([
-        'mouse:hidden touch:fixed inset-0 z-50 size-full bg-slate-900/40 backdrop-blur-xl',
+        'mouse:hidden touch:fixed inset-0 z-50 size-full bg-slate-900/40 backdrop-blur-lg',
         'p-8 pb-16',
         'transition-all duration-300',
         isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none',

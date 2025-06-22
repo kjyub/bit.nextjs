@@ -9,3 +9,13 @@
     transform: translate(0, -100%);
   }
 }
+
+.glow-ring {
+  position: absolute;
+  width: 50%;
+  aspect-ratio: 1 / 1;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, #6712ce, transparent 50%, transparent);
+  opacity: 0.7;
+}

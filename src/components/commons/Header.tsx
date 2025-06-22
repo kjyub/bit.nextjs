@@ -60,17 +60,20 @@ export default function Header() {
       <div className="content">
         {/* 왼쪽 */}
         <NS.Section>
-          <Link href="/" className="flex flex-center w-24 font-sinchon-rhapsody text-lg translate-y-0.5">
+          <Link href="/" className="flex flex-center w-24 font-sinchon-rhapsody text-lg translate-y-0.5 select-none">
             KURRITO
           </Link>
           <Link
             href={isAuth ? '/crypto' : `/crypto/${DEFAULT_MARKET_CODE}`}
             className={`btn ${CommonUtils.isPathActive(pathname, '/crypto') ? 'active' : ''}`}
           >
-            <span>암호화폐 거래</span>
+            <span>코인 거래소</span>
           </Link>
           <Link href="/mine" className={`btn ${CommonUtils.isPathActive(pathname, '/mine') ? 'active' : ''}`}>
             <span>지하 노역장</span>
+          </Link>
+          <Link href="/flex" className={`btn ${CommonUtils.isPathActive(pathname, '/flex') ? 'active' : ''}`}>
+            <span>수익 인증</span>
           </Link>
         </NS.Section>
         {/* 오른쪽 */}

@@ -4,6 +4,8 @@ import CryptoMarket from '@/types/cryptos/CryptoMarket';
 import { type PriceChangeType, PriceChangeTypes } from '@/types/cryptos/CryptoTypes';
 import CryptoUtils from '@/utils/CryptoUtils';
 import { cn } from '@/utils/StyleUtils';
+import Link from 'next/link';
+import TodayMarketTitleWrapper from './TodayMarketTitleWrapper';
 
 interface Props {
   getMarketsPromise: Promise<IUpbitMarketTicker[]>;
@@ -28,23 +30,32 @@ export default async function TodayMarkets({ getMarketsPromise, getMarketAllProm
   const profitRateOrderedTop5 = profitRateOrderd.slice(0, 5);
 
   return (
-    <div className="flex flex-col w-full p-4 gap-2">
-      <h3 className="px-1 text-xl md:text-2xl font-bold">오늘의 종목</h3>
+    <div className="flex flex-col w-full p-4 gap-4">
+      <TodayMarketTitleWrapper>
+        <i className="fa-solid fa-rocket"></i>
+        <h3 className="text-xl md:text-2xl font-bold text-center text-slate-50">오늘의 종목</h3>
+      </TodayMarketTitleWrapper>
 
-      <div className="grid sm:grid-cols-2 gap-4">
-        <div className="flex flex-col w-full">
-          <h4 className="px-1 text-base text-slate-300">거래대금</h4>
+      <div className="grid sm:grid-cols-2 gap-4 [&>div]:p-4 [&>div]:bg-slate-500/10 [&>div]:rounded-xl">
+        <div className="flex flex-col w-full gap-2">
+          <h4 className="px-1 text-lg text-slate-300">
+            <i className="fa-solid fa-chart-simple mr-1"></i>
+            <span>거래대금</span>
+          </h4>
           <div className="flex flex-col w-full divide-y divide-slate-500/30">
             {volumeOrderedTop5.map((market) => (
-              <MarketItem key={market.code} market={market} marketDic={marketDic} />
+              <MarketItemVolume key={market.code} market={market} marketDic={marketDic} />
             ))}
           </div>
         </div>
-        <div className="flex flex-col w-full">
-          <h4 className="px-1 text-base text-slate-300">수익률</h4>
+        <div className="flex flex-col w-full gap-2">
+          <h4 className="px-1 text-lg  text-slate-300">
+            <i className="fa-solid fa-chart-line mr-1"></i>
+            <span>수익률</span>
+          </h4>
           <div className="flex flex-col w-full divide-y divide-slate-500/30">
             {profitRateOrderedTop5.map((market) => (
-              <MarketItem key={market.code} market={market} marketDic={marketDic} />
+              <MarketItemPriceChange key={market.code} market={market} marketDic={marketDic} />
             ))}
           </div>
         </div>
@@ -53,44 +64,66 @@ export default async function TodayMarkets({ getMarketsPromise, getMarketAllProm
   );
 }
 
-const MarketItem = ({ market, marketDic }: { market: IUpbitMarketTicker; marketDic: Record<string, CryptoMarket> }) => {
+const MarketItemLayout = ({ market, marketDic, children }: { market: IUpbitMarketTicker; marketDic: Record<string, CryptoMarket>; children: React.ReactNode }) => {
   const priceChangeType: PriceChangeType = CryptoUtils.getPriceChangeType(market.trade_price, market.opening_price);
-  const priceChangePercent = market.signed_change_rate;
 
   return (
-    <div key={market.code} className="flex justify-between items-center px-2 py-3">
-      <div className="flex flex-col">
-        <h4
-          className={cn([
-            'text-base md:text-lg font-semibold',
-            {
-              'text-position-short-strong': priceChangeType === PriceChangeTypes.FALL,
-              'text-position-long-strong': priceChangeType === PriceChangeTypes.RISE,
-            },
-          ])}
-        >
+    <Link 
+      href={`/crypto/${market.code}`}
+      className={cn([
+        'flex justify-between items-center px-3 py-3 mouse:hover:bg-slate-500/10 touch:active:bg-slate-500/10 [&_*]:leading-[100%]',
+        '[&>.section]:flex [&>.section]:flex-col [&>.section.price]:items-end [&>.section.price]:w-32',
+        '[&>.section.price>.main]:text-sm md:[&>.section.price>.main]:text-base [&>.section.price>.main]:text-slate-500',
+        '[&>.section.price>.sub]:text-xs md:[&>.section.price>.sub]:text-sm [&>.section.price>.sub]:text-slate-500',
+        { '[&_.position]:!text-position-short-strong': priceChangeType === PriceChangeTypes.FALL },
+        { '[&_.position]:!text-position-long-strong': priceChangeType === PriceChangeTypes.RISE },
+      ])}
+    >
+      <div className="section">
+        <h4 className="text-base md:text-lg font-semibold position">
           {marketDic[market.code].koreanName}
         </h4>
         <p className="text-xs md:text-sm text-slate-500">{market.code}</p>
       </div>
-      <div className="flex flex-col items-end w-32">
-        <p
-          className={cn([
-            'text-xs md:text-sm text-slate-500',
-            {
-              'text-position-short-strong': priceChangeType === PriceChangeTypes.FALL,
-              'text-position-long-strong': priceChangeType === PriceChangeTypes.RISE,
-            },
-          ])}
-        >
-          {CryptoUtils.getPriceText(market.trade_price)}
-          {CRYPTO_WALLET_UNIT}
-        </p>
-        <p className="text-xs md:text-sm text-slate-500">
-          {priceChangeType === PriceChangeTypes.RISE ? '+' : ''}
-          {priceChangePercent.toFixed(2)}%
-        </p>
+      <div className="section price">
+        {children}
       </div>
-    </div>
+    </Link>
+  );
+};
+
+const MarketItemVolume = ({ market, marketDic }: { market: IUpbitMarketTicker; marketDic: Record<string, CryptoMarket> }) => {
+  const priceChangeType: PriceChangeType = CryptoUtils.getPriceChangeType(market.trade_price, market.opening_price);
+  const priceChangePercent = market.signed_change_rate;
+
+  return (
+    <MarketItemLayout market={market} marketDic={marketDic}>
+      <p className="main position">
+        {CryptoUtils.getPriceText(market.trade_price)}
+        {CRYPTO_WALLET_UNIT}
+      </p>
+      <p className="sub">
+        {priceChangeType === PriceChangeTypes.RISE ? '+' : ''}
+        {priceChangePercent.toFixed(2)}%
+      </p>
+    </MarketItemLayout>
+  );
+};
+
+const MarketItemPriceChange = ({ market, marketDic }: { market: IUpbitMarketTicker; marketDic: Record<string, CryptoMarket> }) => {
+  const priceChangeType: PriceChangeType = CryptoUtils.getPriceChangeType(market.trade_price, market.opening_price);
+  const priceChangePercent = market.signed_change_rate;
+
+  return (
+    <MarketItemLayout market={market} marketDic={marketDic}>
+      <p className="main position">
+        {priceChangeType === PriceChangeTypes.RISE ? '+' : ''}
+        {priceChangePercent.toFixed(2)}%
+      </p>
+      <p className="sub">
+        {CryptoUtils.getPriceText(market.trade_price)}
+        {CRYPTO_WALLET_UNIT}
+      </p>
+    </MarketItemLayout>
   );
 };
