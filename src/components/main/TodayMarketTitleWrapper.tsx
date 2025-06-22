@@ -22,6 +22,8 @@ const Border = () => {
   useEffect(() => {
     if (!containerRef.current) return;
 
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
+
     const container = containerRef.current;
     const containerRect = container.getBoundingClientRect();
 
@@ -41,9 +43,13 @@ const Border = () => {
       setPosition({ x: x - offset, y: y - offset });
     }
 
-    window.addEventListener('mousemove', handleMouseMove);
+    if (!isTouch) {
+      window.addEventListener('mousemove', handleMouseMove);
+    }
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
+      if (!isTouch) {
+        window.removeEventListener('mousemove', handleMouseMove);
+      }
     }
   }, []);
 
