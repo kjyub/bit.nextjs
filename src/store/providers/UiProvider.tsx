@@ -39,10 +39,12 @@ export const UiProvider = ({ children }: { children: React.ReactNode }) => {
     chartColorRef.current = chartColor;
     updateChartColor(chartColor);
 
-    UserApi.updateUser({
-      chart_color: chartColorRef.current,
-    });
-  }, [chartColor]);
+    if (isAuth) {
+      UserApi.updateUser({
+        chart_color: chartColorRef.current,
+      });
+    }
+  }, [isAuth, chartColor]);
 
   return <UiContext.Provider value={{ chartColor, setChartColor }}>{children}</UiContext.Provider>;
 };

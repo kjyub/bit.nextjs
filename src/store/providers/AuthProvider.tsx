@@ -59,9 +59,9 @@ export const AuthProvider = ({
         const newUser = new User();
         newUser.parseResponse(userData as any);
         setUser(newUser);
+      } else {
+        getUser(true);
       }
-
-      getUser(true);
     }
   }, [authToken, userData]);
 

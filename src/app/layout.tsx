@@ -1,7 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import localFont from 'next/font/local';
 import '@/styles/css/globals.css';
-import UserApi from '@/apis/api/users/UserApi';
 import { setAuthToken } from '@/apis/utils/instances';
 import AppClientLayout from '@/layouts/AppClientLayout';
 import { AuthProvider } from '@/store/providers/AuthProvider';
@@ -9,6 +7,8 @@ import { UiProvider } from '@/store/providers/UiProvider';
 import AuthServerUtils from '@/utils/AuthUtils.server';
 import Script from 'next/script';
 import { pretendard, sinchonRhapsody } from './fonts';
+import UserServerApi from '@/apis/api/users/UserServerApi';
+import { v4 as uuidv4 } from 'uuid';
 
 export const metadata: Metadata = {
   title: {
@@ -37,7 +37,9 @@ export default async function RootLayout({
   const authToken = await AuthServerUtils.getAuthToken();
   setAuthToken(authToken);
 
-  const userData = authToken ? await UserApi.getUserDataSelf() : {};
+  const instanceOptions = await AuthServerUtils.getAuthInstanceOptions();
+  const userData = authToken ? await UserServerApi.getUserCurrentData(instanceOptions) : {};
+  console.log('server layout', uuidv4());
 
   return (
     <html lang="ko" suppressHydrationWarning>

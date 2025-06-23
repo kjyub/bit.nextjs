@@ -1,6 +1,7 @@
-import type { LoginResponse } from '@/types/users/UserTypes';
+import { AccountStatusTypes, type LoginResponse } from '@/types/users/UserTypes';
 import ky, { type KyRequest, type KyResponse, type NormalizedOptions } from 'ky';
 import { getAuthToken, removeAuthToken, setAuthToken } from './instances';
+import AuthUtils from '@/utils/AuthUtils';
 
 export const setAuthorization = (request: KyRequest) => {
   const token = getAuthToken();
@@ -64,6 +65,62 @@ export const validateAuthToken = async (request: KyRequest, _options: Normalized
       }
 
       throw new Error('토큰 갱신 실패');
+    }
+  }
+
+  return response;
+};
+
+export const validateAuthTokenServer = async (request: KyRequest, options: NormalizedOptions, response: KyResponse) => {
+  // 재요청 실패 체크
+  if (response?.status === 401 && request.headers.get('x-retry') === 'true') {
+    throw new Error('토큰 만료');
+  }
+
+  // 401 에러시 토큰 재발급 시도
+  if (response?.status === 401 && request.headers.get('x-retry') !== 'true') {
+    const refreshToken = request.headers.get('Refresh');
+
+    try {
+      const refreshResponse = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER}/api/auth/refresh/`, {
+        credentials: 'include',
+        method: 'POST',
+        body: JSON.stringify({ refresh: refreshToken }),
+      });
+      if (!refreshResponse.ok) {
+        throw new Error('토큰 갱신 실패');
+      }
+
+      const result = (await refreshResponse.json()) as LoginResponse;
+
+      if (!result.token.access) {
+        throw new Error('토큰 만료');
+      }
+
+      // 원본 요청 재시도
+      request.headers.set('Authorization', `Bearer ${result.token.access}`);
+      request.headers.set('Refresh', result.token.refresh ?? '');
+      request.headers.set('x-retry', 'true');
+
+      return ky(request);
+    } catch (refreshError) {
+      try {
+        if (refreshToken === null) {
+          return response;
+        }
+
+        const tokenData = AuthUtils.parseJwt(refreshToken);
+        if (tokenData.account_status === AccountStatusTypes.TEMP) {
+          return response;
+        }
+      } catch {
+        //
+      }
+
+      request.headers.delete('Authorization');
+      await fetch(`${process.env.NEXT_PUBLIC_API_SERVER}/api/auth/signout/`);
+
+      throw new Error('토큰 만료');
     }
   }
 

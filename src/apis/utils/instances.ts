@@ -1,6 +1,6 @@
 import type { Token } from '@/types/users/UserTypes';
 import ky, { type KyInstance, type Options } from 'ky';
-import { setAuthorization, validateAuthToken } from './kyHooks';
+import { setAuthorization, validateAuthToken, validateAuthTokenServer } from './kyHooks';
 
 const URL = process.env.NEXT_PUBLIC_DJANGO_SERVER;
 
@@ -28,6 +28,15 @@ const kyAuthApi = (options: Options = {}) => {
       afterResponse: [validateAuthToken],
     },
     ...options,
+  });
+};
+
+export const authServerInstance = (options: Options = {}) => {
+  return kyApi({
+    ...options,
+    hooks: {
+      afterResponse: [validateAuthTokenServer],
+    },
   });
 };
 

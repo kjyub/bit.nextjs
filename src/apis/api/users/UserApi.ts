@@ -248,7 +248,7 @@ namespace UserApi {
 
     return result;
   }
-  export async function getUserDataSelf(): Promise<object> {
+  export async function getUserCurrentData(): Promise<object> {
     let userData = {};
 
     try {
