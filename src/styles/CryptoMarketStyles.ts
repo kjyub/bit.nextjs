@@ -13,8 +13,8 @@ export const MainLayout = tw.div`
 `;
 // 코인 이름 및 가격 정보
 export const TitleLayout = tw.div<StyleProps>`
-  sticky max-md:top-0 max-full:top-14 full:top-14 z-30
-  flex max-md:flex-col max-md:justify-center md:justify-between md:items-center w-full max-md:h-22 max-full:h-32 full:h-32
+  sticky max-md:top-0 top-14 z-30
+  flex max-md:flex-col max-md:justify-center md:justify-between md:items-center w-full max-md:h-22 md:h-32
   border-b
 
   ${({ $is_active }: StyleProps) => ($is_active ? 'border-slate-500/20 backdrop-blur-lg' : 'border-transparent')}
@@ -52,7 +52,8 @@ export const BottomLayout = tw.div`
   flex w-full gap-4 max-md:mt-4 max-md:!px-2 md:!px-1
 `;
 export const MyTradeLayout = tw.div`
-  flex flex-col flex-1 full:h-[calc(100vh-14rem)]
+  flex flex-col flex-1 
+  group-[.compact]/crypto:lg:h-[calc(100vh-14rem)] group-[.wide]/crypto:full:h-[calc(100vh-14rem)]
 `;
 export const CommunityLayout = tw.div`
   max-lg:hidden lg:flex flex-col w-128 min-h-[10rem] lg:max-h-full
@@ -60,7 +61,10 @@ export const CommunityLayout = tw.div`
 
 export const MarketListLayout = tw.div`
   sticky top-14 z-0
-  flex flex-col max-sm:w-full sm:w-96 h-[calc(100dvh-144px)] max-md:p-2 max-full:p-3 full:p-4 full:pt-8 space-y-4
+  flex flex-col max-sm:w-full sm:w-96 h-[calc(100dvh-144px)] max-md:p-2 space-y-4
+  group-[.compact]/crypto:max-lg:p-3 group-[.compact]/crypto:lg:p-4 
+  group-[.wide]/crypto:max-full:p-3 group-[.wide]/crypto:full:p-4 
+  group-[.compact]/crypto:lg:pt-8 group-[.wide]/crypto:full:pt-8
 `;
 
 export const MarketListBox = tw.div`
@@ -87,8 +91,9 @@ export const MarketListBox = tw.div`
   [&>.market-sort>button>.icon]:text-xs
   [&>.market-sort>button>.icon]:opacity-0 [&>.market-sort>button.active>.icon]:opacity-100
 
-  [&>.list]:flex [&>.list]:flex-col [&>.list]:w-full [&>.list]:h-full [&>.list]:space-y-1
-  full:[&>.list]:p-2 [&>.list]:rounded-lg full:[&>.list]:bg-slate-500/10
+  [&>.list]:flex [&>.list]:flex-col [&>.list]:w-full [&>.list]:h-full [&>.list]:space-y-1 [&>.list]:rounded-lg 
+  group-[.compact]/crypto:lg:[&>.list]:p-2 group-[.wide]/crypto:full:[&>.list]:p-2
+  group-[.compact]/crypto:[&>.list]:lg:bg-slate-500/10 group-[.wide]/crypto:[&>.list]:full:bg-slate-500/10
   [&>.list]:overflow-y-auto
 `;
 

@@ -4,6 +4,7 @@ import { useCryptoUi } from '@/hooks/useCryptoUi';
 import { useIsScrollUp } from '@/hooks/useIsScrollUp';
 import * as NS from '@/styles/NavigationStyles';
 import type { StyleProps } from '@/types/StyleTypes';
+import { cn } from '@/utils/StyleUtils';
 import Link from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
 import tw from 'tailwind-styled-components';
@@ -42,7 +43,11 @@ const Navigation = () => {
         <span>토론방</span>
       </Link>
       <button
-        className={`btn full:!hidden ml-auto ${isShowMarketList ? 'active' : ''}`}
+        className={cn([
+          'btn ml-auto',
+          'group-[.compact]/crypto:lg:!hidden group-[.wide]/crypto:full:!hidden',
+          { 'active': isShowMarketList },
+        ])}
         onClick={() => setIsShowMarketList(!isShowMarketList)}
         type="button"
       >
