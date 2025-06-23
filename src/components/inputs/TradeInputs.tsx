@@ -70,7 +70,7 @@ export const SlideInput = ({ value, setValue, min, max, step = 1, mark }: SlideI
         min={min}
         max={max}
         step={step}
-        value={value}
+        value={value || 0}
         onChange={handleChange}
       />
       <div className="absolute z-0 w-full h-full px-2">
