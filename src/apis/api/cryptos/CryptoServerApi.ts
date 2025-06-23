@@ -21,7 +21,9 @@ namespace CryptoServerApi {
   export async function getMarketAll(): Promise<object> {
     let result: object = {};
     try {
-      const response = await defaultInstance.get('api/cryptos/market_all/');
+      const response = await defaultInstance.get('api/cryptos/market_all/', {
+        next: { revalidate: 3600 * 3 },
+      });
       result = (await response.json()) as any;
     } catch (error) {
       console.log(error);
