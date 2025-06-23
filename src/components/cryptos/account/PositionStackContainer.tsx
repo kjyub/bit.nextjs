@@ -147,8 +147,6 @@ export default function PositionStackContainer({ positions, balance, isLoading }
     values.items = mainItems;
     values.others = otherItems;
 
-    console.log(values);
-
     return values;
   }, [positions, balance, breakpointState]);
 
