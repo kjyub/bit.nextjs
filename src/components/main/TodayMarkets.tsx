@@ -6,6 +6,8 @@ import CryptoUtils from '@/utils/CryptoUtils';
 import { cn } from '@/utils/StyleUtils';
 import Link from 'next/link';
 import TodayMarketTitleWrapper from './TodayMarketTitleWrapper';
+import CommonUtils from '@/utils/CommonUtils';
+import { TextFormats } from '@/types/CommonTypes';
 
 interface Props {
   getMarketsPromise: Promise<IUpbitMarketTicker[]>;
@@ -25,7 +27,7 @@ export default async function TodayMarkets({ getMarketsPromise, getMarketAllProm
   const volumeOrderd = markets.sort((a, b) => b.acc_trade_price_24h - a.acc_trade_price_24h);
   const volumeOrderedTop5 = volumeOrderd.slice(0, 5);
 
-  // 수익률 기준 정렬 내림차순
+  // 변화율 기준 정렬 내림차순
   const profitRateOrderd = markets.sort((a, b) => b.signed_change_rate - a.signed_change_rate);
   const profitRateOrderedTop5 = profitRateOrderd.slice(0, 5);
 
@@ -51,7 +53,7 @@ export default async function TodayMarkets({ getMarketsPromise, getMarketAllProm
         <div className="flex flex-col w-full gap-2">
           <h4 className="px-1 text-lg  text-slate-300">
             <i className="fa-solid fa-chart-line mr-1"></i>
-            <span>수익률</span>
+            <span>변화율</span>
           </h4>
           <div className="flex flex-col w-full divide-y divide-slate-500/30">
             {profitRateOrderedTop5.map((market) => (
@@ -71,7 +73,7 @@ const MarketItemLayout = ({ market, marketDic, children }: { market: IUpbitMarke
     <Link 
       href={`/crypto/${market.code}`}
       className={cn([
-        'flex justify-between items-center px-3 py-3 mouse:hover:bg-slate-500/10 touch:active:bg-slate-500/10 [&_*]:leading-[100%]',
+        'flex justify-between items-center px-3 py-3 mouse:hover:bg-slate-500/10 touch:active:bg-slate-500/10 [&_*]:leading-[110%]',
         '[&>.section]:flex [&>.section]:flex-col [&>.section.price]:items-end [&>.section.price]:w-32',
         '[&>.section.price>.main]:text-sm md:[&>.section.price>.main]:text-base [&>.section.price>.main]:text-slate-500',
         '[&>.section.price>.sub]:text-xs md:[&>.section.price>.sub]:text-sm [&>.section.price>.sub]:text-slate-500',
@@ -103,8 +105,7 @@ const MarketItemVolume = ({ market, marketDic }: { market: IUpbitMarketTicker; m
         {CRYPTO_WALLET_UNIT}
       </p>
       <p className="sub">
-        {priceChangeType === PriceChangeTypes.RISE ? '+' : ''}
-        {priceChangePercent.toFixed(2)}%
+        {`거래대금: ${CommonUtils.textFormat(market.acc_trade_price_24h, TextFormats.KOREAN_PRICE_SIMPLE)}`}
       </p>
     </MarketItemLayout>
   );
@@ -112,7 +113,7 @@ const MarketItemVolume = ({ market, marketDic }: { market: IUpbitMarketTicker; m
 
 const MarketItemPriceChange = ({ market, marketDic }: { market: IUpbitMarketTicker; marketDic: Record<string, CryptoMarket> }) => {
   const priceChangeType: PriceChangeType = CryptoUtils.getPriceChangeType(market.trade_price, market.opening_price);
-  const priceChangePercent = market.signed_change_rate;
+  const priceChangePercent = market.signed_change_rate * 100;
 
   return (
     <MarketItemLayout market={market} marketDic={marketDic}>
@@ -121,8 +122,7 @@ const MarketItemPriceChange = ({ market, marketDic }: { market: IUpbitMarketTick
         {priceChangePercent.toFixed(2)}%
       </p>
       <p className="sub">
-        {CryptoUtils.getPriceText(market.trade_price)}
-        {CRYPTO_WALLET_UNIT}
+        {`현재가격: ${CryptoUtils.getPriceText(market.trade_price)}${CRYPTO_WALLET_UNIT}`}
       </p>
     </MarketItemLayout>
   );
