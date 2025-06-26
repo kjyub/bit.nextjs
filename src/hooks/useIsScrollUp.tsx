@@ -12,7 +12,7 @@ export const useIsScrollUp = () => {
       const isAtBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight; // 페이지 맨 아래인지 여부
       const isAtTop = currentScroll <= 0; // 페이지 맨 위인지 여부
 
-      setIsScrollUp(isScrollDown && !isAtBottom && !isAtTop);
+      setIsScrollUp(!isScrollDown || isAtBottom || isAtTop);
       lastScrollRef.current = currentScroll;
     };
 

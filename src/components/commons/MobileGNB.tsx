@@ -6,16 +6,35 @@ import { useUser } from '@/hooks/useUser';
 import * as NS from '@/styles/MobileGNBStyles';
 import CommonUtils from '@/utils/CommonUtils';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import MobileMenu from './control-panel/MobileMenu';
 
 export default function MobileGNB() {
   // 회원 관련
   const { isLoading: isUserLoading, isAuth } = useUser();
-  const isHide = useIsScrollUp();
+  const isScrollUp = useIsScrollUp();
   const pathname = usePathname();
 
+  const [isHide, setIsHide] = useState(false);
+  const isHideTimer = useRef<NodeJS.Timeout | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (isScrollUp) {
+      setIsHide(false);
+    } else {
+      if (isHideTimer.current) clearTimeout(isHideTimer.current);
+      isHideTimer.current = setTimeout(() => {
+        setIsHide(true);
+      }, 500);
+    }
+
+    return () => {
+      if (isHideTimer.current) {
+        clearTimeout(isHideTimer.current);
+      }
+    }
+  }, [isScrollUp])
 
   const handleMenu = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();

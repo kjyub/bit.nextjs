@@ -7,6 +7,7 @@ import type { StyleProps } from '@/types/StyleTypes';
 import { cn } from '@/utils/StyleUtils';
 import Link from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
 
 const Layout = tw.div<StyleProps>`
@@ -94,9 +95,28 @@ const MobileSection = tw.div`
 
 export const CryptoMobileNavigation = () => {
   const isScrollUp = useIsScrollUp();
+  const [isHide, setIsHide] = useState(false);
+  const isHideTimer = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    if (isScrollUp) {
+      setIsHide(false);
+    } else {
+      if (isHideTimer.current) clearTimeout(isHideTimer.current);
+      isHideTimer.current = setTimeout(() => {
+        setIsHide(true);
+      }, 500);
+    }
+
+    return () => {
+      if (isHideTimer.current) {
+        clearTimeout(isHideTimer.current);
+      }
+    }
+  }, [isScrollUp])
 
   return (
-    <MobileLayout $is_active={!isScrollUp}>
+    <MobileLayout $is_active={!isHide}>
       <MobileSection>
         <Navigation />
       </MobileSection>
