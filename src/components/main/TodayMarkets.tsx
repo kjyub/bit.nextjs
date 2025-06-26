@@ -74,7 +74,7 @@ const MarketItemLayout = ({ market, marketDic, children }: { market: IUpbitMarke
       href={`/crypto/${market.code}`}
       className={cn([
         'flex justify-between items-center px-3 py-3 mouse:hover:bg-slate-500/10 touch:active:bg-slate-500/10 [&_*]:leading-[110%]',
-        '[&>.section]:flex [&>.section]:flex-col [&>.section.price]:items-end [&>.section.price]:w-32',
+        '[&>.section]:flex [&>.section]:flex-col [&>.section.price]:items-end [&>.section.price]:w-40',
         '[&>.section.price>.main]:text-sm md:[&>.section.price>.main]:text-base [&>.section.price>.main]:text-slate-500',
         '[&>.section.price>.sub]:text-xs md:[&>.section.price>.sub]:text-sm [&>.section.price>.sub]:text-slate-500',
         { '[&_.position]:!text-position-short-strong': priceChangeType === PriceChangeTypes.FALL },
@@ -83,7 +83,7 @@ const MarketItemLayout = ({ market, marketDic, children }: { market: IUpbitMarke
     >
       <div className="section">
         <h4 className="text-base md:text-lg font-semibold position">
-          {marketDic[market.code].koreanName}
+          {marketDic[market.code]?.koreanName || market.market}
         </h4>
         <p className="text-xs md:text-sm text-slate-500">{market.code}</p>
       </div>
