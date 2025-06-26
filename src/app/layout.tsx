@@ -39,7 +39,6 @@ export default async function RootLayout({
 
   const instanceOptions = await AuthServerUtils.getAuthInstanceOptions();
   const userData = authToken ? await UserServerApi.getUserCurrentData(instanceOptions) : {};
-  console.log('server layout', uuidv4());
 
   return (
     <html lang="ko" suppressHydrationWarning>

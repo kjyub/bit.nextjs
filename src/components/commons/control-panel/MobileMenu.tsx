@@ -24,6 +24,7 @@ const Layout = ({
 
   // 브라우저 스크롤 막기
   useLayoutEffect(() => {
+    console.log('isOpen', isOpen);
     if (isOpen) {
       setTranslateY(0);
       setOpacity(100);
@@ -61,7 +62,6 @@ const Layout = ({
   const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
     const currentY = e.changedTouches[0].clientY;
     const deltaY = currentY - startY.current;
-    console.log(deltaY);
     if (deltaY > SWIPE_DOWN_THRESHOLD) {
       setIsOpen(false);
     } else {
@@ -83,7 +83,7 @@ const Layout = ({
     >
       <div
         className={cn([
-          'flex flex-col justify-between size-full gap-4',
+          'flex flex-col size-full gap-4',
           isOpen ? 'translate-y-0' : 'translate-y-24',
           isSwiping ? 'duration-0' : 'duration-300',
           'will-change-transform will-change-opacity select-none',
@@ -142,11 +142,11 @@ export default function MobileMenu({ isOpen, setIsOpen }: { isOpen: boolean; set
 
   return (
     <Layout isOpen={isOpen} setIsOpen={setIsOpen}>
-      <h1 className="mb-8 text-2xl font-light text-slate-200/80 font-sinchon-rhapsody">KURRITO</h1>
+      <h1 className="mb-[30%] text-2xl font-light text-slate-200/80 font-sinchon-rhapsody">KURRITO</h1>
 
       <MessageList ref={usePreventSwipe()} isOpen={isOpen} onClose={() => setIsOpen(false)} />
 
-      <div className="flex justify-between items-end">
+      <div className="flex justify-between items-end mt-auto">
         <div className="flex flex-col justify-end gap-1">
           <span className="text-xs text-slate-200/80">차트 색상</span>
           <div className="flex flex-1 gap-1">
