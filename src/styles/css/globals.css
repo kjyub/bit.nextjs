@@ -60,6 +60,10 @@
     border-color: var(--color-gray-200, currentColor);
   }
 
+  html {
+    background-color: rgb(1, 0, 24, 1);
+  }
+
   body {
     /* color: rgb(var(--foreground-rgb));
     background: rgb(var(--background-rgb)); */
@@ -80,6 +84,8 @@
       rgb(26, 26, 70) 83%,
       rgb(32, 60, 91) 100%
     );
+
+    min-height: 100dvh;
 
     @apply overflow-x-hidden text-slate-100;
     transition: background-color 0.5s ease-in-out;

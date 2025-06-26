@@ -133,14 +133,16 @@ export default function CryptoMarketCommunity({
         </div>
       </CS.ListLayout>
 
-      <ModalContainer isOpen={isShowEditor} setIsOpen={setShowEditor}>
-        <CryptoMarketCommunityEditor
-          marketCode={marketCode}
-          community={selectedCommunity}
-          onClose={() => {
-            setShowEditor(false);
-          }}
-        />
+      <ModalContainer isOpen={isShowEditor} setIsOpen={setShowEditor} isDirectClose={false}>
+        {isShowEditor && (
+          <CryptoMarketCommunityEditor
+            marketCode={marketCode}
+            community={selectedCommunity}
+            onClose={() => {
+              setShowEditor(false);
+            }}
+          />
+        )}
       </ModalContainer>
     </CS.Layout>
   );

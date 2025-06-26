@@ -36,6 +36,10 @@ export default function MobileGNB() {
     }
   }, [isScrollUp])
 
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname])
+
   const handleMenu = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     setIsMenuOpen(!isMenuOpen);

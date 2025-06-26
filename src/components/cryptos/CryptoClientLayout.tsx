@@ -16,6 +16,8 @@ export default function CryptoClientLayout({ children }: { children: React.React
     } else {
       setMode('compact');
     }
+
+    window.scrollTo(0, 0);
   }, [pathname, currentCode])
 
   return (
