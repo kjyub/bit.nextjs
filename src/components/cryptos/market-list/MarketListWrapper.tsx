@@ -9,7 +9,7 @@ const Wrapper = tw.div<StyleProps>`
   group-[.wide]/crypto:max-full:fixed group-[.wide]/crypto:full:hidden
   max-md:top-4 md:top-30 max-sm:inset-x-4 sm:right-4 z-50
   flex p-1
-  rounded-2xl bg-black/10 backdrop-blur-lg
+  rounded-2xl bg-black/10 backdrop-blur-[20px]
   border border-slate-700/50
 
   transition-transform duration-300 ease-in-out will-change-transform

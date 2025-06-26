@@ -68,8 +68,14 @@ export default function CryptoMarketCommunity({
   return (
     <CS.Layout>
       <h1 className="title">
-        <i className="fa-solid fa-comments-dollar"></i>
-        토론방
+        <div className="flex gap-2">
+          <i className="fa-solid fa-comments-dollar"></i>
+          토론방
+        </div>
+
+        <span className="text-nowrap text-sm text-slate-500">
+          {CommonUtils.textFormat(pagination.count, TextFormats.NUMBER)}개의 토론
+        </span>
       </h1>
 
       <CS.ListLayout>
@@ -80,10 +86,6 @@ export default function CryptoMarketCommunity({
             width="200px"
             placeholder="검색어를 입력하세요."
           />
-
-          <span className="text-nowrap text-sm text-slate-500">
-            {CommonUtils.textFormat(pagination.count, TextFormats.NUMBER)}개의 토론
-          </span>
         </div>
 
         <div className="list">

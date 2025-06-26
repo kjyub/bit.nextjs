@@ -1,7 +1,6 @@
 import CryptoApi from '@/apis/api/cryptos/CryptoApi';
 import CommunityPagination from '@/components/atomics/community/CommunityPagination';
 import { MARKET_COMMUNITY_COMMENT_PAGE_SIZE } from '@/constants/CryptoConsts';
-import useSystemMessageStore from '@/store/useSystemMessageStore';
 import useToastMessageStore from '@/store/useToastMessageStore';
 import * as CS from '@/styles/CryptoMarketCommunityStyles';
 import { TextFormats } from '@/types/CommonTypes';
@@ -10,9 +9,10 @@ import { type LikeType, LikeTypes } from '@/types/common/CommonTypes';
 import MarketCommunity from '@/types/cryptos/MarketCommunity';
 import type MarketCommunityComment from '@/types/cryptos/MarketCommunityComment';
 import type User from '@/types/users/User';
-import { UserTypes } from '@/types/users/UserTypes';
 import CommonUtils from '@/utils/CommonUtils';
 import { useEffect, useRef, useState } from 'react';
+import CommunityComment from './CommunityComment';
+import { useUser } from '@/hooks/useUser';
 
 interface ICryptoMarketCommunityView {
   user: User;
@@ -20,6 +20,8 @@ interface ICryptoMarketCommunityView {
 }
 export default function CryptoMarketCommunityView({ user, communityNanoId }: ICryptoMarketCommunityView) {
   const { createMessage } = useToastMessageStore();
+  const { isAuth } = useUser();
+  
   const [community, setCommunity] = useState<MarketCommunity>(new MarketCommunity());
 
   const [myLikeType, setMyLikeType] = useState<LikeType>(LikeTypes.NONE);
@@ -101,6 +103,13 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
     if (isCommentLoading) {
       return;
     }
+
+
+    if (!isAuth) {
+      createMessage('로그인 후 이용해주세요.');
+      return;
+    }
+
     if (!user.uuid) {
       createMessage('회원 정보를 찾을 수 없습니다.');
       return;
@@ -224,7 +233,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
         <span className="comment-count">{CommonUtils.textFormat(itemCount, TextFormats.NUMBER)}개의 댓글</span>
         <div className="list">
           {comments.map((comment, index) => (
-            <Comment key={index} user={user} comment={comment} handleComment={handleComment} />
+            <CommunityComment key={index} user={user} comment={comment} handleComment={handleComment} />
           ))}
         </div>
 
@@ -268,250 +277,3 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
     </CS.ItemViewBox>
   );
 }
-
-interface IComment {
-  user: User;
-  comment: MarketCommunityComment;
-  handleComment: (value: string, parentId: number) => void;
-}
-const Comment = ({ user, comment, handleComment }: IComment) => {
-  const createToastMessage = useToastMessageStore((state) => state.createMessage);
-  const createSystemMessage = useSystemMessageStore((state) => state.createMessage);
-
-  const [content, setContent] = useState<string>(comment.content);
-
-  // 댓글 수정
-  const [isShowEdit, setShowEdit] = useState<boolean>(false);
-  const [isEditLoading, setEditLoading] = useState<boolean>(false);
-
-  // 댓글 삭제
-  const [isDeleted, setDeleted] = useState<boolean>(false);
-
-  // 대댓글
-  const [isShowReply, setShowReply] = useState<boolean>(false);
-  const [commentValue, setCommentValue] = useState<string>('');
-  const commentInputRef = useRef<HTMLTextAreaElement>(null);
-
-  const hasParent = !!(comment.parentId && comment.parentId >= 0);
-  const isMaster = user.uuid === comment.user.uuid || user.userType === UserTypes.STAFF;
-
-  useEffect(() => {
-    setContent(comment.content);
-  }, [comment]);
-
-  // 댓글 수정
-  const handleCommentEdit = async (value: string) => {
-    if (isEditLoading) {
-      return;
-    }
-    if (!user.uuid) {
-      createToastMessage('회원 정보를 찾을 수 없습니다.');
-      return;
-    }
-
-    setEditLoading(true);
-
-    const data = {
-      content: value,
-    };
-
-    const result = await CryptoApi.updateCommunityComment(comment.id, data);
-
-    if (result.id < 0) {
-      setEditLoading(false);
-      createToastMessage('수정 실패했습니다.');
-      return;
-    }
-    setContent(result.content);
-    setShowEdit(false);
-    setEditLoading(false);
-  };
-
-  // 대댓글 작성
-  const handleCommentReply = () => {
-    handleComment(commentValue, comment.id);
-    setCommentValue('');
-    if (commentInputRef.current) {
-      commentInputRef.current.style.height = '48px';
-    }
-    setShowReply(false);
-  };
-
-  const handleCommentEnter = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      handleCommentReply();
-    }
-  };
-
-  // 댓글 삭제
-  const handleCommentDelete = async () => {
-    const isConfirmed = await createSystemMessage({
-      type: 'confirm',
-      content: '정말 삭제하시겠습니까?',
-    });
-
-    if (!isConfirmed) {
-      return;
-    }
-
-    const response = await CryptoApi.deleteCommunityComment(comment.id);
-
-    if (response) {
-      setDeleted(true);
-      createToastMessage('삭제되었습니다');
-    } else {
-      createToastMessage('삭제에 실패했습니다.');
-    }
-  };
-
-  return (
-    <CS.ItemCommentBox className={`${hasParent ? 'ml-4 w-[calc(100%-1rem)]' : ''}`} $is_deleted={isDeleted}>
-      <div className="header">
-        <div className="user">
-          <i className="fa-solid fa-user" />
-          <span>{comment.user.nickname}</span>
-        </div>
-
-        <div className="flex items-center space-x-2">
-          <span className="text-xs text-slate-500">{CommonUtils.getDateShorten(comment.createdDate)}</span>
-          <CS.ItemControlButton
-            onClick={() => {
-              setShowReply(!isShowReply);
-            }}
-          >
-            <i className="fa-solid fa-reply"></i>
-          </CS.ItemControlButton>
-          {isMaster && (
-            <>
-              <CS.ItemControlButton
-                onClick={() => {
-                  setShowEdit(!isShowEdit);
-                }}
-              >
-                <i className="fa-solid fa-pen-to-square"></i>
-              </CS.ItemControlButton>
-              <CS.ItemControlButton
-                onClick={() => {
-                  handleCommentDelete();
-                }}
-              >
-                <i className="fa-solid fa-trash"></i>
-              </CS.ItemControlButton>
-            </>
-          )}
-        </div>
-      </div>
-
-      {/* 댓글 내용과 댓글 수정은 여기서 진행된다. */}
-      <CommentContent
-        content={content}
-        hasParent={hasParent}
-        parentName={'parentName'}
-        isEdit={isShowEdit}
-        handleComment={handleCommentEdit}
-      />
-
-      {/* 답글 작성 */}
-      {isShowReply && (
-        <CS.ItemCommentWriteBox className="mt-4! pl-6 [&>button]:w-24">
-          <textarea
-            ref={commentInputRef}
-            value={commentValue}
-            placeholder="답글을 입력해주세요"
-            onChange={(e) => {
-              setCommentValue(e.target.value);
-            }}
-            onKeyDown={handleCommentEnter}
-            onInput={(e: React.FormEvent<HTMLTextAreaElement>) => {
-              const target = e.target as HTMLTextAreaElement;
-              target.style.height = '48px';
-              target.style.height = `${Number(target.scrollHeight)}px`;
-            }}
-          />
-          <button
-            type="button"
-            onClick={() => {
-              handleCommentReply();
-            }}
-          >
-            등록
-          </button>
-        </CS.ItemCommentWriteBox>
-      )}
-    </CS.ItemCommentBox>
-  );
-};
-
-interface ICommentContent {
-  content: string;
-  hasParent: boolean;
-  parentName: string;
-  isEdit: boolean;
-  handleComment: (value: string) => void;
-}
-// 댓글 내용 및 수정 컴포넌트
-const CommentContent = ({ content, hasParent, parentName, isEdit, handleComment }: ICommentContent) => {
-  // 댓글
-  const [_isShowReply, setShowReply] = useState<boolean>(false);
-  const [commentValue, setCommentValue] = useState<string>(content);
-  const commentInputRef = useRef<HTMLTextAreaElement>(null);
-
-  useEffect(() => {
-    setCommentValue(content);
-  }, [isEdit]);
-
-  // 댓글 수정
-  const handleCommentEdit = () => {
-    handleComment(commentValue);
-    setCommentValue('');
-    if (commentInputRef.current) {
-      commentInputRef.current.style.height = '48px';
-    }
-    setShowReply(false);
-  };
-
-  const handleCommentEnter = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      handleCommentEdit();
-    }
-  };
-
-  return (
-    <>
-      {isEdit ? (
-        <CS.ItemCommentWriteBox className="mt-4! [&>button]:w-24">
-          <textarea
-            ref={commentInputRef}
-            value={commentValue}
-            onChange={(e) => {
-              setCommentValue(e.target.value);
-            }}
-            onKeyDown={handleCommentEnter}
-            onInput={(e: React.FormEvent<HTMLTextAreaElement>) => {
-              const target = e.target as HTMLTextAreaElement;
-              target.style.height = '48px';
-              target.style.height = `${Number(target.scrollHeight)}px`;
-            }}
-          />
-          <button
-            type="button"
-            onClick={() => {
-              handleCommentEdit();
-            }}
-          >
-            수정
-          </button>
-        </CS.ItemCommentWriteBox>
-      ) : (
-        <pre className="content font-pretendard">
-          {/* {hasParent && (
-            <div className="h-fit mt-1 mr-1 px-1 py-0.5 -translate-y-0.5 rounded-sm bg-[#edfcf1] text-brand_green-4 text-xs font-light">
-              {parentName}
-            </div>
-          )} */}
-          {content}
-        </pre>
-      )}
-    </>
-  );
-};

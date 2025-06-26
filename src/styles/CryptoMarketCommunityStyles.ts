@@ -5,9 +5,9 @@ export const Layout = tw.div`
   flex flex-col w-full space-y-5
   pb-[360px]
 
-  [&>.title]:flex [&>.title]:items-center [&>.title]:px-1
+  [&>.title]:flex [&>.title]:justify-between [&>.title]:items-center [&>.title]:w-full [&>.title]:px-1
   [&>.title]:text-2xl [&>.title]:text-slate-100 [&.title]:font-semibold
-  [&>.title>i]:mr-2 [&>.title>i]:text-lg
+  [&>.title>_i]:mr-2 [&>.title>_i]:text-lg
 `;
 
 export const ListLayout = tw.div`
@@ -104,8 +104,10 @@ export const ItemCommentBox = tw.div`
   [&>.content]:font-light [&>.content]:leading-[165%] 
 `;
 
-export const ItemControlButton = tw.button`
+export const ItemControlButton = tw.button<StyleProps>`
   p-1
   text-xs text-slate-400 hover:text-slate-300
+  rounded-lg
+  ${({ $is_active }: StyleProps) => ($is_active ? 'bg-slate-500/50' : '')}
   transition-colors
 `;
