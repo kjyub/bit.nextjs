@@ -35,7 +35,7 @@ export default function CommunityComment({ user, comment, handleComment }: IComm
   const [commentValue, setCommentValue] = useState<string>('');
   const commentInputRef = useRef<HTMLTextAreaElement>(null);
 
-  const hasParent = !!(comment.parentId && comment.parentId >= 0);
+  const hasParent = !!comment.parentId;
   const isMaster = user.uuid === comment.user.uuid || user.userType === UserTypes.STAFF;
 
   useEffect(() => {

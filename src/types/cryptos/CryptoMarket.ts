@@ -14,7 +14,7 @@ export default class CryptoMarket extends AbsApiObject {
 
   constructor() {
     super();
-    this._id = -1;
+    this._id = 0;
     this._code = '';
     this._koreanName = '';
     this._englishName = '';

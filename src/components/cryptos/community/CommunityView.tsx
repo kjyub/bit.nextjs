@@ -60,7 +60,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
   };
 
   // 댓글 목록 가져오기
-  const getComments = async (_pageIndex: number, requireId = -1) => {
+  const getComments = async (_pageIndex: number, requireId = 0) => {
     let response = new Pagination<MarketCommunityComment>();
     response = await CryptoApi.getCommunityCommentList(communityNanoId, _pageIndex, MARKET_COMMUNITY_COMMENT_PAGE_SIZE);
 
@@ -69,7 +69,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
       return response.items.filter((c) => c.id === requireId).length > 0;
     };
 
-    if (requireId >= 0 && !hasRequireComment()) {
+    if (requireId && !hasRequireComment()) {
       let additionalIndex = 0;
 
       // 서버 과부하를 막기 위한 10번 제한
@@ -99,7 +99,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
   };
 
   // 댓글 및 대댓글 작성
-  const handleComment = async (value: string, parentId = -1) => {
+  const handleComment = async (value: string, parentId = 0) => {
     if (isCommentLoading) {
       return;
     }
@@ -126,7 +126,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
       content: value,
     };
 
-    if (parentId >= 0) {
+    if (parentId) {
       data.parent_id = parentId;
     }
 
@@ -139,11 +139,11 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
     }
 
     setCommentValue('');
-    if (parentId < 0 && commentInputRef.current) {
+    if (!parentId && commentInputRef.current) {
       commentInputRef.current.style.height = '48px';
     }
 
-    if (parentId >= 0) {
+    if (parentId) {
       // 대댓글인 경우 해당 페이지에서 댓글을 다시 불러옴
       await getComments(pageIndex, result.id);
     } else {

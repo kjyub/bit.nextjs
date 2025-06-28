@@ -15,7 +15,7 @@ export default class CryptoFlex extends AbsApiObject {
 
   constructor() {
     super();
-    this._id = -1;
+    this._id = 0;
     this._user = new User();
     this._market = new CryptoMarket();
     this._position = new TradePosition();

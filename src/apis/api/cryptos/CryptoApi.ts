@@ -11,7 +11,7 @@ import MarketCommunityComment from '@/types/cryptos/MarketCommunityComment';
 import TradeHistory from '@/types/cryptos/TradeHistory';
 import TradeOrder from '@/types/cryptos/TradeOrder';
 import TradePosition from '@/types/cryptos/TradePosition';
-import { HTTPError } from 'ky';
+import type { HTTPError } from 'ky';
 
 namespace CryptoApi {
   // region MyTrades

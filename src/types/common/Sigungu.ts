@@ -11,7 +11,7 @@ export default class Sigungu extends AbsApiObject {
 
   constructor() {
     super();
-    this._id = -1;
+    this._id = 0;
     this._index = -1;
     this._sido = '';
     this._sidoEnglish = '';

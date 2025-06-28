@@ -15,9 +15,9 @@ export default class MarketCommunityComment extends AbsApiObject {
 
   constructor() {
     super();
-    this._id = -1;
+    this._id = 0;
     this._communityNanoId = '';
-    this._parentId = -1;
+    this._parentId = 0;
     this._user = new User();
     this._content = '';
     this._likes = 0;

@@ -20,7 +20,7 @@ export default class MarketCommunity extends AbsApiObject {
 
   constructor() {
     super();
-    this._id = -1;
+    this._id = 0;
     this._nanoId = '';
     this._marketCode = '';
     this._user = new User();

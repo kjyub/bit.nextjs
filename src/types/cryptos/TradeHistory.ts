@@ -18,7 +18,7 @@ export default class TradeHistory extends AbsApiObject {
 
   constructor() {
     super();
-    this._id = -1;
+    this._id = 0;
     this._order = new TradeOrder();
     this._orderType = TradeOrderTypes.NONE;
     this._positionType = PositionTypes.LONG;

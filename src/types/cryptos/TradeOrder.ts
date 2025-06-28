@@ -36,7 +36,7 @@ export default class TradeOrder extends AbsApiObject {
 
   constructor() {
     super();
-    this._id = -1;
+    this._id = 0;
     this._marketCode = '';
     this._market = new CryptoMarket();
     this._isOpen = false;
