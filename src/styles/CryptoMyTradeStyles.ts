@@ -107,7 +107,6 @@ export const OrderHeader = tw.div`
   [&>.row]:flex [&>.row]:justify-between [&>.row]:items-center [&>.row]:w-full [&>.row]:gap-2
   [&_.section]:flex [&_.section]:items-center [&_.section]:gap-1.5
 
-  [&_.datetime]:w-[8.5rem]
   [&_.datetime>i]:mr-1
   max-md:[&_.datetime>i]:text-[10px] md:[&_.datetime>i]:text-xs [&_.datetime>i]:text-slate-400
   [&_.datetime]:rounded-md [&_.datetime]:text-left
