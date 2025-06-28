@@ -332,7 +332,7 @@ namespace CryptoApi {
     pageIndex = 1,
     pageSize = 50,
     search = '',
-    positionType?: PositionType,
+    positionType: PositionType | null = null,
   ): Promise<Pagination<CryptoFlex>> {
     const result: Pagination<CryptoFlex> = new Pagination<CryptoFlex>();
 
@@ -351,7 +351,7 @@ namespace CryptoApi {
         searchParams.search = search;
       }
 
-      if (positionType) {
+      if (positionType !== null) {
         searchParams.position_type = positionType.toString();
       }
 

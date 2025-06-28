@@ -413,6 +413,10 @@
   }
   .layer1 {
     @apply bg-slate-500/20 rounded-lg;
+
+    &.hover {
+      @apply hover:bg-slate-500/30;
+    }
   }
   .layer1-1 {
     @apply bg-slate-700/30;

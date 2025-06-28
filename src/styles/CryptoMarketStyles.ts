@@ -70,7 +70,7 @@ export const MarketListLayout = tw.div`
 export const MarketListBox = tw.div`
   flex flex-col w-full h-full space-y-2
 
-  [&>input]:px-3 [&>input]:py-2 [&>input]:w-full 
+  [&>input]:px-3 [&>input]:py-2.5 [&>input]:w-full 
   [&>input]:rounded-lg
   [&>input]:bg-slate-500/40 [&>input]:focus:bg-slate-500/50
   [&>input]:text-slate-300
