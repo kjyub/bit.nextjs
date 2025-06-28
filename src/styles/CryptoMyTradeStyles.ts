@@ -20,7 +20,7 @@ export const PageLayout = tw.div<StyleProps>`
 `;
 export const PageList = tw.div<StyleProps>`
   ${({ $is_active }) => ($is_active ? 'opacity-100' : 'opacity-50')}
-  flex flex-col w-full h-full pb-8 space-y-2
+  flex flex-col w-full pb-8 space-y-2
   overflow-y-auto scroll-transparent
   duration-200
 `;

@@ -12,6 +12,7 @@ import { useState } from 'react';
 import CryptoMyTradeFilter from './Filter';
 import HeaderLink from './HeaderLink';
 import CryptoMyTradeItemSkeleton from './ItemSkeleton';
+import MyTradeBlank from './MyTradeBlank';
 
 const PAGE_SIZE = 10;
 
@@ -70,6 +71,7 @@ export default function CryptoMyTradeHistory() {
 
         <CryptoMyTradeItemSkeleton ref={scrollRef} pageIndex={pageIndex} itemCount={itemCount} pageSize={PAGE_SIZE} />
       </S.PageList>
+      <MyTradeBlank isShow={histories.length === 0} message="거래 내역이 없습니다." />
     </S.PageLayout>
   );
 }

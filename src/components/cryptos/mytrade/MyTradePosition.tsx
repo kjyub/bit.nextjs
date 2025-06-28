@@ -23,6 +23,7 @@ import CryptoUtils from '@/utils/CryptoUtils';
 import TypeUtils from '@/utils/TypeUtils';
 import { useCallback, useEffect, useState } from 'react';
 import HeaderLink from './HeaderLink';
+import MyTradeBlank from './MyTradeBlank';
 
 export default function CryptoMyTradePosition() {
   const { balance, myTrades } = useUserInfoStore();
@@ -35,6 +36,7 @@ export default function CryptoMyTradePosition() {
           <Position key={index} position={position} userBudget={balance} />
         ))}
       </S.PageList>
+      <MyTradeBlank isShow={positions.length === 0} message="현재 포지션이 없습니다." />
     </S.PageLayout>
   );
 }

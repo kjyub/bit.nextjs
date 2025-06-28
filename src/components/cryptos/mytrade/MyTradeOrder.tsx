@@ -13,6 +13,7 @@ import type TradeOrder from '@/types/cryptos/TradeOrder';
 import CryptoUtils from '@/utils/CryptoUtils';
 import dayjs from 'dayjs';
 import HeaderLink from './HeaderLink';
+import MyTradeBlank from './MyTradeBlank';
 
 export default function CryptoMyTradeOrder() {
   const { myTrades, updateInfo } = useUserInfoStore();
@@ -25,6 +26,7 @@ export default function CryptoMyTradeOrder() {
           <Order key={index} order={order} updateInfo={updateInfo} />
         ))}
       </S.PageList>
+      <MyTradeBlank isShow={orders.length === 0} message="현재 주문이 없습니다." />
     </S.PageLayout>
   );
 }
