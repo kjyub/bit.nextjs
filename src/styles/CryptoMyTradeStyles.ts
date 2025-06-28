@@ -130,9 +130,10 @@ export const OrderHeader = tw.div`
   [&_.info]:text-xs [&_.info]:text-slate-400 [&_.info]:font-light
 
   [&_button.info]:px-1.5 [&_button.info]:py-0.5
-  [&_button.info]:rounded-md [&_button.info]:bg-slate-500/70
-  [&_button.info]:text-xs [&_button.info]:text-slate-400 [&_button.info]:font-medium
-  [&_button.info]:hover:bg-slate-600/70 [&_button.info]:hover:text-slate-400
+  [&_button.info]:rounded-md [&_button.info]:bg-slate-600/70
+  [&_button.info]:text-xs [&_button.info]:text-slate-300/80 [&_button.info]:font-medium
+  [&_button.info]:hover:bg-slate-600/80 [&_button.info]:hover:text-slate-400
+  [&_button.info]:transition-colors
 
   [&_.info>.position]:text-xs 
   [&_.info>.position.long]:text-position-long-2 [&_.info>.position.short]:text-position-short-2

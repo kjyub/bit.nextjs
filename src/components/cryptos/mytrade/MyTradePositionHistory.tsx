@@ -13,6 +13,7 @@ import CryptoMyTradeFilter from './Filter';
 import HeaderLink from './HeaderLink';
 import CryptoMyTradeItemSkeleton from './ItemSkeleton';
 import MyTradeBlank from './MyTradeBlank';
+import useSystemMessageStore from '@/store/useSystemMessageStore';
 
 const PAGE_SIZE = 10;
 
@@ -80,6 +81,36 @@ interface IPosition {
   position: TradePosition;
 }
 const Position = ({ position }: IPosition) => {
+  const createSystemMessage = useSystemMessageStore((state) => state.createMessage);
+
+  const handleFlex = async () => {
+    const result = await createSystemMessage({
+      type: 'confirm',
+      content: '수익인증 하시겠습니까?',
+    });
+    if (!result) {
+      return;
+    }
+
+    const [flex, statusCode] = await CryptoApi.createFlex(position.id);
+    if (statusCode === 201) {
+      createSystemMessage({
+        type: 'alert',
+        content: '업로드 되었습니다.',
+      });
+    } else if (statusCode === 409) {
+      createSystemMessage({
+        type: 'alert',
+        content: '이미 수익인증 되었습니다.',
+      });
+    } else {
+      createSystemMessage({
+        type: 'alert',
+        content: '업로드 실패하였습니다.',
+      });
+    }
+  };
+
   return (
     <S.OrderBox>
       <S.OrderHeader>
@@ -107,6 +138,9 @@ const Position = ({ position }: IPosition) => {
 
           <div className="section">
             <div className="info">{MarginModeTypeNames[position.marginMode]}</div>
+            <button type="button" className="info" onClick={handleFlex}>
+              수익인증
+            </button>
           </div>
         </div>
       </S.OrderHeader>

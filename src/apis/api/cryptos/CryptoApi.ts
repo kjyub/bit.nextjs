@@ -1,14 +1,17 @@
 import { authInstance, defaultInstance } from '@/apis/utils/instances';
 import Pagination from '@/types/api/pagination';
 import type { LikeType } from '@/types/common/CommonTypes';
+import CryptoFlex from '@/types/cryptos/CryptoFlex';
 import type { IMyTradeData } from '@/types/cryptos/CryptoInterfaces';
 import CryptoMarket from '@/types/cryptos/CryptoMarket';
+import type { PositionType } from '@/types/cryptos/CryptoTypes';
 import CryptoWallet from '@/types/cryptos/CryptoWallet';
 import MarketCommunity from '@/types/cryptos/MarketCommunity';
 import MarketCommunityComment from '@/types/cryptos/MarketCommunityComment';
 import TradeHistory from '@/types/cryptos/TradeHistory';
 import TradeOrder from '@/types/cryptos/TradeOrder';
 import TradePosition from '@/types/cryptos/TradePosition';
+import { HTTPError } from 'ky';
 
 namespace CryptoApi {
   // region MyTrades
@@ -316,6 +319,73 @@ namespace CryptoApi {
       const response = await authInstance.get('api/cryptos/my_position_history/', { searchParams });
       const data = (await response.json()) as any;
       result.parseResponse(data as any, TradePosition);
+    } catch (error) {
+      console.log(error);
+    }
+
+    return result;
+  }
+  // endregion
+
+  // region Flex
+  export async function getFlexList(
+    pageIndex = 1,
+    pageSize = 50,
+    search = '',
+    positionType?: PositionType,
+  ): Promise<Pagination<CryptoFlex>> {
+    const result: Pagination<CryptoFlex> = new Pagination<CryptoFlex>();
+
+    try {
+      const searchParams: {
+        page: string;
+        page_size: string;
+        search?: string;
+        position_type?: string;
+      } = {
+        page: pageIndex.toString(),
+        page_size: pageSize.toString(),
+      };
+
+      if (search) {
+        searchParams.search = search;
+      }
+
+      if (positionType) {
+        searchParams.position_type = positionType.toString();
+      }
+
+      const response = await authInstance.get('api/cryptos/flexes/', { searchParams });
+      const data = (await response.json()) as any;
+      result.parseResponse(data as any, CryptoFlex);
+    } catch (error) {
+      console.log(error);
+    }
+
+    return result;
+  }
+  export async function createFlex(positionId: number): Promise<[CryptoFlex, number]> {
+    const result: CryptoFlex = new CryptoFlex();
+    let statusCode = 0;
+
+    try {
+      const response = await authInstance.post('api/cryptos/flex/', { json: { position_id: positionId } });
+      const data = (await response.json()) as any;
+      result.parseResponse(data as any);
+      statusCode = response.status;
+    } catch (error) {
+      const httpError = error as HTTPError;
+      statusCode = httpError.response.status;
+    }
+
+    return [result, statusCode];
+  }
+  export async function deleteFlex(flexId: number): Promise<boolean> {
+    let result = false;
+
+    try {
+      await authInstance.delete('api/cryptos/flex/', { searchParams: { flex_id: flexId.toString() } });
+      result = true;
     } catch (error) {
       console.log(error);
     }
