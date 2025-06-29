@@ -48,9 +48,10 @@ interface Props {
   setIsOpen: (isOpen: boolean) => void;
   isEscClose?: boolean;
   isDirectClose?: boolean;
+  zIndex?: number;
   children: React.ReactNode;
 }
-export default function ModalContainer({ isOpen, setIsOpen, isEscClose = true, isDirectClose = true, children }: Props) {
+export default function ModalContainer({ isOpen, setIsOpen, isEscClose = true, isDirectClose = true, zIndex = 60, children }: Props) {
   const isCloseTryRef = useRef<boolean>(false);
   const isCloseTryTimerRef = useRef<NodeJS.Timeout | null>(null);
   const createToastMessage = useToastMessageStore((state) => state.createMessage);
@@ -96,7 +97,7 @@ export default function ModalContainer({ isOpen, setIsOpen, isEscClose = true, i
 
   return (
     <Layout>
-      <div className={cn(['fixed inset-0 z-60 flex flex-center w-screen h-dvh', { 'pointer-events-none': !isOpen }])}>
+      <div className={cn(['fixed inset-0 flex flex-center w-screen h-dvh', { 'pointer-events-none': !isOpen }])} style={{ zIndex }}>
         <Dimmer onClick={() => handleClose()} $is_active={isOpen} />
         <Wrapper isOpen={isOpen}>{children}</Wrapper>
       </div>
