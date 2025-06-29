@@ -12,6 +12,7 @@ import TypeUtils from '@/utils/TypeUtils';
 import { useEffect, useMemo, useState } from 'react';
 import ModalLayout from '../atomics/ModalLayout';
 import { SlideInput } from '../inputs/TradeInputs';
+import CryptoUtils from '@/utils/CryptoUtils';
 
 const TransferSuffix = {
   [TransferTypes.TO_ACCOUNT]: CASH_UNIT,
@@ -54,6 +55,8 @@ export default function CryptoTransferModal({ defaultTransferType, close }: Cryp
       if (value > balance) {
         setErrorMessage('거래 지갑 잔액이 부족합니다.');
         setValid(false);
+      } else if (value <= 0) {
+        setValid(false);
       } else {
         setErrorMessage('');
         setValid(true);
@@ -61,6 +64,8 @@ export default function CryptoTransferModal({ defaultTransferType, close }: Cryp
     } else if (transferType === TransferTypes.TO_WALLET) {
       if (value > cash) {
         setErrorMessage('통장 잔액이 부족합니다.');
+        setValid(false);
+      } else if (value <= 0) {
         setValid(false);
       } else {
         setErrorMessage('');
@@ -160,14 +165,14 @@ export default function CryptoTransferModal({ defaultTransferType, close }: Cryp
             <S.TransferInfoBox>
               <span className="label">지갑 잔액</span>
               <span className="value">
-                {CommonUtils.textFormat(balance, TextFormats.NUMBER)}
+                {priceText(balance)}
                 {CRYPTO_WALLET_UNIT}
               </span>
             </S.TransferInfoBox>
             <S.TransferInfoBox>
               <span className="label">이체 후 통장 잔액</span>
               <span className="value">
-                {CommonUtils.textFormat(TypeUtils.round(cash + value, 0), TextFormats.NUMBER)}
+                {priceText(cash + value)}
                 {CASH_UNIT}
               </span>
             </S.TransferInfoBox>
@@ -178,14 +183,14 @@ export default function CryptoTransferModal({ defaultTransferType, close }: Cryp
             <S.TransferInfoBox>
               <span className="label">통장 잔액</span>
               <span className="value">
-                {CommonUtils.textFormat(cash, TextFormats.NUMBER)}
+                {priceText(cash)}
                 {CASH_UNIT}
               </span>
             </S.TransferInfoBox>
             <S.TransferInfoBox>
               <span className="label">이체 후 지갑 잔액</span>
               <span className="value">
-                {CommonUtils.textFormat(TypeUtils.round(balance + value, 0), TextFormats.NUMBER)}
+                {priceText(balance + value)}
                 {CRYPTO_WALLET_UNIT}
               </span>
             </S.TransferInfoBox>
@@ -204,3 +209,7 @@ export default function CryptoTransferModal({ defaultTransferType, close }: Cryp
     </ModalLayout>
   );
 }
+
+const priceText = (price: number) => {
+  return CommonUtils.textFormat(TypeUtils.round(price, 0), TextFormats.NUMBER);
+};

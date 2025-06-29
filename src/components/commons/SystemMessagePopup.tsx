@@ -24,7 +24,7 @@ const SystemMessagePopup = () => {
 
   return (
     // ModalContainer의 isOpen엔 message값으로 넣어서 미리 isOpen을 끈다. (애니메이션)
-    <ModalContainer isOpen={messages.length > 0} setIsOpen={() => {}}>
+    <ModalContainer isOpen={messages.length > 0} setIsOpen={() => {}} zIndex={70}>
       {message && <Wrapper message={message} />}
     </ModalContainer>
   );
