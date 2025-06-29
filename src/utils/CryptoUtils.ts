@@ -30,12 +30,12 @@ namespace CryptoUtils {
     }
   }
   export function getPriceRound(price: number, round = 0): number {
-    if (price >= 1000) return TypeUtils.round(price, 0);
-    else if (price >= 100) return TypeUtils.round(price, 1);
-    else if (price >= 10) return TypeUtils.round(price, 2);
-    else if (price >= 1) return TypeUtils.round(price, 3);
-    else if (price > 0) return TypeUtils.round(price, round ? round : 8);
-    else if (price === 0) return 0;
+    if (Math.abs(price) >= 1000) return TypeUtils.round(price, 0);
+    else if (Math.abs(price) >= 100) return TypeUtils.round(price, 1);
+    else if (Math.abs(price) >= 10) return TypeUtils.round(price, 2);
+    else if (Math.abs(price) >= 1) return TypeUtils.round(price, 3);
+    else if (Math.abs(price) > 0) return TypeUtils.round(price, round ? round : 8);
+    else if (Math.abs(price) === 0) return 0;
     else return price;
   }
   export function getPriceText(price: number): string {
@@ -53,12 +53,12 @@ namespace CryptoUtils {
   export function getPriceUnit(price: number, round = 0): number {
     let result = '';
 
-    if (price >= 100000) result = `${Math.round(price / 1000) * 1000}`;
-    else if (price >= 10000) result = `${Math.round(price / 100) * 100}`;
-    else if (price >= 1000) result = `${TypeUtils.round(price, 0)}`;
-    else if (price >= 100) result = `${TypeUtils.round(price, 1)}`;
-    else if (price >= 1) result = `${TypeUtils.round(price, 3)}`;
-    else if (price >= 0) result = `${TypeUtils.round(price, round ? round : 8)}`;
+    if (Math.abs(price) >= 100000) result = `${Math.round(price / 1000) * 1000}`;
+    else if (Math.abs(price) >= 10000) result = `${Math.round(price / 100) * 100}`;
+    else if (Math.abs(price) >= 1000) result = `${TypeUtils.round(price, 0)}`;
+    else if (Math.abs(price) >= 100) result = `${TypeUtils.round(price, 1)}`;
+    else if (Math.abs(price) >= 1) result = `${TypeUtils.round(price, 3)}`;
+    else if (Math.abs(price) >= 0) result = `${TypeUtils.round(price, round ? round : 8)}`;
     else result = `${TypeUtils.round(price, 4)}`;
 
     return Number(result);

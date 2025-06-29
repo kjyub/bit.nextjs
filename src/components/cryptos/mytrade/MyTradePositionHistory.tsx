@@ -14,6 +14,7 @@ import HeaderLink from './HeaderLink';
 import CryptoMyTradeItemSkeleton from './ItemSkeleton';
 import MyTradeBlank from './MyTradeBlank';
 import useSystemMessageStore from '@/store/useSystemMessageStore';
+import TypeUtils from '@/utils/TypeUtils';
 
 const PAGE_SIZE = 10;
 
@@ -158,13 +159,15 @@ const Position = ({ position }: IPosition) => {
           </dt>
           <dd>{CryptoUtils.getPriceText(position.averageClosePrice)}</dd>
         </S.OrderItem>
-        <S.OrderItem className={`max-sm:hidden col-span-2 ${position.pnl > 0 ? 'long' : 'short'}`}>
+        <S.OrderItem className={`max-sm:hidden col-span-2 ${(position.pnl - position.totalFee) > 0 ? 'long' : 'short'}`}>
           <dt>
             손익 <span>Closing PNL</span>
           </dt>
           <dd className="!font-medium">
-            {CryptoUtils.getPriceText(position.pnl)}
+            {CryptoUtils.getPriceText(position.pnl - position.totalFee)}
             {CRYPTO_WALLET_UNIT}
+            /
+            {TypeUtils.percent(position.pnlRatio, 2)}
           </dd>
         </S.OrderItem>
         <S.OrderItem className={''}>
@@ -179,13 +182,15 @@ const Position = ({ position }: IPosition) => {
           </dt>
           <dd>{dayjs(position.closeTime).format('YYYY-MM-DD HH:mm:ss')}</dd>
         </S.OrderItem>
-        <S.OrderItem className={`sm:hidden col-span-2 ${position.pnl > 0 ? 'long' : 'short'}`}>
+        <S.OrderItem className={`sm:hidden col-span-2 ${(position.pnl - position.totalFee) > 0 ? 'long' : 'short'}`}>
           <dt>
             손익 <span>Closing PNL</span>
           </dt>
           <dd className="!font-medium">
             {CryptoUtils.getPriceText(position.pnl)}
             {CRYPTO_WALLET_UNIT}
+            /
+            {TypeUtils.percent(position.pnl / position.entryPrice, 2)}
           </dd>
         </S.OrderItem>
       </S.OrderBody>

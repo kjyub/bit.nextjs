@@ -12,7 +12,7 @@ const Layout = tw.div`
 `
 
 const PriceInfoBox = tw.div`
-  flex flex-col w-fit mt-1 gap-1 text-xs 
+  flex flex-col w-fit mt-1 gap-1 max-md:text-xs md:text-[13px]
   [&>dl]:flex [&>dl]:justify-between [&>dl]:gap-1
   [&>dl>dt]:w-20 [&>dl>dt]:font-light [&>dl>dt]:text-slate-400 
   [&>dl>dd]:text-right [&>dl>dd]:font-semibold [&>dl>dd]:text-indigo-500
@@ -28,7 +28,7 @@ interface Props {
 }
 export default function FlexItem({ flex }: Props) {
   const imageCode = flex.position.market.code.split('-')[1];
-  const pnlRatio = flex.position.averageClosePrice / flex.position.averagePrice - 1;
+  const pnlRatio = flex.position.pnlRatio;
   return (
     <Layout>
       <div className="flex flex-col gap-1">
@@ -39,7 +39,7 @@ export default function FlexItem({ flex }: Props) {
           </p>
 
           <p className={cn(['flex items-center max-sm:text-sm'])}>
-            <span>{(pnlRatio > 0 ? '+' : '') + CryptoUtils.getPriceText(flex.position.pnl)}{CRYPTO_WALLET_UNIT}</span>
+            <span>{(pnlRatio > 0 ? '+' : '') + CryptoUtils.getPriceText(flex.position.pnl - flex.position.totalFee)}{CRYPTO_WALLET_UNIT}</span>
           </p>
         </div>
 
@@ -85,7 +85,7 @@ export default function FlexItem({ flex }: Props) {
         <img
           src={`https://static.upbit.com/logos/${imageCode}.png`}
           alt="coin"
-          className="absolute top-0 right-0 size-16 scale-300 group-hover:scale-330 transition-all duration-500 object-contain rotate-15 blur-[1px] grayscale-50 contrast-50 brightness-50 opacity-20"
+          className="absolute top-0 right-0 size-16 scale-300 group-hover:scale-270 transition-all duration-500 object-contain rotate-15 blur-[1px] grayscale-50 contrast-50 brightness-50 opacity-20"
         />
         {flex.position.pnl === 0 && (
           <i className="fa-solid fa-diamond"></i>

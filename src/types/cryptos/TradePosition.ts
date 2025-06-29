@@ -19,6 +19,7 @@ export default class TradePosition extends AbsApiObject {
   private _totalFee: number;
   private _entryPrice: number;
   private _averageClosePrice: number;
+  private _accumMarginPrice: number;
   private _pnl: number;
   private _closeTime: string;
   private _createdDate: string;
@@ -40,6 +41,7 @@ export default class TradePosition extends AbsApiObject {
     this._totalFee = 0;
     this._entryPrice = 0;
     this._averageClosePrice = 0;
+    this._accumMarginPrice = 0;
     this._pnl = 0;
     this._closeTime = '';
     this._createdDate = '';
@@ -63,6 +65,7 @@ export default class TradePosition extends AbsApiObject {
     this._totalFee = json.total_fee;
     this._entryPrice = json.entry_price;
     this._averageClosePrice = json.average_close_price;
+    this._accumMarginPrice = json.accum_margin_price;
     this._pnl = json.pnl;
     this._closeTime = json.close_time;
     this._createdDate = json.created_date;
@@ -117,8 +120,39 @@ export default class TradePosition extends AbsApiObject {
   public get averageClosePrice(): number {
     return this._averageClosePrice;
   }
+  public get accumMarginPrice(): number {
+    return this._accumMarginPrice;
+  }
   public get pnl(): number {
     return this._pnl;
+  }
+  public get pnlRatio(): number {
+    // const priceRatio = this.averageClosePrice / this.averagePrice;
+    // const pnlRatio =
+    //   this.positionType === PositionTypes.LONG
+    //     ? (priceRatio - 1) * this.averageLeverage // 롱: (종가/진입가 - 1) * 레버리지
+    //     : (1 - priceRatio) * this.averageLeverage; // 숏: (1 - 종가/진입가) * 레버리지
+
+    // if (pnlRatio < -1) {
+    //   return -1;
+    // }
+
+    // const pnlExcludeFee = this._pnl - this._totalFee;
+
+    // const originMarginPrice = this._pnl / pnlRatio;
+
+    // const result = pnlExcludeFee / originMarginPrice;
+
+    const result = (this._pnl - this._totalFee) / this._accumMarginPrice;
+    if (result < -1) {
+      return -1;
+    }
+
+    if (Number.POSITIVE_INFINITY === result || Number.NEGATIVE_INFINITY === result) {
+      return 0;
+    }
+
+    return result;
   }
   public get closeTime(): string {
     return this._closeTime;
