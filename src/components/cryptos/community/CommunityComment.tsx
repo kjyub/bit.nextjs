@@ -169,7 +169,7 @@ export default function CommunityComment({ user, comment, handleComment }: IComm
 
       {/* 답글 작성 */}
       {isShowReply && (
-        <CS.ItemCommentWriteBox className="mt-4! pl-6 [&>button]:w-24">
+        <CS.ItemCommentWriteBox className="mt-2 pl-6 [&>button]:w-24">
           <textarea
             ref={commentInputRef}
             value={commentValue}

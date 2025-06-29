@@ -92,7 +92,7 @@ export const ItemCommentWriteBox = tw.div`
 `;
 export const ItemCommentBox = tw.div`
   ${({ $is_deleted }: StyleProps) => ($is_deleted ? 'hidden' : 'flex')}
-  flex-col w-full max-md:p-3 md:p-3 space-y-2
+  flex-col w-full max-md:py-2.5 p-3 max-md:space-y-0.5 md:space-y-2
   rounded-lg bg-slate-500/20
 
   [&>.header]:flex [&>.header]:justify-between [&>.header]:items-center [&>.header]:w-full

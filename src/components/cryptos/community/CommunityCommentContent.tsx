@@ -38,7 +38,7 @@ export default function CommunityCommentContent({ content, hasParent, parentName
   return (
     <>
       {isEdit ? (
-        <CS.ItemCommentWriteBox className="mt-4! [&>button]:w-24">
+        <CS.ItemCommentWriteBox className="mt-2 [&>button]:w-24">
           <textarea
             ref={commentInputRef}
             value={commentValue}
