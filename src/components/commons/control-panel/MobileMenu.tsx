@@ -24,7 +24,6 @@ const Layout = ({
 
   // 브라우저 스크롤 막기
   useLayoutEffect(() => {
-    console.log('isOpen', isOpen);
     if (isOpen) {
       setTranslateY(0);
       setOpacity(100);
@@ -50,7 +49,7 @@ const Layout = ({
       const currentY = e.touches[0].clientY;
       let deltaY = currentY - startY.current;
       if (deltaY > SWIPE_DOWN_THRESHOLD) {
-        deltaY = SWIPE_DOWN_THRESHOLD;
+        // deltaY = SWIPE_DOWN_THRESHOLD;
       } else if (deltaY < 0) {
         deltaY = 0;
       }
