@@ -212,10 +212,10 @@ export default function CryptoMarketTrade({
         />
       )}
 
-      <I.TpSlLayout>
+      {/* <I.TpSlLayout>
         <I.NumberInput label={'TP'} value={takeProfit} setValue={setTakeProfit} />
         <I.NumberInput label={'SL'} value={stopLoss} setValue={setStopLoss} />
-      </I.TpSlLayout>
+      </I.TpSlLayout> */}
 
       <div className="flex flex-col w-full space-y-1 mt-auto!">
         <S.SummaryItem>
