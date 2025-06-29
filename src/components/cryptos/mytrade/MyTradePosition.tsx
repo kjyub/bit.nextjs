@@ -21,7 +21,7 @@ import type TradePosition from '@/types/cryptos/TradePosition';
 import CommonUtils from '@/utils/CommonUtils';
 import CryptoUtils from '@/utils/CryptoUtils';
 import TypeUtils from '@/utils/TypeUtils';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import HeaderLink from './HeaderLink';
 import MyTradeBlank from './MyTradeBlank';
 
@@ -59,12 +59,14 @@ export const Position = ({ position, userBudget }: IPosition) => {
   const [closePrice, setClosePrice] = useState<number>(0);
   const [closeQuantity, setCloseQuantity] = useState<number>(position.quantity);
 
+  const isClosePriceFoucsRef = useRef<boolean>(false);
+
   useEffect(() => {
     setCloseQuantity(position.quantity);
   }, [position]);
 
   useEffect(() => {
-    setClosePrice(marketPrice);
+    if (!isClosePriceFoucsRef.current) setClosePrice(marketPrice);
 
     const _size = position.quantity * marketPrice;
     setSize(_size);
@@ -249,7 +251,7 @@ export const Position = ({ position, userBudget }: IPosition) => {
             </button>
           </div>
           <div className="inputs max-sm:!hidden">
-            <I.NumberInput label={'가격'} value={closePrice} setValue={setClosePrice} />
+            <I.NumberInput label={'가격'} value={closePrice} setValue={setClosePrice} setFocus={(isFocus) => {isClosePriceFoucsRef.current = isFocus}} />
             <I.PositionCloseSizeInput
               label={'수량'}
               value={closeQuantity}
@@ -259,7 +261,7 @@ export const Position = ({ position, userBudget }: IPosition) => {
           </div>
         </div>
         <div className="max-sm:grid sm:hidden grid-cols-2 w-full gap-2">
-          <I.NumberInput label={'가격'} value={closePrice} setValue={setClosePrice} />
+          <I.NumberInput label={'가격'} value={closePrice} setValue={setClosePrice} setFocus={(isFocus) => {isClosePriceFoucsRef.current = isFocus}} />
           <I.PositionCloseSizeInput
             label={'수량'}
             value={closeQuantity}

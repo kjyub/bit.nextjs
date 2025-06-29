@@ -307,6 +307,7 @@ interface NumberInputProps {
   max?: number;
   className?: string;
   suffix?: string;
+  setFocus?: (isFocus: boolean) => void;
 }
 export const NumberInput = ({
   label,
@@ -316,28 +317,31 @@ export const NumberInput = ({
   max,
   className = '',
   suffix = '',
+  setFocus,
 }: NumberInputProps) => {
+  const [internalValue, setInternalValue] = useState<string>(String(value));
+
+  useEffect(() => {
+    setInternalValue(CommonUtils.textFormat(value, TextFormats.NUMBER));
+  }, [value]);
+
   const handleValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const replaceComma = String(e.target.value.replace(/,/g, ''));
 
     if (replaceComma === '') {
       setValue(0);
+      setInternalValue('');
       return;
     }
 
     const _value = Number.parseFloat(replaceComma);
-    if (Number.isNaN(_value)) return;
+    if (Number.isNaN(_value) || replaceComma[replaceComma.length - 1] === '.') {
+      setInternalValue(e.target.value);
+      return;
+    };
 
-    // 소수점 입력하는 경우 1
-    if (replaceComma[replaceComma.length - 1] === '.') {
-      setValue(_value);
-      return;
-    }
-    // 소수점 입력하는 경우 2
-    if (replaceComma.includes('.') && replaceComma[replaceComma.length - 1] === '0') {
-      setValue(_value);
-      return;
-    }
+    setInternalValue(CommonUtils.textFormat(replaceComma, TextFormats.NUMBER));
+    setValue(_value);
 
     if (max && _value > max) {
       setValue(max);
@@ -353,11 +357,16 @@ export const NumberInput = ({
       <span className="font-light text-sm text-slate-400/80 text-nowrap select-none">{label}</span>
       <input
         className="input text-right w-full"
-        value={CommonUtils.textFormat(value, TextFormats.NUMBER)}
-        // value={value}
+        value={internalValue}
         onChange={handleValue}
         min={min}
         max={max}
+        onFocus={() => {
+          setFocus?.(true);
+        }}
+        onBlur={() => {
+          setFocus?.(false);
+        }}
       />
       {suffix && <span className="ml-0.5! input text-slate-400!">{suffix}</span>}
     </S.InputBox>
