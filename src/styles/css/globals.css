@@ -80,9 +80,9 @@
     background: linear-gradient(
       188deg,
       rgba(1, 0, 24, 1) 0%,
-      rgb(12, 12, 46) 49%,
-      rgb(26, 26, 70) 83%,
-      rgb(32, 60, 91) 100%
+      rgb(14, 14, 52) 40%,
+      rgb(25, 25, 71) 72%,
+      rgb(37, 67, 102) 100%
     );
 
     min-height: 100dvh;
