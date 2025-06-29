@@ -209,7 +209,7 @@ const Community = ({ user, community, selectedCommunity, setSelectedCommunity, h
       >
         {/* 1단 */}
         <div className="row">
-          <h3 className="text-slate-300 flex-1 truncate">{community.title}</h3>
+          <h3 className="text-slate-300 flex-1 truncate max-md:text-sm">{community.title}</h3>
           <div className="flex items-center space-x-2">
             <span className="text-xs text-slate-500">{CommonUtils.getDateShorten(community.createdDate)}</span>
             {isMaster && (

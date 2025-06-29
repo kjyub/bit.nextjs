@@ -51,18 +51,18 @@ export const ItemRow = tw.div<StyleProps>`
   [&>.row>.infos]:flex [&>.row>.infos]:items-center [&>.row>.infos]:space-x-2
   [&>.row>.infos>.info]:flex [&>.row>.infos>.info]:items-center [&>.row>.infos>.info]:space-x-1
   [&>.row>.infos>.info]:text-slate-400
-  [&>.row>.infos>.info>i]:text-xs [&>.row>.infos>.info>span]:text-sm
+  [&>.row>.infos>.info>i]:text-xs max-md:[&>.row>.infos>.info>span]:text-xs md:[&>.row>.infos>.info>span]:text-sm
 `;
 export const ItemViewBox = tw.div`
-  flex flex-col items-center w-full p-3 pb-16 space-y-5
+  flex flex-col items-center w-full p-3 max-md:px-1 pb-16 space-y-5
   border-t border-slate-500/20
 `;
 export const ItemViewLikeBox = tw.div`
   flex items-center space-x-2
 
-  [&>button]:px-4 [&>button]:h-8 [&>button]:space-x-2
+  max-md:[&>button]:px-3.5 md:[&>button]:px-4 max-md:[&>button]:h-7.5 md:[&>button]:h-8 [&>button]:space-x-2
   [&>button]:rounded-full [&>button]:bg-slate-600/50 [&>button]:hover:bg-slate-500/50
-  [&>button]:text-sm [&>button]:text-slate-300
+  max-md:[&>button]:text-xs md:[&>button]:text-sm [&>button]:text-slate-300
   [&>button]:duration-200
   [&>button>i]:text-xs
   [&>button.like>i]:text-red-500 [&>button.dislike>i]:text-blue-500
@@ -75,14 +75,14 @@ export const ItemCommentLayout = tw.div`
 
   [&>.pagination]:flex [&>.pagination]:justify-center [&>.pagination]:items-center [&>.pagination]:w-full
 
-  [&>.comment-count]:text-slate-400
+  max-md:[&>.comment-count]:text-sm [&>.comment-count]:text-slate-400
 `;
 export const ItemCommentWriteBox = tw.div`
   flex flex-col w-full space-y-2
   [&>textarea]:w-full [&>textarea]:min-h-[2rem] [&>textarea]:max-h-[8rem] [&>textarea]:p-3
   [&>textarea]:rounded-lg [&>textarea]:bg-slate-500/30 
   [&>textarea]:border [&>textarea]:border-slate-500/20 [&>textarea]:focus:border-blue-500
-  [&>textarea]:text-slate-300 
+  max-md:[&>textarea]:text-sm [&>textarea]:text-slate-300 
   [&>textarea]:resize-none [&>textarea]:transition-colors
 
   [&>button]:w-24 [&>button]:h-9 [&>button]:ml-auto
@@ -92,16 +92,18 @@ export const ItemCommentWriteBox = tw.div`
 `;
 export const ItemCommentBox = tw.div`
   ${({ $is_deleted }: StyleProps) => ($is_deleted ? 'hidden' : 'flex')}
-  flex-col w-full p-3 space-y-2
+  flex-col w-full max-md:p-3 md:p-3 space-y-2
   rounded-lg bg-slate-500/20
 
   [&>.header]:flex [&>.header]:justify-between [&>.header]:items-center [&>.header]:w-full
   [&>.header>.user]:flex [&>.header>.user]:items-center [&>.header>.user]:space-x-1
   [&>.header>.user]:text-slate-300/80
-  [&>.header>.user>i]:text-xs [&>.header>.user>span]:text-sm
+  max-md:[&>.header>.user>i]:text-[11px] max-md:[&>.header>.user>span]:text-xs
+  md:[&>.header>.user>i]:text-xs md:[&>.header>.user>span]:text-sm
 
   [&>.content]:flex [&>.content]:flex-nowrap
   [&>.content]:font-light [&>.content]:leading-[165%] 
+  max-md:[&>.content]:text-sm
 `;
 
 export const ItemControlButton = tw.button<StyleProps>`

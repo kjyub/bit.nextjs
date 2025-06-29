@@ -127,7 +127,7 @@ export default function CommunityComment({ user, comment, handleComment }: IComm
         </div>
 
         <div className="flex items-center space-x-2">
-          <span className="text-xs text-slate-500">{CommonUtils.getDateShorten(comment.createdDate)}</span>
+          <span className="max-md:text-[11px] md:text-xs text-slate-500">{CommonUtils.getDateShorten(comment.createdDate)}</span>
           <CS.ItemControlButton
             $is_active={isShowReply}
             onClick={() => {
