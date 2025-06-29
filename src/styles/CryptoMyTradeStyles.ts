@@ -81,11 +81,11 @@ export const PositionClose = tw.div`
   flex flex-col w-full pt-2 max-sm:gap-1 sm:gap-3
   border-t border-violet-500/20
 
-  [&_.title]:text-sm [&_.title]:text-violet-500 [&_.title]:font-medium
+  [&_.title]:text-sm [&_.title]:text-violet-500 [&_.title]:font-medium max-md:[&_.title]:mr-8
 
   [&_.buttons]:grid [&_.buttons]:grid-cols-2 max-sm:[&_.buttons]:flex-1 [&_.buttons]:gap-1
 
-  [&_.buttons>button]:px-2 [&_.buttons>button]:py-0.5
+  [&_.buttons>button]:px-2 [&_.buttons>button]:py-0.5 touch:[&_.buttons>button]:bg-slate-600/20 touch:[&_.buttons>button]:active:bg-slate-600/40
   [&_.buttons>button]:rounded-md [&_.buttons>button]:hover:bg-slate-600/50
   [&_.buttons>button]:text-sm [&_.buttons>button]:text-violet-400 [&_.buttons>button]:hover:text-violet-300
   [&_.buttons>button]:duration-200
