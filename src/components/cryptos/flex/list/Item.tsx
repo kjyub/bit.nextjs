@@ -5,6 +5,7 @@ import CryptoUtils from "@/utils/CryptoUtils";
 import { cn } from "@/utils/StyleUtils";
 import TypeUtils from "@/utils/TypeUtils";
 import dayjs from "dayjs";
+import Link from "next/link";
 import tw from "tailwind-styled-components";
 
 const Layout = tw.div`
@@ -44,7 +45,7 @@ export default function FlexItem({ flex }: Props) {
         </div>
 
         {/* 포지션 정보 */}
-        <div className="flex items-center [&>span]:text-sm [&>span]:font-light [&>.split]:h-4 [&>.split]:mx-3 [&>.split]:border-l [&>.split]:border-slate-500/50">
+        <div className="flex items-center [&>*]:text-sm [&>*]:font-light [&>.split]:h-4 [&>.split]:mx-3 [&>.split]:border-l [&>.split]:border-slate-500/50">
           <span 
             className={cn({ 'text-position-long-strong': flex.position.positionType === PositionTypes.LONG, 'text-position-short-strong': flex.position.positionType === PositionTypes.SHORT })}
           >
@@ -53,7 +54,10 @@ export default function FlexItem({ flex }: Props) {
           <div className="split"></div>
           <span className="text-slate-300">{flex.position.averageLeverage}x</span>
           <div className="split"></div>
-          <span className="text-slate-300">{flex.position.market.code}</span>
+          <Link href={`/crypto/${flex.position.market.code}`} className="text-slate-300 flex items-center gap-1">
+            {flex.position.market.code}
+            <i className="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+          </Link>
         </div>
 
         {/* 가격 정보 */}
