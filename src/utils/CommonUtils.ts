@@ -1,6 +1,7 @@
 import { TextFormats } from '@/types/CommonTypes';
 import dayjs from 'dayjs';
 import Inko from 'inko';
+import { disassemble } from 'es-hangul';
 
 namespace CommonUtils {
   export function getBaseUrl(): string {
@@ -242,6 +243,12 @@ namespace CommonUtils {
     } catch {
       return false;
     }
+  }
+  export function searchKorean(text: string, search: string): boolean {
+    const textArray = disassemble(text);
+    const searchArray = disassemble(search);
+
+    return textArray.includes(searchArray);
   }
 }
 

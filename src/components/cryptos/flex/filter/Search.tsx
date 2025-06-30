@@ -2,11 +2,13 @@
 
 import CryptoApi from "@/apis/api/cryptos/CryptoApi";
 import { useDetectClose } from "@/hooks/useDetectClose";
-import useFocus from "@/hooks/useFocus";
 import type CryptoMarket from "@/types/cryptos/CryptoMarket";
 import { MarketTypes } from "@/types/cryptos/CryptoTypes";
 import { cn } from "@/utils/StyleUtils";
+import { filter, map, pipe, reverse, sortBy, toArray } from "@fxts/core";
+import { getChoseong } from "es-hangul";
 import { useEffect, useState, useMemo } from "react";
+import { attachHighlightMarket, type MarketWithHighlight } from "./utils";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -28,26 +30,33 @@ export default function FlexSearch({ onSearch }: IFlexSearch) {
 
   useEffect(() => {
     (async () => {
-      const markets = await CryptoApi.getMarkets("", MarketTypes.BTC);
+      const markets = await CryptoApi.getMarkets("", MarketTypes.KRW);
       setMarkets(markets);
     })()
   }, [])
 
-  const filteredMarkets = useMemo(() => {
+  const searchedMarkets: Array<MarketWithHighlight> = useMemo(() => {
     if (value.length === 0) {
-      return markets;
+      return markets.map((market) => attachHighlightMarket(market, value));
     }
 
-    const searchLower = value.toLowerCase();
     const searchUpper = value.toUpperCase();
     
-    return markets.filter((market) => {
-      return (
-        market.koreanName.toLowerCase().includes(searchLower) ||
-        market.englishName.toLowerCase().includes(searchLower) ||
-        market.code.includes(searchUpper)
-      );
-    });
+    return pipe(
+      markets,
+      filter((market) => {
+        return (
+          // CommonUtils.searchKorean(market.koreanName, value) ||
+          getChoseong(market.koreanName).includes(getChoseong(value)) ||
+          market.englishName.toUpperCase().includes(searchUpper) ||
+          market.code.includes(searchUpper)
+        );
+      }),
+      map((market) => attachHighlightMarket(market, value)),
+      sortBy((data) => data.similarScore),
+      reverse,
+      toArray
+    )
   }, [markets, value]);
 
   const onSelect = (market: CryptoMarket) => {
@@ -55,7 +64,7 @@ export default function FlexSearch({ onSearch }: IFlexSearch) {
     onSearch(market.code);
     setIsFocused(false);
   }
-
+  
   return (
     <Layout>
       <div ref={ref} className="relative flex flex-col w-full px-1 py-1 gap-3">
@@ -86,15 +95,15 @@ export default function FlexSearch({ onSearch }: IFlexSearch) {
           >
             <i className="fa-solid fa-xmark"></i>
           </button>
-          <button className={'text-slate-400 hover:text-slate-200 text-sm'} type="button">
+          <button className={'text-slate-400 hover:text-slate-200 text-sm'} type="button" onClick={() => onSearch(value)}>
             <i className="fa-solid fa-magnifying-glass"></i>
           </button>
         </div>
         {/* 검색 결과 */}
-        {isFocused && filteredMarkets.length > 0 && (
+        {isFocused && searchedMarkets.length > 0 && (
           <div className="z-10 flex flex-col w-full max-h-[24rem] gap-2 overflow-y-auto scroll-transparent">
-            {filteredMarkets.map((market) => (
-              <Item key={market.code} market={market} searchValue={value} onSelect={onSelect} />
+            {searchedMarkets.map((highlightedMarket) => (
+              <Item key={highlightedMarket.market.code} highlightedMarket={highlightedMarket} onSelect={onSelect} />
             ))}
           </div>
         )}
@@ -112,69 +121,16 @@ export default function FlexSearch({ onSearch }: IFlexSearch) {
   );
 }
 
-interface HightLightText {
-  text: string;
-  isHighlight: boolean;
-}
-const highlightText = (text: string, searchValue: string): Array<HightLightText> => {
-  if (!searchValue.trim()) return [{ text, isHighlight: false }];
-  
-  const searchLower = searchValue.toLowerCase();
-  const textLower = text.toLowerCase();
-  const parts: Array<HightLightText> = [];
-  
-  let lastIndex = 0;
-  let searchIndex = textLower.indexOf(searchLower, lastIndex);
-  
-  while (searchIndex !== -1) {
-    // 매칭 전 부분
-    if (searchIndex > lastIndex) {
-      parts.push({
-        text: text.slice(lastIndex, searchIndex),
-        isHighlight: false
-      });
-    }
-    
-    // 매칭된 부분
-    parts.push({
-      text: text.slice(searchIndex, searchIndex + searchValue.length),
-      isHighlight: true
-    });
-    
-    lastIndex = searchIndex + searchValue.length;
-    searchIndex = textLower.indexOf(searchLower, lastIndex);
-  }
-  
-  // 나머지 부분
-  if (lastIndex < text.length) {
-    parts.push({
-      text: text.slice(lastIndex),
-      isHighlight: false
-    });
-  }
-  
-  return parts;
-};
-
-const Item = ({ market, searchValue, onSelect }: { market: CryptoMarket, searchValue: string, onSelect: (market: CryptoMarket) => void }) => {
-  const koreanHighlights = useMemo(() => 
-    highlightText(market.koreanName, searchValue), 
-    [market.koreanName, searchValue]
-  );
-  
-  const codeHighlights = useMemo(() => 
-    highlightText(market.code, searchValue), 
-    [market.code, searchValue]
-  );
-
+const Item = ({ highlightedMarket, onSelect }: { highlightedMarket: MarketWithHighlight, onSelect: (market: CryptoMarket) => void }) => {
   return (
-    <div className="flex justify-between items-center w-full px-3 py-2 gap-2 hover:bg-slate-500/20 rounded-lg" onClick={() => onSelect(market)}>
+    <div className="flex justify-between items-center w-full px-3 py-2 gap-2 hover:bg-slate-500/20 rounded-lg" onClick={() => onSelect(highlightedMarket.market)}>
       <div className="text-sm text-slate-300">
-        {koreanHighlights.map((part, index) => (
+        {highlightedMarket.koreanHighlights.map((part, index) => (
           <span 
             key={index} 
             className={cn([
-              { 'text-indigo-500 font-medium': part.isHighlight }
+              { 'text-indigo-300 font-medium': part.isHighlight === 'half' },
+              { 'text-indigo-500 font-medium': part.isHighlight === 'full' }
             ])}
           >
             {part.text}
@@ -182,11 +138,12 @@ const Item = ({ market, searchValue, onSelect }: { market: CryptoMarket, searchV
         ))}
       </div>
       <div className="text-xs text-slate-400">
-        {codeHighlights.map((part, index) => (
+        {highlightedMarket.codeHighlights.map((part, index) => (
           <span 
             key={index} 
             className={cn([
-              { 'text-indigo-500 font-medium': part.isHighlight }
+              { 'text-indigo-300 font-medium': part.isHighlight === 'half' },
+              { 'text-indigo-500 font-medium': part.isHighlight === 'full' }
             ])}
           >
             {part.text}
