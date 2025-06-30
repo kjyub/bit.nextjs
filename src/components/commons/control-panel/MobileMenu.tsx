@@ -8,6 +8,10 @@ import MessageList from './MessageList';
 
 const SWIPE_DOWN_THRESHOLD = 75;
 
+const preventScroll = (e: Event) => {
+  e.preventDefault();
+}
+
 // 추후에 로그 메세지 같은거 넣기
 
 const Layout = ({
@@ -30,9 +34,11 @@ const Layout = ({
       startY.current = 0;
       document.body.style.overflow = 'hidden';
       document.body.style.userSelect = 'none';
+      document.body.addEventListener('touchmove', preventScroll, { passive: false });
     } else {
       document.body.style.overflow = 'visible';
       document.body.style.userSelect = 'auto';
+      document.body.removeEventListener('touchmove', preventScroll);
     }
   }, [isOpen]);
 

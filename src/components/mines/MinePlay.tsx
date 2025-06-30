@@ -10,6 +10,10 @@ import MineComplete from './MineComplete';
 import MazeMain from './maze/MazeMain';
 import { secondsToTime } from './maze/utils';
 
+const preventScroll = (e: Event) => {
+  e.preventDefault();
+}
+
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="fixed inset-0 flex flex-col flex-center w-full h-[100dvh] pb-12">
@@ -56,6 +60,7 @@ export default function MinePlay({ room, setRoom }: Props) {
     }, 1000);
 
     document.body.style.overflow = 'hidden';
+    document.body.addEventListener('touchmove', preventScroll, { passive: false });
 
     return () => {
       if (timerRef.current) {
@@ -64,6 +69,7 @@ export default function MinePlay({ room, setRoom }: Props) {
       }
 
       document.body.style.overflow = 'auto';
+      document.body.removeEventListener('touchmove', preventScroll);
     };
   }, [room]);
 
