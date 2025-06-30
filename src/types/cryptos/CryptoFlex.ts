@@ -1,6 +1,4 @@
-import CryptoUtils from '@/utils/CryptoUtils';
 import { AbsApiObject } from '../ApiTypes';
-import type { PriceChangeType } from './CryptoTypes';
 import User from '../users/User';
 import CryptoMarket from './CryptoMarket';
 import TradePosition from './TradePosition';

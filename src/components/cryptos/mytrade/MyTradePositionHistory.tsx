@@ -3,18 +3,18 @@
 import CryptoApi from '@/apis/api/cryptos/CryptoApi';
 import { CRYPTO_WALLET_UNIT } from '@/constants/CryptoConsts';
 import usePageScroll from '@/hooks/usePageScroll';
+import useSystemMessageStore from '@/store/useSystemMessageStore';
 import * as S from '@/styles/CryptoMyTradeStyles';
 import { MarginModeTypeNames, PositionTypes } from '@/types/cryptos/CryptoTypes';
 import type TradePosition from '@/types/cryptos/TradePosition';
 import CryptoUtils from '@/utils/CryptoUtils';
+import TypeUtils from '@/utils/TypeUtils';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import CryptoMyTradeFilter from './Filter';
 import HeaderLink from './HeaderLink';
 import CryptoMyTradeItemSkeleton from './ItemSkeleton';
 import MyTradeBlank from './MyTradeBlank';
-import useSystemMessageStore from '@/store/useSystemMessageStore';
-import TypeUtils from '@/utils/TypeUtils';
 
 const PAGE_SIZE = 10;
 
@@ -159,15 +159,15 @@ const Position = ({ position }: IPosition) => {
           </dt>
           <dd>{CryptoUtils.getPriceText(position.averageClosePrice)}</dd>
         </S.OrderItem>
-        <S.OrderItem className={`max-sm:hidden col-span-2 ${(position.pnl - position.totalFee) > 0 ? 'long' : 'short'}`}>
+        <S.OrderItem
+          className={`max-sm:hidden col-span-2 ${(position.pnl - position.totalFee) > 0 ? 'long' : 'short'}`}
+        >
           <dt>
             손익 <span>Closing PNL</span>
           </dt>
           <dd className="!font-medium">
             {CryptoUtils.getPriceText(position.pnl - position.totalFee)}
-            {CRYPTO_WALLET_UNIT}
-            /
-            {TypeUtils.percent(position.pnlRatio, 2)}
+            {CRYPTO_WALLET_UNIT}/{TypeUtils.percent(position.pnlRatio, 2)}
           </dd>
         </S.OrderItem>
         <S.OrderItem className={''}>
@@ -188,9 +188,7 @@ const Position = ({ position }: IPosition) => {
           </dt>
           <dd className="!font-medium">
             {CryptoUtils.getPriceText(position.pnl - position.totalFee)}
-            {CRYPTO_WALLET_UNIT}
-            /
-            {TypeUtils.percent(position.pnlRatio, 2)}
+            {CRYPTO_WALLET_UNIT}/{TypeUtils.percent(position.pnlRatio, 2)}
           </dd>
         </S.OrderItem>
       </S.OrderBody>

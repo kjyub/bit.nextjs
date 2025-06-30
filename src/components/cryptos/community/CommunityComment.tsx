@@ -1,4 +1,5 @@
 import CryptoApi from '@/apis/api/cryptos/CryptoApi';
+import { useUser } from '@/hooks/useUser';
 import useSystemMessageStore from '@/store/useSystemMessageStore';
 import useToastMessageStore from '@/store/useToastMessageStore';
 import * as CS from '@/styles/CryptoMarketCommunityStyles';
@@ -8,7 +9,6 @@ import { UserTypes } from '@/types/users/UserTypes';
 import CommonUtils from '@/utils/CommonUtils';
 import { useEffect, useRef, useState } from 'react';
 import CommunityCommentContent from './CommunityCommentContent';
-import { useUser } from '@/hooks/useUser';
 
 interface IComment {
   user: User;
@@ -127,7 +127,9 @@ export default function CommunityComment({ user, comment, handleComment }: IComm
         </div>
 
         <div className="flex items-center space-x-2">
-          <span className="max-md:text-[11px] md:text-xs text-slate-500">{CommonUtils.getDateShorten(comment.createdDate)}</span>
+          <span className="max-md:text-[11px] md:text-xs text-slate-500">
+            {CommonUtils.getDateShorten(comment.createdDate)}
+          </span>
           <CS.ItemControlButton
             $is_active={isShowReply}
             onClick={() => {
@@ -196,4 +198,4 @@ export default function CommunityComment({ user, comment, handleComment }: IComm
       )}
     </CS.ItemCommentBox>
   );
-};
+}

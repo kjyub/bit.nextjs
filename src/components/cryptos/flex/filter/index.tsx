@@ -1,21 +1,21 @@
 'use client';
 
-import { use } from "react";
-import FlexSearch from "./Search";
-import { FlexContext } from "../FlexView";
-import { PositionTypes, type PositionType } from "@/types/cryptos/CryptoTypes";
-import FlexFilterPosition from "./Position";
+import { type PositionType, PositionTypes } from '@/types/cryptos/CryptoTypes';
+import { use } from 'react';
+import { FlexContext } from '../FlexView';
+import FlexFilterPosition from './Position';
+import FlexSearch from './Search';
 
 export default function FlexFilter() {
   const { searchValue, filterPosition, leverageMin, search } = use(FlexContext);
 
   const handleSearch = (searchValue: string) => {
     search(searchValue, filterPosition, leverageMin);
-  }
+  };
 
   const handleFilterPosition = (filterPosition: PositionType | null) => {
     search(searchValue, filterPosition, leverageMin);
-  }
+  };
 
   return (
     // md 이상의 sticky
@@ -25,7 +25,7 @@ export default function FlexFilter() {
         <FlexFilterPosition positionType={PositionTypes.LONG} onSearch={handleFilterPosition}>
           <span className="text-sm text-slate-300">롱 포지션</span>
         </FlexFilterPosition>
-        <FlexFilterPosition positionType={PositionTypes.SHORT} onSearch={handleFilterPosition}> 
+        <FlexFilterPosition positionType={PositionTypes.SHORT} onSearch={handleFilterPosition}>
           <span className="text-sm text-slate-300">숏 포지션</span>
         </FlexFilterPosition>
       </div>

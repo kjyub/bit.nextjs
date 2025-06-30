@@ -47,7 +47,7 @@ const Navigation = () => {
         className={cn([
           'btn ml-auto',
           'group-[.compact]/crypto:lg:!hidden group-[.wide]/crypto:full:!hidden',
-          { 'active': isShowMarketList },
+          { active: isShowMarketList },
         ])}
         onClick={() => setIsShowMarketList(!isShowMarketList)}
         type="button"
@@ -112,8 +112,8 @@ export const CryptoMobileNavigation = () => {
       if (isHideTimer.current) {
         clearTimeout(isHideTimer.current);
       }
-    }
-  }, [isScrollUp])
+    };
+  }, [isScrollUp]);
 
   return (
     <MobileLayout $is_active={!isHide}>

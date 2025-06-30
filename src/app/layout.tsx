@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import '@/styles/css/globals.css';
+import UserServerApi from '@/apis/api/users/UserServerApi';
 import { setAuthToken } from '@/apis/utils/instances';
 import AppClientLayout from '@/layouts/AppClientLayout';
 import { AuthProvider } from '@/store/providers/AuthProvider';
@@ -7,8 +8,6 @@ import { UiProvider } from '@/store/providers/UiProvider';
 import AuthServerUtils from '@/utils/AuthUtils.server';
 import Script from 'next/script';
 import { pretendard, sinchonRhapsody } from './fonts';
-import UserServerApi from '@/apis/api/users/UserServerApi';
-import { v4 as uuidv4 } from 'uuid';
 
 export const metadata: Metadata = {
   title: {

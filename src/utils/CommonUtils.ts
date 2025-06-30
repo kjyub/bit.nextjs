@@ -1,7 +1,7 @@
 import { TextFormats } from '@/types/CommonTypes';
 import dayjs from 'dayjs';
-import Inko from 'inko';
 import { disassemble } from 'es-hangul';
+import Inko from 'inko';
 
 namespace CommonUtils {
   export function getBaseUrl(): string {

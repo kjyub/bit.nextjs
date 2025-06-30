@@ -6,10 +6,10 @@ import * as S from '@/styles/CryptoMarketStyles';
 import { type OrderType, OrderTypes } from '@/types/common/CommonTypes';
 import type CryptoMarket from '@/types/cryptos/CryptoMarket';
 import { type MarketSortType, MarketSortTypes, type MarketType, MarketTypes } from '@/types/cryptos/CryptoTypes';
+import { getChoseong } from 'es-hangul';
 import { Suspense, useCallback, useEffect, useState } from 'react';
 import Market from './Market';
 import MarketSortTypeButton from './MarketSortTypeButton';
-import { getChoseong } from 'es-hangul';
 
 const getSortedCodes = async (
   marketDic: Record<string, CryptoMarket>,

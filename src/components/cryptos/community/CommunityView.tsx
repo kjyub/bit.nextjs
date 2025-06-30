@@ -1,6 +1,7 @@
 import CryptoApi from '@/apis/api/cryptos/CryptoApi';
 import CommunityPagination from '@/components/atomics/community/CommunityPagination';
 import { MARKET_COMMUNITY_COMMENT_PAGE_SIZE } from '@/constants/CryptoConsts';
+import { useUser } from '@/hooks/useUser';
 import useToastMessageStore from '@/store/useToastMessageStore';
 import * as CS from '@/styles/CryptoMarketCommunityStyles';
 import { TextFormats } from '@/types/CommonTypes';
@@ -12,7 +13,6 @@ import type User from '@/types/users/User';
 import CommonUtils from '@/utils/CommonUtils';
 import { useEffect, useRef, useState } from 'react';
 import CommunityComment from './CommunityComment';
-import { useUser } from '@/hooks/useUser';
 
 interface ICryptoMarketCommunityView {
   user: User;
@@ -21,7 +21,7 @@ interface ICryptoMarketCommunityView {
 export default function CryptoMarketCommunityView({ user, communityNanoId }: ICryptoMarketCommunityView) {
   const { createMessage } = useToastMessageStore();
   const { isAuth } = useUser();
-  
+
   const [community, setCommunity] = useState<MarketCommunity>(new MarketCommunity());
 
   const [myLikeType, setMyLikeType] = useState<LikeType>(LikeTypes.NONE);
@@ -103,7 +103,6 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
     if (isCommentLoading) {
       return;
     }
-
 
     if (!isAuth) {
       createMessage('로그인 후 이용해주세요.');

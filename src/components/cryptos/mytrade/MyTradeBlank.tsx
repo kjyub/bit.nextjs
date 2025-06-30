@@ -15,5 +15,5 @@ export default function MyTradeBlank({ isShow, message }: Props) {
       </div>
       <span className="max-md:text-sm text-slate-400/70 font-medium">{message}</span>
     </div>
-  )
+  );
 }

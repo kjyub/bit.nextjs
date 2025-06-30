@@ -1,13 +1,13 @@
 import { CRYPTO_WALLET_UNIT } from '@/constants/CryptoConsts';
+import { TextFormats } from '@/types/CommonTypes';
 import type { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
 import CryptoMarket from '@/types/cryptos/CryptoMarket';
 import { type PriceChangeType, PriceChangeTypes } from '@/types/cryptos/CryptoTypes';
+import CommonUtils from '@/utils/CommonUtils';
 import CryptoUtils from '@/utils/CryptoUtils';
 import { cn } from '@/utils/StyleUtils';
 import Link from 'next/link';
 import TodayMarketTitleWrapper from './TodayMarketTitleWrapper';
-import CommonUtils from '@/utils/CommonUtils';
-import { TextFormats } from '@/types/CommonTypes';
 
 interface Props {
   getMarketsPromise: Promise<IUpbitMarketTicker[]>;
@@ -66,11 +66,15 @@ export default async function TodayMarkets({ getMarketsPromise, getMarketAllProm
   );
 }
 
-const MarketItemLayout = ({ market, marketDic, children }: { market: IUpbitMarketTicker; marketDic: Record<string, CryptoMarket>; children: React.ReactNode }) => {
+const MarketItemLayout = ({
+  market,
+  marketDic,
+  children,
+}: { market: IUpbitMarketTicker; marketDic: Record<string, CryptoMarket>; children: React.ReactNode }) => {
   const priceChangeType: PriceChangeType = CryptoUtils.getPriceChangeType(market.trade_price, market.opening_price);
 
   return (
-    <Link 
+    <Link
       href={`/crypto/${market.code}`}
       className={cn([
         'flex justify-between items-center px-3 py-3 mouse:hover:bg-slate-500/10 touch:active:bg-slate-500/10 [&_*]:leading-[110%]',
@@ -87,14 +91,15 @@ const MarketItemLayout = ({ market, marketDic, children }: { market: IUpbitMarke
         </h4>
         <p className="text-xs md:text-sm text-slate-500">{market.code}</p>
       </div>
-      <div className="section price">
-        {children}
-      </div>
+      <div className="section price">{children}</div>
     </Link>
   );
 };
 
-const MarketItemVolume = ({ market, marketDic }: { market: IUpbitMarketTicker; marketDic: Record<string, CryptoMarket> }) => {
+const MarketItemVolume = ({
+  market,
+  marketDic,
+}: { market: IUpbitMarketTicker; marketDic: Record<string, CryptoMarket> }) => {
   const priceChangeType: PriceChangeType = CryptoUtils.getPriceChangeType(market.trade_price, market.opening_price);
   const priceChangePercent = market.signed_change_rate;
 
@@ -111,7 +116,10 @@ const MarketItemVolume = ({ market, marketDic }: { market: IUpbitMarketTicker; m
   );
 };
 
-const MarketItemPriceChange = ({ market, marketDic }: { market: IUpbitMarketTicker; marketDic: Record<string, CryptoMarket> }) => {
+const MarketItemPriceChange = ({
+  market,
+  marketDic,
+}: { market: IUpbitMarketTicker; marketDic: Record<string, CryptoMarket> }) => {
   const priceChangeType: PriceChangeType = CryptoUtils.getPriceChangeType(market.trade_price, market.opening_price);
   const priceChangePercent = market.signed_change_rate * 100;
 
@@ -121,9 +129,7 @@ const MarketItemPriceChange = ({ market, marketDic }: { market: IUpbitMarketTick
         {priceChangeType === PriceChangeTypes.RISE ? '+' : ''}
         {priceChangePercent.toFixed(2)}%
       </p>
-      <p className="sub">
-        {`현재가격: ${CryptoUtils.getPriceText(market.trade_price)}${CRYPTO_WALLET_UNIT}`}
-      </p>
+      <p className="sub">{`현재가격: ${CryptoUtils.getPriceText(market.trade_price)}${CRYPTO_WALLET_UNIT}`}</p>
     </MarketItemLayout>
   );
 };

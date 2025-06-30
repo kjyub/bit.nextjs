@@ -338,7 +338,7 @@ export const NumberInput = ({
     if (Number.isNaN(_value) || replaceComma[replaceComma.length - 1] === '.') {
       setInternalValue(e.target.value);
       return;
-    };
+    }
 
     setInternalValue(CommonUtils.textFormat(replaceComma, TextFormats.NUMBER));
     setValue(_value);

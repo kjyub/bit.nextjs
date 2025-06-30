@@ -6,9 +6,7 @@ import './style.css';
 export default function TodayMarketTitleWrapper({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex flex-col px-1 gap-3">
-      <div className="flex items-center justify-center gap-2">
-        {children}
-      </div>
+      <div className="flex items-center justify-center gap-2">{children}</div>
 
       <Border />
     </div>
@@ -34,14 +32,14 @@ const Border = () => {
       const y = e.clientY - containerRect.top + scrollY;
       const margin = containerRect.width / 4;
 
-      if ((x < 0 - margin || x > containerRect.width + margin) || (y < 0 - margin || y > containerRect.height + margin)) {
+      if (x < 0 - margin || x > containerRect.width + margin || y < 0 - margin || y > containerRect.height + margin) {
         setPosition({ x: -1000, y: -1000 });
         return;
       }
 
-      const offset = containerRect.width / 4
+      const offset = containerRect.width / 4;
       setPosition({ x: x - offset, y: y - offset });
-    }
+    };
 
     if (!isTouch) {
       window.addEventListener('mousemove', handleMouseMove);
@@ -50,12 +48,18 @@ const Border = () => {
       if (!isTouch) {
         window.removeEventListener('mousemove', handleMouseMove);
       }
-    }
+    };
   }, []);
 
   return (
-    <div ref={containerRef} className="relative flex flex-center w-full h-[2px] bg-slate-500/20 overflow-hidden text-violet-600">
-      <div className="glow-ring will-change-transform" style={{ transform: `translate(${position.x}px, ${position.y}px)` }} />
+    <div
+      ref={containerRef}
+      className="relative flex flex-center w-full h-[2px] bg-slate-500/20 overflow-hidden text-violet-600"
+    >
+      <div
+        className="glow-ring will-change-transform"
+        style={{ transform: `translate(${position.x}px, ${position.y}px)` }}
+      />
     </div>
-  )
-}
+  );
+};

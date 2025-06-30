@@ -12,7 +12,6 @@ import TypeUtils from '@/utils/TypeUtils';
 import { useEffect, useMemo, useState } from 'react';
 import ModalLayout from '../atomics/ModalLayout';
 import { SlideInput } from '../inputs/TradeInputs';
-import CryptoUtils from '@/utils/CryptoUtils';
 
 const TransferSuffix = {
   [TransferTypes.TO_ACCOUNT]: CASH_UNIT,

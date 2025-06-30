@@ -1,12 +1,12 @@
 'use client';
 
-import * as MS from "@/styles/MainStyles";
-import FlexFilter from "./filter";
-import { createContext, useCallback, useEffect, useState } from "react";
-import { PositionTypes, type PositionType } from "@/types/cryptos/CryptoTypes";
-import type CryptoFlex from "@/types/cryptos/CryptoFlex";
-import CryptoApi from "@/apis/api/cryptos/CryptoApi";
-import FlexList from "./list";
+import CryptoApi from '@/apis/api/cryptos/CryptoApi';
+import * as MS from '@/styles/MainStyles';
+import type CryptoFlex from '@/types/cryptos/CryptoFlex';
+import type { PositionType } from '@/types/cryptos/CryptoTypes';
+import { createContext, useCallback, useEffect, useState } from 'react';
+import FlexFilter from './filter';
+import FlexList from './list';
 
 const PAGE_SIZE = 20;
 
@@ -51,8 +51,18 @@ export default function FlexView() {
     })();
   }, []);
 
-  const getFlexes = async (_pageIndex: number, _search: string, _filterPosition: PositionType | null, _leverageMin: number) => {
-    const response = await CryptoApi.getFlexList(_pageIndex, PAGE_SIZE, _search, _filterPosition !== null ? _filterPosition : undefined);
+  const getFlexes = async (
+    _pageIndex: number,
+    _search: string,
+    _filterPosition: PositionType | null,
+    _leverageMin: number,
+  ) => {
+    const response = await CryptoApi.getFlexList(
+      _pageIndex,
+      PAGE_SIZE,
+      _search,
+      _filterPosition !== null ? _filterPosition : undefined,
+    );
 
     if (_pageIndex === 1) {
       setFlexes(response.items);
@@ -80,7 +90,9 @@ export default function FlexView() {
   }, []);
 
   return (
-    <FlexContext.Provider value={{ searchValue, filterPosition, leverageMin, search, flexes, pageIndex, itemCount, isLoading, getNextPage }}>
+    <FlexContext.Provider
+      value={{ searchValue, filterPosition, leverageMin, search, flexes, pageIndex, itemCount, isLoading, getNextPage }}
+    >
       <MS.PageLayout>
         <MS.PageContent className="md:flex-row md:justify-center max-md:p-4 md:p-12 gap-8">
           {/* md 미만의 sticky */}

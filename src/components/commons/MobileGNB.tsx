@@ -33,12 +33,12 @@ export default function MobileGNB() {
       if (isHideTimer.current) {
         clearTimeout(isHideTimer.current);
       }
-    }
-  }, [isScrollUp])
+    };
+  }, [isScrollUp]);
 
   useEffect(() => {
     setIsMenuOpen(false);
-  }, [pathname])
+  }, [pathname]);
 
   const handleMenu = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();

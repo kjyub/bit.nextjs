@@ -1,7 +1,7 @@
 import { AccountStatusTypes, type LoginResponse } from '@/types/users/UserTypes';
+import AuthUtils from '@/utils/AuthUtils';
 import ky, { type KyRequest, type KyResponse, type NormalizedOptions } from 'ky';
 import { getAuthToken, removeAuthToken, setAuthToken } from './instances';
-import AuthUtils from '@/utils/AuthUtils';
 
 export const setAuthorization = (request: KyRequest) => {
   const token = getAuthToken();

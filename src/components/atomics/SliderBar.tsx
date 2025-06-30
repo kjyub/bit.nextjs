@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState } from 'react';
 
 interface Props {
   min: number;
@@ -16,12 +16,12 @@ export default function SliderBar({ min, max, value, step = 1, onChange }: Props
   const handleStart = () => {
     isDraggingRef.current = true;
     document.body.style.overflow = 'hidden';
-  }
+  };
 
   const handleEnd = () => {
     isDraggingRef.current = false;
     document.body.style.overflow = 'auto';
-  }
+  };
 
   const handleMove = (clientX: number) => {
     requestAnimationFrame(() => {
@@ -32,11 +32,11 @@ export default function SliderBar({ min, max, value, step = 1, onChange }: Props
       setInternalValue(newValue);
       setPercent(percent);
       onChange(newValue);
-    })
+    });
   };
 
   return (
-    <div 
+    <div
       ref={ref}
       className="relative flex items-center w-full h-full"
       onMouseDown={handleStart}
@@ -48,7 +48,10 @@ export default function SliderBar({ min, max, value, step = 1, onChange }: Props
     >
       <div className="relative w-full h-2 rounded-full overflow-hidden">
         <div className="w-full h-2 rounded-full layer1" />
-        <div className="absolute top-0 -left-full w-full h-2 rounded-full bg-gradient-to-r from-indigo-600 to-indigo-400" style={{ transform: `translateX(${percent * 100}%)` }} />
+        <div
+          className="absolute top-0 -left-full w-full h-2 rounded-full bg-gradient-to-r from-indigo-600 to-indigo-400"
+          style={{ transform: `translateX(${percent * 100}%)` }}
+        />
       </div>
       <div className="absolute-center size-4 bg-slate-200 rounded-full" style={{ left: `${percent * 100}%` }} />
     </div>

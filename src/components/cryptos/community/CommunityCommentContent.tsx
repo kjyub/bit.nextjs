@@ -9,7 +9,13 @@ interface ICommentContent {
   handleComment: (value: string) => void;
 }
 // 댓글 내용 및 수정 컴포넌트
-export default function CommunityCommentContent({ content, hasParent, parentName, isEdit, handleComment }: ICommentContent) {
+export default function CommunityCommentContent({
+  content,
+  hasParent,
+  parentName,
+  isEdit,
+  handleComment,
+}: ICommentContent) {
   // 댓글
   const [_isShowReply, setShowReply] = useState<boolean>(false);
   const [commentValue, setCommentValue] = useState<string>(content);
@@ -73,4 +79,4 @@ export default function CommunityCommentContent({ content, hasParent, parentName
       )}
     </>
   );
-};
+}

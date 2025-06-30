@@ -1,7 +1,7 @@
-import usePageScroll from "@/hooks/usePageScroll";
-import { FlexContext } from "../FlexView";
-import { use } from "react";
-import FlexItem, { FlexItemSkeleton } from "./Item";
+import usePageScroll from '@/hooks/usePageScroll';
+import { use } from 'react';
+import { FlexContext } from '../FlexView';
+import FlexItem, { FlexItemSkeleton } from './Item';
 
 const PAGE_SIZE = 20;
 

@@ -251,7 +251,14 @@ export const Position = ({ position, userBudget }: IPosition) => {
             </button>
           </div>
           <div className="inputs max-sm:!hidden">
-            <I.NumberInput label={'가격'} value={closePrice} setValue={setClosePrice} setFocus={(isFocus) => {isClosePriceFoucsRef.current = isFocus}} />
+            <I.NumberInput
+              label={'가격'}
+              value={closePrice}
+              setValue={setClosePrice}
+              setFocus={(isFocus) => {
+                isClosePriceFoucsRef.current = isFocus;
+              }}
+            />
             <I.PositionCloseSizeInput
               label={'수량'}
               value={closeQuantity}
@@ -261,7 +268,14 @@ export const Position = ({ position, userBudget }: IPosition) => {
           </div>
         </div>
         <div className="max-sm:grid sm:hidden grid-cols-2 w-full gap-2">
-          <I.NumberInput label={'가격'} value={closePrice} setValue={setClosePrice} setFocus={(isFocus) => {isClosePriceFoucsRef.current = isFocus}} />
+          <I.NumberInput
+            label={'가격'}
+            value={closePrice}
+            setValue={setClosePrice}
+            setFocus={(isFocus) => {
+              isClosePriceFoucsRef.current = isFocus;
+            }}
+          />
           <I.PositionCloseSizeInput
             label={'수량'}
             value={closeQuantity}
