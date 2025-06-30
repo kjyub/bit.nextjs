@@ -9,6 +9,7 @@ import { type MarketSortType, MarketSortTypes, type MarketType, MarketTypes } fr
 import { Suspense, useCallback, useEffect, useState } from 'react';
 import Market from './Market';
 import MarketSortTypeButton from './MarketSortTypeButton';
+import { getChoseong } from 'es-hangul';
 
 const getSortedCodes = async (
   marketDic: Record<string, CryptoMarket>,
@@ -53,8 +54,10 @@ const getFilteredMarkets = (_search: string, _markets: Array<CryptoMarket>): Set
   const keys = new Set<string>();
   _markets
     .filter((market) => {
+      const koreanChoseong = getChoseong(market.koreanName);
+      const searchChoseong = getChoseong(_search);
       return (
-        market.koreanName.includes(_search) ||
+        (koreanChoseong && searchChoseong && koreanChoseong.includes(searchChoseong)) ||
         market.englishName.includes(_search) ||
         market.code.includes(_search.toUpperCase())
       );
