@@ -45,9 +45,10 @@ export default function FlexSearch({ onSearch }: IFlexSearch) {
     return pipe(
       markets,
       filter((market) => {
+        const koreanChoseong = getChoseong(market.koreanName);
+        const valueChoseong = getChoseong(value);
         return (
-          // CommonUtils.searchKorean(market.koreanName, value) ||
-          getChoseong(market.koreanName).includes(getChoseong(value)) ||
+          (koreanChoseong && valueChoseong && koreanChoseong.includes(valueChoseong)) ||
           market.englishName.toUpperCase().includes(searchUpper) ||
           market.code.includes(searchUpper)
         );

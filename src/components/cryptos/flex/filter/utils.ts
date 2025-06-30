@@ -94,7 +94,7 @@ export interface MarketWithHighlight {
 export const attachHighlightMarket = (market: CryptoMarket, searchValue: string): MarketWithHighlight => {
   let similarScore = 0;
   const koreanHighlights = highlightText(market.koreanName, searchValue);
-  const codeHighlights = highlightText(market.code, searchValue);
+  const codeHighlights = highlightText(market.code, searchValue.toUpperCase());
 
   if (koreanHighlights.length > 0) {
     similarScore += koreanHighlights.reduce((acc, highlight) => {
