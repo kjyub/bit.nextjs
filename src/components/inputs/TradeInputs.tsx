@@ -17,6 +17,7 @@ import { cn } from '@/utils/StyleUtils';
 import TypeUtils from '@/utils/TypeUtils';
 import type React from 'react';
 import { useEffect, useRef, useState } from 'react';
+import SliderBar from '../atomics/SliderBar';
 
 type HelpBoxPosition = 'left-top' | 'left-bottom' | 'right-top' | 'right-bottom';
 export const HelpBox = ({
@@ -64,7 +65,7 @@ export const SlideInput = ({ value, setValue, min, max, step = 1, mark }: SlideI
 
   return (
     <S.SliderBox className="trade-slider">
-      <input
+      {/* <input
         type="range"
         className="w-full bg-transparent text-violet-600"
         min={min}
@@ -72,15 +73,18 @@ export const SlideInput = ({ value, setValue, min, max, step = 1, mark }: SlideI
         step={step}
         value={value || 0}
         onChange={handleChange}
-      />
-      <div className="absolute z-0 w-full h-full px-2">
+      /> */}
+      <div className="w-full h-4 px-2">
+        <SliderBar value={value} onChange={setValue} min={min} max={max} step={step} />
+      </div>
+      {/* <div className="absolute z-0 w-full h-full px-2">
         <div className="relative w-full h-full">
           <S.SliderBar />
           {marks.map((mark, idx) => (
             <S.SliderMark key={idx} style={{ left: `${mark}%` }} />
           ))}
         </div>
-      </div>
+      </div> */}
     </S.SliderBox>
   );
 };
