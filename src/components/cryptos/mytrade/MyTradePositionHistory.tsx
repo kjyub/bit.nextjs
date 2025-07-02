@@ -166,7 +166,7 @@ const Position = ({ position }: IPosition) => {
             손익 <span>Closing PNL</span>
           </dt>
           <dd className="!font-medium">
-            {CryptoUtils.getPriceText(position.pnl - position.totalFee)}
+            {position.pnl > 0 ? '+' : ''}{CryptoUtils.getPriceText(position.pnl - position.totalFee)}
             {CRYPTO_WALLET_UNIT}/{TypeUtils.percent(position.pnlRatio, 2)}
           </dd>
         </S.OrderItem>
@@ -187,7 +187,7 @@ const Position = ({ position }: IPosition) => {
             손익 <span>Closing PNL</span>
           </dt>
           <dd className="!font-medium">
-            {CryptoUtils.getPriceText(position.pnl - position.totalFee)}
+            {position.pnl > 0 ? '+' : ''}{CryptoUtils.getPriceText(position.pnl - position.totalFee)}
             {CRYPTO_WALLET_UNIT}/{TypeUtils.percent(position.pnlRatio, 2)}
           </dd>
         </S.OrderItem>

@@ -223,7 +223,7 @@ export const Position = ({ position, userBudget }: IPosition) => {
             실현손익 <span>PNL</span>
           </dt>
           <dd className="flex flex-col w-full">
-            <span>{CryptoUtils.getPriceText(pnl)}</span>
+            <span>{pnl > 0 ? '+' : ''}{CryptoUtils.getPriceText(pnl)}</span>
             <span className="text-xs">{TypeUtils.round(pnlRatio * 100, 2)}%</span>
           </dd>
         </S.PositionItem>

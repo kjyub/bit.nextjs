@@ -136,12 +136,12 @@ const History = ({ history }: IHistory) => {
             {CRYPTO_WALLET_UNIT}
           </dd>
         </S.OrderItem>
-        <S.OrderItem className={''}>
+        <S.OrderItem className={history.pnl > 0 ? 'long' : history.pnl < 0 ? 'short' : ''}>
           <dt>
             실현손익 <span>Realized Profit</span>
           </dt>
           <dd>
-            {CryptoUtils.getPriceText(history.pnl)}
+            {history.pnl > 0 ? '+' : ''}{CryptoUtils.getPriceText(history.pnl)}
             {CRYPTO_WALLET_UNIT}
           </dd>
         </S.OrderItem>
