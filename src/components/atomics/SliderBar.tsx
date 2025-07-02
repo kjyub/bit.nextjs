@@ -43,10 +43,13 @@ export default function SliderBar({ min, max, value, step = 1, onChange }: Props
 
   const handleStart = () => {
     setIsDragging(true);
-    document.body.style.overflow = 'hidden';
-    document.body.style.cursor = 'grabbing';
     document.body.style.userSelect = 'none';
-    document.body.addEventListener('touchmove', preventScroll, { passive: false });
+    document.body.style.cursor = 'grabbing';
+    
+    if (window.matchMedia('(pointer: coarse)').matches) {
+      document.body.style.overflow = 'hidden';
+      document.body.addEventListener('touchmove', preventScroll, { passive: false });
+    }
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseup', handleEnd);
     window.addEventListener('touchmove', handleTouchMove);
