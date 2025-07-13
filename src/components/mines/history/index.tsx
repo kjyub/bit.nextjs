@@ -2,15 +2,14 @@
 
 import MineApi from '@/apis/api/mines/MineApi';
 import usePageScroll from '@/hooks/usePageScroll';
-import { TextFormats } from '@/types/CommonTypes';
 import type { StyleProps } from '@/types/StyleTypes';
-import type Pagination from '@/types/api/pagination';
 import type MineRoom from '@/types/mines/MineRoom';
-import CommonUtils from '@/utils/CommonUtils';
 import { cn } from '@/utils/StyleUtils';
 import { useEffect, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
-import { secondsToTime } from '../maze/utils';
+import Maze from './Maze';
+import Hammer from './Hammer';
+import { GameTypes } from '@/types/mines/MineTypes';
 
 const PAGE_SIZE = 10;
 
@@ -75,7 +74,7 @@ export default function MineHistory() {
       className={cn(['flex flex-col max-sm:w-full sm:w-108 mt-16 mb-24 gap-2 duration-200', { 'opacity-0': !isShow }])}
     >
       <div className="flex justify-between items-center w-full">
-        <span className="font-semibold text-stone-300">노역록</span>
+        <span className="md:text-lg font-semibold text-stone-300">노역록</span>
 
         <div className="flex gap-1">
           <OnlyMineButton type="button" $is_active={onlyMine} onClick={() => getMineHistory(1, true)}>
@@ -87,20 +86,11 @@ export default function MineHistory() {
         </div>
       </div>
 
-      <div className="flex flex-col w-full min-h-24 max-h-[90dvh] gap-1 divide-y divide-stone-800 overflow-y-auto scroll-transparent">
+      <div className="flex flex-col w-full min-h-24 gap-1 divide-y divide-stone-800 overflow-y-auto scroll-transparent">
         {mineHistory.map((room) => (
-          <div key={room.id} className="flex flex-col justify-center w-full px-2 py-4 gap-2">
-            <div className="flex justify-between items-baseline w-full">
-              <span className="text-[13px] text-stone-400">{room.user.nickname}</span>
-              <span className="text-xs text-stone-500">{CommonUtils.getDateShorten(room.createdDate)}</span>
-            </div>
-            <div className="flex justify-between items-center w-full font-medium">
-              <span className="text-stone-300">+{CommonUtils.textFormat(room.reward, TextFormats.NUMBER)}W</span>
-              <span className="flex items-center text-stone-300">
-                <i className="fa-solid fa-stopwatch text-sm mr-1"></i>
-                {secondsToTime(room.playTime)}
-              </span>
-            </div>
+          <div key={room.id}>
+            {room.gameType === GameTypes.MAZE && <Maze room={room} />}
+            {room.gameType === GameTypes.HAMMER && <Hammer room={room} />}
           </div>
         ))}
 

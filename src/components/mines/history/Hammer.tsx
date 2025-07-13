@@ -1,0 +1,28 @@
+import type MineRoom from '@/types/mines/MineRoom';
+import CommonUtils from '@/utils/CommonUtils';
+import { TextFormats } from '@/types/CommonTypes';
+import { MineHistoryStyles as S } from './styles';
+import { cn } from '@/utils/StyleUtils';
+
+export default function Maze({ room }: { room: MineRoom }) {
+  return (
+    <S.MineHistoryItem key={room.id}>
+      <S.MineHistoryItemHeader>
+        <div className="left">
+          <span className="nickname">{room.user.nickname}</span>
+          <div className="game-type">망치</div>
+          <div className={cn(['game-mode', { 'practice': room.isPractice }])}>
+            {room.isPractice ? '연습' : '실전'}
+          </div>
+        </div>
+        <span className="date">{CommonUtils.getDateShorten(room.updatedDate)}</span>
+      </S.MineHistoryItemHeader>
+      <S.MineHistoryItemBody>
+        <span className="reward">+{CommonUtils.textFormat(room.reward, TextFormats.NUMBER)}W</span>
+        <span className="info">
+          {`최고: ${room.hammerGame.highScore}`}
+        </span>
+      </S.MineHistoryItemBody>
+    </S.MineHistoryItem>
+  )
+}

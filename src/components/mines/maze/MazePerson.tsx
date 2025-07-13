@@ -19,11 +19,9 @@ export default function MazePerson({ coord, isHolding, setHolding }: Props) {
             onMouseUp={() => setHolding(false)}
             onTouchStart={() => {
               setHolding(true);
-              console.log('touch start');
             }}
             onTouchEnd={() => {
               setHolding(false);
-              console.log('touch end');
             }}
           ></div>
         </div>

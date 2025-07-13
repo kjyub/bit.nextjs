@@ -49,14 +49,27 @@ namespace MineApi {
 
     return result;
   }
-  export async function updateMineRoom(roomId: string, playTime: number): Promise<MineRoom> {
+  export async function getMineRoom(roomId: string): Promise<MineRoom> {
+    const result: MineRoom = new MineRoom();
+
+    try {
+      const response = await authInstance.get(`api/mines/room/${roomId}/`);
+      const data = (await response.json()) as any;
+      result.parseResponse(data);
+    } catch (error) {
+      console.log(error);
+    }
+
+    return result;
+  }
+  export async function updateMineRoom(roomId: string, gameData: object): Promise<MineRoom> {
     const result: MineRoom = new MineRoom();
 
     try {
       const response = await authInstance.put('api/mines/room/', {
         json: {
           room_id: roomId,
-          play_time: playTime,
+          ...gameData,
         },
       });
       const data = (await response.json()) as any;

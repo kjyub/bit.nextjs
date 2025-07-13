@@ -4,9 +4,9 @@ import type Pagination from '@/types/api/pagination';
 import MineRoom from '@/types/mines/MineRoom';
 import { useEffect, useState } from 'react';
 import MinePlay from './MinePlay';
-import MinePlayButtonBox from './MinePlayButtonBox';
+import MineLobby from './lobby';
 import MineTitle from './MineTitle';
-import MineHistory from './history/MineHistory';
+import MineHistory from './history';
 
 export type PageType = 'lobby' | 'room';
 
@@ -23,7 +23,7 @@ export default function MineMain() {
       {pageType === 'lobby' && (
         <>
           <MineTitle />
-          <MinePlayButtonBox setRoom={setRoom} />
+          <MineLobby setRoom={setRoom} />
           <MineHistory />
         </>
       )}

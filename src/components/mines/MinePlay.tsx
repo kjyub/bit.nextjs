@@ -9,6 +9,8 @@ import ExitButton from './ExitButton';
 import MineComplete from './MineComplete';
 import MazeMain from './maze/MazeMain';
 import { secondsToTime } from './maze/utils';
+import { GameTypes } from '@/types/mines/MineTypes';
+import HammerMain from './hammer/HammerMain';
 
 const preventScroll = (e: Event) => {
   e.preventDefault();
@@ -29,14 +31,14 @@ interface MineContextType {
   setRound: (round: number) => void;
   time: number;
   setTime: (time: number) => void;
-  onComplete: () => void;
+  onComplete: (data?: object) => void;
 }
 export const MineContext = createContext<MineContextType>({
   round: 1,
   setRound: () => {},
   time: 0,
   setTime: () => {},
-  onComplete: () => {},
+  onComplete: (data?: object) => {},
 });
 
 interface Props {
@@ -73,13 +75,18 @@ export default function MinePlay({ room, setRoom }: Props) {
     };
   }, [room]);
 
-  const handleComplete = useCallback(async () => {
+  const handleComplete = useCallback(async (data?: object) => {
     if (!timerRef.current) return;
 
     clearInterval(timerRef.current);
     timerRef.current = null;
 
-    const response = await MineApi.updateMineRoom(room.id, time);
+    const gameData = {
+      play_time: time,
+      ...data,
+    }
+
+    const response = await MineApi.updateMineRoom(room.id, gameData);
     if (response.id) {
       setIsComplete(true);
       setRoom(response);
@@ -92,10 +99,11 @@ export default function MinePlay({ room, setRoom }: Props) {
   return (
     <MineContext.Provider value={{ round, setRound, time, setTime, onComplete: handleComplete }}>
       <Layout>
+        {/* 게임 헤더 */}
         <div className="relative flex justify-between items-center w-full">
           <ExitButton action={() => setRoom(new MineRoom())} className="-translate-y-1" />
 
-          <div className="absolute-center text-stone-100" onClick={() => handleComplete()}>
+          <div className="absolute-center text-stone-100">
             <span className="text-2xl font-sinchon-rhapsody">라운드 {round}</span>
           </div>
 
@@ -105,8 +113,10 @@ export default function MinePlay({ room, setRoom }: Props) {
           </div>
         </div>
 
+        {/* 게임 메인 */}
         <div className="relative w-full aspect-square">
-          <MazeMain seed={room.seed} />
+          {room.gameType === GameTypes.MAZE && <MazeMain seed={room.mazeGame.seed} />}
+          {room.gameType === GameTypes.HAMMER && <HammerMain />}
           {isComplete && <MineComplete room={room} setRoom={setRoom} />}
         </div>
       </Layout>

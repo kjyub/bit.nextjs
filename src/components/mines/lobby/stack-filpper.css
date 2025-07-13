@@ -1,0 +1,18 @@
+.item {
+  @apply absolute w-full h-full transition-all duration-500 will-change-transform;
+}
+
+.item.active {
+  transform: translateY(0);
+  @apply z-10 scale-100 opacity-100;
+}
+
+.item.inactive {
+  transform: translateY(-84px);
+  @apply z-0 scale-90 opacity-50 cursor-pointer;
+
+  &:hover {
+    transform: translateY(-72px);
+    @apply scale-93 opacity-70;
+  }
+}

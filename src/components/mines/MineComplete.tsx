@@ -11,7 +11,7 @@ export default function MineComplete({ room, setRoom }: Props) {
   const [isActive, setIsActive] = useState(false);
 
   return (
-    <div className="absolute inset-0 flex flex-center w-full h-full rounded-2xl overflow-hidden backdrop-blur-sm bg-stone-900/30 duration-300">
+    <div className="absolute inset-0 z-50 flex flex-center w-full h-full rounded-2xl overflow-hidden backdrop-blur-sm bg-stone-900/30 duration-300">
       <div className="flex flex-col flex-center max-sm:w-[80vw] sm:w-96 h-56 gap-4 rounded-xl bg-stone-400 border border-stone-500/50 shadow-lg animate-fade-pop">
         <div className="flex flex-col items-center gap-2">
           <span className="text-4xl font-sinchon-rhapsody">완료!</span>
