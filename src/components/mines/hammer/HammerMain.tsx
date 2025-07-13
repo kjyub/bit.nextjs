@@ -7,7 +7,7 @@ import Hammer from './Hammer';
 const ROUND = 3;
 const START_HP = 10000;
 const HIT_HP = 1200;
-const HIT_MARGIN = 300;
+const HIT_MARGIN = 200;
 
 const DAMAGE_RANGE = [50, 100];
 const DAMAGE_INTERVAL_RANGE = [5, 200];
@@ -25,6 +25,7 @@ enum RoundState {
 
 export default function HammerMain() {
   const { round, setRound, onComplete } = use(MineContext);
+  const roundRef = useRef(round);
   const scoresRef = useRef<number[]>([]);
 
   const [hp, setHp] = useState(START_HP);
@@ -46,6 +47,7 @@ export default function HammerMain() {
 
   useEffect(() => {
     startRound();
+    roundRef.current = round;
   }, [round]);
 
   const updateHp = (hp: number) => {
@@ -87,7 +89,7 @@ export default function HammerMain() {
     updateHp(0);
     updateRoundState(RoundState.COMPLETE);
 
-    if (round < ROUND) {
+    if (roundRef.current < ROUND) {
       // 다음 라운드 시작
     } else {
       // 라운드 완료
