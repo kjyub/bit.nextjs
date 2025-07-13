@@ -80,6 +80,24 @@ namespace MineApi {
 
     return result;
   }
+  export async function updateMineRoomNickname(roomId: string, nickname: string): Promise<MineRoom> {
+    const result: MineRoom = new MineRoom();
+
+    try {
+      const response = await authInstance.put('api/mines/room/nickname/', {
+        json: {
+          room_id: roomId,
+          nickname,
+        },
+      });
+      const data = (await response.json()) as any;
+      result.parseResponse(data as any);
+    } catch (error) {
+      console.log(error);
+    }
+
+    return result;
+  }
   // endregion
 }
 

@@ -9,6 +9,7 @@ export default class MineRoom extends AbsApiObject {
   protected _id: string;
 
   private _user: User;
+  private _nickname: string;
   private _isCompleted: boolean;
   private _playTime: number;
   private _reward: number;
@@ -25,6 +26,7 @@ export default class MineRoom extends AbsApiObject {
 
     this._id = '';
     this._user = new User();
+    this._nickname = '';
     this._isCompleted = false;
     this._playTime = 0;
     this._reward = 0;
@@ -43,6 +45,7 @@ export default class MineRoom extends AbsApiObject {
     this._id = json.id;
     this._user = new User();
     this._user.parseResponse(json.user);
+    this._nickname = json.nickname;
     this._isCompleted = json.is_completed;
     this._playTime = json.play_time;
     this._reward = json.reward;
@@ -64,6 +67,15 @@ export default class MineRoom extends AbsApiObject {
 
   public get user(): User {
     return this._user;
+  }
+
+  public get nickname(): string {
+    return this._nickname;
+  }
+
+  public get userName(): string {
+    if (this._user.id) return this._user.nickname;
+    return this._nickname;
   }
 
   public get isCompleted(): boolean {

@@ -9,7 +9,7 @@ export default function Maze({ room }: { room: MineRoom }) {
     <S.MineHistoryItem key={room.id}>
       <S.MineHistoryItemHeader>
         <div className="left">
-          <span className="nickname">{room.user.nickname}</span>
+          <span className="nickname">{room.userName}</span>
           <div className="game-type">망치</div>
           <div className={cn(['game-mode', { 'practice': room.isPractice }])}>
             {room.isPractice ? '연습' : '실전'}
