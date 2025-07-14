@@ -10,6 +10,7 @@ import tw from 'tailwind-styled-components';
 import Maze from './Maze';
 import Hammer from './Hammer';
 import { GameTypes } from '@/types/mines/MineTypes';
+import { useUser } from '@/hooks/useUser';
 
 const PAGE_SIZE = 10;
 
@@ -22,6 +23,8 @@ const OnlyMineButton = tw.button<StyleProps>`
 `;
 
 export default function MineHistory() {
+  const { isAuth } = useUser();
+
   const [onlyMine, setOnlyMine] = useState(true);
   const [mineHistory, setMineHistory] = useState<MineRoom[]>([]);
   const [pageIndex, setPageIndex] = useState(1);
@@ -76,14 +79,16 @@ export default function MineHistory() {
       <div className="flex justify-between items-center w-full">
         <span className="md:text-lg font-semibold text-stone-300">노역록</span>
 
-        <div className="flex gap-1">
-          <OnlyMineButton type="button" $is_active={onlyMine} onClick={() => getMineHistory(1, true)}>
-            내 기록만
-          </OnlyMineButton>
-          <OnlyMineButton type="button" $is_active={!onlyMine} onClick={() => getMineHistory(1, false)}>
-            전체 기록
-          </OnlyMineButton>
-        </div>
+        {isAuth && (
+          <div className="flex gap-1">
+            <OnlyMineButton type="button" $is_active={onlyMine} onClick={() => getMineHistory(1, true)}>
+              내 기록만
+            </OnlyMineButton>
+            <OnlyMineButton type="button" $is_active={!onlyMine} onClick={() => getMineHistory(1, false)}>
+              전체 기록
+            </OnlyMineButton>
+          </div>
+        )}
       </div>
 
       <div className="flex flex-col w-full min-h-24 gap-1 divide-y divide-stone-800 overflow-y-auto scroll-transparent">

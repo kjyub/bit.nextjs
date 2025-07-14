@@ -8,11 +8,11 @@
 }
 
 .item.inactive {
-  transform: translateY(-84px);
+  transform: translateY(-72px);
   @apply z-0 scale-90 opacity-50 cursor-pointer;
 
   &:hover {
-    transform: translateY(-72px);
+    transform: translateY(-64px);
     @apply scale-93 opacity-70;
   }
 }

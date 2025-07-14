@@ -26,6 +26,7 @@ enum RoundState {
 export default function HammerMain() {
   const { round, setRound, onComplete } = use(MineContext);
   const roundRef = useRef(round);
+  const [scores, setScores] = useState<number[]>([]);
   const scoresRef = useRef<number[]>([]);
 
   const [hp, setHp] = useState(START_HP);
@@ -60,6 +61,11 @@ export default function HammerMain() {
     setRoundState(state);
   }
 
+  const updateScores = (score: number) => {
+    scoresRef.current.push(score);
+    setScores(scoresRef.current);
+  }
+
   const calcHammerState = (hp: number) => {
     // hp가 START_HP일 경우 0
     // hp가 HIT_HP에 도달한 경우 100
@@ -85,7 +91,7 @@ export default function HammerMain() {
     }
 
     // 라운드 성공
-    scoresRef.current.push(hpRef.current);
+    updateScores(hpRef.current);
     updateHp(0);
     updateRoundState(RoundState.COMPLETE);
 
@@ -128,6 +134,7 @@ export default function HammerMain() {
 
   return (
     <div className="relative flex flex-col flex-center w-full aspect-square rounded-2xl overflow-hidden bg-stone-900">
+      {/* 체력 정보 및 가이드 */}
       <div className="absolute top-2 z-10 flex flex-col items-center gap-2">
         <span className="text-stone-100 text-2xl font-medium">
           {hp}
@@ -143,10 +150,21 @@ export default function HammerMain() {
         </span>
       </div>
 
+      {/* 점수 기록 */}
+      <div className="absolute bottom-2 right-2 z-10 flex flex-col items-center gap-1">
+        {scores.map((score, index) => (
+          <span key={index} className="text-stone-100 text-sm">
+            {`${index + 1}라운드: ${score}`}
+          </span>
+        ))}
+      </div>
+
+      {/* 망치 */}
       <div className="absolute-center z-0 translate-y-1/16 size-2/3">
         <Hammer state={hammerState} onClick={handleHit} />
       </div>
 
+      {/* 다음 라운드 버튼 */}
       <button
         type="button"
         className={cn([
