@@ -5,6 +5,7 @@ import { use, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import ChartColorButton from './ChartColorButton';
 import ControlButton from './ControlButton';
 import MessageList from './MessageList';
+import useSyncedState from '@/hooks/useSyncedState';
 
 const SWIPE_DOWN_THRESHOLD = 75;
 
@@ -21,10 +22,9 @@ const Layout = ({
 }: { isOpen: boolean; setIsOpen: (isOpen: boolean) => void; children: React.ReactNode }) => {
   const [translateY, setTranslateY] = useState<number>(0);
   const [opacity, setOpacity] = useState<number>(100);
-  const [isSwiping, setIsSwiping] = useState<boolean>(false);
+  const [isSwiping, setIsSwiping, isSwipingRef] = useSyncedState<boolean>(false);
 
   const startY = useRef<number>(0);
-  const isSwipingRef = useRef<boolean>(false);
 
   // 브라우저 스크롤 막기
   useLayoutEffect(() => {
@@ -45,7 +45,6 @@ const Layout = ({
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     startY.current = e.touches[0].clientY;
     setIsSwiping(true);
-    isSwipingRef.current = true;
   };
 
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
@@ -74,7 +73,6 @@ const Layout = ({
       setOpacity(100);
     }
     setIsSwiping(false);
-    isSwipingRef.current = false;
   };
 
   return (

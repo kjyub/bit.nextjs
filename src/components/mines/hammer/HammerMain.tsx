@@ -3,6 +3,7 @@ import { use, useEffect, useRef, useState } from 'react';
 import { MineContext } from '../MinePlay';
 import { cn } from '@/utils/StyleUtils';
 import Hammer from './Hammer';
+import useSyncedState from '@/hooks/useSyncedState';
 
 const ROUND = 3;
 const START_HP = 10000;
@@ -26,13 +27,10 @@ enum RoundState {
 export default function HammerMain() {
   const { round, setRound, onComplete } = use(MineContext);
   const roundRef = useRef(round);
-  const [scores, setScores] = useState<number[]>([]);
-  const scoresRef = useRef<number[]>([]);
 
-  const [hp, setHp] = useState(START_HP);
-  const hpRef = useRef(START_HP);
-  const [roundState, setRoundState] = useState(RoundState.READY);
-  const roundStateRef = useRef(RoundState.READY);
+  const [scores, setScores, scoresRef] = useSyncedState<number[]>([]);
+  const [hp, setHp, hpRef] = useSyncedState(START_HP);
+  const [roundState, setRoundState, roundStateRef] = useSyncedState(RoundState.READY);
 
   const [hammerState, setHammerState] = useState(0); // 0: 내려친 상태 100: 올라온 상태
 
@@ -50,21 +48,6 @@ export default function HammerMain() {
     startRound();
     roundRef.current = round;
   }, [round]);
-
-  const updateHp = (hp: number) => {
-    hpRef.current = hp;
-    setHp(hp);
-  }
-  
-  const updateRoundState = (state: RoundState) => {
-    roundStateRef.current = state;
-    setRoundState(state);
-  }
-
-  const updateScores = (score: number) => {
-    scoresRef.current.push(score);
-    setScores(scoresRef.current);
-  }
 
   const calcHammerState = (hp: number) => {
     // hp가 START_HP일 경우 0
@@ -86,14 +69,14 @@ export default function HammerMain() {
     calcHammerState(START_HP);
 
     if (!isKill) {
-      updateRoundState(RoundState.FAIL);
+      setRoundState(RoundState.FAIL);
       return;
     }
 
     // 라운드 성공
-    updateScores(hpRef.current);
-    updateHp(0);
-    updateRoundState(RoundState.COMPLETE);
+    setScores([...scoresRef.current, hpRef.current]);
+    setHp(0);
+    setRoundState(RoundState.COMPLETE);
 
     if (roundRef.current < ROUND) {
       // 다음 라운드 시작
@@ -107,12 +90,12 @@ export default function HammerMain() {
 
   const nextRound = () => {
     setRound(round + 1);
-    updateRoundState(RoundState.READY);
+    setRoundState(RoundState.READY);
   }
 
   const startRound = async () => {
-    updateRoundState(RoundState.PLAYING);
-    updateHp(START_HP);
+    setRoundState(RoundState.PLAYING);
+    setHp(START_HP);
     calcHammerState(START_HP);
 
     while (roundStateRef.current === RoundState.PLAYING) {
@@ -125,9 +108,9 @@ export default function HammerMain() {
       let nextHp = hpRef.current - damage;
       if (nextHp <= 0) {
         nextHp = 0;
-        updateRoundState(RoundState.FAIL)
+        setRoundState(RoundState.FAIL)
       }
-      updateHp(nextHp);
+      setHp(nextHp);
       calcHammerState(nextHp);
     }
   }
