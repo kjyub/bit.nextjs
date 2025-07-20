@@ -1,4 +1,4 @@
-import { CRYPTO_WALLET_UNIT } from '@/constants/CryptoConsts';
+import { CRYPTO_WALLET_UNIT, MAX_PRICE } from '@/constants/CryptoConsts';
 import { useDetectClose } from '@/hooks/useDetectClose';
 import { useMouseHover } from '@/hooks/useMouseHover';
 import useToastMessageStore from '@/store/useToastMessageStore';
@@ -18,6 +18,7 @@ import TypeUtils from '@/utils/TypeUtils';
 import type React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import SliderBar from '../atomics/SliderBar';
+import * as CI from './CommonInputs';
 
 type HelpBoxPosition = 'left-top' | 'left-bottom' | 'right-top' | 'right-bottom';
 export const HelpBox = ({
@@ -323,55 +324,10 @@ export const NumberInput = ({
   suffix = '',
   setFocus,
 }: NumberInputProps) => {
-  const [internalValue, setInternalValue] = useState<string>(String(value));
-
-  useEffect(() => {
-    setInternalValue(CommonUtils.textFormat(value, TextFormats.NUMBER));
-  }, [value]);
-
-  const handleValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const replaceComma = String(e.target.value.replace(/,/g, ''));
-
-    if (replaceComma === '') {
-      setValue(0);
-      setInternalValue('');
-      return;
-    }
-
-    const _value = Number.parseFloat(replaceComma);
-    if (Number.isNaN(_value) || replaceComma[replaceComma.length - 1] === '.') {
-      setInternalValue(e.target.value);
-      return;
-    }
-
-    setInternalValue(CommonUtils.textFormat(replaceComma, TextFormats.NUMBER));
-    setValue(_value);
-
-    if (max && _value > max) {
-      setValue(max);
-    } else if (_value < min) {
-      setValue(min);
-    } else {
-      setValue(_value);
-    }
-  };
-
   return (
     <S.InputBox className={`justify-between h-8 space-x-2 ${className}`}>
       <span className="font-light text-sm text-slate-400/80 text-nowrap select-none">{label}</span>
-      <input
-        className="input text-right w-full"
-        value={internalValue}
-        onChange={handleValue}
-        min={min}
-        max={max}
-        onFocus={() => {
-          setFocus?.(true);
-        }}
-        onBlur={() => {
-          setFocus?.(false);
-        }}
-      />
+      <CI.NumberInput className="input text-right w-full" value={value} setValue={setValue} min={min} max={max} setFocus={setFocus} />
       {suffix && <span className="ml-0.5! input text-slate-400!">{suffix}</span>}
     </S.InputBox>
   );
@@ -412,7 +368,7 @@ export const LimitPriceInput = ({ price, setPrice, initPrice }: LimitPriceInputP
   return (
     <div className={'flex w-full justify-between'}>
       <div className="w-[calc(100%-24px)]">
-        <NumberInput label={'가격'} value={price} setValue={setPrice} />
+        <NumberInput label={'가격'} value={price} setValue={setPrice} min={0} max={MAX_PRICE} />
       </div>
       <button
         className="w-4 text-sm text-slate-500 hover:text-slate-400"
@@ -555,7 +511,7 @@ export const TradeSizeInput = ({
         {!isPercent ? (
           sizeUnitType === SizeUnitTypes.PRICE ? (
             <NumberInput
-              label={'크기'}
+              label={'크기 (가격)'}
               value={sizeValue}
               setValue={handleSize}
               max={maxSize}
@@ -563,7 +519,7 @@ export const TradeSizeInput = ({
             />
           ) : (
             <NumberInput
-              label={'크기'}
+              label={'크기 (수량)'}
               value={quantityValue}
               setValue={handleQuantity}
               max={(maxSize / price) * leverage}

@@ -29,7 +29,6 @@ export default function CryptoTransferModal({ defaultTransferType, close }: Cryp
 
   // 타입 및 스타일
   const [transferType, setTransferType] = useState<TransferType>(defaultTransferType);
-  const [isBgActive, setBgActive] = useState<boolean>(false);
 
   // 잔액
   const { cash, balance, updateInfo } = useUserInfoStore();
@@ -76,15 +75,6 @@ export default function CryptoTransferModal({ defaultTransferType, close }: Cryp
   useEffect(() => {
     setValue(0);
   }, [transferType]);
-
-  const handleValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const _value = Number(e.target.value.replaceAll(',', ''));
-    if (Number.isNaN(_value)) return;
-
-    if (_value < 0) return;
-
-    setValue(_value);
-  };
 
   const handleSlideValue = (value: number) => {
     const max = transferType === TransferTypes.TO_ACCOUNT ? balance : cash;
@@ -148,14 +138,16 @@ export default function CryptoTransferModal({ defaultTransferType, close }: Cryp
       </S.TransferTypeBox>
 
       <div className="flex flex-col w-full mt-4 space-y-6">
-        <I.Input
+        <I.NumberInput
           label={'이체 금액'}
-          value={CommonUtils.textFormat(value, TextFormats.NUMBER)}
-          onChange={handleValue}
+          value={value}
+          setValue={setValue}
           placeholder={'금액을 입력'}
           className="h-10 pl-4 pr-1 text-right"
           suffix={TransferSuffix[transferType]}
           errorMessage={errorMessage}
+          min={0}
+          max={transferType === TransferTypes.TO_ACCOUNT ? TypeUtils.round(balance, 0) : TypeUtils.round(cash, 0)}
         />
         <SlideInput value={percentValue} setValue={handleSlideValue} min={0} max={100} step={1} mark={25} />
 

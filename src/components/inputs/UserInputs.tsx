@@ -2,6 +2,8 @@ import { useDetectClose } from '@/hooks/useDetectClose';
 import * as S from '@/styles/UserInputStyles';
 import type React from 'react';
 import { useState } from 'react';
+import * as CI from './CommonInputs';
+import { cn } from '@/utils/StyleUtils';
 
 interface InputContainerProps {
   label?: string;
@@ -101,6 +103,58 @@ export const Input: React.FC<InputProps<string | number>> = ({
     </InputContainer>
   );
 };
+
+interface NumberInputProps
+  extends Omit<InputBaseProps<number>, 'value' | 'setValue'>,
+    React.InputHTMLAttributes<HTMLInputElement> {
+  value: number;
+  setValue: (value: number) => void;
+  placeholder?: string;
+  errorMessage?: string;
+  suffix?: string;
+  min?: number;
+  max?: number;
+}
+export const NumberInput: React.FC<NumberInputProps> = ({
+  label,
+  labelWidth = 'w-[80px]',
+  helpText,
+  placeholder,
+  errorMessage,
+  value,
+  setValue,
+  suffix,
+  min,
+  max,
+  ...props
+}) => {
+  const [isInputFoucs, setInputFocus] = useState<boolean>(false);
+  const isError = !!(value && errorMessage);
+  return (
+    <InputContainer label={label} labelWidth={labelWidth} helpText={helpText}>
+      <S.InputContainer>
+        <S.InputBox $is_active={isInputFoucs} $is_error={!!isError} $disabled={props?.disabled}>
+          <CI.NumberInput 
+            {...props}
+            className={cn(['w-full bg-transparent', props?.className])}
+            value={value}
+            setValue={setValue}
+            onFocus={() => {
+              setInputFocus(true);
+            }}
+            onBlur={() => {
+              setInputFocus(false);
+            }}
+            min={min}
+            max={max}
+          />
+          {suffix && <S.Suffix>{suffix}</S.Suffix>}
+          {isError && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
+        </S.InputBox>
+      </S.InputContainer> 
+    </InputContainer>
+  );
+}
 
 interface IBooleanInputProps extends InputBaseProps<boolean> {
   yesText: string;
