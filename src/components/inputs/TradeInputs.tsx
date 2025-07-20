@@ -19,6 +19,7 @@ import type React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import SliderBar from '../atomics/SliderBar';
 import * as CI from './CommonInputs';
+import useSyncedState from '@/hooks/useSyncedState';
 
 type HelpBoxPosition = 'left-top' | 'left-bottom' | 'right-top' | 'right-bottom';
 export const HelpBox = ({
@@ -445,7 +446,7 @@ export const TradeSizeInput = ({
   sizeUnitType,
   setSizeUnitType,
 }: TradeSizeInputProps) => {
-  const [isPercent, setIsPercent] = useState<boolean>(false);
+  const [isPercent, setIsPercent, isPercentRef] = useSyncedState<boolean>(false);
 
   // 여기서 사용되는 값
   const [percentValue, setPercentValue] = useState<number>(0); // 자산 비율
@@ -472,7 +473,7 @@ export const TradeSizeInput = ({
   };
 
   const handlePercent = (_percentValue: number) => {
-    if (!isPercent) {
+    if (!isPercentRef.current) {
       return;
     }
 
@@ -484,7 +485,7 @@ export const TradeSizeInput = ({
   };
 
   const handleSize = (_size: number) => {
-    if (isPercent) {
+    if (isPercentRef.current) {
       return;
     }
 
@@ -495,7 +496,7 @@ export const TradeSizeInput = ({
   };
 
   const handleQuantity = (_quantity: number) => {
-    if (isPercent) {
+    if (isPercentRef.current) {
       return;
     }
     // _quantity엔 이미 레버리지 포함되어있음
