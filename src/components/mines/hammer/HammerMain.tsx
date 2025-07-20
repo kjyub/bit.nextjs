@@ -15,7 +15,7 @@ const DAMAGE_INTERVAL_RANGE = [5, 200];
 
 const getRandomInt = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+};
 
 enum RoundState {
   READY = 'READY',
@@ -52,12 +52,12 @@ export default function HammerMain() {
   const calcHammerState = (hp: number) => {
     // hp가 START_HP일 경우 0
     // hp가 HIT_HP에 도달한 경우 100
-    let angle = 100 - ((hp - HIT_HP) / (START_HP - HIT_HP) * 100);
+    let angle = 100 - ((hp - HIT_HP) / (START_HP - HIT_HP)) * 100;
     if (angle > 100) {
       angle = 100;
     }
     setHammerState(angle);
-  }
+  };
 
   const handleHit = () => {
     if (roundStateRef.current !== RoundState.PLAYING) return;
@@ -91,7 +91,7 @@ export default function HammerMain() {
   const nextRound = () => {
     setRound(round + 1);
     setRoundState(RoundState.READY);
-  }
+  };
 
   const startRound = async () => {
     setRoundState(RoundState.PLAYING);
@@ -108,29 +108,26 @@ export default function HammerMain() {
       let nextHp = hpRef.current - damage;
       if (nextHp <= 0) {
         nextHp = 0;
-        setRoundState(RoundState.FAIL)
+        setRoundState(RoundState.FAIL);
       }
       setHp(nextHp);
       calcHammerState(nextHp);
     }
-  }
+  };
 
   return (
     <div className="relative flex flex-col flex-center w-full aspect-square rounded-2xl overflow-hidden bg-stone-900">
       {/* 체력 정보 및 가이드 */}
       <div className="absolute top-2 z-10 flex flex-col items-center gap-2">
-        <span className="text-stone-100 text-2xl font-medium">
-          {hp}
-        </span>
+        <span className="text-stone-100 text-2xl font-medium">{hp}</span>
         <div className="relative w-48 h-2 bg-black rounded-full">
-          <div className="absolute top-0 left-0 h-full bg-red-500 rounded-full" style={{ width: `${hp / START_HP * 100}%` }} />
+          <div
+            className="absolute top-0 left-0 h-full bg-red-500 rounded-full"
+            style={{ width: `${(hp / START_HP) * 100}%` }}
+          />
         </div>
-        <span className="text-stone-300 text-sm">
-          {`${HIT_HP - HIT_MARGIN} ~ ${HIT_HP} 사이일 때 내려치면 성공`}
-        </span>
-        <span className="text-stone-400 text-xs">
-          (D, F 키 혹은 망치 클릭)
-        </span>
+        <span className="text-stone-300 text-sm">{`${HIT_HP - HIT_MARGIN} ~ ${HIT_HP} 사이일 때 내려치면 성공`}</span>
+        <span className="text-stone-400 text-xs">(D, F 키 혹은 망치 클릭)</span>
       </div>
 
       {/* 점수 기록 */}
@@ -179,5 +176,5 @@ export default function HammerMain() {
         다시하기
       </button>
     </div>
-  )
+  );
 }

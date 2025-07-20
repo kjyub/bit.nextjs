@@ -141,7 +141,8 @@ const History = ({ history }: IHistory) => {
             실현손익 <span>Realized Profit</span>
           </dt>
           <dd>
-            {history.pnl > 0 ? '+' : ''}{CryptoUtils.getPriceText(history.pnl)}
+            {history.pnl > 0 ? '+' : ''}
+            {CryptoUtils.getPriceText(history.pnl)}
             {CRYPTO_WALLET_UNIT}
           </dd>
         </S.OrderItem>

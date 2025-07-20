@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
 const localeStringOption: Intl.NumberFormatOptions = {
   minimumFractionDigits: 0,
   maximumFractionDigits: 8,
-}
+};
 
 interface NumberInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   value: number;
@@ -25,7 +25,7 @@ export function NumberInput({ value, setValue, min, max, ...props }: NumberInput
 
   useEffect(() => {
     cursorUpdateRef.current();
-  }, [internalValue])
+  }, [internalValue]);
 
   const handleValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const raw = e.target.value.replace(/,/g, '');
@@ -36,23 +36,21 @@ export function NumberInput({ value, setValue, min, max, ...props }: NumberInput
       setInternalValue('');
       return;
     }
-    
+
     if (min !== undefined && value < min) value = min;
     if (max !== undefined && value > max) value = max;
-    
+
     setValue(value);
     const formatted = value.toLocaleString(undefined, localeStringOption);
     setInternalValue(formatted);
-    
+
     // 커서 업데이트
     const inputCursor = e.target.selectionStart ?? raw.length;
-    const onlyNumberCursor = e.target.value
-      .slice(0, inputCursor)
-      .replace(/[^\d]/g, '').length; // 콤마를 제외한 현재 커서 위치
+    const onlyNumberCursor = e.target.value.slice(0, inputCursor).replace(/[^\d]/g, '').length; // 콤마를 제외한 현재 커서 위치
 
     cursorUpdateRef.current = () => {
       if (!inputRef.current) return;
-    
+
       let numberCount = 0;
       let newCursor = 0;
 
@@ -70,19 +68,10 @@ export function NumberInput({ value, setValue, min, max, ...props }: NumberInput
     // internalValue가 업데이트 되지 않아 렌더링 되지 않는 경우 직접 실행
     if (internalValue === formatted) {
       setTimeout(() => {
-        cursorUpdateRef.current()
+        cursorUpdateRef.current();
       }, 0);
     }
   };
 
-  return (
-    <input
-      ref={inputRef}
-      value={internalValue}
-      onChange={handleValue}
-      min={min}
-      max={max}
-      {...props}
-    />
-  )
+  return <input ref={inputRef} value={internalValue} onChange={handleValue} min={min} max={max} {...props} />;
 }

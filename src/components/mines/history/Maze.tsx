@@ -12,9 +12,7 @@ export default function Maze({ room }: { room: MineRoom }) {
         <div className="left">
           <span className="nickname">{room.userName}</span>
           <div className="game-type">미로</div>
-          <div className={cn(['game-mode', { 'practice': room.isPractice }])}>
-            {room.isPractice ? '연습' : '실전'}
-          </div>
+          <div className={cn(['game-mode', { practice: room.isPractice }])}>{room.isPractice ? '연습' : '실전'}</div>
         </div>
         <span className="date">{CommonUtils.getDateShorten(room.updatedDate)}</span>
       </S.MineHistoryItemHeader>
@@ -26,5 +24,5 @@ export default function Maze({ room }: { room: MineRoom }) {
         </span>
       </S.MineHistoryItemBody>
     </S.MineHistoryItem>
-  )
+  );
 }

@@ -11,7 +11,7 @@ const SWIPE_DOWN_THRESHOLD = 75;
 
 const preventScroll = (e: Event) => {
   e.preventDefault();
-}
+};
 
 // 추후에 로그 메세지 같은거 넣기
 

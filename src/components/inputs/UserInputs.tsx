@@ -134,7 +134,7 @@ export const NumberInput: React.FC<NumberInputProps> = ({
     <InputContainer label={label} labelWidth={labelWidth} helpText={helpText}>
       <S.InputContainer>
         <S.InputBox $is_active={isInputFoucs} $is_error={!!isError} $disabled={props?.disabled}>
-          <CI.NumberInput 
+          <CI.NumberInput
             {...props}
             className={cn(['w-full bg-transparent', props?.className])}
             value={value}
@@ -151,10 +151,10 @@ export const NumberInput: React.FC<NumberInputProps> = ({
           {suffix && <S.Suffix>{suffix}</S.Suffix>}
           {isError && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
         </S.InputBox>
-      </S.InputContainer> 
+      </S.InputContainer>
     </InputContainer>
   );
-}
+};
 
 interface IBooleanInputProps extends InputBaseProps<boolean> {
   yesText: string;

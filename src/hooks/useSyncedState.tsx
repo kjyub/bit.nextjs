@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState } from 'react';
 
 export default function useSyncedState<T>(defaultValue: T) {
   const [state, setState] = useState<T>(defaultValue);
@@ -7,7 +7,7 @@ export default function useSyncedState<T>(defaultValue: T) {
   const updateValue = (value: T) => {
     ref.current = value;
     setState(value);
-  }
+  };
 
   return [state, updateValue, ref] as const;
 }

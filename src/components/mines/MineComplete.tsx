@@ -19,7 +19,7 @@ export default function MineComplete({ room, setRoom }: Props) {
     }
 
     setRoom(new MineRoom());
-  }
+  };
 
   return (
     <div className="absolute inset-0 z-50 flex flex-center w-full h-full rounded-2xl overflow-hidden backdrop-blur-sm bg-stone-900/30 duration-300">
@@ -36,7 +36,7 @@ export default function MineComplete({ room, setRoom }: Props) {
         ) : (
           <div className="flex flex-col w-48 gap-1">
             <span className="text-xs text-stone-100">기록에 저장할 이름을 바꾸시겠습니까?</span>
-            <input 
+            <input
               type="text"
               className="w-48 h-10 rounded-xl bg-stone-500/50 text-stone-100 border border-stone-500/50 px-2 text-sm"
               value={nickname}

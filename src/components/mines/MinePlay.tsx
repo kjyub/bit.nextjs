@@ -14,7 +14,7 @@ import HammerMain from './hammer/HammerMain';
 
 const preventScroll = (e: Event) => {
   e.preventDefault();
-}
+};
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -75,26 +75,29 @@ export default function MinePlay({ room, setRoom }: Props) {
     };
   }, [room]);
 
-  const handleComplete = useCallback(async (data?: object) => {
-    if (!timerRef.current) return;
+  const handleComplete = useCallback(
+    async (data?: object) => {
+      if (!timerRef.current) return;
 
-    clearInterval(timerRef.current);
-    timerRef.current = null;
+      clearInterval(timerRef.current);
+      timerRef.current = null;
 
-    const gameData = {
-      play_time: time,
-      ...data,
-    }
+      const gameData = {
+        play_time: time,
+        ...data,
+      };
 
-    const response = await MineApi.updateMineRoom(room.id, gameData);
-    if (response.id) {
-      setIsComplete(true);
-      setRoom(response);
-    } else {
-      createToastMessage('오류가 발생했습니다. 다시 시도해주세요.');
-      setRoom(new MineRoom());
-    }
-  }, [time]);
+      const response = await MineApi.updateMineRoom(room.id, gameData);
+      if (response.id) {
+        setIsComplete(true);
+        setRoom(response);
+      } else {
+        createToastMessage('오류가 발생했습니다. 다시 시도해주세요.');
+        setRoom(new MineRoom());
+      }
+    },
+    [time],
+  );
 
   return (
     <MineContext.Provider value={{ round, setRound, time, setTime, onComplete: handleComplete }}>

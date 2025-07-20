@@ -328,7 +328,7 @@ export const NumberInput = ({
   return (
     <S.InputBox className={`justify-between h-8 space-x-2 ${className}`}>
       <span className="font-light text-sm text-slate-400/80 text-nowrap select-none">{label}</span>
-      <CI.NumberInput 
+      <CI.NumberInput
         className="input text-right w-full"
         value={value}
         setValue={setValue}
@@ -336,7 +336,8 @@ export const NumberInput = ({
         max={max}
         onFocus={() => {
           setFocus?.(true);
-        }} onBlur={() => {
+        }}
+        onBlur={() => {
           setFocus?.(false);
         }}
       />

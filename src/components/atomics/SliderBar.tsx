@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 
 const preventScroll = (e: Event) => {
   e.preventDefault();
-}
+};
 
 interface Props {
   min: number;
@@ -25,27 +25,27 @@ export default function SliderBar({ min, max, value, step = 1, onChange }: Props
     setInternalValue(newValue);
     setPercent(percent);
     onChange(newValue);
-  }
+  };
 
   const handleMouseMove = (e: MouseEvent) => {
     requestAnimationFrame(() => {
       if (!ref.current) return;
       handleSlide(e.clientX);
     });
-  }
+  };
 
   const handleTouchMove = (e: TouchEvent) => {
     requestAnimationFrame(() => {
       if (!ref.current) return;
       handleSlide(e.touches[0].clientX);
     });
-  }
+  };
 
   const handleStart = () => {
     setIsDragging(true);
     document.body.style.userSelect = 'none';
     document.body.style.cursor = 'grabbing';
-    
+
     if (window.matchMedia('(pointer: coarse)').matches) {
       document.body.style.overflow = 'hidden';
       document.body.addEventListener('touchmove', preventScroll, { passive: false });
@@ -86,7 +86,9 @@ export default function SliderBar({ min, max, value, step = 1, onChange }: Props
         />
       </div>
       <div className="absolute-center flex flex-center size-0" style={{ left: `${percent * 100}%` }}>
-        <div className={`absolute size-4 bg-slate-200 rounded-full transition-all duration-300 ${isDragging ? 'scale-125' : ''}`} />
+        <div
+          className={`absolute size-4 bg-slate-200 rounded-full transition-all duration-300 ${isDragging ? 'scale-125' : ''}`}
+        />
       </div>
     </div>
   );
