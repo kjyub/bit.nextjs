@@ -1,8 +1,7 @@
 // store.js
 import TradeGoApi from '@/apis/api/cryptos/TradeGoApi';
-import type { IUpbitCandle, IUpbitMarketTicker, IUpbitOrderBook } from '@/types/cryptos/CryptoInterfaces';
+import type { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
 import type { TradeSocketRequest } from '@/types/cryptos/CryptoTypes';
-import { v4 as uuid } from 'uuid';
 import { create } from 'zustand';
 
 const getInitData = async () => {
@@ -50,13 +49,9 @@ const useMarketPriceStore = create<IMarketPriceStore>((set, get) => ({
     };
 
     socket.onmessage = handleMessage;
-    socket.onopen = () => {
-      console.log('[거래:마켓] 연결 시작');
-    };
+    socket.onopen = () => {};
 
-    socket.onclose = () => {
-      console.log('[거래:마켓] 연결 종료');
-    };
+    socket.onclose = () => {};
 
     socket.onerror = (event) => {
       console.error('[거래:마켓] WebSocket error:', event);

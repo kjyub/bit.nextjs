@@ -25,7 +25,6 @@ export default function useSocketManager(connect: () => void, disconnect: () => 
     if (isVisible) {
       if (isPause.current) {
         disconnect();
-        console.log('[소켓] 연결 시작 useSocketManager');
         connect();
       }
     } else {

@@ -25,11 +25,9 @@ export default function useAlarmSocket() {
       };
 
       userAlarmSocket.onopen = () => {
-        console.log('[알람] 연결 시작');
       };
 
       userAlarmSocket.onclose = () => {
-        console.log('[알람] 연결 종료');
       };
 
       userAlarmSocket.onerror = (event) => {

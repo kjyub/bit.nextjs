@@ -28,13 +28,11 @@ export default function useTradeMarketUpbitSocket(
   const connectChart = useCallback(
     async (marketCode: string, timeType: CandleTimeType) => {
       if (socketRef.current) {
-        console.log('[업비트] 기존 연결 종료');
         socketRef.current.close();
       }
 
       const newSocket = new WebSocket('wss://api.upbit.com/websocket/v1');
       newSocket.binaryType = 'arraybuffer';
-      console.log('[업비트] 연결 시작');
       newSocket.onmessage = (event: MessageEvent) => {
         try {
           const dataString = new TextDecoder('utf-8').decode(event.data as any);
@@ -64,12 +62,10 @@ export default function useTradeMarketUpbitSocket(
           { type: 'candle.1s', codes: [marketCode] },
           { type: 'orderbook', codes: [marketCode] },
         ];
-        console.log('[업비트] ticket', requestData);
         newSocket.send(JSON.stringify(requestData));
       };
 
       newSocket.onclose = (event) => {
-        console.log('[업비트] 연결 종료', event, marketCode);
       };
 
       newSocket.onerror = (event) => {

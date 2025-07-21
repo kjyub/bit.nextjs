@@ -177,7 +177,6 @@ export default function CryptoMarketChartProvider({ marketCode, children }: ICry
       if (!marketCode) return;
 
       await getCandleData(timeType);
-      console.log('[차트] 초기화', marketCode, timeType);
       connectChart(marketCode, timeType);
     },
     [marketCode],
