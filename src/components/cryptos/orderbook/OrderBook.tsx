@@ -64,7 +64,7 @@ export default function OrderBook({ orderBook, marketCode, marketCurrent }: IOrd
             key={index}
             unit={unit}
             max={orderBook.total_ask_size}
-            className="[&_.trade-price]:text-position-long-strong [&_.percent]:bg-position-long-strong/50"
+            className="[&_.trade-price]:text-position-long-strong [&_.percent]:bg-position-long-strong/20"
           />
         ))}
 
@@ -75,7 +75,7 @@ export default function OrderBook({ orderBook, marketCode, marketCurrent }: IOrd
             key={index}
             unit={unit}
             max={orderBook.total_bid_size}
-            className="[&_.trade-price]:text-position-short-strong [&_.percent]:bg-position-short-strong/50"
+            className="[&_.trade-price]:text-position-short-strong [&_.percent]:bg-position-short-strong/20"
           />
         ))}
       </List>
@@ -141,7 +141,7 @@ const Price = ({ price }: { price: number }) => {
 
 const Row = ({ unit, max, className }: { unit: Unit; max: number; className: string }) => {
   const { setTradePrice } = useCryptoMarketTrade();
-
+  
   return (
     <S.Row
       className={cn([
@@ -151,21 +151,23 @@ const Row = ({ unit, max, className }: { unit: Unit; max: number; className: str
       onClick={() => setTradePrice(unit.price)}
     >
       {/* <span className="trade-price">{(unit.bid_price + unit.ask_price) / 2}</span> */}
-      <span className="trade-price">{CryptoUtils.getPriceText(unit.price)}</span>
-      <div className="flex max-sm:flex-col max-sm:w-[50px] sm:w-[100px]">
-        <span className="size font-light text-slate-200/90">
-          {unit.size >= 1000
-            ? CommonUtils.textFormat(CryptoUtils.getPriceRound(unit.size), TextFormats.KOREAN_PRICE_SIMPLE)
-            : CryptoUtils.getPriceRound(unit.size, 4)}
-        </span>
-        <span className="price font-light text-slate-200/90 max-sm:hidden">
-          {unit.size * unit.price >= 1000
-            ? CommonUtils.textFormat(CryptoUtils.getPriceRound(unit.size * unit.price), TextFormats.KOREAN_PRICE_SIMPLE)
-            : CryptoUtils.getPriceRound(unit.size * unit.price, 4)}
-        </span>
+      <div className="z-10 flex w-full">
+        <span className="trade-price">{CryptoUtils.getPriceText(unit.price)}</span>
+        <div className="flex max-sm:flex-col max-sm:w-[50px] sm:w-[100px]">
+          <span className="size font-light text-slate-200/90">
+            {unit.size >= 1000
+              ? CommonUtils.textFormat(CryptoUtils.getPriceRound(unit.size), TextFormats.KOREAN_PRICE_SIMPLE)
+              : CryptoUtils.getPriceRound(unit.size, 4)}
+          </span>
+          <span className="price font-light text-slate-200/90 max-sm:hidden">
+            {unit.size * unit.price >= 1000
+              ? CommonUtils.textFormat(CryptoUtils.getPriceRound(unit.size * unit.price), TextFormats.KOREAN_PRICE_SIMPLE)
+              : CryptoUtils.getPriceRound(unit.size * unit.price, 4)}
+          </span>
+        </div>
       </div>
 
-      <div className="absolute inset-0 -z-10 flex justify-end size-full">
+      <div className="absolute inset-0 z-0 flex justify-end size-full">
         <div className="percent h-full" style={{ width: `${(unit.size / max) * 100}%` }} />
       </div>
     </S.Row>
