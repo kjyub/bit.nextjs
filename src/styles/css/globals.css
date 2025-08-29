@@ -219,7 +219,17 @@
 
   .skeleton {
     color: transparent !important;
-    @apply after:content-['S'] rounded-lg bg-slate-700/50 animate-pulse;
+    animation: fade-in 0.5s ease-in, var(--animate-pulse);
+    @apply after:content-['S'] rounded-lg bg-slate-700/30;
+  }
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   }
 
   @keyframes shine {

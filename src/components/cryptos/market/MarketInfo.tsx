@@ -7,7 +7,6 @@ import type { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
 import CryptoMarket from '@/types/cryptos/CryptoMarket';
 import { PriceChangeTypes } from '@/types/cryptos/CryptoTypes';
 import CryptoUtils from '@/utils/CryptoUtils';
-import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
 
 interface Props {

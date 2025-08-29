@@ -3,7 +3,7 @@ import * as S from '@/styles/CryptoMarketStyles';
 
 export default async function Loading() {
   return (
-    <div className="max-md:w-full md:w-156 p-4">
+    <div className="max-md:w-full md:w-156 p-4 [&>div]:p-4">
       <S.TitleLayout>
         <div className="flex flex-col gap-1">
           {/* 코인 이름 */}
@@ -16,7 +16,7 @@ export default async function Loading() {
 
           {/* 코인 가격 */}
           <S.MainPriceBox>
-            <div className="change skeleton w-84">변동률</div>
+            <div className="change skeleton w-84 h-8">변동률</div>
           </S.MainPriceBox>
         </div>
       </S.TitleLayout>
