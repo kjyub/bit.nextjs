@@ -6,14 +6,15 @@ const localeStringOption: Intl.NumberFormatOptions = {
 };
 
 interface NumberInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  value: number;
+  value?: number;
   setValue: (value: number) => void;
   min?: number;
   max?: number;
   suffix?: string;
+  blank?: boolean;
 }
-export function NumberInput({ value, setValue, min, max, ...props }: NumberInputProps) {
-  const [internalValue, setInternalValue] = useState<string>(String(value));
+export function NumberInput({ value, setValue, min, max, blank = false, ...props }: NumberInputProps) {
+  const [internalValue, setInternalValue] = useState<string>(String(value ?? ''));
   const inputRef = useRef<HTMLInputElement>(null);
   const cursorUpdateRef = useRef<() => void>(() => {}); // 커서 위치 업데이트 함수
 
@@ -29,6 +30,19 @@ export function NumberInput({ value, setValue, min, max, ...props }: NumberInput
 
   const handleValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const raw = e.target.value.replace(/,/g, '');
+    if (blank && raw === '') {
+      setValue(0);
+      setInternalValue('');
+      return;
+    }
+
+    // 소수점 2개 이상 입력 시 소수점 제거
+    const dotCount = raw.split('.').length - 1;
+    if (dotCount > 1) {
+      raw.replace(/\.(?=.*\.)/g, '');
+      return;
+    }
+
     let value = Number(raw);
 
     if (Number.isNaN(value) || raw === '') {
@@ -47,6 +61,13 @@ export function NumberInput({ value, setValue, min, max, ...props }: NumberInput
     // 커서 업데이트
     const inputCursor = e.target.selectionStart ?? raw.length;
     const onlyNumberCursor = e.target.value.slice(0, inputCursor).replace(/[^\d]/g, '').length; // 콤마를 제외한 현재 커서 위치
+
+    // 소수점 입력 시 커서 업데이트 방지
+    if (raw[raw.length - 1] === '.' && inputCursor - 1 === formatted.length) {
+      setInternalValue(`${formatted}.`);
+      cursorUpdateRef.current = () => {};
+      return;
+    }
 
     cursorUpdateRef.current = () => {
       if (!inputRef.current) return;
