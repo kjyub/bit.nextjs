@@ -4,7 +4,7 @@ import { DEFAULT_MARKET_CODE } from '@/constants/CryptoConsts';
 import { useIsScrollUp } from '@/hooks/useIsScrollUp';
 import { useUser } from '@/hooks/useUser';
 import * as NS from '@/styles/MobileGNBStyles';
-import CommonUtils from '@/utils/CommonUtils';
+import BrowserUtils from '@/utils/BrowserUtils';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import MobileMenu from './control-panel/MobileMenu';
@@ -48,18 +48,18 @@ export default function MobileGNB() {
   return (
     <NS.Layout $is_show={!isHide}>
       <div className="grid grid-cols-5 w-full h-full">
-        <NS.LinkButton href="/" className={CommonUtils.isPathActive(pathname, '/') ? 'active' : ''}>
+        <NS.LinkButton href="/" className={BrowserUtils.isPathActive(pathname, '/') ? 'active' : ''}>
           <i className="fa-solid fa-house"></i>
           <span>홈</span>
         </NS.LinkButton>
         <NS.LinkButton
           href={isAuth ? '/crypto' : `/crypto/${DEFAULT_MARKET_CODE}`}
-          className={CommonUtils.isPathActive(pathname, '/crypto') ? 'active' : ''}
+          className={BrowserUtils.isPathActive(pathname, '/crypto') ? 'active' : ''}
         >
           <i className="fa-solid fa-coins"></i>
           <span>거래소</span>
         </NS.LinkButton>
-        <NS.LinkButton href="/mine" className={CommonUtils.isPathActive(pathname, '/mine') ? 'active' : ''}>
+        <NS.LinkButton href="/mine" className={BrowserUtils.isPathActive(pathname, '/mine') ? 'active' : ''}>
           <i className="fa-solid fa-hammer"></i>
           <span>지하노역장</span>
         </NS.LinkButton>
@@ -78,7 +78,7 @@ export default function MobileGNB() {
             </NS.LinkButton>
           ) : (
             // 비회원
-            <NS.LinkButton href="/auth" className={CommonUtils.isPathActive(pathname, '/auth') ? 'active' : ''}>
+            <NS.LinkButton href="/auth" className={BrowserUtils.isPathActive(pathname, '/auth') ? 'active' : ''}>
               <i className="fa-solid fa-right-to-bracket"></i>
               <span>로그인</span>
             </NS.LinkButton>

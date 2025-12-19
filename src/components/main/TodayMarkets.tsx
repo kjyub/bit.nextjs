@@ -3,7 +3,7 @@ import { TextFormats } from '@/types/CommonTypes';
 import type { IUpbitMarketTicker } from '@/types/cryptos/CryptoInterfaces';
 import CryptoMarket from '@/types/cryptos/CryptoMarket';
 import { type PriceChangeType, PriceChangeTypes } from '@/types/cryptos/CryptoTypes';
-import CommonUtils from '@/utils/CommonUtils';
+import FormatUtils from '@/utils/FormatUtils';
 import CryptoUtils from '@/utils/CryptoUtils';
 import { cn } from '@/utils/StyleUtils';
 import Link from 'next/link';
@@ -110,7 +110,7 @@ const MarketItemVolume = ({
         {CRYPTO_WALLET_UNIT}
       </p>
       <p className="sub">
-        {`거래대금: ${CommonUtils.textFormat(market.acc_trade_price_24h, TextFormats.KOREAN_PRICE_SIMPLE)}`}
+        {`거래대금: ${FormatUtils.textFormat(market.acc_trade_price_24h, TextFormats.KOREAN_PRICE_SIMPLE)}`}
       </p>
     </MarketItemLayout>
   );

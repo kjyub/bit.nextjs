@@ -2,7 +2,7 @@ import type { StackHorizonItem } from '@/components/atomics/StackHorizon';
 import StackHorizon from '@/components/atomics/StackHorizon';
 import useBreakpoint from '@/hooks/useBreakpoint';
 import type TradePosition from '@/types/cryptos/TradePosition';
-import TypeUtils from '@/utils/TypeUtils';
+import FormatUtils from '@/utils/FormatUtils';
 import { useMemo } from 'react';
 
 const VISIBLE_STACK_COUNT = 4;
@@ -81,7 +81,7 @@ export default function PositionStackContainer({ positions, balance, isLoading }
 
     const total = balance + positions.reduce((acc, position) => acc + position.marginPrice, 0);
     const items: StackHorizonItem[] = positions.map((position, index) => ({
-      content: `${position.market.code.split('-')[1]} ${TypeUtils.percent(position.marginPrice / total)}`,
+      content: `${position.market.code.split('-')[1]} ${FormatUtils.percent(position.marginPrice / total)}`,
       ratio: (position.marginPrice / total) * 100,
       widthRatio: (position.marginPrice / total) * 100,
       color: getColor(index),
@@ -89,7 +89,7 @@ export default function PositionStackContainer({ positions, balance, isLoading }
 
     const walletRatio = balance === 0 || total === 0 ? 1 : balance / total;
     items.push({
-      content: `내 지갑 ${TypeUtils.percent(walletRatio)}`,
+      content: `내 지갑 ${FormatUtils.percent(walletRatio)}`,
       ratio: 100 - items.reduce((acc, item) => acc + item.ratio, 0),
       widthRatio: 100 - items.reduce((acc, item) => acc + item.ratio, 0),
       color: '#90a1b955',

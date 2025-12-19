@@ -8,7 +8,7 @@ import useUserInfoStore from '@/store/useUserInfo';
 import * as S from '@/styles/CryptoWalletStyles';
 import { TextFormats } from '@/types/CommonTypes';
 import { type TransferType, TransferTypes } from '@/types/cryptos/CryptoTypes';
-import CommonUtils from '@/utils/CommonUtils';
+import FormatUtils from '@/utils/FormatUtils';
 import { useEffect, useMemo, useState } from 'react';
 import CryptoTransferModal from '../CryptoTransferModal';
 
@@ -78,7 +78,7 @@ export default function AssetManager() {
           <div className="content">
             <div className="label">총 잔액</div>
             <div className={`value ${isLoading ? 'skeleton w-24' : ''}`}>
-              {CommonUtils.textFormat(cash, TextFormats.NUMBER)}
+              {FormatUtils.textFormat(cash, TextFormats.NUMBER)}
               {CASH_UNIT}
             </div>
           </div>
@@ -103,21 +103,21 @@ export default function AssetManager() {
           <div className="content">
             <div className="label">지갑 총액</div>
             <div className={`value ${isLoading ? 'skeleton w-24' : ''}`}>
-              {CommonUtils.textFormat(Math.floor(balance), TextFormats.NUMBER)}
+              {FormatUtils.textFormat(Math.floor(balance), TextFormats.NUMBER)}
               {CRYPTO_WALLET_UNIT}
             </div>
           </div>
           <div className="content">
             <div className="label">사용 중</div>
             <div className={`value ${isLoading ? 'skeleton w-24' : ''}`}>
-              {CommonUtils.textFormat(Math.floor(locked), TextFormats.NUMBER)}
+              {FormatUtils.textFormat(Math.floor(locked), TextFormats.NUMBER)}
               {CRYPTO_WALLET_UNIT}
             </div>
           </div>
           <div className="content">
             <div className="label">사용 가능</div>
             <div className={`value ${isLoading ? 'skeleton w-24' : ''}`}>
-              {CommonUtils.textFormat(Math.floor(availableBalance), TextFormats.NUMBER)}
+              {FormatUtils.textFormat(Math.floor(availableBalance), TextFormats.NUMBER)}
               {CRYPTO_WALLET_UNIT}
             </div>
           </div>

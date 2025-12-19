@@ -1,5 +1,5 @@
 import { cn } from '@/utils/StyleUtils';
-import TypeUtils from '@/utils/TypeUtils';
+import NumberUtils from '@/utils/NumberUtils';
 
 interface Props {
   ratio: number;
@@ -72,7 +72,7 @@ export default function Guage({ ratio, title, helpText, color, size = 120, isMax
         <span
           className="font-bold text-white"
           style={{ fontSize: `${size / 5}px`, lineHeight: `${size / 5}px` }}
-        >{`${isMaxLimit ? percentage : TypeUtils.round(ratio * 100)}%`}</span>
+        >{`${isMaxLimit ? percentage : NumberUtils.roundDecimal(ratio * 100)}%`}</span>
         <span className="font-medium text-gray-400" style={{ fontSize: `${size / 8}px`, lineHeight: `${size / 8}px` }}>
           {title}
         </span>

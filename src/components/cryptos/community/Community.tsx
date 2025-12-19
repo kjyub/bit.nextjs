@@ -12,7 +12,8 @@ import Pagination from '@/types/api/pagination';
 import MarketCommunity from '@/types/cryptos/MarketCommunity';
 import type User from '@/types/users/User';
 import { UserTypes } from '@/types/users/UserTypes';
-import CommonUtils from '@/utils/CommonUtils';
+import DateUtils from '@/utils/DateUtils';
+import FormatUtils from '@/utils/FormatUtils';
 import FrontUtils from '@/utils/FrontUtils';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -74,7 +75,7 @@ export default function CryptoMarketCommunity({
         </div>
 
         <span className="text-nowrap text-sm text-slate-500">
-          {CommonUtils.textFormat(pagination.count, TextFormats.NUMBER)}개의 토론
+          {FormatUtils.textFormat(pagination.count, TextFormats.NUMBER)}개의 토론
         </span>
       </h1>
 
@@ -211,7 +212,7 @@ const Community = ({ user, community, selectedCommunity, setSelectedCommunity, h
         <div className="row">
           <h3 className="text-slate-300 flex-1 truncate max-md:text-sm">{community.title}</h3>
           <div className="flex items-center space-x-2">
-            <span className="text-xs text-slate-500">{CommonUtils.getDateShorten(community.createdDate)}</span>
+            <span className="text-xs text-slate-500">{DateUtils.getDateShorten(community.createdDate)}</span>
             {isMaster && (
               <>
                 <CS.ItemControlButton onClick={handleEdit}>

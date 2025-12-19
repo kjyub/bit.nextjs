@@ -3,7 +3,7 @@ import type CryptoFlex from '@/types/cryptos/CryptoFlex';
 import { PositionTypes } from '@/types/cryptos/CryptoTypes';
 import CryptoUtils from '@/utils/CryptoUtils';
 import { cn } from '@/utils/StyleUtils';
-import TypeUtils from '@/utils/TypeUtils';
+import FormatUtils from '@/utils/FormatUtils';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 import tw from 'tailwind-styled-components';
@@ -41,7 +41,7 @@ export default function FlexItem({ flex }: Props) {
           ])}
         >
           <p className={cn(['flex items-center max-sm:text-xl sm:text-2xl font-semibold'])}>
-            <span>{(pnlRatio > 0 ? '+' : '') + TypeUtils.percent(pnlRatio, 2)}</span>
+            <span>{(pnlRatio > 0 ? '+' : '') + FormatUtils.percent(pnlRatio, 2)}</span>
           </p>
 
           <p className={cn(['flex items-center max-sm:text-sm'])}>

@@ -23,9 +23,8 @@ import {
   TradeTypes,
 } from '@/types/cryptos/CryptoTypes';
 import type User from '@/types/users/User';
-import CommonUtils from '@/utils/CommonUtils';
 import CryptoUtils from '@/utils/CryptoUtils';
-import TypeUtils from '@/utils/TypeUtils';
+import FormatUtils from '@/utils/FormatUtils';
 import { useEffect, useState } from 'react';
 
 const R = 0.005; // 유지 증거금률
@@ -240,7 +239,7 @@ export default function CryptoMarketTrade({
         )}
         <S.SummaryItem>
           <span className="label">수수료</span>
-          <span className="value">{TypeUtils.percent(fee, 3)}</span>
+          <span className="value">{FormatUtils.percent(fee, 3)}</span>
         </S.SummaryItem>
       </div>
 

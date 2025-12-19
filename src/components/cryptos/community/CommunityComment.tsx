@@ -6,7 +6,7 @@ import * as CS from '@/styles/CryptoMarketCommunityStyles';
 import type MarketCommunityComment from '@/types/cryptos/MarketCommunityComment';
 import type User from '@/types/users/User';
 import { UserTypes } from '@/types/users/UserTypes';
-import CommonUtils from '@/utils/CommonUtils';
+import DateUtils from '@/utils/DateUtils';
 import { useEffect, useRef, useState } from 'react';
 import CommunityCommentContent from './CommunityCommentContent';
 
@@ -128,7 +128,7 @@ export default function CommunityComment({ user, comment, handleComment }: IComm
 
         <div className="flex items-center space-x-2">
           <span className="max-md:text-[11px] md:text-xs text-slate-500">
-            {CommonUtils.getDateShorten(comment.createdDate)}
+            {DateUtils.getDateShorten(comment.createdDate)}
           </span>
           <CS.ItemControlButton
             $is_active={isShowReply}

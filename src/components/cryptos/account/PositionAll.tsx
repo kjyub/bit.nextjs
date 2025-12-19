@@ -4,9 +4,9 @@ import useMarketPriceStore from '@/store/useMarketPriceStore';
 import { TextFormats } from '@/types/CommonTypes';
 import { MarginModeTypes, PositionTypes, type PriceChangeType, PriceChangeTypes } from '@/types/cryptos/CryptoTypes';
 import type TradePosition from '@/types/cryptos/TradePosition';
-import CommonUtils from '@/utils/CommonUtils';
 import CryptoUtils from '@/utils/CryptoUtils';
-import TypeUtils from '@/utils/TypeUtils';
+import FormatUtils from '@/utils/FormatUtils';
+import NumberUtils from '@/utils/NumberUtils';
 import { type Dispatch, type SetStateAction, useEffect, useMemo, useState } from 'react';
 
 interface Values {
@@ -71,7 +71,7 @@ export default function PositionAll({ positions, balance, isLoading }: Props) {
         <div className="flex flex-col max-sm:w-full sm:gap-1">
           <span className="text-slate-300">전체 손익</span>
           <span className={`text-2xl font-bold price-color ${values.priceChange} ${isLoading ? 'skeleton w-24' : ''}`}>
-            {CommonUtils.textFormat(TypeUtils.round(values.pnl, 0), TextFormats.NUMBER)}
+            {FormatUtils.textFormat(NumberUtils.roundDecimal(values.pnl, 0), TextFormats.NUMBER)}
             {CRYPTO_WALLET_UNIT}
           </span>
         </div>
@@ -79,7 +79,7 @@ export default function PositionAll({ positions, balance, isLoading }: Props) {
         <div className="flex flex-col max-sm:w-full sm:gap-1">
           <span className="text-slate-300">전체 손익률</span>
           <span className={`text-2xl font-bold price-color ${values.priceChange} ${isLoading ? 'skeleton w-24' : ''}`}>
-            {TypeUtils.round(values.pnlRatio * 100, 2)}%
+            {NumberUtils.roundDecimal(values.pnlRatio * 100, 2)}%
           </span>
         </div>
       </div>

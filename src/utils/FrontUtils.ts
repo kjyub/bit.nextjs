@@ -15,7 +15,6 @@ namespace FrontUtils {
     }
 
     return link;
-    // router.push(link, { scroll: isScroll })
   }
   export function handleArrayParam(params: Record<string, any>, key: string, value: any): string {
     let stringValues: string = params[key] ?? '';

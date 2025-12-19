@@ -1,4 +1,4 @@
-import CommonUtils from './CommonUtils';
+import BrowserUtils from './BrowserUtils';
 
 namespace AuthUtils {
   export function parseJwt(token: string): Record<string, any> {
@@ -51,7 +51,7 @@ namespace AuthUtils {
     return expireDate.getTime() <= now.getTime();
   }
   export function authKakao(): void {
-    const baseUrl = CommonUtils.getBaseUrl();
+    const baseUrl = BrowserUtils.getBaseUrl();
     const kakaoRedirectUrl = `${baseUrl}/oauth/kakao/callback`;
     window.Kakao.Auth.authorize({
       redirectUri: kakaoRedirectUrl,

@@ -4,7 +4,7 @@ import UserApi from '@/apis/api/users/UserApi';
 import usePageScroll from '@/hooks/usePageScroll';
 import { useUser } from '@/hooks/useUser';
 import UserMessage from '@/types/users/UserMessage';
-import CommonUtils from '@/utils/CommonUtils';
+import DateUtils from '@/utils/DateUtils';
 import { cn } from '@/utils/StyleUtils';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -129,7 +129,7 @@ const MessageItem = ({
       onClick={onClose}
     >
       <div className="flex justify-between w-full">
-        <span className="text-xs text-slate-400">{CommonUtils.getDateShorten(message.createdDate)}</span>
+        <span className="text-xs text-slate-400">{DateUtils.getDateShorten(message.createdDate)}</span>
         <button
           className="text-sm text-slate-400 hover:text-slate-300"
           type="button"

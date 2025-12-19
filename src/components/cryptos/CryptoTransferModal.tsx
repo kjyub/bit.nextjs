@@ -7,8 +7,8 @@ import useUserInfoStore from '@/store/useUserInfo';
 import * as S from '@/styles/CryptoWalletStyles';
 import { TextFormats } from '@/types/CommonTypes';
 import { type TransferType, TransferTypes, WalletTransactionTypes } from '@/types/cryptos/CryptoTypes';
-import CommonUtils from '@/utils/CommonUtils';
-import TypeUtils from '@/utils/TypeUtils';
+import FormatUtils from '@/utils/FormatUtils';
+import NumberUtils from '@/utils/NumberUtils';
 import { useEffect, useMemo, useState } from 'react';
 import ModalLayout from '../atomics/ModalLayout';
 import { SlideInput } from '../inputs/TradeInputs';
@@ -79,7 +79,7 @@ export default function CryptoTransferModal({ defaultTransferType, close }: Cryp
   const handleSlideValue = (value: number) => {
     const max = transferType === TransferTypes.TO_ACCOUNT ? balance : cash;
     const _value = (value / 100) * max;
-    setValue(TypeUtils.round(_value, 0));
+    setValue(NumberUtils.roundDecimal(_value, 0));
   };
 
   const handleTransfer = async () => {
@@ -88,7 +88,7 @@ export default function CryptoTransferModal({ defaultTransferType, close }: Cryp
     const data = {
       transaction_type:
         transferType === TransferTypes.TO_ACCOUNT ? WalletTransactionTypes.WITHDRAW : WalletTransactionTypes.DEPOSIT,
-      amount: TypeUtils.round(value, 0),
+      amount: NumberUtils.roundDecimal(value, 0),
     };
 
     const response = await CryptoApi.transactionWallet(data);
@@ -147,7 +147,7 @@ export default function CryptoTransferModal({ defaultTransferType, close }: Cryp
           suffix={TransferSuffix[transferType]}
           errorMessage={errorMessage}
           min={0}
-          max={transferType === TransferTypes.TO_ACCOUNT ? TypeUtils.round(balance, 0) : TypeUtils.round(cash, 0)}
+          max={transferType === TransferTypes.TO_ACCOUNT ? NumberUtils.roundDecimal(balance, 0) : NumberUtils.roundDecimal(cash, 0)}
         />
         <SlideInput value={percentValue} setValue={handleSlideValue} min={0} max={100} step={1} mark={25} />
 
@@ -202,5 +202,5 @@ export default function CryptoTransferModal({ defaultTransferType, close }: Cryp
 }
 
 const priceText = (price: number) => {
-  return CommonUtils.textFormat(TypeUtils.round(price, 0), TextFormats.NUMBER);
+  return FormatUtils.textFormat(NumberUtils.roundDecimal(price, 0), TextFormats.NUMBER);
 };

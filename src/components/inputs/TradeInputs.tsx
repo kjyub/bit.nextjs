@@ -12,9 +12,9 @@ import {
   type TradeOrderType,
   TradeOrderTypes,
 } from '@/types/cryptos/CryptoTypes';
-import CommonUtils from '@/utils/CommonUtils';
 import { cn } from '@/utils/StyleUtils';
-import TypeUtils from '@/utils/TypeUtils';
+import FormatUtils from '@/utils/FormatUtils';
+import NumberUtils from '@/utils/NumberUtils';
 import type React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import SliderBar from '../atomics/SliderBar';
@@ -366,7 +366,7 @@ export const LimitSizeInput = ({ amount, setAmount, maxAmount }: LimitSizeInputP
         <div className="flex-1">
           <SlideInput value={amount} setValue={setAmount} min={0} max={maxAmount} step={step} />
         </div>
-        <span className="font-light text-xs text-slate-400/80 text-right w-6">{TypeUtils.percent(percent, 1)}</span>
+        <span className="font-light text-xs text-slate-400/80 text-right w-6">{FormatUtils.percent(percent, 1)}</span>
       </div>
     </div>
   );
@@ -413,7 +413,7 @@ export const MarketPriceInput = ({ targetPrice, setTargetPrice, maxSize }: Marke
         <div className="flex-1">
           <SlideInput value={targetPrice} setValue={setTargetPrice} min={0} max={maxSize} step={maxSize / 100} />
         </div>
-        <span className="font-light text-xs text-slate-400/80 text-right w-6">{TypeUtils.percent(percent, 1)}</span>
+        <span className="font-light text-xs text-slate-400/80 text-right w-6">{FormatUtils.percent(percent, 1)}</span>
       </div>
     </div>
   );
@@ -572,20 +572,20 @@ export const TradeSizeInput = ({
         {sizeUnitType === SizeUnitTypes.PRICE && (
           <>
             <span className="border-l-2 border-position-long-3" title="롱 포지션 크기">
-              {`${CommonUtils.textFormat(TypeUtils.round(size * (1 - fee), 4), TextFormats.KOREAN_PRICE)}${CRYPTO_WALLET_UNIT}`}
+              {`${FormatUtils.textFormat(NumberUtils.roundDecimal(size * (1 - fee), 4), TextFormats.KOREAN_PRICE)}${CRYPTO_WALLET_UNIT}`}
             </span>
             <span className="border-r-2 border-position-short-3" title="숏 포지션 크기">
-              {`${CommonUtils.textFormat(TypeUtils.round(size * (1 - fee), 4), TextFormats.KOREAN_PRICE)}${CRYPTO_WALLET_UNIT}`}
+              {`${FormatUtils.textFormat(NumberUtils.roundDecimal(size * (1 - fee), 4), TextFormats.KOREAN_PRICE)}${CRYPTO_WALLET_UNIT}`}
             </span>
           </>
         )}
         {sizeUnitType === SizeUnitTypes.QUANTITY && (
           <>
             <span className="border-l-2 border-position-long-3" title="롱 포지션 크기">
-              {`${CommonUtils.textFormat(TypeUtils.round((size * (1 - fee)) / price, 10), TextFormats.NUMBER)}${unit}`}
+              {`${FormatUtils.textFormat(NumberUtils.roundDecimal((size * (1 - fee)) / price, 10), TextFormats.NUMBER)}${unit}`}
             </span>
             <span className="border-r-2 border-position-short-3" title="숏 포지션 크기">
-              {`${CommonUtils.textFormat(TypeUtils.round((size * (1 - fee)) / price, 10), TextFormats.NUMBER)}${unit}`}
+              {`${FormatUtils.textFormat(NumberUtils.roundDecimal((size * (1 - fee)) / price, 10), TextFormats.NUMBER)}${unit}`}
             </span>
           </>
         )}
@@ -665,7 +665,7 @@ export const PositionCloseSizeInput = ({ label, value, setValue, max }: Position
             <SlideInput value={value} setValue={setValue} min={0} max={max} step={max / 100} mark={max / 4} />
           </div>
           <span className="font-light text-xs text-slate-400 text-right w-6 pr-1">
-            {TypeUtils.percent(value / max, 1)}
+            {FormatUtils.percent(value / max, 1)}
           </span>
         </div>
       )}

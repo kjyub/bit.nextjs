@@ -4,7 +4,7 @@ import { DEFAULT_MARKET_CODE } from '@/constants/CryptoConsts';
 import { useDetectClose } from '@/hooks/useDetectClose';
 import { useUser } from '@/hooks/useUser';
 import * as NS from '@/styles/NavigationStyles';
-import CommonUtils from '@/utils/CommonUtils';
+import BrowserUtils from '@/utils/BrowserUtils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
@@ -21,7 +21,7 @@ export default function Header() {
 
     return (
       <>
-        <Link href="/mypage" className={`btn ${CommonUtils.isPathActive(pathname, '/mypage') ? 'active' : ''}`}>
+        <Link href="/mypage" className={`btn ${BrowserUtils.isPathActive(pathname, '/mypage') ? 'active' : ''}`}>
           <i className="fa-solid fa-user"></i>
           <span>{user.nickname}님</span>
         </Link>
@@ -47,7 +47,7 @@ export default function Header() {
       <>
         <Link
           href="/auth"
-          className={`btn ${CommonUtils.isPathActive(pathname, '/auth') ? 'active' : ''} bg-slate-100/10 hover:!bg-slate-100/20 !text-slate-300/80`}
+          className={`btn ${BrowserUtils.isPathActive(pathname, '/auth') ? 'active' : ''} bg-slate-100/10 hover:!bg-slate-100/20 !text-slate-300/80`}
         >
           <span>로그인</span>
         </Link>
@@ -65,14 +65,14 @@ export default function Header() {
           </Link>
           <Link
             href={isAuth ? '/crypto' : `/crypto/${DEFAULT_MARKET_CODE}`}
-            className={`btn ${CommonUtils.isPathActive(pathname, '/crypto') ? 'active' : ''}`}
+            className={`btn ${BrowserUtils.isPathActive(pathname, '/crypto') ? 'active' : ''}`}
           >
             <span>코인 거래소</span>
           </Link>
-          <Link href="/mine" className={`btn ${CommonUtils.isPathActive(pathname, '/mine') ? 'active' : ''}`}>
+          <Link href="/mine" className={`btn ${BrowserUtils.isPathActive(pathname, '/mine') ? 'active' : ''}`}>
             <span>지하 노역장</span>
           </Link>
-          <Link href="/flex" className={`btn ${CommonUtils.isPathActive(pathname, '/flex') ? 'active' : ''}`}>
+          <Link href="/flex" className={`btn ${BrowserUtils.isPathActive(pathname, '/flex') ? 'active' : ''}`}>
             <span>수익 인증</span>
           </Link>
         </NS.Section>

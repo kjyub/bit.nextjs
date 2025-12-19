@@ -8,7 +8,7 @@ import * as S from '@/styles/CryptoMyTradeStyles';
 import { MarginModeTypeNames, PositionTypes } from '@/types/cryptos/CryptoTypes';
 import type TradePosition from '@/types/cryptos/TradePosition';
 import CryptoUtils from '@/utils/CryptoUtils';
-import TypeUtils from '@/utils/TypeUtils';
+import FormatUtils from '@/utils/FormatUtils';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import CryptoMyTradeFilter from './Filter';
@@ -168,7 +168,7 @@ const Position = ({ position }: IPosition) => {
           <dd className="!font-medium">
             {position.pnl > 0 ? '+' : ''}
             {CryptoUtils.getPriceText(position.pnl - position.totalFee)}
-            {CRYPTO_WALLET_UNIT}/{TypeUtils.percent(position.pnlRatio, 2)}
+            {CRYPTO_WALLET_UNIT}/{FormatUtils.percent(position.pnlRatio, 2)}
           </dd>
         </S.OrderItem>
         <S.OrderItem className={''}>
@@ -190,7 +190,7 @@ const Position = ({ position }: IPosition) => {
           <dd className="!font-medium">
             {position.pnl > 0 ? '+' : ''}
             {CryptoUtils.getPriceText(position.pnl - position.totalFee)}
-            {CRYPTO_WALLET_UNIT}/{TypeUtils.percent(position.pnlRatio, 2)}
+            {CRYPTO_WALLET_UNIT}/{FormatUtils.percent(position.pnlRatio, 2)}
           </dd>
         </S.OrderItem>
       </S.OrderBody>

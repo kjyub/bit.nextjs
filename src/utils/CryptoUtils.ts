@@ -1,7 +1,7 @@
 import { TextFormats } from '@/types/CommonTypes';
 import { type PositionType, PositionTypes, type PriceChangeType, PriceChangeTypes } from '@/types/cryptos/CryptoTypes';
-import CommonUtils from './CommonUtils';
-import TypeUtils from './TypeUtils';
+import FormatUtils from './FormatUtils';
+import NumberUtils from './NumberUtils';
 
 namespace CryptoUtils {
   // 유저 타입에따라 쓰기가 가능한 현황만 가져온다.
@@ -30,22 +30,22 @@ namespace CryptoUtils {
     }
   }
   export function getPriceRound(price: number, round = 0): number {
-    if (Math.abs(price) >= 1000) return TypeUtils.round(price, 0);
-    else if (Math.abs(price) >= 100) return TypeUtils.round(price, 1);
-    else if (Math.abs(price) >= 10) return TypeUtils.round(price, 2);
-    else if (Math.abs(price) >= 1) return TypeUtils.round(price, 3);
-    else if (Math.abs(price) > 0) return TypeUtils.round(price, round ? round : 8);
+    if (Math.abs(price) >= 1000) return NumberUtils.roundDecimal(price, 0);
+    else if (Math.abs(price) >= 100) return NumberUtils.roundDecimal(price, 1);
+    else if (Math.abs(price) >= 10) return NumberUtils.roundDecimal(price, 2);
+    else if (Math.abs(price) >= 1) return NumberUtils.roundDecimal(price, 3);
+    else if (Math.abs(price) > 0) return NumberUtils.roundDecimal(price, round ? round : 8);
     else if (Math.abs(price) === 0) return 0;
     else return price;
   }
   export function getPriceText(price: number): string {
-    return CommonUtils.textFormat(CryptoUtils.getPriceRound(price), TextFormats.NUMBER);
+    return FormatUtils.textFormat(CryptoUtils.getPriceRound(price), TextFormats.NUMBER);
   }
   export function getTradePriceText(price: number): string {
     if (price >= 1000000) {
-      return `${CommonUtils.textFormat((price / 1000000).toFixed(0), TextFormats.NUMBER)}백만`;
+      return `${FormatUtils.textFormat((price / 1000000).toFixed(0), TextFormats.NUMBER)}백만`;
     } else if (price >= 10000) {
-      return `${CommonUtils.textFormat((price / 10000).toFixed(0), TextFormats.NUMBER)}만`;
+      return `${FormatUtils.textFormat((price / 10000).toFixed(0), TextFormats.NUMBER)}만`;
     } else {
       return price.toString();
     }
@@ -55,11 +55,11 @@ namespace CryptoUtils {
 
     if (Math.abs(price) >= 100000) result = `${Math.round(price / 1000) * 1000}`;
     else if (Math.abs(price) >= 10000) result = `${Math.round(price / 100) * 100}`;
-    else if (Math.abs(price) >= 1000) result = `${TypeUtils.round(price, 0)}`;
-    else if (Math.abs(price) >= 100) result = `${TypeUtils.round(price, 1)}`;
-    else if (Math.abs(price) >= 1) result = `${TypeUtils.round(price, 3)}`;
-    else if (Math.abs(price) >= 0) result = `${TypeUtils.round(price, round ? round : 8)}`;
-    else result = `${TypeUtils.round(price, 4)}`;
+    else if (Math.abs(price) >= 1000) result = `${NumberUtils.roundDecimal(price, 0)}`;
+    else if (Math.abs(price) >= 100) result = `${NumberUtils.roundDecimal(price, 1)}`;
+    else if (Math.abs(price) >= 1) result = `${NumberUtils.roundDecimal(price, 3)}`;
+    else if (Math.abs(price) >= 0) result = `${NumberUtils.roundDecimal(price, round ? round : 8)}`;
+    else result = `${NumberUtils.roundDecimal(price, 4)}`;
 
     return Number(result);
   }

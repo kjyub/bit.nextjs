@@ -18,9 +18,9 @@ import {
   TradeTypes,
 } from '@/types/cryptos/CryptoTypes';
 import type TradePosition from '@/types/cryptos/TradePosition';
-import CommonUtils from '@/utils/CommonUtils';
+import FormatUtils from '@/utils/FormatUtils';
+import NumberUtils from '@/utils/NumberUtils';
 import CryptoUtils from '@/utils/CryptoUtils';
-import TypeUtils from '@/utils/TypeUtils';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import HeaderLink from './HeaderLink';
 import MyTradeBlank from './MyTradeBlank';
@@ -147,7 +147,7 @@ export const Position = ({ position, userBudget }: IPosition) => {
           </div>
 
           <div className="section">
-            <div className="info">{CommonUtils.round(position.averageLeverage, 2)}x</div>
+            <div className="info">{NumberUtils.round(position.averageLeverage, 2)}x</div>
             <div className="info">{MarginModeTypeNames[position.marginMode]}</div>
             {/* <button className="info" type="button">
               TP/SL
@@ -201,7 +201,7 @@ export const Position = ({ position, userBudget }: IPosition) => {
               {CRYPTO_WALLET_UNIT}
             </span>
             <span className="text-xs">
-              {CommonUtils.textFormat(TypeUtils.round(position.quantity, 8), TextFormats.NUMBER)}
+              {FormatUtils.textFormat(NumberUtils.roundDecimal(position.quantity, 8), TextFormats.NUMBER)}
               {position.market.unit}
             </span>
           </dd>
@@ -210,7 +210,7 @@ export const Position = ({ position, userBudget }: IPosition) => {
           <dt>
             마진 비율 <span>Margin Ratio</span>
           </dt>
-          <dd>{TypeUtils.round(marginRatio * 100, 2)}%</dd>
+          <dd>{NumberUtils.roundDecimal(marginRatio * 100, 2)}%</dd>
         </S.PositionItem>
         <S.PositionItem>
           <dt>
@@ -227,7 +227,7 @@ export const Position = ({ position, userBudget }: IPosition) => {
               {pnl > 0 ? '+' : ''}
               {CryptoUtils.getPriceText(pnl)}
             </span>
-            <span className="text-xs">{TypeUtils.round(pnlRatio * 100, 2)}%</span>
+            <span className="text-xs">{NumberUtils.roundDecimal(pnlRatio * 100, 2)}%</span>
           </dd>
         </S.PositionItem>
       </S.PositionBody>

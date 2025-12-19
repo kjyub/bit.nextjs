@@ -10,7 +10,7 @@ import { type LikeType, LikeTypes } from '@/types/common/CommonTypes';
 import MarketCommunity from '@/types/cryptos/MarketCommunity';
 import type MarketCommunityComment from '@/types/cryptos/MarketCommunityComment';
 import type User from '@/types/users/User';
-import CommonUtils from '@/utils/CommonUtils';
+import FormatUtils from '@/utils/FormatUtils';
 import { useEffect, useRef, useState } from 'react';
 import CommunityComment from './CommunityComment';
 
@@ -229,7 +229,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
 
       {/* 댓글 */}
       <CS.ItemCommentLayout>
-        <span className="comment-count">{CommonUtils.textFormat(itemCount, TextFormats.NUMBER)}개의 댓글</span>
+        <span className="comment-count">{FormatUtils.textFormat(itemCount, TextFormats.NUMBER)}개의 댓글</span>
         <div className="list">
           {comments.map((comment, index) => (
             <CommunityComment key={index} user={user} comment={comment} handleComment={handleComment} />

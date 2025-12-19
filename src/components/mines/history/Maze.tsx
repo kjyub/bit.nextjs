@@ -1,5 +1,6 @@
 import type MineRoom from '@/types/mines/MineRoom';
-import CommonUtils from '@/utils/CommonUtils';
+import DateUtils from '@/utils/DateUtils';
+import FormatUtils from '@/utils/FormatUtils';
 import { secondsToTime } from '../maze/utils';
 import { TextFormats } from '@/types/CommonTypes';
 import { MineHistoryStyles as S } from './styles';
@@ -14,10 +15,10 @@ export default function Maze({ room }: { room: MineRoom }) {
           <div className="game-type">미로</div>
           <div className={cn(['game-mode', { practice: room.isPractice }])}>{room.isPractice ? '연습' : '실전'}</div>
         </div>
-        <span className="date">{CommonUtils.getDateShorten(room.updatedDate)}</span>
+        <span className="date">{DateUtils.getDateShorten(room.updatedDate)}</span>
       </S.MineHistoryItemHeader>
       <S.MineHistoryItemBody>
-        <span className="reward">+{CommonUtils.textFormat(room.reward, TextFormats.NUMBER)}W</span>
+        <span className="reward">+{FormatUtils.textFormat(room.reward, TextFormats.NUMBER)}W</span>
         <span className="info">
           <i className="fa-solid fa-stopwatch text-sm mr-1"></i>
           {secondsToTime(room.playTime)}

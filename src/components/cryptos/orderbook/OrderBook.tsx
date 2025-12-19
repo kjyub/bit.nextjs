@@ -3,7 +3,7 @@ import useMarketPriceStore from '@/store/useMarketPriceStore';
 import { TextFormats } from '@/types/CommonTypes';
 import { type IUpbitMarketTicker, type IUpbitOrderBook, IUpbitOrderBookUnit } from '@/types/cryptos/CryptoInterfaces';
 import { type PriceChangeType, PriceChangeTypes } from '@/types/cryptos/CryptoTypes';
-import CommonUtils from '@/utils/CommonUtils';
+import FormatUtils from '@/utils/FormatUtils';
 import CryptoUtils from '@/utils/CryptoUtils';
 import { cn } from '@/utils/StyleUtils';
 import { useParams } from 'next/navigation';
@@ -156,12 +156,12 @@ const Row = ({ unit, max, className }: { unit: Unit; max: number; className: str
         <div className="flex max-sm:flex-col max-sm:w-[50px] sm:w-[100px]">
           <span className="size font-light text-slate-200/90">
             {unit.size >= 1000
-              ? CommonUtils.textFormat(CryptoUtils.getPriceRound(unit.size), TextFormats.KOREAN_PRICE_SIMPLE)
+              ? FormatUtils.textFormat(CryptoUtils.getPriceRound(unit.size), TextFormats.KOREAN_PRICE_SIMPLE)
               : CryptoUtils.getPriceRound(unit.size, 4)}
           </span>
           <span className="price font-light text-slate-200/90 max-sm:hidden">
             {unit.size * unit.price >= 1000
-              ? CommonUtils.textFormat(CryptoUtils.getPriceRound(unit.size * unit.price), TextFormats.KOREAN_PRICE_SIMPLE)
+              ? FormatUtils.textFormat(CryptoUtils.getPriceRound(unit.size * unit.price), TextFormats.KOREAN_PRICE_SIMPLE)
               : CryptoUtils.getPriceRound(unit.size * unit.price, 4)}
           </span>
         </div>

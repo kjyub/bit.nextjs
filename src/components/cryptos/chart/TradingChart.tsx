@@ -3,7 +3,7 @@
 import useBreakpoint from '@/hooks/useBreakpoint';
 import useUserInfoStore from '@/store/useUserInfo';
 import { TextFormats } from '@/types/CommonTypes';
-import CommonUtils from '@/utils/CommonUtils';
+import FormatUtils from '@/utils/FormatUtils';
 import CryptoUtils from '@/utils/CryptoUtils';
 import { cn } from '@/utils/StyleUtils';
 import {
@@ -81,7 +81,7 @@ const areaSeriesOptions: DeepPartial<AreaSeriesOptions> = {
     type: 'custom',
     minMove: 0.0000001,
     formatter: (price: number) => {
-      return CommonUtils.textFormat(CryptoUtils.getPriceUnit(price), TextFormats.NUMBER);
+      return FormatUtils.textFormat(CryptoUtils.getPriceUnit(price), TextFormats.NUMBER);
     },
   },
   crosshairMarkerVisible: false,
@@ -98,7 +98,7 @@ const candleSeriesOptions = () => ({
     type: 'custom' as const,
     minMove: 0.0000001,
     formatter: (price: number) => {
-      return CommonUtils.textFormat(CryptoUtils.getPriceUnit(price), TextFormats.NUMBER);
+      return FormatUtils.textFormat(CryptoUtils.getPriceUnit(price), TextFormats.NUMBER);
     },
   },
 });
