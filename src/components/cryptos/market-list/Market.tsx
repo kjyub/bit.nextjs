@@ -5,6 +5,7 @@ import * as S from '@/styles/CryptoMarketStyles';
 import type CryptoMarket from '@/types/cryptos/CryptoMarket';
 import { PriceChangeTypes } from '@/types/cryptos/CryptoTypes';
 import CryptoUtils from '@/utils/CryptoUtils';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { memo, useEffect, useMemo, useState } from 'react';
 
@@ -12,7 +13,7 @@ interface Props {
   market: CryptoMarket;
 }
 export default memo(function Market({ market }: Props) {
-  const { ref: clickScaleRef } = useClickScaleAnimation<HTMLAnchorElement>();
+  const { ref: clickScaleRef } = useClickScaleAnimation<HTMLDivElement>();
 
   const socketData = useMarketPriceStore((state) => state.marketDic[market.code]);
   const [isPriceChangeShow, setIsPriceChangeShow] = useState<boolean>(false);
@@ -42,38 +43,39 @@ export default memo(function Market({ market }: Props) {
   const changeRateText = !Number.isNaN(changeRate) ? `${(changeRate * 100).toFixed(2)}%` : '-';
 
   return (
-    <S.MarketListItem
-      ref={clickScaleRef}
-      href={path}
-      id={`market-list-${market.code}`}
-      className={`${
-        changeType === PriceChangeTypes.RISE ? 'rise' : changeType === PriceChangeTypes.FALL ? 'fall' : ''
-      } transition-transform`}
-      onClick={() => setIsShowMarketList(false)}
-    >
-      <div className="name">
-        <span className="korean">{market.koreanName}</span>
-        <span className="english">{market.code}</span>
-      </div>
-      <div className="price change-color">
-        <span className="price">
-          {/* <CountUp start={startPrice} end={price} duration={0.3} separator="," /> */}
-          {CryptoUtils.getPriceText(price)}
-        </span>
-        <span className="volume" title="거래대금 (24h)">
-          {CryptoUtils.getTradePriceText(tradePrice24)}
-        </span>
-      </div>
-      <div className="change change-color">
-        <span className="rate" title="전일 대비 변화액">
-          {changeRateText}
-        </span>
-        {isPriceChangeShow && (
-          <span className="price" title="전일 대비 변화율">
-            {CryptoUtils.getPriceText(changePrice)}
+    <Link href={path}>
+      <S.MarketListItem
+        ref={clickScaleRef}
+        id={`market-list-${market.code}`}
+        className={`${
+          changeType === PriceChangeTypes.RISE ? 'rise' : changeType === PriceChangeTypes.FALL ? 'fall' : ''
+        } transition-transform`}
+        onClick={() => setIsShowMarketList(false)}
+      >
+        <div className="name">
+          <span className="korean">{market.koreanName}</span>
+          <span className="english">{market.code}</span>
+        </div>
+        <div className="price change-color">
+          <span className="price">
+            {/* <CountUp start={startPrice} end={price} duration={0.3} separator="," /> */}
+            {CryptoUtils.getPriceText(price)}
           </span>
-        )}
-      </div>
-    </S.MarketListItem>
+          <span className="volume" title="거래대금 (24h)">
+            {CryptoUtils.getTradePriceText(tradePrice24)}
+          </span>
+        </div>
+        <div className="change change-color">
+          <span className="rate" title="전일 대비 변화액">
+            {changeRateText}
+          </span>
+          {isPriceChangeShow && (
+            <span className="price" title="전일 대비 변화율">
+              {CryptoUtils.getPriceText(changePrice)}
+            </span>
+          )}
+        </div>
+      </S.MarketListItem>
+    </Link>
   );
 });

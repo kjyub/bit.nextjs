@@ -97,7 +97,7 @@ export const MarketListBox = tw.div`
   [&>.list]:overflow-y-auto
 `;
 
-export const MarketListItem = tw(Link)`
+export const MarketListItem = tw.div`
   flex shrink-0 items-center w-full h-12 px-2
   rounded-md hover:bg-white/5 active:bg-white/7
   text-sm text-slate-200
