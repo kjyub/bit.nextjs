@@ -90,11 +90,6 @@ const History = ({ history }: IHistory) => {
 
         <div className="row">
           <div className="section">
-            <div className="max-sm:!hidden datetime">
-              <i className="fa-solid fa-clock"></i>
-              <span>{dayjs(history.createdDate).format('YYYY-MM-DD HH:mm:ss')}</span>
-            </div>
-
             <div className={`position ${history.positionType === PositionTypes.LONG ? 'long' : 'short'}`}>
               {history.positionType === PositionTypes.LONG ? 'LONG' : 'SHORT'}
             </div>
@@ -106,6 +101,11 @@ const History = ({ history }: IHistory) => {
           </div>
 
           <div className="section">
+            <div className="max-sm:!hidden datetime">
+              <i className="fa-solid fa-clock"></i>
+              <span>{dayjs(history.createdDate).format('YYYY-MM-DD HH:mm:ss')}</span>
+            </div>
+            
             <div className="info">{TradeOrderTypeNames[history.orderType]}</div>
           </div>
         </div>

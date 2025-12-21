@@ -6,7 +6,7 @@ export const Layout = tw.div`
   pb-[360px]
 
   [&>.title]:flex [&>.title]:justify-between [&>.title]:items-center [&>.title]:w-full [&>.title]:px-1
-  [&>.title]:text-2xl [&>.title]:text-slate-100 [&.title]:font-semibold
+  [&>.title]:text-2xl [&>.title]:text-surface-main-text [&.title]:font-semibold
   [&>.title>_i]:mr-2 [&>.title>_i]:text-lg
 `;
 

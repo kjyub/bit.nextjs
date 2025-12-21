@@ -46,6 +46,14 @@
 
   --breakpoint-xl: 1280px;
   --breakpoint-full: 1700px;
+
+  --color-surface-common-background: #ffffff0d; /* bg-white/5 */
+  --color-surface-common-border: #ffffff1a; /* bg-white/10 */
+  --color-surface-sub-background: #ffffff26; /* bg-white/15 */
+  --color-surface-sub-border: #ffffff2b; /* border-white/17 */
+  --color-surface-sub-text: #ffffffa0; /* text-white/60 */
+  --color-surface-main-text: #ffffffe0; /* text-white/80 */
+  --color-surface-chart-background: #33415566; /* bg-slate-700/40 */
 }
 
 @custom-variant mouse (@media screen and (pointer: fine));
@@ -80,9 +88,9 @@
     background: linear-gradient(
       188deg,
       rgb(3, 2, 30) 0%,
-      rgb(23, 23, 72) 40%,
-      rgb(33, 33, 86) 72%,
-      rgb(48, 81, 120) 100%
+      rgb(15, 18, 55) 40%,
+      rgb(20, 28, 70) 72%,
+      rgb(30, 55, 95) 100%
     );
 
     min-height: 100dvh;
@@ -400,7 +408,7 @@
   }
 
   .price-color {
-    @apply text-slate-400;
+    @apply text-surface-main-text;
 
     &.rise {
       @apply text-position-long-3;
@@ -411,13 +419,16 @@
   }
 
   .common-panel {
-    @apply rounded-2xl bg-slate-600/30 border border-slate-600/50;
+    @apply rounded-2xl bg-surface-common-background border border-surface-common-border;
     &.padding {
       @apply max-md:p-5 md:p-6;
     }
+    &.blur {
+      @apply backdrop-blur-2xl;
+    }
   }
   .modal-panel {
-    @apply bg-slate-800/50 backdrop-blur-2xl rounded-xl;
+    @apply bg-surface-common-background rounded-xl;
     &.padding {
       @apply max-md:p-5 md:p-6;
     }

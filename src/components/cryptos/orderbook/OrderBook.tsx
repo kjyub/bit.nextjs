@@ -9,6 +9,7 @@ import { cn } from '@/utils/StyleUtils';
 import { useParams } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as S from './OrderBookStyle';
+import { useClickScaleAnimation } from '@/hooks/useClickScaleAnimation';
 
 interface Unit {
   price: number;
@@ -107,6 +108,7 @@ const Price = ({ price }: { price: number }) => {
   const [oldPrice, setOldPrice] = useState<number>(price);
 
   const { setTradePrice } = useCryptoMarketTrade();
+  const { ref: clickScaleRef } = useClickScaleAnimation<HTMLDivElement>();
 
   useEffect(() => {
     setChangeType(CryptoUtils.getPriceChangeType(price, oldPrice));
@@ -115,6 +117,7 @@ const Price = ({ price }: { price: number }) => {
 
   return (
     <div
+      ref={clickScaleRef}
       className="flex items-center w-full py-2 gap-2 cursor-pointer active:bg-slate-100/10 select-none"
       onClick={() => setTradePrice(price)}
     >
@@ -141,9 +144,11 @@ const Price = ({ price }: { price: number }) => {
 
 const Row = ({ unit, max, className }: { unit: Unit; max: number; className: string }) => {
   const { setTradePrice } = useCryptoMarketTrade();
+  const { ref: clickScaleRef } = useClickScaleAnimation<HTMLButtonElement>();
   
   return (
     <S.Row
+      ref={clickScaleRef}
       className={cn([
         'relative py-1 text-xs mouse:hover:bg-slate-100/10 active:bg-slate-100/10 cursor-pointer',
         className,

@@ -1,3 +1,4 @@
+import { useClickScaleAnimation } from '@/hooks/useClickScaleAnimation';
 import { useCryptoUi } from '@/hooks/useCryptoUi';
 import useMarketPriceStore from '@/store/useMarketPriceStore';
 import * as S from '@/styles/CryptoMarketStyles';
@@ -11,6 +12,8 @@ interface Props {
   market: CryptoMarket;
 }
 export default memo(function Market({ market }: Props) {
+  const { ref: clickScaleRef } = useClickScaleAnimation<HTMLAnchorElement>();
+
   const socketData = useMarketPriceStore((state) => state.marketDic[market.code]);
   const [isPriceChangeShow, setIsPriceChangeShow] = useState<boolean>(false);
 
@@ -40,11 +43,12 @@ export default memo(function Market({ market }: Props) {
 
   return (
     <S.MarketListItem
+      ref={clickScaleRef}
       href={path}
       id={`market-list-${market.code}`}
       className={`${
         changeType === PriceChangeTypes.RISE ? 'rise' : changeType === PriceChangeTypes.FALL ? 'fall' : ''
-      }`}
+      } transition-transform`}
       onClick={() => setIsShowMarketList(false)}
     >
       <div className="name">

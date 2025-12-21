@@ -122,11 +122,6 @@ const Position = ({ position }: IPosition) => {
 
         <div className="row">
           <div className="section">
-            <div className="max-sm:!hidden datetime">
-              <i className="fa-solid fa-clock"></i>
-              <span>{dayjs(position.createdDate).format('YYYY-MM-DD HH:mm:ss')}</span>
-            </div>
-
             <div className={`position ${position.positionType === PositionTypes.LONG ? 'long' : 'short'}`}>
               {position.positionType === PositionTypes.LONG ? 'LONG' : 'SHORT'}
             </div>
@@ -138,6 +133,11 @@ const Position = ({ position }: IPosition) => {
           </div>
 
           <div className="section">
+            <div className="max-sm:!hidden datetime">
+              <i className="fa-solid fa-clock"></i>
+              <span>{dayjs(position.createdDate).format('YYYY-MM-DD HH:mm:ss')}</span>
+            </div>
+
             <div className="info">{MarginModeTypeNames[position.marginMode]}</div>
             <button type="button" className="info" onClick={handleFlex}>
               수익인증

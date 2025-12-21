@@ -126,7 +126,7 @@ export const OrderHeader = tw.div`
   [&_.price.rise]:text-position-long-strong [&_.price.fall]:text-position-short-strong
 
   [&_.info]:px-1 [&_.info]:py-0.5
-  [&_.info]:rounded-xs [&_.info]:bg-slate-600/50
+  [&_.info]:rounded-sm [&_.info]:bg-slate-600/50
   [&_.info]:text-xs [&_.info]:text-slate-400 [&_.info]:font-light
 
   [&_button.info]:px-1.5 [&_button.info]:py-0.5

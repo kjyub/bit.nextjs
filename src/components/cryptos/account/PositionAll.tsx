@@ -69,7 +69,7 @@ export default function PositionAll({ positions, balance, isLoading }: Props) {
       <div className="flex flex-col max-sm:w-full sm:w-56 gap-4">
         {/* 전체 손익 */}
         <div className="flex flex-col max-sm:w-full sm:gap-1">
-          <span className="text-slate-300">전체 손익</span>
+          <span className="text-surface-sub-text">전체 손익</span>
           <span className={`text-2xl font-bold price-color ${values.priceChange} ${isLoading ? 'skeleton w-24' : ''}`}>
             {FormatUtils.textFormat(NumberUtils.roundDecimal(values.pnl, 0), TextFormats.NUMBER)}
             {CRYPTO_WALLET_UNIT}
@@ -77,7 +77,7 @@ export default function PositionAll({ positions, balance, isLoading }: Props) {
         </div>
         {/* 전체 손익률 */}
         <div className="flex flex-col max-sm:w-full sm:gap-1">
-          <span className="text-slate-300">전체 손익률</span>
+          <span className="text-surface-sub-text">전체 손익률</span>
           <span className={`text-2xl font-bold price-color ${values.priceChange} ${isLoading ? 'skeleton w-24' : ''}`}>
             {NumberUtils.roundDecimal(values.pnlRatio * 100, 2)}%
           </span>

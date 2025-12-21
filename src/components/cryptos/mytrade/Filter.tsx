@@ -1,6 +1,7 @@
 'use client';
 
 import * as S from '@/styles/CryptoMyTradeStyles';
+import DateUtils from '@/utils/DateUtils';
 import dayjs from 'dayjs';
 import { useEffect, useMemo, useState } from 'react';
 
@@ -123,48 +124,110 @@ const Date = ({ date, setDate }: IDate) => {
   const [month, setMonth] = useState<string>('');
   const [day, setDay] = useState<string>('');
 
+  // 외부에서 날짜가 변경되면 로컬 state 업데이트
   useEffect(() => {
     if (!dayjs(date).isValid()) {
       return;
     }
 
-    setYear(date.split('-')[0]);
-    setMonth(date.split('-')[1]);
-    setDay(date.split('-')[2]);
+    const [y, m, d] = date.split('-');
+    setYear(y);
+    setMonth(m);
+    setDay(d);
   }, [date]);
 
-  const handleYear = (year: number) => {
-    if (!year || Number.isNaN(Number(year)) || Number(year) < 0 || Number(year) > 2100) return;
-
-    const _date = `${year}-${month}-${day}`;
-    if (dayjs(_date).isValid()) {
-      setDate(_date);
+  // 입력 중에는 숫자만 허용하고 자유롭게 입력
+  const handleYearChange = (value: string) => {
+    if (value === '' || /^\d+$/.test(value)) {
+      setYear(value);
     }
   };
-  const handleMonth = (month: number) => {
-    if (!month || Number.isNaN(Number(month)) || Number(month) < 0 || Number(month) > 12) return;
 
-    const _date = `${year}-${month}-${day}`;
-    if (dayjs(_date).isValid()) {
-      setDate(_date);
+  const handleMonthChange = (value: string) => {
+    if (value === '' || /^\d+$/.test(value)) {
+      setMonth(value);
     }
   };
-  const handleDay = (day: number) => {
-    if (!day || Number.isNaN(Number(day)) || Number(day) < 0 || Number(day) > 31) return;
 
-    const _date = `${year}-${month}-${day}`;
-    if (dayjs(_date).isValid()) {
-      setDate(_date);
+  const handleDayChange = (value: string) => {
+    if (value === '' || /^\d+$/.test(value)) {
+      setDay(value);
+    }
+  };
+
+  // blur 시점에 검증 및 보정
+  const handleBlur = () => {
+    if (!year || !month || !day) {
+      return;
+    }
+
+    let y = Number(year);
+    let m = Number(month);
+    let d = Number(day);
+
+    // 범위 보정
+    y = Math.max(1900, Math.min(2100, y));
+    m = Math.max(1, Math.min(12, m));
+
+    // 월별 최대 일수 확인 및 보정
+    const maxDay = DateUtils.getDaysInMonth(y, m);
+    d = Math.max(1, Math.min(maxDay, d));
+
+    // 최종 검증
+    if (DateUtils.isValidDate(y, m, d)) {
+      const formattedDate = `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+      
+      // 로컬 state 업데이트 (포맷팅된 값으로)
+      setYear(String(y));
+      setMonth(String(m).padStart(2, '0'));
+      setDay(String(d).padStart(2, '0'));
+      
+      // 부모 컴포넌트에 전달
+      setDate(formattedDate);
+    }
+  };
+
+  // Enter 키 입력 시에도 검증
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.currentTarget.blur();
     }
   };
 
   return (
     <S.FilterDateInputBox>
-      <input type="text" className="w-[28px]" value={year} onChange={(e) => handleYear(Number(e.target.value))} />
+      <input
+        type="text"
+        className="w-[28px]"
+        value={year}
+        onChange={(e) => handleYearChange(e.target.value)}
+        onBlur={handleBlur}
+        onKeyDown={handleKeyDown}
+        placeholder="YYYY"
+        maxLength={4}
+      />
       <span>-</span>
-      <input type="text" className="w-4" value={month} onChange={(e) => handleMonth(Number(e.target.value))} />
+      <input
+        type="text"
+        className="w-4"
+        value={month}
+        onChange={(e) => handleMonthChange(e.target.value)}
+        onBlur={handleBlur}
+        onKeyDown={handleKeyDown}
+        placeholder="MM"
+        maxLength={2}
+      />
       <span>-</span>
-      <input type="text" className="w-4" value={day} onChange={(e) => handleDay(Number(e.target.value))} />
+      <input
+        type="text"
+        className="w-4"
+        value={day}
+        onChange={(e) => handleDayChange(e.target.value)}
+        onBlur={handleBlur}
+        onKeyDown={handleKeyDown}
+        placeholder="DD"
+        maxLength={2}
+      />
     </S.FilterDateInputBox>
   );
 };

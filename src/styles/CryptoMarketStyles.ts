@@ -13,9 +13,9 @@ export const MainLayout = tw.div`
 `;
 // 코인 이름 및 가격 정보
 export const TitleLayout = tw.div<StyleProps>`
-  sticky max-md:top-0 top-14 z-30
-  flex max-md:flex-col max-md:justify-center md:justify-between md:items-center w-full max-md:h-22 md:h-32
-  border-b
+  sticky max-md:top-1 max-md:left-1 top-4 z-30
+  flex max-md:flex-col max-md:justify-center md:justify-between md:items-center max-md:w-[calc(100%-0.5rem)] w-full max-md:h-22 md:h-32
+  rounded-xl border
 
   ${({ $is_active }: StyleProps) => ($is_active ? 'border-slate-500/20 backdrop-blur-lg' : 'border-transparent')}
 
@@ -27,7 +27,7 @@ export const ChartAndTradeLayout = tw.div`
 `;
 const BoxLayout = tw.div`
   p-3
-  rounded-lg bg-slate-700/40
+  rounded-lg bg-surface-chart-background
 `;
 export const ChartLayout = tw(BoxLayout)`
   max-lg:hidden lg:flex flex-col flex-1 lg:h-full
@@ -60,11 +60,11 @@ export const CommunityLayout = tw.div`
 `;
 
 export const MarketListLayout = tw.div`
-  sticky top-14 z-0
+  sticky top-0 z-0
   flex flex-col max-sm:w-full sm:w-96 h-[calc(100dvh-144px)] max-md:p-2 space-y-4
   group-[.compact]/crypto:max-lg:p-3 group-[.compact]/crypto:lg:p-4 
   group-[.wide]/crypto:max-full:p-3 group-[.wide]/crypto:full:p-4 
-  group-[.compact]/crypto:lg:pt-8 group-[.wide]/crypto:full:pt-8
+  group-[.compact]/crypto:lg:pt-8 group-[.wide]/crypto:full:pt-4
 `;
 
 export const MarketListBox = tw.div`
@@ -99,7 +99,7 @@ export const MarketListBox = tw.div`
 
 export const MarketListItem = tw(Link)`
   flex shrink-0 items-center w-full h-12 px-2
-  rounded-md hover:bg-slate-700/30 active:bg-slate-700/30 
+  rounded-md hover:bg-white/5 active:bg-white/7
   text-sm text-slate-200
   transition-colors
 

@@ -20,7 +20,7 @@ export default function StackHorizon({ className, items, others }: Props) {
   return (
     <div
       className={cn([
-        'relative flex items-center w-full min-h-[34px] px-1 py-1.25 gap-1 rounded-full bg-slate-700/60',
+        'relative flex items-center w-full min-h-[34px] px-1 py-1.25 gap-1 rounded-full bg-surface-sub-background',
         className,
       ])}
     >
@@ -85,7 +85,7 @@ const StackHorizonItem = ({
     >
       <div className="@max-[26px]:hidden @min-[27px]:flex justify-center w-full h-full">
         <div
-          className="flex justify-center items-center h-full text-xs text-slate-200/80 border border-slate-500/30 rounded-full"
+          className="flex justify-center items-center h-full text-xs text-surface-sub-text border border-surface-sub-border rounded-full"
           style={{ width: 'calc(100% - 0.25rem)', backgroundColor: item.color }}
         >
           <div className="truncate">{children}</div>
@@ -109,9 +109,9 @@ const Tooltip = ({ children }: { children: React.ReactNode }) => {
   return (
     <div
       className={cn([
-        'flex flex-col items-center min-w-24 w-fit p-2 gap-2 rounded-xl bg-slate-400/30 backdrop-blur-md',
-        'text-xs text-slate-200/80',
-        'border border-slate-500/30',
+        'flex flex-col items-center min-w-24 w-fit p-2 gap-2 rounded-xl bg-white/15 backdrop-blur-md',
+        'text-xs text-white/80',
+        'border border-white/17',
       ])}
     >
       {children}

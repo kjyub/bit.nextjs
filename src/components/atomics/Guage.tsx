@@ -43,7 +43,7 @@ export default function Guage({ ratio, title, helpText, color, size = 120, isMax
         <title>{`${title}: ${percentage}%`}</title>
         {/* Background Arc */}
         <circle
-          className="text-gray-200 dark:text-gray-700"
+          className="text-surface-sub-background"
           strokeWidth={strokeWidth}
           stroke="currentColor"
           fill="transparent"
@@ -70,15 +70,15 @@ export default function Guage({ ratio, title, helpText, color, size = 120, isMax
       </svg>
       <div className="absolute z-0 flex flex-col items-center justify-center gap-1">
         <span
-          className="font-bold text-white"
+          className="font-bold text-surface-main-text"
           style={{ fontSize: `${size / 5}px`, lineHeight: `${size / 5}px` }}
         >{`${isMaxLimit ? percentage : NumberUtils.roundDecimal(ratio * 100)}%`}</span>
-        <span className="font-medium text-gray-400" style={{ fontSize: `${size / 8}px`, lineHeight: `${size / 8}px` }}>
+        <span className="font-medium text-surface-sub-text" style={{ fontSize: `${size / 8}px`, lineHeight: `${size / 8}px` }}>
           {title}
         </span>
         {helpText && (
           <span
-            className="font-medium text-gray-500"
+            className="font-medium text-surface-sub-text"
             style={{ fontSize: `${size / 10}px`, lineHeight: `${size / 10}px` }}
           >
             {helpText}

@@ -1,7 +1,6 @@
 'use client';
 
 import ModalContainer from '@/components/ModalContainer';
-import CommonButton from '@/components/atomics/buttons/CommonButton';
 import { CASH_UNIT, CRYPTO_WALLET_UNIT } from '@/constants/CryptoConsts';
 import useSystemMessageStore from '@/store/useSystemMessageStore';
 import useUserInfoStore from '@/store/useUserInfo';
@@ -11,6 +10,7 @@ import { type TransferType, TransferTypes } from '@/types/cryptos/CryptoTypes';
 import FormatUtils from '@/utils/FormatUtils';
 import { useEffect, useMemo, useState } from 'react';
 import CryptoTransferModal from '../CryptoTransferModal';
+import { Button } from '@/components/atomics/buttons/Button/Button';
 
 export default function AssetManager() {
   const [isTransferModalOpen, setTransferModalOpen] = useState<boolean>(false);
@@ -64,7 +64,8 @@ export default function AssetManager() {
               <i className="fa-solid fa-money-check"></i>
               <span>내 통장</span>
             </div>
-            <CommonButton
+            <Button
+              size='sm'
               onClick={() => {
                 handleTransferModal(TransferTypes.TO_ACCOUNT);
               }}
@@ -73,7 +74,7 @@ export default function AssetManager() {
               <span>거래 지갑</span>
               <i className="fa-solid fa-arrow-right"></i>
               <span>통장</span>
-            </CommonButton>
+            </Button>
           </div>
           <div className="content">
             <div className="label">총 잔액</div>
@@ -89,7 +90,8 @@ export default function AssetManager() {
               <i className="fa-brands fa-bitcoin"></i>
               <span>내 거래 지갑</span>
             </div>
-            <CommonButton
+            <Button
+              size='sm'
               onClick={() => {
                 handleTransferModal(TransferTypes.TO_WALLET);
               }}
@@ -98,7 +100,7 @@ export default function AssetManager() {
               <span>통장</span>
               <i className="fa-solid fa-arrow-right"></i>
               <span>거래 지갑</span>
-            </CommonButton>
+            </Button>
           </div>
           <div className="content">
             <div className="label">지갑 총액</div>

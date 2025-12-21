@@ -1,31 +1,18 @@
 import tw from 'tailwind-styled-components';
 
 const Button = tw.button`
-    px-3 py-1 
-    rounded-md bg-slate-500/50 hover:bg-slate-500/70
+    h-10 px-3 py-1 
+    rounded-xl bg-slate-500/50 hover:bg-slate-500/70
     text-sm text-slate-200 
     transition-colors
 `;
 
-interface CommonButtonProps {
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children?: React.ReactNode;
-  onClick?: () => void;
-  className?: string;
-  disabled?: boolean;
-  type?: 'button' | 'submit' | 'reset';
-  style?: React.CSSProperties;
 }
-export default function CommonButton({
-  children,
-  onClick,
-  className = '',
-  disabled = false,
-  type = 'button',
-  style = {},
-  ...props
-}: CommonButtonProps) {
+export default function CommonButton({ children, ...props }: Props) {
   return (
-    <Button type={type} onClick={onClick} className={`${className}`} disabled={disabled} style={style} {...props}>
+    <Button {...props}>
       {children}
     </Button>
   );

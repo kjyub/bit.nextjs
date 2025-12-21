@@ -5,18 +5,18 @@ export const Layout = tw.div`
   flex flex-col w-full space-y-1
 `;
 export const Label = tw.label`
-  text-sm text-slate-600 dark:text-slate-300
+  text-sm text-surface-sub-text
 `;
 export const HelpText = tw.label`
-  text-xs text-slate-500 dark:text-slate-400 font-light
+  text-xs text-surface-sub-text font-light
 `;
 
 export const InputColor = tw.div`
-  border-slate-600/50
-  bg-slate-600/30
-  text-slate-800 dark:text-slate-100
+  border-slate-600/40
+  bg-slate-700/30
+  text-slate-100
   [&>.value]:text-slate-100
-  disabled:bg-slate-600
+  disabled:bg-slate-700/50
   disabled:[&>.value]:text-slate-300
 `;
 
@@ -28,9 +28,9 @@ export const InputBox = tw(InputColor)<StyleProps>`
   flex items-center justify-between w-full h-full p-4
   rounded-lg border
 
-  ${({ $is_active }) => ($is_active ? 'border-indigo-500' : '')}
+  ${({ $is_active }) => ($is_active ? 'border-indigo-600' : '')}
   ${({ $is_error }) => ($is_error ? 'border-red-500' : '')}
-  ${({ $disabled }) => ($disabled ? 'bg-slate-600/10 text-slate-400!' : '')}
+  ${({ $disabled }) => ($disabled ? 'bg-slate-700/50 text-slate-300' : '')}
   duration-200
 `;
 export const Input = tw.input`

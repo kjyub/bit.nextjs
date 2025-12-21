@@ -12,6 +12,7 @@ import NumberUtils from '@/utils/NumberUtils';
 import { useEffect, useMemo, useState } from 'react';
 import ModalLayout from '../atomics/ModalLayout';
 import { SlideInput } from '../inputs/TradeInputs';
+import { Button } from '../atomics/buttons/Button/Button';
 
 const TransferSuffix = {
   [TransferTypes.TO_ACCOUNT]: CASH_UNIT,
@@ -188,14 +189,16 @@ export default function CryptoTransferModal({ defaultTransferType, close }: Cryp
           </S.TransferInfoList>
         )}
 
-        <S.TransferButton
+        <Button
+          size='lg'
+          variant='primary'
           onClick={() => {
             handleTransfer();
           }}
           disabled={!isValid}
         >
           이체하기
-        </S.TransferButton>
+        </Button>
       </div>
     </ModalLayout>
   );

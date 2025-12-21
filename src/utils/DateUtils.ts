@@ -45,6 +45,36 @@ namespace DateUtils {
   }
 
   /**
+   * 년, 월, 일이 유효한 날짜인지 확인합니다.
+   * @param year - 년도
+   * @param month - 월 (1-12)
+   * @param day - 일
+   * @returns 유효한 날짜이면 true
+   */
+  export function isValidDate(year: number, month: number, day: number): boolean {
+    if (year < 1900 || year > 2100) return false;
+    if (month < 1 || month > 12) return false;
+
+    const maxDay = getDaysInMonth(year, month);
+    if (day < 1 || day > maxDay) return false;
+
+    return true;
+  }
+
+  /**
+   * 입력된 값을 바탕으로 가능한 유효한 일자를 반환합니다.
+   * (월/일 범위를 벗어나면 최대값으로 조정)
+   */
+  export function getConstrainedDate(year: number, month: number, day: number): { y: number; m: number; d: number } {
+    const y = Math.min(Math.max(year, 1900), 2100);
+    const m = Math.min(Math.max(month, 1), 12);
+    const maxDay = getDaysInMonth(y, m);
+    const d = Math.min(Math.max(day, 1), maxDay);
+
+    return { y, m, d };
+  }
+
+  /**
    * 날짜를 상대적인 시간 표현으로 변환합니다.
    * @param date - 변환할 날짜 문자열
    * @returns 상대적 시간 문자열 (예: '5분 전', '2일 전')
@@ -101,4 +131,3 @@ namespace DateUtils {
 }
 
 export default DateUtils;
-

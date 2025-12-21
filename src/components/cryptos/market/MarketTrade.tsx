@@ -1,6 +1,7 @@
 'use client';
 
 import CryptoApi from '@/apis/api/cryptos/CryptoApi';
+import { Button } from '@/components/atomics/buttons/Button/Button';
 import { ErrorMessageForm } from '@/components/commons/SystemMessagePopup';
 import * as I from '@/components/inputs/TradeInputs';
 import { useCryptoMarketTrade } from '@/hooks/useCryptoMarketTrade';
@@ -244,20 +245,26 @@ export default function CryptoMarketTrade({
       </div>
 
       <div className="grid grid-cols-2 gap-2 w-full">
-        <S.TradeLongButton
+        <Button 
+          variant='primary'
+          size='lg'
           onClick={() => {
             handleTrade(PositionTypes.LONG);
           }}
+          className='bg-position-long-1 hover:bg-position-long-2 active:bg-position-long-3'
         >
           매수/롱
-        </S.TradeLongButton>
-        <S.TradeShortButton
+        </Button>
+        <Button
+          variant='primary'
+          size='lg'
           onClick={() => {
             handleTrade(PositionTypes.SHORT);
           }}
+          className='bg-position-short-1 hover:bg-position-short-2 active:bg-position-short-3'
         >
           매도/숏
-        </S.TradeShortButton>
+        </Button>
       </div>
     </S.TradeBox>
   );

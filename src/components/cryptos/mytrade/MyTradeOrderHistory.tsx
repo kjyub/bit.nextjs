@@ -90,11 +90,6 @@ const Order = ({ order }: IOrder) => {
 
         <div className="row">
           <div className="section">
-            <div className="max-sm:!hidden datetime">
-              <i className="fa-solid fa-clock"></i>
-              <span>{dayjs(order.createdDate).format('YYYY-MM-DD HH:mm:ss')}</span>
-            </div>
-
             <div className={`position ${order.positionType === PositionTypes.LONG ? 'long' : 'short'}`}>
               {order.positionType === PositionTypes.LONG ? 'LONG' : 'SHORT'}
             </div>
@@ -105,8 +100,13 @@ const Order = ({ order }: IOrder) => {
             </HeaderLink>
           </div>
 
-          <div className="section info">
-            <div className={`value ${order.isCancel ? 'text-slate-400!' : 'text-violet-500!'}`}>
+          <div className="section">
+            <div className="max-sm:!hidden datetime">
+              <i className="fa-solid fa-clock"></i>
+              <span>{dayjs(order.createdDate).format('YYYY-MM-DD HH:mm:ss')}</span>
+            </div>
+
+            <div className={`info value ${order.isCancel ? 'text-slate-400!' : 'text-violet-500!'}`}>
               {order.isCancel ? '취소됨' : '처리됨'}
             </div>
           </div>

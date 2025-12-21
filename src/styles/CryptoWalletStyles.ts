@@ -18,8 +18,8 @@ export const WalletBox = tw.div`
   [&>.header>.title]:space-x-2
   max-sm:[&>.header>.title]:text-lg sm:[&>.header>.title]:text-xl [&>.header>.title]:text-slate-300 [&>.header>.title]:font-medium
   [&>.content]:flex [&>.content]:justify-between [&>.content]:items-center [&>.content]:w-full
-  [&>.content>.label]:text-sm [&>.content>.label]:text-slate-300/70
-  [&>.content>.value]:text-base [&>.content>.value]:text-slate-100
+  [&>.content>.label]:text-sm [&>.content>.label]:text-surface-sub-text
+  [&>.content>.value]:text-base [&>.content>.value]:text-surface-main-text
 `;
 
 export const TransferTypeBox = tw.div`
@@ -29,7 +29,7 @@ export const TransferTypeBox = tw.div`
 
   *:duration-300
   [&>button]:z-20 [&>button]:w-1/2 [&>button]:h-full [&>button]:space-x-2
-  [&>button]:text-slate-400 [&>button.active]:text-slate-100
+  [&>button]:text-surface-sub-text [&>button.active]:text-surface-main-text
 
   [&>.thumb]:absolute [&>.thumb]:z-10 [&>.thumb]:top-0 [&>.thumb]:left-0 [&>.thumb.right]:left-1/2
   [&>.thumb]:w-1/2 [&>.thumb]:h-full
@@ -37,9 +37,9 @@ export const TransferTypeBox = tw.div`
 
   [&>.bg]:w-full [&>.bg]:h-full
   [&>.bg]:rounded-full [&>.bg]:bg-transparent
-  mouse:hover:[&>.bg]:bg-slate-700/50
+  mouse:hover:[&>.bg]:bg-surface-common-background
   mouse:hover:[&>.bg]:w-[calc(100%+0.5rem)] mouse:hover:[&>.bg]:h-[calc(100%+0.5rem)]
-  active:[&>.bg]:bg-slate-700/50
+  active:[&>.bg]:bg-surface-common-background
   active:[&>.bg]:w-[calc(100%+0.5rem)] active:[&>.bg]:h-[calc(100%+0.5rem)]
 `;
 
@@ -49,8 +49,8 @@ export const TransferInfoList = tw.div`
 export const TransferInfoBox = tw.div`
   flex justify-between items-center w-full
 
-  [&>.label]:text-sm [&>.label]:text-slate-300/70
-  [&>.value]:text-base [&>.value]:text-slate-300
+  [&>.label]:text-sm [&>.label]:text-surface-sub-text
+  [&>.value]:text-base [&>.value]:text-surface-main-text
 `;
 export const TransferButton = tw.button`
   max-sm:w-full sm:w-48 h-11 mx-auto

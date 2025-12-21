@@ -1,11 +1,7 @@
 import tw from 'tailwind-styled-components';
 
 export const Layout = tw.div`
-  sticky top-0 z-50
   max-md:hidden md:flex justify-center items-center w-full h-14 p-4
-  border-b border-slate-800
-  bg-slate-800
-  duration-300
 
   [&>.content]:flex [&>.content]:justify-between [&>.content]:items-center [&>.content]:w-full
   [&>.content]:max-w-(--breakpoint-2xl)
