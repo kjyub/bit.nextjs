@@ -102,6 +102,6 @@ export const TradeShortButton = tw(TradeButton)`
 
 export const SummaryItem = tw.div`
   flex justify-between items-center w-full
-  [&>.label]:text-xs [&>.label]:text-slate-500
-  [&>.value]:text-sm [&>.value]:text-slate-400
+  [&>.label]:text-xs [&>.label]:text-slate-400
+  [&>.value]:text-sm [&>.value]:text-slate-300
 `;

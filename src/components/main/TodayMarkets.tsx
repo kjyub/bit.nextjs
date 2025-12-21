@@ -38,7 +38,7 @@ export default async function TodayMarkets({ getMarketsPromise, getMarketAllProm
         <h3 className="text-xl md:text-2xl font-bold text-center text-slate-50">오늘의 종목</h3>
       </TodayMarketTitleWrapper>
 
-      <div className="grid sm:grid-cols-2 gap-4 [&>div]:p-4 [&>div]:bg-slate-500/10 [&>div]:rounded-xl">
+      <div className="grid sm:grid-cols-2 gap-4 [&>div]:p-4 [&>div]:bg-slate-500/20 [&>div]:rounded-xl">
         <div className="flex flex-col w-full gap-2">
           <h4 className="px-1 text-lg text-slate-300">
             <i className="fa-solid fa-chart-simple mr-1"></i>

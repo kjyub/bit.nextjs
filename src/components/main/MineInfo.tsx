@@ -24,7 +24,7 @@ export default function MineInfo() {
 
       <Link
         href="/mine"
-        className="relative flex flex-center md:aspect-square max-md:h-40 md:h-56 rounded-4xl md:bg-slate-600/10 touch:active:bg-slate-500/10 transition-colors select-none"
+        className="relative flex flex-center md:aspect-square max-md:h-40 md:h-56 rounded-4xl md:bg-slate-600/30 touch:active:bg-slate-500/20 transition-colors select-none"
       >
         <i className="fa-solid fa-hammer text-7xl text-slate-500 mouse:group-hover:rotate-20 group-active:rotate-20 mouse:group-hover:scale-y-90 group-active:scale-y-90 transition-transform duration-300"></i>
         <div

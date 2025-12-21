@@ -17,7 +17,7 @@ export default function Flex() {
       <Link
         href="/flex"
         className={cn([
-          'relative flex flex-center md:aspect-square max-md:h-40 md:h-56 rounded-4xl md:bg-slate-600/10 touch:active:bg-slate-500/10 transition-colors select-none',
+          'relative flex flex-center md:aspect-square max-md:h-40 md:h-56 rounded-4xl md:bg-slate-600/30 touch:active:bg-slate-500/20 transition-colors select-none',
           'transition-colors group select-none',
         ])}
       >

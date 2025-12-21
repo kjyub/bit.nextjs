@@ -79,10 +79,10 @@
     /* biome-ignore lint/suspicious/noShorthandPropertyOverrides: <explanation> */
     background: linear-gradient(
       188deg,
-      rgba(1, 0, 24, 1) 0%,
-      rgb(14, 14, 52) 40%,
-      rgb(25, 25, 71) 72%,
-      rgb(37, 67, 102) 100%
+      rgb(3, 2, 30) 0%,
+      rgb(23, 23, 72) 40%,
+      rgb(33, 33, 86) 72%,
+      rgb(48, 81, 120) 100%
     );
 
     min-height: 100dvh;
@@ -411,13 +411,13 @@
   }
 
   .common-panel {
-    @apply rounded-2xl bg-slate-800/20 border border-slate-600/50;
+    @apply rounded-2xl bg-slate-600/30 border border-slate-600/50;
     &.padding {
-      @apply max-md:p-5 md:p-8;
+      @apply max-md:p-5 md:p-6;
     }
   }
   .modal-panel {
-    @apply bg-slate-800/20 backdrop-blur-xl rounded-xl;
+    @apply bg-slate-800/50 backdrop-blur-2xl rounded-xl;
     &.padding {
       @apply max-md:p-5 md:p-6;
     }

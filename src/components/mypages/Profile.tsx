@@ -55,8 +55,7 @@ export default function Profile() {
         type="submit"
         className={cn([
           'w-full h-12 transition-all duration-300',
-          'rounded-lg bg-indigo-500/30 hover:bg-indigo-500/40',
-          'border border-indigo-500/40',
+          'rounded-lg bg-indigo-500/70 hover:bg-indigo-500/80 active:bg-indigo-500',
           'text-slate-200 font-semibold',
           isPending && 'animate-pulse cursor-not-allowed',
         ])}

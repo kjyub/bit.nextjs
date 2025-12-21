@@ -27,7 +27,7 @@ export const ChartAndTradeLayout = tw.div`
 `;
 const BoxLayout = tw.div`
   p-3
-  rounded-lg bg-slate-800/60
+  rounded-lg bg-slate-700/40
 `;
 export const ChartLayout = tw(BoxLayout)`
   max-lg:hidden lg:flex flex-col flex-1 lg:h-full
@@ -93,7 +93,7 @@ export const MarketListBox = tw.div`
 
   [&>.list]:flex [&>.list]:flex-col [&>.list]:w-full [&>.list]:h-full [&>.list]:space-y-1 [&>.list]:rounded-lg 
   group-[.compact]/crypto:lg:[&>.list]:p-2 group-[.wide]/crypto:full:[&>.list]:p-2
-  group-[.compact]/crypto:[&>.list]:lg:bg-slate-500/10 group-[.wide]/crypto:[&>.list]:full:bg-slate-500/10
+  group-[.compact]/crypto:[&>.list]:lg:bg-slate-500/20 group-[.wide]/crypto:[&>.list]:full:bg-slate-700/30
   [&>.list]:overflow-y-auto
 `;
 

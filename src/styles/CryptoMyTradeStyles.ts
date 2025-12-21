@@ -16,7 +16,7 @@ export const PageTabBar = tw.div`
 
 export const PageLayout = tw.div<StyleProps>`
   flex flex-col w-full h-full min-h-[12rem]
-  rounded-lg bg-slate-900/30
+  rounded-lg bg-black/20
 `;
 export const PageList = tw.div<StyleProps>`
   ${({ $is_active }) => ($is_active ? 'opacity-100' : 'opacity-50')}

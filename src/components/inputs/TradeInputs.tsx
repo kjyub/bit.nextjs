@@ -213,9 +213,9 @@ export const LeverageInput = ({ leverageRatio, setLeverageRatio, maxRatio = 75 }
   return (
     <div className="flex flex-col w-full space-y-2">
       <div className="flex justify-between items-center w-full h-9">
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-1">
           <S.Title>레버리지</S.Title>
-          <span className="max-sm:hidden font-light text-sm text-slate-500">{`1x ~ ${maxRatio}x`}</span>
+          <span className="max-sm:hidden font-light text-sm text-slate-400">{`1x ~ ${maxRatio}x`}</span>
         </div>
 
         <div className="flex items-center space-x-4">
@@ -556,7 +556,7 @@ export const TradeSizeInput = ({
 
       {/* 자산 비율 슬라이더 */}
       <div className="flex items-center pl-2 space-x-0">
-        <span className="font-light text-xs text-slate-400/80 w-12">자산 비율</span>
+        <span className="font-light text-xs text-slate-400 w-12">자산 비율</span>
         <div
           className="flex-1"
           onMouseDown={() => {

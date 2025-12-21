@@ -26,19 +26,16 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
 const Wrapper = ({ isOpen, children }: { isOpen: boolean; children: React.ReactNode }) => {
   return (
-    <div className="relative flex flex-center">
-      <div
-        className={cn([
-          'z-10 transition-all duration-200 will-change-transform [&>div]:backdrop-blur-none',
-          { 'opacity-0 scale-97': !isOpen },
-          { 'opacity-100 scale-100': isOpen },
-        ])}
-        onClick={(e) => e.stopPropagation()}
-        onTouchStart={(e) => e.stopPropagation()}
-      >
-        {children}
-      </div>
-      {isOpen && <div className="absolute z-0 w-[100%] h-[100%] backdrop-blur-xl rounded-xl"></div>}
+    <div
+      className={cn([
+        'z-10 transition-all duration-200 will-change-transform backdrop-blur-lg',
+        { 'opacity-0 translate-y-2': !isOpen },
+        { 'opacity-100': isOpen },
+      ])}
+      onClick={(e) => e.stopPropagation()}
+      onTouchStart={(e) => e.stopPropagation()}
+    >
+      {children}
     </div>
   );
 };
