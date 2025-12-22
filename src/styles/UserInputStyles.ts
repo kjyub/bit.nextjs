@@ -12,12 +12,12 @@ export const HelpText = tw.label`
 `;
 
 export const InputColor = tw.div`
-  border-slate-600/40
-  bg-slate-700/30
-  text-slate-100
-  [&>.value]:text-slate-100
-  disabled:bg-slate-700/50
-  disabled:[&>.value]:text-slate-300
+  border-surface-common-border
+  bg-surface-floating-background
+  text-surface-main-text
+  [&>.value]:text-surface-main-text
+  disabled:bg-black/30
+  disabled:[&>.value]:text-surface-sub-text
 `;
 
 export const InputContainer = tw.div`
@@ -30,7 +30,7 @@ export const InputBox = tw(InputColor)<StyleProps>`
 
   ${({ $is_active }) => ($is_active ? 'border-indigo-600' : '')}
   ${({ $is_error }) => ($is_error ? 'border-red-500' : '')}
-  ${({ $disabled }) => ($disabled ? 'bg-slate-700/50 text-slate-300' : '')}
+  ${({ $disabled }) => ($disabled ? 'bg-black/30 text-surface-sub-text' : '')}
   duration-200
 `;
 export const Input = tw.input`
@@ -38,14 +38,14 @@ export const Input = tw.input`
 `;
 
 export const Suffix = tw.span`
-  text-slate-400
+  text-surface-sub-text
 `;
 export const FeatureButton = tw.button`
   shrink-0
   flex flex-center h-full p-4
   rounded-lg border 
   border-indigo-500 text-indigo-500
-  disabled:border-slate-600 disabled:text-slate-600
+  disabled:border-surface-common-border disabled:text-surface-sub-text
 `;
 export const ErrorMessage = tw.span`
   absolute -bottom-5 right-0
@@ -68,9 +68,9 @@ export const BoolButton = tw(InputColor)`
     text-indigo-800 dark:text-indigo-100
     `
       : `
-    border-slate-200 dark:border-slate-600
-    bg-slate-100 dark:bg-slate-700
-    text-slate-800 dark:text-slate-100
+    border-surface-common-border dark:border-surface-common-border
+    bg-surface-sub-background dark:bg-surface-sub-background
+    text-surface-main-text dark:text-surface-main-text
     `}
 `;
 
@@ -83,6 +83,6 @@ export const OptionBox = tw(InputColor)`
   overflow-y-auto
 
   [&>li]:flex [&>li]:items-center [&>li]:shrink-0 [&>li]:px-2 [&>li]:py-1 
-  [&>li]:rounded-lg [&>li]:hover:bg-slate-200 dark:[&>li]:hover:bg-slate-600
-  [&>li]:text-slate-800 dark:[&>li]:text-slate-100
+  [&>li]:rounded-lg [&>li]:hover:bg-surface-common-background dark:[&>li]:hover:bg-surface-common-background
+  [&>li]:text-surface-main-text dark:[&>li]:text-surface-main-text
 `;

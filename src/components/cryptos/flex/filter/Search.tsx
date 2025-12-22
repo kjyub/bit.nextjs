@@ -71,11 +71,11 @@ export default function FlexSearch({ onSearch }: IFlexSearch) {
         <div
           className={cn([
             'z-10 flex items-center w-full px-3 py-2 space-x-2 transition-colors rounded-lg',
-            { 'bg-slate-500/20': isFocused },
+            { 'bg-surface-sub-background': isFocused },
           ])}
         >
           <input
-            className={'w-full bg-transparent text-sm text-slate-300 placeholder:text-slate-500'}
+            className={'w-full bg-transparent text-sm text-surface-main-text placeholder:text-surface-sub-text/70'}
             value={value}
             onChange={(e) => setValue(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && onSearch(value)}
@@ -85,7 +85,7 @@ export default function FlexSearch({ onSearch }: IFlexSearch) {
 
           <button
             className={cn([
-              'text-slate-400 hover:text-slate-300 text-[11px] rounded-full bg-slate-400/40',
+              'text-surface-sub-text hover:text-surface-main-text text-[11px] rounded-full bg-surface-sub-background',
               'flex items-center justify-center aspect-square h-3.5 duration-200',
               { 'opacity-0': value.length === 0 },
             ])}
@@ -95,7 +95,7 @@ export default function FlexSearch({ onSearch }: IFlexSearch) {
             <i className="fa-solid fa-xmark"></i>
           </button>
           <button
-            className={'text-slate-400 hover:text-slate-200 text-sm'}
+            className={'text-surface-sub-text hover:text-surface-main-text text-sm'}
             type="button"
             onClick={() => onSearch(value)}
           >
@@ -114,7 +114,7 @@ export default function FlexSearch({ onSearch }: IFlexSearch) {
         {/* 배경 */}
         <div
           className={cn([
-            'absolute z-0 top-0 inset-x-0 size-full rounded-xl max-md:border border-slate-500/20 layer1 backdrop-blur-lg',
+            'absolute z-0 top-0 inset-x-0 size-full rounded-xl max-md:border border-surface-common-border layer1 backdrop-blur-lg',
             'transition-all duration-300 ease-out transform-gpu pointer-events-none',
             {
               'layer1-1 w-[calc(100%+0.8rem)] h-[calc(100%+0.8rem)] translate-x-[-0.4rem] translate-y-[-0.4rem]':
@@ -133,10 +133,10 @@ const Item = ({
 }: { highlightedMarket: MarketWithHighlight; onSelect: (market: CryptoMarket) => void }) => {
   return (
     <div
-      className="flex justify-between items-center w-full px-3 py-2 gap-2 hover:bg-slate-500/20 rounded-lg"
+      className="flex justify-between items-center w-full px-3 py-2 gap-2 hover:bg-surface-common-background rounded-lg"
       onClick={() => onSelect(highlightedMarket.market)}
     >
-      <div className="text-sm text-slate-300">
+      <div className="text-sm text-surface-main-text">
         {highlightedMarket.koreanHighlights.map((part, index) => (
           <span
             key={index}
@@ -149,7 +149,7 @@ const Item = ({
           </span>
         ))}
       </div>
-      <div className="text-xs text-slate-400">
+      <div className="text-xs text-surface-sub-text">
         {highlightedMarket.codeHighlights.map((part, index) => (
           <span
             key={index}

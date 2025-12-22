@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 const IconClassName = cn([
   'absolute m-auto',
-  'text-5xl text-slate-500 -skew-6 mouse:group-hover:-skew-9 group-active:-skew-9 transition-transform duration-300',
+  'text-5xl text-surface-sub-text/70 -skew-6 mouse:group-hover:-skew-9 group-active:-skew-9 transition-transform duration-300',
 ]);
 
 export default function Flex() {
@@ -17,7 +17,7 @@ export default function Flex() {
       <Link
         href="/flex"
         className={cn([
-          'relative flex flex-center md:aspect-square max-md:h-40 md:h-56 rounded-4xl md:bg-slate-600/30 touch:active:bg-slate-500/20 transition-colors select-none',
+          'relative flex flex-center md:aspect-square max-md:h-40 md:h-56 rounded-4xl md:bg-surface-sub-background touch:active:bg-surface-common-background transition-colors select-none',
           'transition-colors group select-none',
         ])}
       >
@@ -36,8 +36,8 @@ export default function Flex() {
         ></i>
         <div
           className={cn([
-            'absolute max-md:bottom-4 md:bottom-10 inset-x-0 w-fit px-2 py-1 mx-auto rounded-full bg-slate-500/30',
-            'text-sm text-slate-300/70',
+            'absolute max-md:bottom-4 md:bottom-10 inset-x-0 w-fit px-2 py-1 mx-auto rounded-full bg-surface-sub-background',
+            'text-sm text-surface-main-text/70',
             'opacity-0 transition-all duration-300',
             'mouse:group-hover:opacity-100 mouse:group-hover:translate-y-2',
             'touch:group-active:opacity-100 touch:group-active:translate-y-2',
@@ -48,8 +48,8 @@ export default function Flex() {
       </Link>
 
       <div className="flex flex-col justify-center max-md:items-center flex-1 h-56 max-md:px-2 md:px-12 gap-2">
-        <p className="text-right text-2xl md:text-3xl font-bold text-slate-50">수익 인증</p>
-        <p className="text-right max-md:text-lg md:text-xl text-slate-200 max-md:text-center">내 거래를 자랑해보세요</p>
+        <p className="text-right text-2xl md:text-3xl font-bold text-surface-main-text">수익 인증</p>
+        <p className="text-right max-md:text-lg md:text-xl text-surface-main-text max-md:text-center">내 거래를 자랑해보세요</p>
       </div>
     </div>
   );

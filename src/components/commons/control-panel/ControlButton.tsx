@@ -10,8 +10,8 @@ export default function ControlButton({ className, children, ...props }: Props) 
       type="button"
       className={cn([
         'w-fit px-12 py-4 ml-auto',
-        'rounded-2xl bg-slate-300/10 active:bg-slate-400/20 hover:bg-slate-400/20',
-        'text-slate-200/80 border border-slate-500/50 transition-colors',
+        'rounded-2xl bg-surface-common-background active:bg-surface-common-background-active hover:bg-surface-common-background-active',
+        'text-surface-main-text/80 border border-surface-common-border transition-colors',
         className,
       ])}
       {...props}

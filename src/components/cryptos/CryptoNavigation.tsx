@@ -12,7 +12,7 @@ import tw from 'tailwind-styled-components';
 
 const Layout = tw.div<StyleProps>`
   max-md:top-0 md:top-0 z-40 
-  max-md:hidden md:flex w-full max-md:px-4 max-xl:px-2 border-b border-slate-600/50
+  max-md:hidden md:flex w-full max-md:px-4 max-xl:px-2 border-b border-surface-common-border
 `;
 
 const Section = tw(NS.Section)`
@@ -81,14 +81,14 @@ const MobileLayout = tw.div<StyleProps>`
 
 const MobileSection = tw.div`
   grid grid-cols-4 h-10 p-1
-  rounded-full bg-slate-400/30 backdrop-blur-lg
-  border border-slate-300/20
+  rounded-full bg-surface-floating-background backdrop-blur-lg
+  border border-surface-floating-border
 
   [&_.btn]:flex [&_.btn]:justify-center [&_.btn]:items-center [&_.btn]:px-1.5 [&_.btn]:py-1 [&_.btn]:space-x-1
   [&_.btn]:rounded-full [&_.btn]:hover:bg-white/10
   max-md:[&_.btn]:text-sm
-  [&_.btn]:text-slate-300/70 [&_.btn]:hover:text-slate-100 [&_.btn]:font-semibold
-  [&_.btn.active]:text-slate-100
+  [&_.btn]:text-surface-main-text/70 [&_.btn]:hover:text-surface-main-text [&_.btn]:font-semibold
+  [&_.btn.active]:text-surface-main-text
   [&_.btn]:transition-colors [&_.btn]:select-none
   [&_.btn>i]:text-xs
   [&>button]:ml-0

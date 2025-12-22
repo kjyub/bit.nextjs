@@ -1,11 +1,10 @@
-import CryptoClientLayout from '@/components/cryptos/CryptoClientLayout';
 import { CryptoMobileNavigation, CryptoNavigation } from '@/components/cryptos/CryptoNavigation';
 import CryptoMarketList from '@/components/cryptos/market-list/MarketList';
-import CryptoMarketListWrapper from '@/components/cryptos/market-list/MarketListWrapper';
+import MarketListLayout from '@/components/cryptos/market-list/MarketListLayout';
+import { getLayoutModeByPathname } from '@/constants/RouteConfig';
 import { CryptoProvider } from '@/store/providers/CryptoProvider';
-import * as S from '@/styles/CryptoMarketStyles';
 import * as MS from '@/styles/MainStyles';
-import { Suspense } from 'react';
+import { headers } from 'next/headers';
 
 export async function generateMetadata() {
   return {
@@ -13,26 +12,24 @@ export async function generateMetadata() {
   };
 }
 
-export default function CryptoLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function CryptoLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const headerList = await headers();
+  const pathname = headerList.get('x-pathname') || '';
+  const layoutMode = getLayoutModeByPathname(pathname);
+
   return (
-    <CryptoProvider>
-      <MS.PageLayout>
-        <CryptoClientLayout>
-          <Suspense>
-            <CryptoNavigation />
-            <CryptoMobileNavigation />
-          </Suspense>
+    <CryptoProvider defaultLayoutMode={layoutMode}>
+      <MS.PageLayout className="relative flex flex-col justify-center xl:w-fit mx-auto">
+        <CryptoNavigation />
+        <CryptoMobileNavigation />
 
-          <div className="flex justify-center w-full">
-            {children}
+        <div className="flex justify-center w-full">
+          {children}
 
-            <CryptoMarketListWrapper>
-              <S.MarketListLayout>
-                <CryptoMarketList />
-              </S.MarketListLayout>
-            </CryptoMarketListWrapper>
-          </div>
-        </CryptoClientLayout>
+          <MarketListLayout>
+            <CryptoMarketList />
+          </MarketListLayout>
+        </div>
       </MS.PageLayout>
     </CryptoProvider>
   );

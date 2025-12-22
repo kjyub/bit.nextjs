@@ -87,7 +87,7 @@ export default function SliderBar({ min, max, value, step = 1, onChange }: Props
       </div>
       <div className="absolute-center flex flex-center size-0" style={{ left: `${percent * 100}%` }}>
         <div
-          className={`absolute size-4 bg-slate-200 rounded-full transition-all duration-300 ${isDragging ? 'scale-125' : ''}`}
+          className={`absolute size-4 bg-surface-main-text rounded-full transition-all duration-300 ${isDragging ? 'scale-125' : ''}`}
         />
       </div>
     </div>

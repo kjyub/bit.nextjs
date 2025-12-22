@@ -53,7 +53,7 @@ export default function MarketGrid({ getMarketsPromise }: { getMarketsPromise: P
   return (
     <div
       ref={containerRef}
-      className="grid-box absolute z-0 size-full grid max-sm:grid-cols-4 max-md:grid-cols-5 max-lg:grid-cols-6 max-xl:grid-cols-7 xl:grid-cols-8 text-slate-500/30 blur-[1px] select-none"
+      className="grid-box absolute z-0 size-full grid max-sm:grid-cols-4 max-md:grid-cols-5 max-lg:grid-cols-6 max-xl:grid-cols-7 xl:grid-cols-8 text-surface-sub-text/30 blur-[1px] select-none"
     >
       {markets.map((market) => (
         <MarketGridItem key={market.code} market={market} />

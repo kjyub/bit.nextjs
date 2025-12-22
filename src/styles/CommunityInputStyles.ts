@@ -5,19 +5,19 @@ export const Layout = tw.div`
   flex flex-col w-full space-y-1
 `;
 export const Label = tw.label`
-  text-sm text-slate-600 dark:text-slate-300
+  text-sm text-surface-sub-text dark:text-surface-main-text
 `;
 export const HelpText = tw.label`
-  text-xs text-slate-500 dark:text-slate-400 font-light
+  text-xs text-surface-sub-text dark:text-surface-sub-text font-light
 `;
 
 export const InputColor = tw.div`
-  border-slate-200 dark:border-slate-600
-  bg-slate-100 dark:bg-slate-700
-  text-slate-800 dark:text-slate-100
-  [&>.value]:text-slate-800 dark:[&>.value]:text-slate-100
-  disabled:bg-slate-200 dark:disabled:bg-slate-600
-  disabled:[&>.value]:text-slate-600 dark:disabled:[&>.value]:text-slate-300
+  border-surface-common-border dark:border-surface-common-border
+  bg-surface-sub-background dark:bg-surface-sub-background
+  text-surface-main-text dark:text-surface-main-text
+  [&>.value]:text-surface-main-text dark:[&>.value]:text-surface-main-text
+  disabled:bg-black/20 dark:disabled:bg-black/30
+  disabled:[&>.value]:text-surface-sub-text dark:disabled:[&>.value]:text-surface-sub-text
 `;
 
 export const InputContainer = tw.div`
@@ -40,7 +40,7 @@ export const FeatureButton = tw.button`
   flex flex-center h-full p-4
   rounded-lg border 
   border-blue-500 text-blue-500
-  disabled:border-slate-600 disabled:text-slate-600
+  disabled:border-surface-common-border disabled:text-surface-sub-text
 `;
 export const ErrorMessage = tw.span`
   absolute -bottom-5 right-0
@@ -63,9 +63,9 @@ export const BoolButton = tw(InputColor)`
     text-blue-800 dark:text-blue-100
     `
       : `
-    border-slate-200 dark:border-slate-600
-    bg-slate-100 dark:bg-slate-700
-    text-slate-800 dark:text-slate-100
+    border-surface-common-border dark:border-surface-common-border
+    bg-surface-sub-background dark:bg-surface-sub-background
+    text-surface-main-text dark:text-surface-main-text
     `}
 `;
 
@@ -78,25 +78,25 @@ export const OptionBox = tw(InputColor)`
   overflow-y-auto
 
   [&>option]:flex [&>option]:items-center [&>option]:shrink-0 [&>option]:px-2 [&>option]:py-1 
-  [&>option]:rounded-lg [&>option]:hover:bg-slate-200 dark:[&>option]:hover:bg-slate-600
-  [&>option]:text-slate-800 dark:[&>option]:text-slate-100
+  [&>option]:rounded-lg [&>option]:hover:bg-surface-common-background dark:[&>option]:hover:bg-surface-common-background
+  [&>option]:text-surface-main-text dark:[&>option]:text-surface-main-text
 `;
 
 export const TitleBox = tw.div`
   relative
   flex w-full p-2
-  border-b border-slate-600
+  border-b border-surface-common-border
   focus-within:border-blue-500
   duration-200 *:duration-200
   overflow-visible
 
   [&>input]:w-full [&>input]:bg-transparent
-  [&>input]:text-slate-200
-  [&>input]:placeholder:text-slate-400
+  [&>input]:text-surface-main-text
+  [&>input]:placeholder:text-surface-sub-text
 
   [&>strong]:absolute [&>strong]:z-10
   [&>strong]:top-2 [&>strong]:left-2
-  [&>strong]:text-slate-400
+  [&>strong]:text-surface-sub-text
   [&>strong.active]:-top-3 [&>strong.active]:left-0
   [&>strong.active]:text-[13px]
   [&>strong.focus]:text-blue-400
@@ -104,9 +104,9 @@ export const TitleBox = tw.div`
 
 export const ContentTextArea = tw.textarea`
   w-full h-24 min-h-[20vh] max-h-[50vh] p-3
-  bg-slate-600/30
-  text-slate-200
-  border-slate-600
+  bg-surface-sub-background
+  text-surface-main-text
+  border-surface-common-border
   rounded-lg border
   focus:outline-hidden focus:border-blue-500
   transition-colors resize-none

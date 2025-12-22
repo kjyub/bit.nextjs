@@ -46,47 +46,48 @@ export default function MobileGNB() {
   };
 
   return (
-    <NS.Layout $is_show={!isHide}>
-      <div className="grid grid-cols-5 w-full h-full">
-        <NS.LinkButton href="/" className={BrowserUtils.isPathActive(pathname, '/') ? 'active' : ''}>
-          <i className="fa-solid fa-house"></i>
-          <span>홈</span>
-        </NS.LinkButton>
-        <NS.LinkButton
-          href={isAuth ? '/crypto' : `/crypto/${DEFAULT_MARKET_CODE}`}
-          className={BrowserUtils.isPathActive(pathname, '/crypto') ? 'active' : ''}
-        >
-          <i className="fa-solid fa-coins"></i>
-          <span>거래소</span>
-        </NS.LinkButton>
-        <NS.LinkButton href="/mine" className={BrowserUtils.isPathActive(pathname, '/mine') ? 'active' : ''}>
-          <i className="fa-solid fa-hammer"></i>
-          <span>지하노역장</span>
-        </NS.LinkButton>
-        <NS.LinkButton href="#" onClick={handleMenu}>
-          <i className="fa-solid fa-sliders"></i>
-          <span>메뉴</span>
-        </NS.LinkButton>
-        <div className="flex gap-2">
-          {isUserLoading ? (
-            <div className="skeleton w-24 h-full rounded-lg"></div>
-          ) : isAuth ? (
-            // 회원
-            <NS.LinkButton href="/mypage">
-              <i className="fa-solid fa-user"></i>
-              <span>내 정보</span>
-            </NS.LinkButton>
-          ) : (
-            // 비회원
-            <NS.LinkButton href="/auth" className={BrowserUtils.isPathActive(pathname, '/auth') ? 'active' : ''}>
-              <i className="fa-solid fa-right-to-bracket"></i>
-              <span>로그인</span>
-            </NS.LinkButton>
-          )}
+    <>
+      <NS.Layout $is_show={!isHide}>
+        <div className="grid grid-cols-5 w-full h-full">
+          <NS.LinkButton href="/" className={BrowserUtils.isPathActive(pathname, '/') ? 'active' : ''}>
+            <i className="fa-solid fa-house"></i>
+            <span>홈</span>
+          </NS.LinkButton>
+          <NS.LinkButton
+            href={isAuth ? '/crypto' : `/crypto/${DEFAULT_MARKET_CODE}`}
+            className={BrowserUtils.isPathActive(pathname, '/crypto') ? 'active' : ''}
+          >
+            <i className="fa-solid fa-coins"></i>
+            <span>거래소</span>
+          </NS.LinkButton>
+          <NS.LinkButton href="/mine" className={BrowserUtils.isPathActive(pathname, '/mine') ? 'active' : ''}>
+            <i className="fa-solid fa-hammer"></i>
+            <span>지하노역장</span>
+          </NS.LinkButton>
+          <NS.LinkButton href="#" onClick={handleMenu}>
+            <i className="fa-solid fa-sliders"></i>
+            <span>메뉴</span>
+          </NS.LinkButton>
+          <div className="flex gap-2">
+            {isUserLoading ? (
+              <div className="skeleton w-24 h-full rounded-lg"></div>
+            ) : isAuth ? (
+              // 회원
+              <NS.LinkButton href="/mypage">
+                <i className="fa-solid fa-user"></i>
+                <span>내 정보</span>
+              </NS.LinkButton>
+            ) : (
+              // 비회원
+              <NS.LinkButton href="/auth" className={BrowserUtils.isPathActive(pathname, '/auth') ? 'active' : ''}>
+                <i className="fa-solid fa-right-to-bracket"></i>
+                <span>로그인</span>
+              </NS.LinkButton>
+            )}
+          </div>
         </div>
-      </div>
-
+      </NS.Layout>
       <MobileMenu isOpen={isMenuOpen} setIsOpen={setIsMenuOpen} />
-    </NS.Layout>
+    </>
   );
 }

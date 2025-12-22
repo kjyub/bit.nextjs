@@ -289,7 +289,7 @@ export default function CryptoMarketFinancialChart() {
   if (isLoading) {
     return (
       <div className="pt-2" style={{ width: `${width}px`, height: `${height}px` }}>
-        <div className="size-full rounded-xl bg-slate-600 animate-pulse" />
+        <div className="size-full rounded-xl bg-surface-sub-background animate-pulse" />
       </div>
     )
   }

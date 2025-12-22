@@ -14,9 +14,9 @@ export default function CryptoMyTradeItemSkeleton({ ref, pageIndex, itemCount, p
     >
       {isShow && (
         <>
-          <div className="bg-slate-600/20" />
-          <div className="bg-slate-600/10" />
-          <div className="bg-slate-600/10" />
+          <div className="bg-surface-common-background" />
+          <div className="bg-surface-common-background" />
+          <div className="bg-surface-common-background" />
         </>
       )}
     </div>

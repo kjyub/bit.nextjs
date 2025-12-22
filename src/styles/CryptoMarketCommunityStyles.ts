@@ -17,13 +17,13 @@ export const ListLayout = tw.div`
   [&>.header]:gap-2
 
   [&>.list]:flex [&>.list]:flex-col [&>.list]:w-full
-  [&>.list]:divide-y [&>.list]:divide-slate-500/30
+  [&>.list]:divide-y [&>.list]:divide-surface-common-border
 
   [&>.control]:flex [&>.control]:justify-between [&>.control]:items-center [&>.control]:w-full
   [&>.control>button]:px-4 [&>.control>button]:h-10
   [&>.control>button]:rounded-full 
-  [&>.control>button]:bg-slate-500/20 [&>.control>button]:hover:bg-slate-500/30
-  [&>.control>button]:text-sm [&>.control>button]:text-slate-300
+  [&>.control>button]:bg-surface-common-background [&>.control>button]:hover:bg-surface-common-background-active
+  [&>.control>button]:text-sm [&>.control>button]:text-surface-main-text/90
   [&>.control>button]:active:animate-pulse
   [&>.control>button]:transition-colors
   [&>.control>button>i]:mr-2 [&>.control>button>i]:text-[11px]
@@ -43,30 +43,30 @@ export const ItemLayout = tw.div`
 `;
 export const ItemRow = tw.div<StyleProps>`
   flex flex-col w-full px-3 py-2 space-y-2
-  rounded-lg mouse:hover:bg-slate-700/30 active:bg-slate-700/30
+  rounded-lg mouse:hover:bg-surface-common-background active:bg-surface-common-background-active
   transition-colors cursor-pointer
-  ${({ $is_active }: StyleProps) => ($is_active ? 'ring-1 ring-blue-500' : '')}
+  ${({ $is_active }: StyleProps) => ($is_active ? 'bg-surface-common-background-active' : '')}
 
   [&>.row]:flex [&>.row]:justify-between [&>.row]:items-center [&>.row]:w-full
   [&>.row>.infos]:flex [&>.row>.infos]:items-center [&>.row>.infos]:space-x-2
   [&>.row>.infos>.info]:flex [&>.row>.infos>.info]:items-center [&>.row>.infos>.info]:space-x-1
-  [&>.row>.infos>.info]:text-slate-400
+  [&>.row>.infos>.info]:text-surface-sub-text
   [&>.row>.infos>.info>i]:text-xs max-md:[&>.row>.infos>.info>span]:text-xs md:[&>.row>.infos>.info>span]:text-sm
 `;
 export const ItemViewBox = tw.div`
   flex flex-col items-center w-full p-3 max-md:px-1 pb-16 space-y-5
-  border-t border-slate-500/20
+  border-t border-surface-common-border
 `;
 export const ItemViewLikeBox = tw.div`
   flex items-center space-x-2
 
   max-md:[&>button]:px-3.5 md:[&>button]:px-4 max-md:[&>button]:h-7.5 md:[&>button]:h-8 [&>button]:space-x-2
-  [&>button]:rounded-full [&>button]:bg-slate-600/50 [&>button]:hover:bg-slate-500/50
-  max-md:[&>button]:text-xs md:[&>button]:text-sm [&>button]:text-slate-300
+  [&>button]:rounded-full [&>button]:bg-surface-common-background [&>button]:hover:bg-surface-common-background-active
+  max-md:[&>button]:text-xs md:[&>button]:text-sm [&>button]:text-surface-main-text/90
   [&>button]:duration-200
   [&>button>i]:text-xs
   [&>button.like>i]:text-red-500 [&>button.dislike>i]:text-blue-500
-  [&>button.active]:ring-1 [&>button.active]:ring-slate-200
+  [&>button.active]:ring-1 [&>button.active.like]:ring-red-500/70 [&>button.active.dislike]:ring-blue-500/70
 `;
 export const ItemCommentLayout = tw.div`
   flex flex-col w-full space-y-4
@@ -75,14 +75,14 @@ export const ItemCommentLayout = tw.div`
 
   [&>.pagination]:flex [&>.pagination]:justify-center [&>.pagination]:items-center [&>.pagination]:w-full
 
-  max-md:[&>.comment-count]:text-sm [&>.comment-count]:text-slate-400
+  max-md:[&>.comment-count]:text-sm [&>.comment-count]:text-surface-sub-text
 `;
 export const ItemCommentWriteBox = tw.div`
   flex flex-col w-full space-y-2
   [&>textarea]:w-full [&>textarea]:min-h-[2rem] [&>textarea]:max-h-[8rem] [&>textarea]:p-3
-  [&>textarea]:rounded-lg [&>textarea]:bg-slate-500/30 
-  [&>textarea]:border [&>textarea]:border-slate-500/20 [&>textarea]:focus:border-blue-500
-  max-md:[&>textarea]:text-sm [&>textarea]:text-slate-300 
+  [&>textarea]:rounded-lg [&>textarea]:bg-surface-sub-background
+  [&>textarea]:border [&>textarea]:border-surface-common-border [&>textarea]:focus:border-indigo-500
+  max-md:[&>textarea]:text-sm [&>textarea]:text-surface-main-text 
   [&>textarea]:resize-none [&>textarea]:transition-colors
 
   [&>button]:w-24 [&>button]:h-9 [&>button]:ml-auto
@@ -93,11 +93,11 @@ export const ItemCommentWriteBox = tw.div`
 export const ItemCommentBox = tw.div`
   ${({ $is_deleted }: StyleProps) => ($is_deleted ? 'hidden' : 'flex')}
   flex-col w-full max-md:py-2.5 p-3 max-md:space-y-0.5 md:space-y-2
-  rounded-lg bg-slate-500/20
+  rounded-lg bg-surface-common-background
 
   [&>.header]:flex [&>.header]:justify-between [&>.header]:items-center [&>.header]:w-full
   [&>.header>.user]:flex [&>.header>.user]:items-center [&>.header>.user]:space-x-1
-  [&>.header>.user]:text-slate-300/80
+  [&>.header>.user]:text-surface-sub-text
   max-md:[&>.header>.user>i]:text-[11px] max-md:[&>.header>.user>span]:text-xs
   md:[&>.header>.user>i]:text-xs md:[&>.header>.user>span]:text-sm
 
@@ -108,8 +108,8 @@ export const ItemCommentBox = tw.div`
 
 export const ItemControlButton = tw.button<StyleProps>`
   p-1
-  text-xs text-slate-400 hover:text-slate-300
+  text-xs text-surface-sub-text hover:text-surface-main-text
   rounded-lg
-  ${({ $is_active }: StyleProps) => ($is_active ? 'bg-slate-500/50' : '')}
+  ${({ $is_active }: StyleProps) => ($is_active ? 'bg-surface-common-background-active' : '')}
   transition-colors
 `;

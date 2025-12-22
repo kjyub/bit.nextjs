@@ -78,7 +78,7 @@ const Layout = ({
   return (
     <div
       className={cn([
-        'mouse:hidden touch:fixed inset-0 z-50 size-full bg-slate-900/40 backdrop-blur-lg',
+        'mouse:hidden touch:fixed inset-0 z-50 size-full bg-black/40 backdrop-blur-lg',
         'p-8 pb-16',
         'transition-all duration-300',
         isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none',
@@ -145,13 +145,13 @@ export default function MobileMenu({ isOpen, setIsOpen }: { isOpen: boolean; set
 
   return (
     <Layout isOpen={isOpen} setIsOpen={setIsOpen}>
-      <h1 className="mb-[30%] text-2xl font-light text-slate-200/80 font-sinchon-rhapsody">KURRITO</h1>
+      <h1 className="mb-[30%] text-2xl font-light text-surface-main-text/80 font-sinchon-rhapsody">KURRITO</h1>
 
       <MessageList ref={usePreventSwipe()} isOpen={isOpen} onClose={() => setIsOpen(false)} />
 
       <div className="flex justify-between items-end mt-auto">
         <div className="flex flex-col justify-end gap-1">
-          <span className="text-xs text-slate-200/80">차트 색상</span>
+          <span className="text-xs text-surface-main-text/80">차트 색상</span>
           <div className="flex flex-1 gap-1">
             <ChartColorButton
               riseColor="red"

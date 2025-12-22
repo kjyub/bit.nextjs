@@ -8,10 +8,10 @@ interface Props {
 }
 export default function HeaderLink({ href, className, children }: Props) {
   return (
-    <Link href={href} className={cn(['hover:[&>i]:text-slate-400', className])}>
+    <Link href={href} className={cn(['hover:[&>i]:text-surface-main-text', className])}>
       {children}
 
-      <i className="fa-solid fa-chevron-right text-slate-500 text-xs"></i>
+      <i className="fa-solid fa-chevron-right text-surface-sub-text text-xs"></i>
     </Link>
   );
 }

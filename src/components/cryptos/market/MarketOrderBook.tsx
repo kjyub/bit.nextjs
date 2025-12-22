@@ -38,7 +38,7 @@ export default function CryptoMarketOrderBook({ marketCode, marketCurrent }: ICr
     <div className="relative flex flex-col size-full">
       {!isShowChart && orderBook && Object.keys(orderBook).length > 0 && (
         <div className="flex flex-col justify-between size-full max-lg:pb-1 lg:pb-2">
-          <div className="flex items-start w-full h-8 pt-1.5 shrink-0 border-b border-slate-500/50">
+          <div className="flex items-start w-full h-8 pt-1.5 shrink-0 border-b border-surface-common-border">
             <span className="font-medium max-lg:leading-3">{isShowChart ? '차트' : '호가'}</span>
           </div>
           <OrderBook orderBook={orderBook} marketCode={marketCode} marketCurrent={marketCurrent} />
@@ -53,7 +53,7 @@ export default function CryptoMarketOrderBook({ marketCode, marketCurrent }: ICr
 
       {/* 상태 변경 */}
       <button
-        className="absolute top-0 right-0 lg:hidden px-1 py-1 text-slate-300/70 active:text-slate-100/90 transition-colors"
+        className="absolute top-0 right-0 lg:hidden px-1 py-1 text-surface-main-text/70 active:text-surface-main-text/90 transition-colors"
         type="button"
         onClick={handleShowChart}
       >

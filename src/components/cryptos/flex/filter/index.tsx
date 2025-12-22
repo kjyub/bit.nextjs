@@ -19,14 +19,14 @@ export default function FlexFilter() {
 
   return (
     // md 이상의 sticky
-    <div className="sticky top-26 flex flex-col max-md:w-full md:w-72 gap-3">
+    <div className="sticky top-4 flex flex-col max-md:w-full md:w-72 gap-3">
       <FlexSearch onSearch={handleSearch} />
-      <div className="flex gap-2">
+      <div className="flex gap-1">
         <FlexFilterPosition positionType={PositionTypes.LONG} onSearch={handleFilterPosition}>
-          <span className="text-sm text-slate-300">롱 포지션</span>
+          <span>롱 포지션</span>
         </FlexFilterPosition>
         <FlexFilterPosition positionType={PositionTypes.SHORT} onSearch={handleFilterPosition}>
-          <span className="text-sm text-slate-300">숏 포지션</span>
+          <span>숏 포지션</span>
         </FlexFilterPosition>
       </div>
     </div>

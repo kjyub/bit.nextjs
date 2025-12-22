@@ -152,7 +152,7 @@ export default function PositionStackContainer({ positions, balance, isLoading }
 
   return (
     <div className="flex flex-col w-full gap-2">
-      <span className="text-slate-300">투자 비율</span>
+      <span className="text-surface-main-text">투자 비율</span>
       {isLoading ? (
         <StackHorizon items={[]} others={[]} />
       ) : (

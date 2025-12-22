@@ -48,12 +48,19 @@
   --breakpoint-full: 1700px;
 
   --color-surface-common-background: #ffffff0d; /* bg-white/5 */
+  --color-surface-common-background-active: #ffffff1a; /* bg-white/10 */
   --color-surface-common-border: #ffffff1a; /* bg-white/10 */
-  --color-surface-sub-background: #ffffff26; /* bg-white/15 */
+  --color-surface-sub-background: #ffffff1a; /* bg-white/10 */
+  --color-surface-sub-background-active: #ffffff26; /* bg-white/15 */
   --color-surface-sub-border: #ffffff2b; /* border-white/17 */
-  --color-surface-sub-text: #ffffffa0; /* text-white/60 */
+  --color-surface-sub-text: #ffffff90; /* text-white/50 */
   --color-surface-main-text: #ffffffe0; /* text-white/80 */
-  --color-surface-chart-background: #33415566; /* bg-slate-700/40 */
+  --color-surface-chart-background: #00000040; /* bg-slate-700/40 */
+  --color-surface-floating-background: #00000033; /* bg-black/20 */
+  --color-surface-floating-background-active: #00000040; /* bg-black/25 */
+  --color-surface-floating-border: #00000010; /* border-black/10 */
+  --color-surface-modal-background: #00000026; /* bg-black/20 */
+  --color-surface-modal-border: #ffffff10; /* border-white/10 */
 }
 
 @custom-variant mouse (@media screen and (pointer: fine));
@@ -85,18 +92,40 @@
     background-attachment: fixed !important;
     position: relative;
     /* biome-ignore lint/suspicious/noShorthandPropertyOverrides: <explanation> */
+    /* background: linear-gradient(
+      188deg,
+      #050814,
+      #1a0a3a,
+      #0a3a1a,
+      #3a0a0a,
+      #0a3a3a,
+      #3a3a0a,
+      #102040,
+      #3a0a20,
+      #1a3a0a,
+      #3a0a3a,
+      #0a1a3a,
+      #3a200a,
+      #1a3a3a,
+      #3a0a1a,
+      #0a3a0a,
+      #050814
+    ); */
+    /* biome-ignore lint/suspicious/noShorthandPropertyOverrides: <explanation> */
     background: linear-gradient(
       188deg,
-      rgb(3, 2, 30) 0%,
-      rgb(15, 18, 55) 40%,
-      rgb(20, 28, 70) 72%,
-      rgb(30, 55, 95) 100%
+      rgb(13, 13, 42) 0%,
+      rgb(31, 35, 84) 40%,
+      rgb(33, 43, 90) 72%,
+      rgb(45, 72, 116) 100%
     );
+    /* background-size: 1400% 1400%;
+    animation: gradient-shift 10s ease infinite; */
 
     min-height: 100dvh;
 
-    @apply overflow-x-hidden text-slate-100;
-    transition: background-color 0.5s ease-in-out;
+    @apply overflow-x-hidden text-surface-main-text;
+    /* transition: background-color 0.5s ease-in-out; */
   }
 
   body.mine {
@@ -183,6 +212,18 @@
   } */
 }
 
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 @layer utilities {
   .prevent-select {
     -webkit-user-select: none;
@@ -229,7 +270,7 @@
     color: transparent !important;
     animation: fade-in 0.5s ease-in, var(--animate-pulse);
     animation-delay: 0s, 0.5s;
-    @apply after:content-['S'] rounded-lg bg-slate-700/30 transition-opacity;
+    @apply after:content-['S'] rounded-lg bg-white/10 transition-opacity;
   }
 
   @keyframes fade-in {
@@ -428,25 +469,25 @@
     }
   }
   .modal-panel {
-    @apply bg-surface-common-background rounded-xl;
+    @apply bg-surface-modal-background rounded-xl;
     &.padding {
       @apply max-md:p-5 md:p-6;
     }
   }
   .layer1 {
-    @apply bg-slate-500/20 rounded-lg;
+    @apply bg-black/10 rounded-lg;
 
     &.hover {
-      @apply hover:bg-slate-500/30;
+      @apply hover:bg-black/15;
     }
   }
   .layer1-1 {
-    @apply bg-slate-700/30;
+    @apply bg-black/30;
   }
   .layer2 {
-    @apply bg-slate-500/50 rounded-lg;
+    @apply bg-black/40 rounded-lg;
     &:hover {
-      @apply bg-slate-500/70;
+      @apply bg-black/50;
     }
   }
 }

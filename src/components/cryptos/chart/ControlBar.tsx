@@ -107,7 +107,7 @@ export default function CryptoMarketChartControlBar() {
         </button>
 
         <HelpBox className="[&>div]:w-32 h-6" position="right-bottom">
-          <div className="[&>div]:flex [&>div]:items-center [&>div]:px-0.5 [&>div]:py-0.5 [&>div]:gap-1.5 max-md:[&_i]:text-xs md:[&_i]:text-sm max-md:[&_span]:text-xs md:[&_span]:text-sm [&_span]:text-slate-300">
+          <div className="[&>div]:flex [&>div]:items-center [&>div]:px-0.5 [&>div]:py-0.5 [&>div]:gap-1.5 max-md:[&_i]:text-xs md:[&_i]:text-sm max-md:[&_span]:text-xs md:[&_span]:text-sm [&_span]:text-surface-main-text">
             <div>
               <i className="fa-solid fa-chart-column"></i>
               <span>캔들 차트</span>

@@ -38,25 +38,7 @@ export default function AssetManager() {
 
   return (
     <S.WalletLayout>
-      <span
-        className="title"
-        onClick={async () => {
-          createSystemMessage({
-            type: 'confirm',
-            content: '자산',
-            onConfirm: () => {
-              console.log('confirm');
-            },
-            onCancel: () => {
-              console.log('cancel');
-            },
-          }).then((result) => {
-            console.log('result', result);
-          });
-        }}
-      >
-        자산
-      </span>
+      <span className="title">자산</span>
       <div className="grid max-sm:grid-cols-1 sm:grid-cols-2 gap-8 w-full">
         <S.WalletBox>
           <div className="header">
@@ -65,7 +47,7 @@ export default function AssetManager() {
               <span>내 통장</span>
             </div>
             <Button
-              size='sm'
+              size="sm"
               onClick={() => {
                 handleTransferModal(TransferTypes.TO_ACCOUNT);
               }}
@@ -78,9 +60,9 @@ export default function AssetManager() {
           </div>
           <div className="content">
             <div className="label">총 잔액</div>
-            <div className={`value ${isLoading ? 'skeleton w-24' : ''}`}>
-              {FormatUtils.textFormat(cash, TextFormats.NUMBER)}
-              {CASH_UNIT}
+            <div className={`value space-x-1 ${isLoading ? 'skeleton w-24' : ''}`}>
+              <span>{FormatUtils.textFormat(cash, TextFormats.NUMBER)}</span>
+              <span>{CASH_UNIT}</span>
             </div>
           </div>
         </S.WalletBox>
@@ -91,7 +73,7 @@ export default function AssetManager() {
               <span>내 거래 지갑</span>
             </div>
             <Button
-              size='sm'
+              size="sm"
               onClick={() => {
                 handleTransferModal(TransferTypes.TO_WALLET);
               }}
@@ -104,23 +86,23 @@ export default function AssetManager() {
           </div>
           <div className="content">
             <div className="label">지갑 총액</div>
-            <div className={`value ${isLoading ? 'skeleton w-24' : ''}`}>
-              {FormatUtils.textFormat(Math.floor(balance), TextFormats.NUMBER)}
-              {CRYPTO_WALLET_UNIT}
+            <div className={`value space-x-1 ${isLoading ? 'skeleton w-24' : ''}`}>
+              <span>{FormatUtils.textFormat(Math.floor(balance), TextFormats.NUMBER)}</span>
+              <span>{CRYPTO_WALLET_UNIT}</span>
             </div>
           </div>
           <div className="content">
             <div className="label">사용 중</div>
-            <div className={`value ${isLoading ? 'skeleton w-24' : ''}`}>
-              {FormatUtils.textFormat(Math.floor(locked), TextFormats.NUMBER)}
-              {CRYPTO_WALLET_UNIT}
+            <div className={`value space-x-1 ${isLoading ? 'skeleton w-24' : ''}`}>
+              <span>{FormatUtils.textFormat(Math.floor(locked), TextFormats.NUMBER)}</span>
+              <span>{CRYPTO_WALLET_UNIT}</span>
             </div>
           </div>
           <div className="content">
             <div className="label">사용 가능</div>
-            <div className={`value ${isLoading ? 'skeleton w-24' : ''}`}>
-              {FormatUtils.textFormat(Math.floor(availableBalance), TextFormats.NUMBER)}
-              {CRYPTO_WALLET_UNIT}
+            <div className={`value space-x-1 ${isLoading ? 'skeleton w-24' : ''}`}>
+              <span>{FormatUtils.textFormat(Math.floor(availableBalance), TextFormats.NUMBER)}</span>
+              <span>{CRYPTO_WALLET_UNIT}</span>
             </div>
           </div>
         </S.WalletBox>

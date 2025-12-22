@@ -201,7 +201,7 @@ export default function CryptoMarketCommunityView({ user, communityNanoId }: ICr
   return (
     <CS.ItemViewBox>
       {/* 내용 */}
-      <pre className="text-slate-300 leading-6 font-pretendard w-full">{community.content}</pre>
+      <pre className="text-surface-main-text leading-6 font-pretendard w-full">{community.content}</pre>
 
       {/* 추천 */}
       <CS.ItemViewLikeBox>

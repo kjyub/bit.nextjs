@@ -92,7 +92,7 @@ export default function MessageList({ ref, className, isOpen, onClose }: Props) 
         <MessageItem key={message.id} message={message} onClose={onClose} handleRead={handleRead} />
       ))}
 
-      {messages.length === 0 && !isLoading && <span className="m-auto text-slate-200/70">메세지가 없습니다.</span>}
+      {messages.length === 0 && !isLoading && <span className="m-auto text-surface-main-text/70">메세지가 없습니다.</span>}
 
       {messages.length === 0 && isLoading && (
         <div className="flex flex-col w-full gap-2 [&>a]:animate-pulse [&_*]:text-transparent">
@@ -124,14 +124,14 @@ const MessageItem = ({
 }) => {
   return (
     <Link
-      className="flex flex-col w-full p-4 gap-0.5 rounded-2xl bg-slate-700/40 hover:bg-slate-700/60 transition-colors"
+      className="flex flex-col w-full p-4 gap-0.5 rounded-2xl bg-surface-sub-background hover:bg-surface-sub-background-active transition-colors"
       href={message.link}
       onClick={onClose}
     >
       <div className="flex justify-between w-full">
-        <span className="text-xs text-slate-400">{DateUtils.getDateShorten(message.createdDate)}</span>
+        <span className="text-xs text-surface-sub-text">{DateUtils.getDateShorten(message.createdDate)}</span>
         <button
-          className="text-sm text-slate-400 hover:text-slate-300"
+          className="text-sm text-surface-sub-text hover:text-surface-main-text"
           type="button"
           onClick={(e) => handleRead?.(e, message.id)}
         >
@@ -139,7 +139,7 @@ const MessageItem = ({
         </button>
       </div>
       <div className="flex w-full">
-        <span className="text-sm text-slate-300">{message.message}</span>
+        <span className="text-sm text-surface-main-text">{message.message}</span>
       </div>
     </Link>
   );

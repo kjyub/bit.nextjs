@@ -2,8 +2,8 @@ import tw from 'tailwind-styled-components';
 
 const Button = tw.button`
     h-10 px-3 py-1 
-    rounded-xl bg-slate-500/50 hover:bg-slate-500/70
-    text-sm text-slate-200 
+    rounded-xl bg-surface-sub-background hover:bg-surface-sub-background-active
+    text-sm text-surface-main-text 
     transition-colors
 `;
 

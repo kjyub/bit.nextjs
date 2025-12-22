@@ -54,7 +54,7 @@ const Border = () => {
   return (
     <div
       ref={containerRef}
-      className="relative flex flex-center w-full h-[2px] bg-slate-500/20 overflow-hidden text-violet-600"
+      className="relative flex flex-center w-full h-[2px] bg-surface-sub-background overflow-hidden text-violet-600"
     >
       <div
         className="glow-ring will-change-transform"

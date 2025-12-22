@@ -7,7 +7,7 @@ const PaginationBox = tw.div`
 `;
 const PaginationButton = tw.button<StyleProps>`
     w-6 h-6
-    ${({ $is_active }) => ($is_active ? 'text-blue-500' : 'text-slate-400 hover:text-slate-100')}
+    ${({ $is_active }) => ($is_active ? 'text-blue-500' : 'text-surface-sub-text hover:text-surface-main-text')}
     ${({ $is_focus }) => ($is_focus ? 'animation-pulse' : '')}
     transition-colors
 `;

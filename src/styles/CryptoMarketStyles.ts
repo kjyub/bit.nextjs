@@ -17,7 +17,7 @@ export const TitleLayout = tw.div<StyleProps>`
   flex max-md:flex-col max-md:justify-center md:justify-between md:items-center max-md:w-[calc(100%-0.5rem)] w-full max-md:h-22 md:h-32
   rounded-xl border
 
-  ${({ $is_active }: StyleProps) => ($is_active ? 'border-slate-500/20 backdrop-blur-lg' : 'border-transparent')}
+  ${({ $is_active }: StyleProps) => ($is_active ? 'border-surface-common-border backdrop-blur-lg' : 'border-transparent')}
 
   transition-colors
 `;
@@ -59,33 +59,25 @@ export const CommunityLayout = tw.div`
   max-lg:hidden lg:flex flex-col w-128 min-h-[10rem] lg:max-h-full
 `;
 
-export const MarketListLayout = tw.div`
-  sticky top-0 z-0
-  flex flex-col max-sm:w-full sm:w-96 h-[calc(100dvh-144px)] max-md:p-2 space-y-4
-  group-[.compact]/crypto:max-lg:p-3 group-[.compact]/crypto:lg:p-4 
-  group-[.wide]/crypto:max-full:p-3 group-[.wide]/crypto:full:p-4 
-  group-[.compact]/crypto:lg:pt-8 group-[.wide]/crypto:full:pt-4
-`;
-
 export const MarketListBox = tw.div`
   flex flex-col w-full h-full space-y-2
 
   [&>input]:px-3 [&>input]:py-2.5 [&>input]:w-full 
   [&>input]:rounded-lg
-  [&>input]:bg-slate-500/40 [&>input]:focus:bg-slate-500/50
-  [&>input]:text-slate-300
+  [&>input]:bg-surface-sub-background [&>input]:focus:bg-surface-sub-background-active
+  [&>input]:text-surface-main-text
   [&>input]:transition-colors
 
   [&>.market-type]:grid [&>.market-type]:grid-cols-4 [&>.market-type]:gap-2 [&>.market-type]:w-full [&>.market-type]:min-h-[2rem]
   [&>.market-type>button]:w-full [&>.market-type>button]:h-full
-  [&>.market-type>button]:rounded-lg [&>.market-type>button]:hover:bg-slate-700/30
-  [&>.market-type>button]:text-slate-300 [&>.market-type>button]:hover:text-slate-100
-  [&>.market-type>button.active]:bg-slate-700/70
+  [&>.market-type>button]:rounded-lg [&>.market-type>button]:hover:bg-surface-sub-background
+  [&>.market-type>button]:text-surface-main-text [&>.market-type>button]:hover:text-surface-main-text
+  [&>.market-type>button.active]:bg-surface-sub-background-active
   [&>.market-type>button]:transition-colors
 
   [&>.market-sort]:grid [&>.market-sort]:grid-cols-4 [&>.market-sort]:w-full [&>.market-sort]:min-h-[1.5rem]
-  [&>.market-sort>button]:text-slate-500 [&>.market-sort>button]:hover:text-slate-300 [&>.market-sort>button]:font-light
-  [&>.market-sort>button.active]:text-slate-200
+  [&>.market-sort>button]:text-surface-sub-text [&>.market-sort>button]:hover:text-surface-main-text [&>.market-sort>button]:font-light
+  [&>.market-sort>button.active]:text-surface-main-text
   [&>.market-sort>button]:text-sm [&>.market-sort>button]:space-x-1
   [&>.market-sort>button]:transition-colors
   [&>.market-sort>button>.icon]:text-xs
@@ -93,27 +85,28 @@ export const MarketListBox = tw.div`
 
   [&>.list]:flex [&>.list]:flex-col [&>.list]:w-full [&>.list]:h-full [&>.list]:space-y-1 [&>.list]:rounded-lg 
   group-[.compact]/crypto:lg:[&>.list]:p-2 group-[.wide]/crypto:full:[&>.list]:p-2
-  group-[.compact]/crypto:[&>.list]:lg:bg-slate-500/20 group-[.wide]/crypto:[&>.list]:full:bg-slate-700/30
+  group-[.compact]/crypto:[&>.list]:lg:bg-surface-floating-background
+  group-[.wide]/crypto:[&>.list]:full:bg-surface-floating-background
   [&>.list]:overflow-y-auto
 `;
 
 export const MarketListItem = tw.div`
   flex shrink-0 items-center w-full h-12 px-2
-  rounded-md hover:bg-white/5 active:bg-white/7
-  text-sm text-slate-200
+  rounded-md hover:bg-surface-common-background active:bg-surface-common-background-active
+  text-sm text-surface-main-text
   transition-colors
 
-  [&>.change-color]:text-slate-200
+  [&>.change-color]:text-surface-main-text
   [&.rise>.change-color]:text-position-long-strong [&.fall>.change-color]:text-position-short-strong
 
   [&>.name]:flex [&>.name]:flex-col [&>.name]:flex-1 [&>.name]:min-w-0 [&>.name]:pr-1
   [&>.name>span]:truncate
-  [&>.name>.korean]:text-sm [&>.name>.korean]:text-slate-200 [&>.name>.korean]:font-medium
-  [&>.name>.english]:text-[10px] [&>.name>.english]:text-slate-400 [&>.name>.english]:font-extralight
+  [&>.name>.korean]:text-sm [&>.name>.korean]:text-surface-main-text [&>.name>.korean]:font-medium
+  [&>.name>.english]:text-[10px] [&>.name>.english]:text-surface-sub-text [&>.name>.english]:font-extralight
 
   [&>.price]:flex [&>.price]:flex-col [&>.price]:w-24
   [&>.price]:font-medium
-  [&>.price>.volume]:text-[11px] [&>.price>.volume]:text-slate-400 [&>.price>.volume]:font-extralight
+  [&>.price>.volume]:text-[11px] [&>.price>.volume]:text-surface-sub-text [&>.price>.volume]:font-extralight
 
   [&>.change]:flex [&>.change]:flex-col [&>.change]:w-12
   [&>.change>.rate]:text-sm 
@@ -125,16 +118,16 @@ export const MainTitleBox = tw.div`
 
   [&>.image]:relative [&>.image]:flex [&>.image]:flex-center [&>.image]:w-[28px] [&>.image]:aspect-square
 
-  [&>.title]:text-3xl [&>.title]:text-slate-50 [&>.title]:font-semibold
+  [&>.title]:text-3xl [&>.title]:text-surface-main-text [&>.title]:font-semibold
 
   [&>.info]:flex [&>.info]:flex-col
-  [&>.info>.english]:text-sm [&>.info>.english]:text-slate-400
-  [&>.info>.code]:text-[10px] [&>.info>.code]:text-slate-500
+  [&>.info>.english]:text-sm [&>.info>.english]:text-surface-sub-text
+  [&>.info>.code]:text-[10px] [&>.info>.code]:text-surface-sub-text
 `;
 
 export const MainPriceBox = tw.div`
   flex items-baseline gap-1
-  text-slate-200
+  text-surface-main-text
   [&.rise]:text-position-long-strong [&.fall]:text-position-short-strong
 
   max-md:[&>.price]:text-xl md:[&>.price]:text-2xl [&>.price>.currency]:text-sm
@@ -149,7 +142,7 @@ export const MainPriceInfoGrid = tw.div`
 
   [&>div]:flex [&>div]:flex-col [&>div]:gap-3
   [&_dl]:flex [&_dl]:justify-between [&_dl]:items-center [&_dl]:w-full
-  [&_dt]:text-sm [&_dt]:text-slate-400 [&_dt]:font-light
-  [&_dd]:text-slate-300 [&_dd]:text-right
+  [&_dt]:text-sm [&_dt]:text-surface-sub-text [&_dt]:font-light
+  [&_dd]:text-surface-main-text [&_dd]:text-right
   [&_dd.rise]:text-position-long-strong [&_dd.fall]:text-position-short-strong
 `;

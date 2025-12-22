@@ -70,7 +70,7 @@ export default function CryptoMarketInfo({ marketCode, marketData, marketCurrent
       <div className="flex flex-col gap-1">
         {/* 코인 이름 */}
         <S.MainTitleBox>
-          <div className="p-1 bg-slate-200 rounded-lg">
+          <div className="p-1 bg-white/70 rounded-lg">
             <div className="relative flex flex-cetner max-md:w-5 md:w-7 aspect-square">
               <img
                 src={`https://static.upbit.com/logos/${imageCode}.png`}
@@ -79,12 +79,12 @@ export default function CryptoMarketInfo({ marketCode, marketData, marketCurrent
               />
             </div>
           </div>
-          <h1 className="max-md:text-xl md:text-3xl text-slate-50 font-semibold">{market.koreanName}</h1>
+          <h1 className="max-md:text-xl md:text-3xl text-white font-semibold">{market.koreanName}</h1>
           <div className="flex flex-col justify-center">
-            <span className="max-md:text-xs md:text-sm text-slate-400 max-md:leading-4 md:leading-3">
+            <span className="max-md:text-xs md:text-sm text-surface-sub-text max-md:leading-4 md:leading-3">
               {market.englishName}
             </span>
-            <span className="max-md:text-[8px] md:text-[10px] text-slate-500 max-md:leading-2 md:leading-4">
+            <span className="max-md:text-[8px] md:text-[10px] text-surface-sub-text/70 max-md:leading-2 md:leading-4">
               {market.code}
             </span>
           </div>

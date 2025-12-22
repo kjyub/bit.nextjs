@@ -6,12 +6,12 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          'bg-indigo-500/70 text-surface-main-text hover:bg-indigo-500/80 active:bg-indigo-500 disabled:bg-slate-700/50 disabled:text-slate-400',
+          'bg-indigo-500/70 text-surface-main-text hover:bg-indigo-500/80 active:bg-indigo-500 disabled:bg-black/20 disabled:text-white/30',
         solid:
-          'bg-slate-600/70 text-slate-100 hover:bg-slate-600/80 active:bg-slate-600 disabled:bg-gray-300 disabled:text-gray-500',
+          'bg-surface-sub-background-active text-surface-main-text hover:bg-surface-sub-background-active active:bg-surface-sub-background-active disabled:bg-black/20 disabled:text-white/30',
         outlined:
           'border border-overlay-border-3 text-gray-800 bg-transparent hover:bg-overlay-bg-1 active:bg-overlay-bg-2 disabled:border-gray-300 disabled:text-gray-500',
-        disabled: 'text-slate-400 bg-slate-700/50',
+        disabled: 'bg-black/20 text-white/30',
         unstyled: '',
       },
       size: {

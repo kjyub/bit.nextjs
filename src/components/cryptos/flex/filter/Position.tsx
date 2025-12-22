@@ -22,8 +22,9 @@ export default function FlexFilterPosition({ positionType, onSearch, children }:
       type="button"
       className={cn([
         'px-3 py-2 rounded-xl layer1 hover',
-        'border border-slate-500/20 backdrop-blur-lg',
-        { layer2: isActive },
+        'text-sm text-surface-sub-text',
+        'border border-surface-common-border backdrop-blur-lg',
+        { 'layer2 text-surface-main-text': isActive },
         'transition-colors',
       ])}
       onClick={handleClick}

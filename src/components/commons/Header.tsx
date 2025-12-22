@@ -47,7 +47,7 @@ export default function Header() {
       <>
         <Link
           href="/auth"
-          className={`btn ${BrowserUtils.isPathActive(pathname, '/auth') ? 'active' : ''} bg-slate-100/10 hover:!bg-slate-100/20 !text-slate-300/80`}
+          className={`btn ${BrowserUtils.isPathActive(pathname, '/auth') ? 'active' : ''} bg-surface-common-background hover:!bg-surface-common-background-active !text-surface-main-text/80`}
         >
           <span>로그인</span>
         </Link>

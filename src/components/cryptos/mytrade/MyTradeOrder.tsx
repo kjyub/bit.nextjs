@@ -94,7 +94,7 @@ const Order = ({ order, updateInfo }: IOrder) => {
 
           <div className="section sm:!hidden">
             <button
-              className="info text-violet-300!"
+              className="info !bg-violet-500 !text-white"
               type="button"
               onClick={() => {
                 handleChase();
@@ -116,11 +116,6 @@ const Order = ({ order, updateInfo }: IOrder) => {
 
         <div className="row">
           <div className="section">
-            <div className="max-sm:!hidden datetime">
-              <i className="fa-solid fa-clock"></i>
-              <span>{dayjs(order.createdDate).format('YYYY-MM-DD HH:mm:ss')}</span>
-            </div>
-
             <HeaderLink href={`/crypto/${order.market.code}`} className="title">
               <span className="korean">{order.market.koreanName}</span>
               <span className="code">{order.market.code}</span>
@@ -130,8 +125,13 @@ const Order = ({ order, updateInfo }: IOrder) => {
           </div>
 
           <div className="section max-sm:!hidden">
+            <div className="max-sm:!hidden datetime">
+              <i className="fa-solid fa-clock"></i>
+              <span>{dayjs(order.createdDate).format('YYYY-MM-DD HH:mm:ss')}</span>
+            </div>
+
             <button
-              className="info text-violet-400!"
+              className="info !bg-violet-500 !text-white"
               type="button"
               onClick={() => {
                 handleChase();

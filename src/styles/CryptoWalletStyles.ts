@@ -7,7 +7,7 @@ export const Layout = tw.div`
 export const WalletLayout = tw.div`
   flex flex-col w-full common-panel padding gap-6
 
-  max-md:[&>.title]:text-xl md:[&>.title]:text-2xl [&>.title]:text-slate-200 [&>.title]:font-bold [&>.title]:leading-[100%]
+  max-md:[&>.title]:text-xl md:[&>.title]:text-2xl [&>.title]:text-surface-main-text [&>.title]:font-bold [&>.title]:leading-[100%]
 `;
 
 export const WalletBox = tw.div`
@@ -16,7 +16,7 @@ export const WalletBox = tw.div`
 
   [&>.header]:flex [&>.header]:justify-between [&>.header]:items-center [&>.header]:w-full
   [&>.header>.title]:space-x-2
-  max-sm:[&>.header>.title]:text-lg sm:[&>.header>.title]:text-xl [&>.header>.title]:text-slate-300 [&>.header>.title]:font-medium
+  max-sm:[&>.header>.title]:text-lg sm:[&>.header>.title]:text-xl [&>.header>.title]:text-surface-main-text [&>.header>.title]:font-medium
   [&>.content]:flex [&>.content]:justify-between [&>.content]:items-center [&>.content]:w-full
   [&>.content>.label]:text-sm [&>.content>.label]:text-surface-sub-text
   [&>.content>.value]:text-base [&>.content>.value]:text-surface-main-text
@@ -55,7 +55,7 @@ export const TransferInfoBox = tw.div`
 export const TransferButton = tw.button`
   max-sm:w-full sm:w-48 h-11 mx-auto
   rounded-lg bg-indigo-600/80 hover:bg-indigo-600/90
-  disabled:bg-slate-500/50 disabled:cursor-not-allowed
-  text-base text-slate-200
+  disabled:bg-black/30 disabled:cursor-not-allowed
+  text-base text-surface-main-text
   transition-colors
 `;

@@ -23,10 +23,10 @@ export default function CryptoMarketLoading() {
         <div className="flex flex-col gap-1">
           {/* 코인 이름 */}
           <S.MainTitleBox>
-            <div className="p-1 bg-slate-500/50 rounded-lg animate-pulse">
+            <div className="p-1 bg-surface-sub-background rounded-lg animate-pulse">
               <div className="max-md:w-6 md:w-7 aspect-square"></div>
             </div>
-            <h1 className="max-md:text-xl md:text-3xl text-slate-50 font-semibold skeleton w-32">이름</h1>
+            <h1 className="max-md:text-xl md:text-3xl text-surface-main-text font-semibold skeleton w-32">이름</h1>
           </S.MainTitleBox>
 
           {/* 코인 가격 */}

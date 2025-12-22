@@ -71,18 +71,18 @@ const Wrapper = ({ message }: { message: SystemMessage }) => {
 
 const Layout = tw.div`
   flex flex-col p-6 gap-6
-  border border-slate-200/10 rounded-2xl bg-slate-600/30 backdrop-blur-sm
+  border border-surface-common-border rounded-2xl bg-surface-common-background backdrop-blur-sm
 
   [&>.content]:flex [&>.content]:flex-col [&>.content]:items-center [&>.content]:pt-1 [&>.content]:gap-2
-  [&>.content]:text-slate-200/90 [&>.content]:font-medium 
+  [&>.content]:text-surface-main-text/90 [&>.content]:font-medium 
 
   [&>.control]:flex [&>.control]:justify-center [&>.control]:w-full [&>.control]:h-10 [&>.control]:px-4 [&>.control]:gap-2
-  [&>.control>button]:w-24 [&>.control>button]:rounded-2xl [&>.control>button]:bg-slate-600/30
-  [&>.control>button]:border [&>.control>button]:border-slate-200/10 [&>.control>button]:text-slate-200/80
-  [&>.control>button]:hover:bg-slate-600/40  [&>.control>button]:hover:border-slate-200/20 [&>.control>button]:hover:text-slate-200/90
-  [&>.control>button]:active:bg-slate-600/50 [&>.control>button]:active:border-slate-200/30 [&>.control>button]:active:text-slate-200/95
-  [&>.control>button]:focus:bg-slate-600/40 [&>.control>button]:focus:border-slate-200/20 [&>.control>button]:focus:text-slate-200/90
-  [&>.control>button]:focus-visible:bg-slate-600/40 [&>.control>button [&>.control>button]:focus-visible:border-slate-200/20 [&>.control>button]:focus-visible:text-slate-200/90
+  [&>.control>button]:w-24 [&>.control>button]:rounded-2xl [&>.control>button]:bg-surface-sub-background
+  [&>.control>button]:border [&>.control>button]:border-surface-common-border [&>.control>button]:text-surface-main-text/80
+  [&>.control>button]:hover:bg-surface-sub-background-active  [&>.control>button]:hover:border-surface-common-border [&>.control>button]:hover:text-surface-main-text/90
+  [&>.control>button]:active:bg-surface-sub-background-active [&>.control>button]:active:border-surface-common-border [&>.control>button]:active:text-surface-main-text/95
+  [&>.control>button]:focus:bg-surface-sub-background-active [&>.control>button]:focus:border-surface-common-border [&>.control>button]:focus:text-surface-main-text/90
+  [&>.control>button]:focus-visible:bg-surface-sub-background-active [&>.control>button [&>.control>button]:focus-visible:border-surface-common-border [&>.control>button]:focus-visible:text-surface-main-text/90
 
   [&>.control>button.confirm]:bg-indigo-600/30 [&>.control>button.confirm]:border [&>.control>button.confirm]:border-indigo-200/10 [&>.control>button.confirm]:text-indigo-200/80
   [&>.control>button.confirm]:hover:bg-indigo-600/40 [&>.control>button.confirm]:hover:border-indigo-200/20 [&>.control>button.confirm]:hover:text-indigo-200/90
@@ -90,7 +90,7 @@ const Layout = tw.div`
   [&>.control>button.confirm]:focus:bg-indigo-600/40 [&>.control>button.confirm]:focus:border-indigo-200/20 [&>.control>button.confirm]:focus:text-indigo-200/90
   [&>.control>button.confirm]:focus-visible:bg-indigo-600/40 [&>.control>button.confirm]:focus-visible:border-indigo-200/20 [&>.control>button.confirm]:focus-visible:text-indigo-200/90
 
-  [&>.control>button]:focus-visible:ring-2 [&>.control>button]:focus-visible:ring-slate-400
+  [&>.control>button]:focus-visible:ring-2 [&>.control>button]:focus-visible:ring-surface-common-border
   [&>.control>button.confirm]:focus-visible:ring-indigo-400
   [&>.control>button]:transition-colors
 `;

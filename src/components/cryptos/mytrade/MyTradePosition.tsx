@@ -158,7 +158,7 @@ export const Position = ({ position, userBudget }: IPosition) => {
         <div className="row sm:!hidden">
           <HeaderLink href={`/crypto/${position.market.code}`} className="title">
             <span className="korean">{position.market.koreanName}</span>
-            <span className="english">{position.market.englishName}</span>
+            {/* <span className="english">{position.market.englishName}</span> */}
             <span className="code">{position.market.code}</span>
           </HeaderLink>
         </div>
@@ -233,8 +233,24 @@ export const Position = ({ position, userBudget }: IPosition) => {
       </S.PositionBody>
 
       <S.PositionClose className="close-box">
-        <div className="flex items-center w-full max-sm:gap-1 sm:gap-3">
+        <div className="flex items-center w-full max-sm:gap-1 sm:gap-2">
           <div className="title">포지션 종료</div>
+          <div className="inputs max-sm:!hidden">
+            <I.NumberInput
+              label={'가격'}
+              value={closePrice}
+              setValue={setClosePrice}
+              setFocus={(isFocus) => {
+                isClosePriceFoucsRef.current = isFocus;
+              }}
+            />
+            <I.PositionCloseSizeInput
+              label={'수량'}
+              value={closeQuantity}
+              setValue={setCloseQuantity}
+              max={position.quantity}
+            />
+          </div>
           <div className="buttons">
             <button
               type="button"
@@ -252,22 +268,6 @@ export const Position = ({ position, userBudget }: IPosition) => {
             >
               시장가
             </button>
-          </div>
-          <div className="inputs max-sm:!hidden">
-            <I.NumberInput
-              label={'가격'}
-              value={closePrice}
-              setValue={setClosePrice}
-              setFocus={(isFocus) => {
-                isClosePriceFoucsRef.current = isFocus;
-              }}
-            />
-            <I.PositionCloseSizeInput
-              label={'수량'}
-              value={closeQuantity}
-              setValue={setCloseQuantity}
-              max={position.quantity}
-            />
           </div>
         </div>
         <div className="max-sm:grid sm:hidden grid-cols-2 w-full gap-2">

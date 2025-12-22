@@ -82,7 +82,7 @@ export default function CryptoMyTradeFilter({ onSearch, isInitSearch = true }: I
   };
 
   return (
-    <div className="flex max-sm:flex-col sm:items-center mb-1 [&>.split]:h-4 [&>.split]:border-l [&>.split]:border-slate-700">
+    <div className="flex max-sm:flex-col sm:items-center mb-1 [&>.split]:h-4 [&>.split]:border-l [&>.split]:border-surface-common-border">
       <div className="flex max-sm:px-1">
         <S.FilterButton $is_active={dateType === DateType.DAY} onClick={() => handleDateType(DateType.DAY)}>
           1일
@@ -99,7 +99,7 @@ export default function CryptoMyTradeFilter({ onSearch, isInitSearch = true }: I
       </div>
       <div className="split max-sm:hidden"></div>
       <div className="flex">
-        <div className="flex items-center px-2 space-x-1 [&>span]:text-xs [&>span]:text-slate-400">
+        <div className="flex items-center px-2 space-x-1 [&>span]:text-xs [&>span]:text-surface-sub-text">
           <span>날짜</span>
           <Date date={dateStart} setDate={setDateStart} />
           <span>~</span>
@@ -176,12 +176,12 @@ const Date = ({ date, setDate }: IDate) => {
     // 최종 검증
     if (DateUtils.isValidDate(y, m, d)) {
       const formattedDate = `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-      
+
       // 로컬 state 업데이트 (포맷팅된 값으로)
       setYear(String(y));
       setMonth(String(m).padStart(2, '0'));
       setDay(String(d).padStart(2, '0'));
-      
+
       // 부모 컴포넌트에 전달
       setDate(formattedDate);
     }

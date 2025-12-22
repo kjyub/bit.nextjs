@@ -26,7 +26,7 @@ export default function ControlPanel({ isOpen, onClose }: { isOpen: boolean; onC
 
       <div className="flex justify-between items-end">
         <div className="flex flex-col justify-end gap-1">
-          <span className="text-xs text-slate-200/80">차트 색상</span>
+          <span className="text-xs text-surface-main-text/80">차트 색상</span>
           <div className="flex flex-1 gap-1">
             <ChartColorButton
               riseColor="red"

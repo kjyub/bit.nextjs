@@ -215,7 +215,7 @@ export const LeverageInput = ({ leverageRatio, setLeverageRatio, maxRatio = 75 }
       <div className="flex justify-between items-center w-full h-9">
         <div className="flex items-center gap-1">
           <S.Title>레버리지</S.Title>
-          <span className="max-sm:hidden font-light text-sm text-slate-400">{`1x ~ ${maxRatio}x`}</span>
+          <span className="max-sm:hidden font-light text-sm text-surface-sub-text">{`1x ~ ${maxRatio}x`}</span>
         </div>
 
         <div className="flex items-center space-x-4">
@@ -245,7 +245,7 @@ export const LeverageInput = ({ leverageRatio, setLeverageRatio, maxRatio = 75 }
                 setInputFocus(false);
               }}
             />
-            <span className="text-xs text-slate-400 ml-0.5 mt-0.5 select-none">x</span>
+            <span className="text-xs text-surface-sub-text ml-0.5 mt-0.5 select-none">x</span>
           </S.InputBox>
           <HelpBox position="left-bottom">
             <div className="flex flex-col space-y-1 [&>strong]:font-semibold">
@@ -268,14 +268,19 @@ interface OrderTypeInputProps {
   setOrderType: (mode: TradeOrderType) => void;
 }
 export const OrderTypeInput = ({ orderType, setOrderType }: OrderTypeInputProps) => {
+  const [isBgActive, setBgActive] = useState<boolean>(false);
   return (
-    <div className="flex items-center w-full h-6 space-x-4">
-      <S.OrderTypeBox>
+    <div className="flex items-center w-full h-7 space-x-4">
+      <S.MarginModeBox>
         <button
           className={orderType === TradeOrderTypes.LIMIT ? 'active' : ''}
           type="button"
-          onClick={() => {
-            setOrderType(TradeOrderTypes.LIMIT);
+          onClick={() => setOrderType(TradeOrderTypes.LIMIT)}
+          onMouseEnter={() => {
+            if (orderType === TradeOrderTypes.MARKET) setBgActive(true);
+          }}
+          onMouseLeave={() => {
+            setBgActive(false);
           }}
         >
           <span>지정가</span>
@@ -283,24 +288,30 @@ export const OrderTypeInput = ({ orderType, setOrderType }: OrderTypeInputProps)
         <button
           className={orderType === TradeOrderTypes.MARKET ? 'active' : ''}
           type="button"
-          onClick={() => {
-            setOrderType(TradeOrderTypes.MARKET);
+          onClick={() => setOrderType(TradeOrderTypes.MARKET)}
+          onMouseEnter={() => {
+            if (orderType === TradeOrderTypes.LIMIT) setBgActive(true);
+          }}
+          onMouseLeave={() => {
+            setBgActive(false);
           }}
         >
           <span>시장가</span>
         </button>
-      </S.OrderTypeBox>
+        <div className={`thumb ${orderType === TradeOrderTypes.MARKET ? 'right' : ''}`} />
+        <div className={`absolute-center bg ${isBgActive ? 'active' : ''}`} />
+      </S.MarginModeBox>
 
-      {/* <HelpBox>
-                <div className="flex flex-col space-y-1 [&>label]:font-semibold">
-                    <label>지정가</label>
-                    <span>투입한 자금과 지갑 내의 돈까지 사용</span>
-                </div>
-                <div className="flex flex-col space-y-1 [&>label]:font-semibold">
-                    <label>시장가</label>
-                    <span>투입한 자금 내의 돈만 사용하여 손실 최소화</span>
-                </div>
-            </HelpBox> */}
+      <HelpBox position="left-bottom">
+        <div className="flex flex-col space-y-1 [&>strong]:font-semibold">
+          <strong>지정가</strong>
+          <span>지정된 가격으로 주문을 진행한다</span>
+        </div>
+        <div className="flex flex-col space-y-1 [&>strong]:font-semibold">
+          <strong>시장가</strong>
+          <span>현재 시장 가격으로 주문을 진행한다</span>
+        </div>
+      </HelpBox>
     </div>
   );
 };
@@ -327,7 +338,7 @@ export const NumberInput = ({
 }: NumberInputProps) => {
   return (
     <S.InputBox className={`justify-between h-8 space-x-2 ${className}`}>
-      <span className="font-light text-sm text-slate-400/80 text-nowrap select-none">{label}</span>
+      <span className="font-light text-sm text-surface-sub-text text-nowrap select-none">{label}</span>
       <CI.NumberInput
         className="input text-right w-full"
         value={value}
@@ -341,7 +352,7 @@ export const NumberInput = ({
           setFocus?.(false);
         }}
       />
-      {suffix && <span className="ml-0.5! input text-slate-400!">{suffix}</span>}
+      {suffix && <span className="ml-0.5! input text-surface-sub-text!">{suffix}</span>}
     </S.InputBox>
   );
 };
@@ -362,11 +373,11 @@ export const LimitSizeInput = ({ amount, setAmount, maxAmount }: LimitSizeInputP
     <div className="flex flex-col w-full space-y-2">
       <NumberInput label={'크기'} value={amount} setValue={setAmount} />
       <div className="flex items-center px-2 space-x-2">
-        <span className="font-light text-xs text-slate-400/80 w-12">{'크기'}</span>
+        <span className="font-light text-xs text-surface-sub-text/80 w-12">{'크기'}</span>
         <div className="flex-1">
           <SlideInput value={amount} setValue={setAmount} min={0} max={maxAmount} step={step} />
         </div>
-        <span className="font-light text-xs text-slate-400/80 text-right w-6">{FormatUtils.percent(percent, 1)}</span>
+        <span className="font-light text-xs text-surface-sub-text/80 text-right w-6">{FormatUtils.percent(percent, 1)}</span>
       </div>
     </div>
   );
@@ -384,7 +395,7 @@ export const LimitPriceInput = ({ price, setPrice, initPrice }: LimitPriceInputP
         <NumberInput label={'가격'} value={price} setValue={setPrice} min={0} max={MAX_PRICE} />
       </div>
       <button
-        className="w-4 text-sm text-slate-500 hover:text-slate-400"
+        className="w-4 text-sm text-surface-sub-text hover:text-surface-main-text"
         type="button"
         onClick={() => {
           initPrice();
@@ -409,11 +420,11 @@ export const MarketPriceInput = ({ targetPrice, setTargetPrice, maxSize }: Marke
     <div className="flex flex-col w-full space-y-2">
       <NumberInput label={'총액'} value={targetPrice} setValue={setTargetPrice} />
       <div className="flex items-center px-2 space-x-2">
-        <span className="font-light text-xs text-slate-400/80 w-12">{'총액(잔고)'}</span>
+        <span className="font-light text-xs text-surface-sub-text/80 w-12">{'총액(잔고)'}</span>
         <div className="flex-1">
           <SlideInput value={targetPrice} setValue={setTargetPrice} min={0} max={maxSize} step={maxSize / 100} />
         </div>
-        <span className="font-light text-xs text-slate-400/80 text-right w-6">{FormatUtils.percent(percent, 1)}</span>
+        <span className="font-light text-xs text-surface-sub-text/80 text-right w-6">{FormatUtils.percent(percent, 1)}</span>
       </div>
     </div>
   );
@@ -544,7 +555,7 @@ export const TradeSizeInput = ({
         )}
 
         <button
-          className="w-4 text-sm text-slate-500 hover:text-slate-400"
+          className="w-4 text-sm text-surface-sub-text hover:text-surface-main-text"
           type="button"
           onClick={() => {
             setSizeUnitType(sizeUnitType === SizeUnitTypes.PRICE ? SizeUnitTypes.QUANTITY : SizeUnitTypes.PRICE);
@@ -556,7 +567,7 @@ export const TradeSizeInput = ({
 
       {/* 자산 비율 슬라이더 */}
       <div className="flex items-center pl-2 space-x-0">
-        <span className="font-light text-xs text-slate-400 w-12">자산 비율</span>
+        <span className="font-light text-xs text-surface-sub-text w-12">자산 비율</span>
         <div
           className="flex-1"
           onMouseDown={() => {
@@ -568,7 +579,7 @@ export const TradeSizeInput = ({
       </div>
 
       {/* 총 크기 */}
-      <div className="flex justify-between items-center w-full [&>span]:px-1 [&>span]:text-[11px] [&>span]:text-slate-300/90 [&>span]:truncate">
+      <div className="flex justify-between items-center w-full [&>span]:px-1 [&>span]:text-[11px] [&>span]:text-surface-main-text/90 [&>span]:truncate">
         {sizeUnitType === SizeUnitTypes.PRICE && (
           <>
             <span className="border-l-2 border-position-long-3" title="롱 포지션 크기">
@@ -604,7 +615,7 @@ export const TpSlLayout = ({ children }: { children: React.ReactNode }) => {
 
         <div className="flex space-x-2">
           <button
-            className={`${isShow ? 'text-violet-500' : 'text-slate-500'} transition-colors`}
+            className={`${isShow ? 'text-violet-500' : 'text-surface-sub-text'} transition-colors`}
             type="button"
             onClick={() => {
               setShow(!isShow);
@@ -660,11 +671,11 @@ export const PositionCloseSizeInput = ({ label, value, setValue, max }: Position
       <NumberInput label={label} value={value} setValue={setValue} max={max} className="close-size-input" />
 
       {isSliderShow && (
-        <div className="absolute top-10 right-0 flex items-center w-[90%] h-9 px-3 space-x-2 rounded-lg bg-slate-800 border border-slate-700 shadow-lg">
+        <div className="absolute top-10 right-0 flex items-center w-[90%] h-9 px-3 space-x-2 rounded-lg bg-surface-common-background border border-surface-common-border backdrop-blur-sm">
           <div className="flex-1">
             <SlideInput value={value} setValue={setValue} min={0} max={max} step={max / 100} mark={max / 4} />
           </div>
-          <span className="font-light text-xs text-slate-400 text-right w-6 pr-1">
+          <span className="font-light text-xs text-surface-sub-text text-right w-6 pr-1">
             {FormatUtils.percent(value / max, 1)}
           </span>
         </div>

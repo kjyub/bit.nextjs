@@ -74,7 +74,7 @@ export default function CryptoMarketCommunity({
           토론방
         </div>
 
-        <span className="text-nowrap text-sm text-slate-500">
+        <span className="text-nowrap text-sm text-surface-sub-text">
           {FormatUtils.textFormat(pagination.count, TextFormats.NUMBER)}개의 토론
         </span>
       </h1>
@@ -212,7 +212,7 @@ const Community = ({ user, community, selectedCommunity, setSelectedCommunity, h
         <div className="row">
           <h3 className="text-surface-main-text flex-1 truncate max-md:text-sm">{community.title}</h3>
           <div className="flex items-center space-x-2">
-            <span className="text-xs text-slate-500">{DateUtils.getDateShorten(community.createdDate)}</span>
+            <span className="text-xs text-surface-sub-text">{DateUtils.getDateShorten(community.createdDate)}</span>
             {isMaster && (
               <>
                 <CS.ItemControlButton onClick={handleEdit}>

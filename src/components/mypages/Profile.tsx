@@ -47,7 +47,7 @@ export default function Profile() {
 
   return (
     <form className="flex flex-col gap-4 common-panel padding" action={submitForm}>
-      <h2 className="text-xl font-bold text-slate-200">회원 정보 수정</h2>
+      <h2 className="text-xl font-bold text-surface-main-text">회원 정보 수정</h2>
       <I.Input label="이메일" value={user.email} disabled={true} />
       <I.Input label="닉네임" name="nickname" defaultValue={state.nickname} disabled={isPending} />
 
@@ -56,7 +56,7 @@ export default function Profile() {
         className={cn([
           'w-full h-12 transition-all duration-300',
           'rounded-lg bg-indigo-500/70 hover:bg-indigo-500/80 active:bg-indigo-500',
-          'text-slate-200 font-semibold',
+          'text-surface-main-text font-semibold',
           isPending && 'animate-pulse cursor-not-allowed',
         ])}
         disabled={isPending}

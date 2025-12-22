@@ -106,7 +106,7 @@ const Order = ({ order }: IOrder) => {
               <span>{dayjs(order.createdDate).format('YYYY-MM-DD HH:mm:ss')}</span>
             </div>
 
-            <div className={`info value ${order.isCancel ? 'text-slate-400!' : 'text-violet-500!'}`}>
+            <div className={`info value ${order.isCancel ? 'text-surface-sub-text' : 'text-surface-main-text'}`}>
               {order.isCancel ? '취소됨' : '처리됨'}
             </div>
           </div>

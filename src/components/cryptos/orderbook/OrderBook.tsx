@@ -53,7 +53,7 @@ export default function OrderBook({ orderBook, marketCode, marketCurrent }: IOrd
 
   return (
     <div className="flex flex-col w-full h-[calc(100%-28px)]">
-      <S.Row className="h-9 shrink-0 pr-2 text-sm font-light text-slate-400 max-sm:hidden">
+      <S.Row className="h-9 shrink-0 pr-2 text-sm font-light text-surface-sub-text max-sm:hidden">
         <span className="trade-price">가격</span>
         <span className="price">수량</span>
         <span className="size">총액</span>
@@ -118,14 +118,14 @@ const Price = ({ price }: { price: number }) => {
   return (
     <div
       ref={clickScaleRef}
-      className="flex items-center w-full py-2 gap-2 cursor-pointer active:bg-slate-100/10 select-none"
+      className="flex items-center w-full py-2 gap-2 cursor-pointer active:bg-surface-common-background select-none"
       onClick={() => setTradePrice(price)}
     >
       <span
         className={cn([
           'trade-price font-semibold text-lg',
           changeType === PriceChangeTypes.EVEN
-            ? 'text-slate-300'
+            ? 'text-surface-main-text'
             : changeType === PriceChangeTypes.RISE
               ? 'text-position-long-strong'
               : 'text-position-short-strong',
@@ -150,7 +150,7 @@ const Row = ({ unit, max, className }: { unit: Unit; max: number; className: str
     <S.Row
       ref={clickScaleRef}
       className={cn([
-        'relative py-1 text-xs mouse:hover:bg-slate-100/10 active:bg-slate-100/10 cursor-pointer',
+        'relative py-1 text-xs mouse:hover:bg-surface-common-background active:bg-surface-common-background cursor-pointer',
         className,
       ])}
       onClick={() => setTradePrice(unit.price)}
@@ -159,12 +159,12 @@ const Row = ({ unit, max, className }: { unit: Unit; max: number; className: str
       <div className="z-10 flex w-full">
         <span className="trade-price">{CryptoUtils.getPriceText(unit.price)}</span>
         <div className="flex max-sm:flex-col max-sm:w-[50px] sm:w-[100px]">
-          <span className="size font-light text-slate-200/90">
+          <span className="size font-light text-surface-main-text/90">
             {unit.size >= 1000
               ? FormatUtils.textFormat(CryptoUtils.getPriceRound(unit.size), TextFormats.KOREAN_PRICE_SIMPLE)
               : CryptoUtils.getPriceRound(unit.size, 4)}
           </span>
-          <span className="price font-light text-slate-200/90 max-sm:hidden">
+          <span className="price font-light text-surface-main-text/90 max-sm:hidden">
             {unit.size * unit.price >= 1000
               ? FormatUtils.textFormat(CryptoUtils.getPriceRound(unit.size * unit.price), TextFormats.KOREAN_PRICE_SIMPLE)
               : CryptoUtils.getPriceRound(unit.size * unit.price, 4)}

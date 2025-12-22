@@ -28,7 +28,7 @@ const Wrapper = ({ isOpen, children }: { isOpen: boolean; children: React.ReactN
   return (
     <div
       className={cn([
-        'z-10 transition-all duration-200 will-change-transform backdrop-blur-lg',
+        'z-10 transition-all duration-200 will-change-transform rounded-lg backdrop-blur-lg',
         { 'opacity-0 translate-y-2': !isOpen },
         { 'opacity-100': isOpen },
       ])}

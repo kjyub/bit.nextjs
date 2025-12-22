@@ -127,7 +127,7 @@ export default function CommunityComment({ user, comment, handleComment }: IComm
         </div>
 
         <div className="flex items-center space-x-2">
-          <span className="max-md:text-[11px] md:text-xs text-slate-500">
+          <span className="max-md:text-[11px] md:text-xs text-surface-sub-text">
             {DateUtils.getDateShorten(comment.createdDate)}
           </span>
           <CS.ItemControlButton

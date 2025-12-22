@@ -105,7 +105,7 @@ const History = ({ history }: IHistory) => {
               <i className="fa-solid fa-clock"></i>
               <span>{dayjs(history.createdDate).format('YYYY-MM-DD HH:mm:ss')}</span>
             </div>
-            
+
             <div className="info">{TradeOrderTypeNames[history.orderType]}</div>
           </div>
         </div>
@@ -140,7 +140,7 @@ const History = ({ history }: IHistory) => {
           <dt>
             실현손익 <span>Realized Profit</span>
           </dt>
-          <dd>
+          <dd className="!font-medium">
             {history.pnl > 0 ? '+' : ''}
             {CryptoUtils.getPriceText(history.pnl)}
             {CRYPTO_WALLET_UNIT}

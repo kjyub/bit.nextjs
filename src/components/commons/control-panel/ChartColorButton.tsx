@@ -16,9 +16,9 @@ export default function ChartColorButton({ className, isActive, riseColor, fallC
       {...props}
       className={cn([
         'flex items-center px-3 gap-2',
-        'rounded-2xl bg-slate-500/10 active:bg-slate-400/20 hover:bg-slate-400/20',
-        'text-sm text-slate-200/80 border border-slate-500/30 transition-colors',
-        { 'bg-slate-400/20 border-violet-500': isActive },
+        'rounded-2xl bg-surface-sub-background active:bg-surface-common-background-active hover:bg-surface-common-background-active',
+        'text-sm text-surface-main-text/80 border border-surface-common-border transition-colors',
+        { 'bg-surface-common-background-active border-violet-500': isActive },
         className,
       ])}
     >

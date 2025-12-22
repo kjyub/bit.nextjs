@@ -172,11 +172,11 @@ export default function CryptoMarketTrade({
       <I.MarginModeInput marginMode={marginMode} setMarginMode={setMarginMode} disabled={isMarginModeDisabled} />
 
       <I.LeverageInput leverageRatio={leverageRatio} setLeverageRatio={setLeverageRatio} maxRatio={75} />
-      <div className="mt-2! mb-2! border-b border-slate-600/30" />
+      <div className="!my-2 border-b border-surface-common-border" />
       <I.OrderTypeInput orderType={orderType} setOrderType={setOrderType} />
 
       {orderType === TradeOrderTypes.LIMIT && (
-        <>
+        <div className="flex flex-col gap-2">
           <I.LimitPriceInput price={price} setPrice={setPrice} initPrice={initPrice} />
           <I.TradeSizeInput
             orderType={orderType}
@@ -192,7 +192,7 @@ export default function CryptoMarketTrade({
             sizeUnitType={sizeUnitType}
             setSizeUnitType={setSizeUnitType}
           />
-        </>
+        </div>
       )}
 
       {orderType === TradeOrderTypes.MARKET && (
@@ -245,23 +245,23 @@ export default function CryptoMarketTrade({
       </div>
 
       <div className="grid grid-cols-2 gap-2 w-full">
-        <Button 
-          variant='primary'
-          size='lg'
+        <Button
+          variant="primary"
+          size="md"
           onClick={() => {
             handleTrade(PositionTypes.LONG);
           }}
-          className='bg-position-long-1 hover:bg-position-long-2 active:bg-position-long-3'
+          className="bg-position-long-1 hover:bg-position-long-2 active:bg-position-long-3 max-sm:text-sm"
         >
           매수/롱
         </Button>
         <Button
-          variant='primary'
-          size='lg'
+          variant="primary"
+          size="md"
           onClick={() => {
             handleTrade(PositionTypes.SHORT);
           }}
-          className='bg-position-short-1 hover:bg-position-short-2 active:bg-position-short-3'
+          className="bg-position-short-1 hover:bg-position-short-2 active:bg-position-short-3 max-sm:text-sm"
         >
           매도/숏
         </Button>

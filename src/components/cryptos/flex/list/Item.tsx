@@ -9,19 +9,19 @@ import Link from 'next/link';
 import tw from 'tailwind-styled-components';
 
 const Layout = tw.div`
-  relative flex justify-between w-full max-sm:h-44 sm:h-48 gap-2 p-6 rounded-2xl bg-slate-600/30 overflow-hidden group
+  relative flex justify-between w-full max-sm:h-44 sm:h-48 gap-2 p-6 rounded-2xl bg-surface-floating-background overflow-hidden group
 `;
 
 const PriceInfoBox = tw.div`
   flex flex-col w-fit mt-1 gap-1 max-md:text-xs md:text-[13px]
   [&>dl]:flex [&>dl]:justify-between [&>dl]:gap-1
-  [&>dl>dt]:w-20 [&>dl>dt]:font-light [&>dl>dt]:text-slate-400 
+  [&>dl>dt]:w-20 [&>dl>dt]:font-light [&>dl>dt]:text-surface-sub-text 
   [&>dl>dd]:text-right [&>dl>dd]:font-semibold [&>dl>dd]:text-indigo-500
 `;
 
 const IconBox = tw.div`
   absolute max-sm:inset-y-0 max-sm:right-0 sm:top-0 sm:right-0 flex flex-center aspect-square max-sm:h-32 sm:h-full max-sm:my-auto rounded-xl
-  [&>i]:absolute [&>i]:text-slate-300/70 max-sm:[&>i]:text-5xl sm:[&>i]:text-7xl
+  [&>i]:absolute [&>i]:text-surface-main-text/70 max-sm:[&>i]:text-5xl sm:[&>i]:text-7xl
 `;
 
 interface Props {
@@ -36,7 +36,7 @@ export default function FlexItem({ flex }: Props) {
         {/* PNL */}
         <div
           className={cn([
-            'flex items-baseline gap-2 text-slate-300',
+            'flex items-baseline gap-2 text-surface-main-text',
             { 'text-position-long-strong': pnlRatio > 0, 'text-position-short-strong': pnlRatio < 0 },
           ])}
         >
@@ -53,7 +53,7 @@ export default function FlexItem({ flex }: Props) {
         </div>
 
         {/* 포지션 정보 */}
-        <div className="flex items-center [&>*]:text-sm [&>*]:font-light [&>.split]:h-4 [&>.split]:mx-3 [&>.split]:border-l [&>.split]:border-slate-500/50">
+        <div className="flex items-center [&>*]:text-sm [&>*]:font-light [&>.split]:h-4 [&>.split]:mx-3 [&>.split]:border-l [&>.split]:border-surface-sub-border">
           <span
             className={cn({
               'text-position-long-strong': flex.position.positionType === PositionTypes.LONG,
@@ -63,11 +63,14 @@ export default function FlexItem({ flex }: Props) {
             {flex.position.positionType === PositionTypes.LONG ? '롱' : '숏'}
           </span>
           <div className="split"></div>
-          <span className="text-slate-300">{flex.position.averageLeverage}x</span>
+          <span className="text-surface-main-text">{flex.position.averageLeverage}x</span>
           <div className="split"></div>
-          <Link href={`/crypto/${flex.position.market.code}`} className="text-slate-300 flex items-center gap-1">
+          <Link
+            href={`/crypto/${flex.position.market.code}`}
+            className="text-surface-main-text flex items-center gap-1"
+          >
             {flex.position.market.code}
-            <i className="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+            <i className="fa-solid fa-chevron-right text-[10px] text-surface-sub-text"></i>
           </Link>
         </div>
 
@@ -91,11 +94,11 @@ export default function FlexItem({ flex }: Props) {
 
         {/* 게시자 정보 */}
         <div className="flex items-center mt-auto gap-2 text-xs">
-          <span className="text-slate-400">
+          <span className="text-surface-sub-text">
             <i className="fa-solid fa-user text-xs mr-1"></i>
             {flex.user.nickname}
           </span>
-          <span className="text-slate-400">
+          <span className="text-surface-sub-text">
             <i className="fa-solid fa-clock text-xs mr-1"></i>
             {dayjs(flex.position.closeTime).format('YYYY-MM-DD HH:mm:ss')}
           </span>
@@ -123,7 +126,7 @@ export const FlexItemSkeleton = ({
   return (
     <Layout ref={ref} className={cn({ 'opacity-0': !isShow })}>
       <div className="flex flex-col gap-2">
-        <div className="flex items-end gap-2 text-slate-300">
+        <div className="flex items-end gap-2 text-surface-main-text">
           <div className="w-16 h-8 skeleton"></div>
           <div className="w-16 h-6 skeleton"></div>
         </div>

@@ -1,5 +1,4 @@
 'use client';
-import BrowserUtils from '@/utils/BrowserUtils';
 import { debounce } from 'lodash';
 import { useLayoutEffect, useState } from 'react';
 
